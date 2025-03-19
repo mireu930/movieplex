@@ -9,4 +9,8 @@ public class MovieDTO {
 	private Date releaseDate;
 	private String overView;
 	private Double populartity;
+	private Long ticketPrice;
+	private Long movieCheck;
+	
+	
 }
