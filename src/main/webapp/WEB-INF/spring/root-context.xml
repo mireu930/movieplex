@@ -4,5 +4,12 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<!-- 파일이 넘어올때 encoding -->
+		<property name="defaultEncoding" value="UTF-8"></property>
+		<!-- 파일마다 최대용량 byte단위 -->
+		<property name="maxUploadSizePerFile" value="10485760"></property>
+		<!-- 총업로드파일양 -->
+		<property name="maxUploadSize" value="31457280"></property>
+	</bean>
 </beans>
