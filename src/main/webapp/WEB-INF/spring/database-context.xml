@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:property-placeholder location="classpath:database/configs/database.properties"/>
+	
+	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location" value="classpath:database/configs/database.properties"></property>
+	</bean>
+	
+	<util:properties location="classpath:database/configs/database.properties"></util:properties> -->
+	
+	
+	
+	<bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" id = "dataSource" >
+		<property name="username" value ="${oracle.user}"></property>
+		<property name="password" value = "${oracle.pw}"></property>
+		<property name="url" value = "${oracle.url}"></property>
+		<property name="driverClassName" value="${oracle.driver}"></property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id ="sqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:database/configs/config.xml"></property>
+		<property name="mapperLocations" value="classpath:database/mappers/*Mapper.xml"></property>
+	</bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionTemplate" id = "sqlSession">
+		<constructor-arg name = "sqlSessionFactory" ref= "sqlSessionFactoryBean"></constructor-arg>
+	</bean>
+	
+	
+	
+</beans>
+
