@@ -15,7 +15,7 @@
 			<div class="collapse navbar-collapse" id="navbarsExampleXxl">
 				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Home</a></li>
+						aria-current="page" href="#">홈</a></li>
 					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
 					<li class="nav-item"><a class="nav-link disabled"
 						aria-disabled="true">Disabled</a></li>
@@ -32,10 +32,6 @@
 				<div>
 					<a class="navbar-brand" href="#">안녕~</a>
 				</div>
-				<form role="search">
-					<input class="form-control" type="search" placeholder="Search"
-						aria-label="Search">
-				</form>
 			</div>
 		</div>
 	</nav>
