@@ -4,6 +4,19 @@ const userEmail = document.getElementById("userEmail");
 const userPhone = document.getElementById("userPhone");
 const userName = document.getElementById("userName");
 const idbtn = document.getElementById("idbtn");
+const userPwCheck = document.getElementById("userPwCheck");
+const mailCheckBtn = document.getElementById("mailCheckBtn");
+
+mailCheckBtn.addEventListener("click", () => {
+    let email = userEmail.value;
+    console.log(email);
+
+    fetch("/users/mailCheck?email="+email)
+    .then(r=>r.text())
+    .then(r=>{
+        alert("인증번호가 전송되었습니다.")
+    })
+})
 
 userId.addEventListener('input', ()=>{
     console.log("input");
@@ -44,6 +57,18 @@ userPw.addEventListener('input', ()=>{
     } else {
         feedback.style.display = 'block';
         userPw.classList.add('is-invalid');
+    }
+})
+
+userPwCheck.addEventListener('input',()=>{
+    let feedback = document.getElementById("userPwCheckFeedback");
+
+    if(userPw.value==userPwCheck.value){
+        feedback.style.display = 'none';
+        userPwCheck.classList.remove('is-invalid');
+    }else {
+        feedback.style.display = 'block';
+        userPwCheck.classList.add('is-invalid');
     }
 })
 

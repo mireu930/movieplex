@@ -15,6 +15,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MailSend mailSend;
 	
 	@RequestMapping(value = "check", method = RequestMethod.GET)
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
@@ -30,6 +32,11 @@ public class UserController {
 		model.addAttribute("result", result);
 		
 		return "commons/ajax";
+	}
+	
+	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
+	public String mailCheck(String email) throws Exception {
+		return mailSend.joinEmail(email);
 	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)

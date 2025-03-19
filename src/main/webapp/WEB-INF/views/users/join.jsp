@@ -46,12 +46,24 @@
 			      </div>
 			    </div>
 			  </div>
+			</div>
+			<div class="col-md-4">
+			  <label for="userPwCheck" class="form-label">비밀번호 확인</label>
+			  <div class="input-group has-validation">
+				<input type="password" name="userPw" class="form-control is-invalid" id="userPwCheck" aria-describedby="userPwCheckFeedback" required>
+				<div id="userPwCheckFeedback" class="invalid-feedback">
+				  비밀번호가 일치하지 않습니다.
+				</div>
+			  </div>
+			</div>
 			  <div class="col-md-6">
 			    <label for="userEmail" class="form-label">이메일</label>
 			    <input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" required>
+			    <input type="button" id="mailCheckBtn" value="인증번호받기">
 			    <div id="userEmailFeedback" class="invalid-feedback">
 			    	이메일을 입력하세요.
 			    </div>
+			    
 			  </div>
 			  <div class="col-md-3">
 			    <label for="userPhone" class="form-label">폰번호</label>
