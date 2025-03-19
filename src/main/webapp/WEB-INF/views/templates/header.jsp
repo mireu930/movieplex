@@ -2,19 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- <nav>
-	<div>
-
-	</div>
-	<div>
-
-	</div>
-	<div>
-
-	</div>
-</nav> -->
-
-
 
 <nav class="navbar navbar-expand-xxl navbar-dark text-center headercss"aria-label="Seventh navbar example">
 	<div class="container-fluid row align-items-start offset-md-2 parent">

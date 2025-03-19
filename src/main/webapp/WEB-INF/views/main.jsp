@@ -13,7 +13,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>Album example · Bootstrap v5.3</title>
+<title>MoviePlex</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
 
