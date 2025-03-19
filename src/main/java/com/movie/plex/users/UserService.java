@@ -20,4 +20,12 @@ public class UserService {
 		
 		return null;
 	}
+	
+	public int join(UserDTO userDTO) throws Exception {
+		return userDAO.join(userDTO);
+	}
+	
+	public UserDTO idCheck(UserDTO userDTO) throws Exception {
+		return userDAO.getLogin(userDTO);
+	}
 }

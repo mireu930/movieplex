@@ -15,5 +15,9 @@ public class UserDAO {
 	public UserDTO getLogin(UserDTO userDTO) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getLogin", userDTO);
 	}
+	
+	public int join(UserDTO userDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"join", userDTO);
+	}
 
 }

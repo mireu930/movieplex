@@ -8,4 +8,9 @@
   		SELECT * FROM USERS WHERE USERID=#{userId}
   	</select>
   	
+  	<insert id="join" parameterType="UserDTO">
+  		INSERT INTO USERS
+  		VALUES(USERNUM_SEQ.NEXTVAL, #{userId}, #{userPw},#{userEmail},#{userPhone},#{userName},0,SYSDATE,0,0)
+  	</insert>
+  	
   </mapper>

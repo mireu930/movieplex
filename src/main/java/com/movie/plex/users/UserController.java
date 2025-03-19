@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -14,6 +15,22 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@RequestMapping(value = "check", method = RequestMethod.GET)
+	public String idCheck(UserDTO userDTO, Model model) throws Exception {
+		
+		userDTO = userService.idCheck(userDTO);
+		//중복 0
+		int result =0;
+		
+		if(userDTO== null) {
+			result =1; //중복 x
+		}
+		
+		model.addAttribute("result", result);
+		
+		return "commons/ajax";
+	}
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String getLogin() throws Exception {
@@ -32,6 +49,7 @@ public class UserController {
 		model.addAttribute("result", "로그인실패");
 		model.addAttribute("path", "./login");
 		
+		
 		return "commons/result";
 	}
 	
@@ -39,5 +57,23 @@ public class UserController {
 	public String logout(HttpSession session) throws Exception {
 		session.invalidate();
 		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "join",method = RequestMethod.GET)
+	public String join() throws Exception {
+		return "users/join";
+	}
+	
+	@RequestMapping(value = "join", method = RequestMethod.POST)
+	public String join(UserDTO userDTO, Model model) throws Exception {
+		
+		int result = userService.join(userDTO);
+		
+		if(result > 0) {
+			model.addAttribute("result", "회원가입성공");
+			model.addAttribute("path", "../");
+		}
+		
+		return "commons/result";
 	}
 }

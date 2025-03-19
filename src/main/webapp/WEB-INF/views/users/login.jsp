@@ -45,6 +45,7 @@
 			  </div>
 			  <div class="col-12">
 			    <button class="btn btn-primary" type="submit">로그인</button>
+			    <a href="/users/join">회원가입하기</a>
 			  </div>
 			  <%-- <div>
 				<a id="kakao-login-btn" href="${urlKakao}"> <img
