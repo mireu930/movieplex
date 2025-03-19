@@ -16,7 +16,12 @@
 				<ul class="navbar-nav me-auto mb-2 mb-xl-0">
 					<li class="nav-item"><a class="nav-link active"
 						aria-current="page" href="#">홈</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Link</a></li>
+					<c:if test="${empty user}">
+					<li class="nav-item"><a class="nav-link" href="/users/login">로그인</a></li>					
+					</c:if>
+					<c:if test="${not empty user}">
+					<li class="nav-item"><a class="nav-link" href="/users/logout">로그아웃</a></li>
+					</c:if>
 					<li class="nav-item"><a class="nav-link disabled"
 						aria-disabled="true">Disabled</a></li>
 					<li class="nav-item dropdown"><a
