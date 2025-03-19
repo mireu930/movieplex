@@ -1,5 +1,70 @@
+.parent{
+ height: 80px;
+ display: flex;
+ justify-content: space-between;
+}
+
+.moviecss{
+	text-align: center;
+	height: 80px;
+	width: 350px;
+	/* border: 1px solid red; */
+	line-height: 60px;
+}
+.moviecss > ul{
+	display: flex;
+	justify-content: space-between;
+}
+
+.logocss{
+	height: 80px;
+	width: 300px;
+	/* border: 1px solid white; */
+	line-height: 60px;
+	margin-left: 110px;
+}
+.admincss{
+	height: 80px;
+	width: 300px;
+	/* border: 1px solid green; */
+	line-height: 60px;
+	margin-left: 100px;
+}
+
+.admincss > ul{
+	display: flex;
+	justify-content: space-between;
+}
+.usercss{
+	height: 80px;
+	width: 100px;
+	/* border: 1px solid purple; */
+	line-height: 60px;
+	margin-left: 270px;
+}
+
+
+
+
+/*---------------------------------------------------------------*/
 .navbar.navbar-dark {
   background-color: #003092 !important;
+  height: 80px !important;
+}
+.nav-item{
+	font-size: 20px !important;
+	font-weight: bold !important;
+	
+}
+/* .nav-link{
+	color: white !important;
+} */
+/* .logocss{
+	padding-left: 225px;
+} */
+#logo{
+	width: 300px;
+	height: 80px;
 }
 .bd-placeholder-img {
 	font-size: 1.125rem;

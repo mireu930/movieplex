@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page session="false"%>
 
@@ -35,16 +35,16 @@
 					data-bs-slide-to="2" aria-label="Slide 3" class=""></button>
 			</div>
 			<div class="carousel-inner">
-				<div class="carousel-item active">
+				<!-- <div class="carousel-item active">
 					<svg class="bd-placeholder-img" width="100%" height="70%"
-						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						xmlns="/resources/image/test_poster3.jpg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
 						<rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
 					<div class="container">
 						<div class="carousel-caption text-start">
 							<h1>Example headline.</h1>
 							<p class="opacity-75">Some representative placeholder content
-								for the first slide of the carousel.</p>
+								for thes first slide of the carousel.</p>
 							<p>
 								<a class="btn btn-lg btn-primary" href="#">Sign up today</a>
 							</p>
@@ -53,7 +53,7 @@
 				</div>
 				<div class="carousel-item">
 					<svg class="bd-placeholder-img" width="100%" height="70%"
-						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						xmlns="/resources/image/test_poster2.jpg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
 						<rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
 					<div class="container">
@@ -69,19 +69,41 @@
 				</div>
 				<div class="carousel-item">
 					<svg class="bd-placeholder-img" width="100%" height="70%"
-						xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+						xmlns="/resources/image/test_poster1.jpg" aria-hidden="true"
 						preserveAspectRatio="xMidYMid slice" focusable="false">
 						<rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect></svg>
 					<div class="container">
 						<div class="carousel-caption text-end">
-							<h1>One more for good measure.</h1>
-							<p>Some representative placeholder content for the third
-								slide of this carousel.</p>
+							
 							<p>
 								<a class="btn btn-lg btn-primary" href="#">Browse gallery</a>
 							</p>
 						</div>
 					</div>
+				</div> -->
+				<div id="carouselExampleAutoplaying" class="carousel slide"
+					data-bs-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item active">
+							<img src="/resources/image/test_poster1.jpg" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="/resources/image/test_poster2.jpg" class="d-block w-100" alt="...">
+						</div>
+						<div class="carousel-item">
+							<img src="/resources/image/test_poster3.jpg" class="d-block w-100" alt="...">
+						</div>
+					</div>
+					<button class="carousel-control-prev" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+						<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Previous</span>
+					</button>
+					<button class="carousel-control-next" type="button"
+						data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+						<span class="carousel-control-next-icon" aria-hidden="true"></span>
+						<span class="visually-hidden">Next</span>
+					</button>
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
@@ -314,8 +336,8 @@
 		</div>
 
 	</main>
-<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
+	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 
-<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </body>
 </html>
