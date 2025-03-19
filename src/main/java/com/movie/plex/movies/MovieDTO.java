@@ -8,4 +8,5 @@ public class MovieDTO {
 	private String moviePoster;
 	private Date releaseDate;
 	private String overView;
+	private Double populartity;
 }
