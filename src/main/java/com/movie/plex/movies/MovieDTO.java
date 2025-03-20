@@ -5,10 +5,11 @@ import java.sql.Date;
 public class MovieDTO {
 	private Long movieId;
 	private String movieTitle;
-	private String moviePoster;
+	private String shortPoster;
+	private String longPoster;
 	private Date releaseDate;
 	private String overView;
-	private Double populartity;
+	private Double popularity;
 	private Long ticketPrice;
 	private Long movieCheck;
 	
@@ -24,11 +25,17 @@ public class MovieDTO {
 	public void setMovieTitle(String movieTitle) {
 		this.movieTitle = movieTitle;
 	}
-	public String getMoviePoster() {
-		return moviePoster;
+	public String getShortPoster() {
+		return shortPoster;
 	}
-	public void setMoviePoster(String moviePoster) {
-		this.moviePoster = moviePoster;
+	public void setShortPoster(String shortPoster) {
+		this.shortPoster = shortPoster;
+	}
+	public String getLongPoster() {
+		return longPoster;
+	}
+	public void setLongPoster(String longPoster) {
+		this.longPoster = longPoster;
 	}
 	public Date getReleaseDate() {
 		return releaseDate;
@@ -43,10 +50,10 @@ public class MovieDTO {
 		this.overView = overView;
 	}
 	public Double getPopulartity() {
-		return populartity;
+		return popularity;
 	}
 	public void setPopulartity(Double populartity) {
-		this.populartity = populartity;
+		this.popularity = populartity;
 	}
 	public Long getTicketPrice() {
 		return ticketPrice;
