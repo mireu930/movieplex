@@ -1,5 +1,5 @@
-const userId = document.getElementById("userId");
-const userPw = document.getElementById("userPw");
+const userId = document.getElementById("joinuserId");
+const userPw = document.getElementById("joinuserPw");
 const userEmail = document.getElementById("userEmail");
 const userPhone = document.getElementById("userPhone");
 const userName = document.getElementById("userName");
@@ -8,6 +8,7 @@ const userPwCheck = document.getElementById("userPwCheck");
 const mailCheckBtn = document.getElementById("mailCheckBtn");
 const mailInput = document.getElementById("mailInput");
 const mailInputCheck = document.getElementById("mailInputCheck");
+const agree = document.getElementById("agree");
 
 let code = "";
 
@@ -178,5 +179,20 @@ userName.addEventListener('input', ()=>{
     } else {
         feedback.style.display = 'block';
         userName.classList.add('is-invalid');
+    }
+})
+
+let label = document.querySelector('label[for="checkbox"]');
+
+agree.addEventListener("change",()=>{
+    let feedback = document.getElementById("checkboxFeedback");
+
+    if(agree.checked){
+        feedback.style.display = 'none';
+		label.style.color = 'blue';
+    } else {
+        feedback.style.display = 'block';
+		label.style.color = '';
+		agree.style.borderColor = ''; 
     }
 })
