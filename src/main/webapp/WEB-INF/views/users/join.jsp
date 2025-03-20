@@ -65,7 +65,7 @@
 					  <div class="input-box">
 						<!-- <label for="userEmail" class="form-label">이메일</label> -->
 						<input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" placeholder="###@###.###" required>
-						<input type="button" id="mailCheckBtn" value="인증번호받기">
+						<input type="button" class="btn-primary" id="mailCheckBtn" value="이메일인증번호받기">
 						<div id="userEmailFeedback" class="invalid-feedback">
 							이메일을 입력하세요.
 						</div>

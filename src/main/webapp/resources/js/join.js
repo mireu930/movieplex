@@ -196,3 +196,29 @@ agree.addEventListener("change",()=>{
 		agree.style.borderColor = ''; 
     }
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("form[action='./join']");
+    if (!form) return; // 해당 폼이 없을 경우 실행 방지
+
+    const submitButton = form.querySelector("button[type='submit']");
+    const inputs = form.querySelectorAll("input");
+
+    function toggleSubmitButton() {
+        let invalidInputs = form.querySelectorAll(".is-invalid");
+        if(invalidInputs.length===0){
+            submitButton.disabled = false;
+        }else{
+            submitButton.disabled = true;
+        }
+       
+    }
+
+    // 모든 입력 필드에서 변경 이벤트가 발생할 때마다 실행
+    inputs.forEach(input => {
+        input.addEventListener("input", toggleSubmitButton);
+    });
+
+    // 초기 실행 (페이지 로딩 시)
+    toggleSubmitButton();
+});

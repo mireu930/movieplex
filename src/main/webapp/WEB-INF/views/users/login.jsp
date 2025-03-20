@@ -30,23 +30,15 @@
 				<h2>login</h2>
 					<form action = "./login" method = "post">
 					  <div class="input-box">
-						<!-- <div for="userId" class="form-label label">아이디</div> -->
 						<div class="input-group has-validation">
 						<span class="icon"><ion-icon name="person-outline"></ion-icon></span>
-						  <input type="text" name="userId"  class="form-control is-invalid" id="validationServer02" aria-describedby="inputGroupPrepend3 validationServerServer02Feedback" required>
-						  <div id="validationServerServer02Feedback" class="invalid-feedback">
-							아이디를 입력하세요.
-						  </div>
+						  <input type="text" name="userId" id="userId" placeholder="아이디" required>
 						</div>
 					  </div>
 					  <div class="input-box">
-						<!-- <div for="userPw" class="form-label label">비밀번호</div> -->
 						<div class="input-group has-validation">
 							<span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-						  <input type="password" name="userPw" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
-						  <div id="validationServerUsernameFeedback" class="invalid-feedback">
-							비밀번호를 입력하세요.
-						  </div>
+						  <input type="password" name="userPw" id="userPw" placeholder="비밀번호" required>
 						</div>
 					  </div>
 					  <div class ="remember-forget">
@@ -75,19 +67,15 @@
 					  <div class="input-box">
 						
 						<div class="input-group has-validation">
-						  <input type="text" name="userId"  class="form-control is-invalid" id="joinuserId" placeholder="ID" aria-describedby="userIdFeedback" required>
+						  <input type="text" name="userId"  class="form-control is-invalid" id="joinuserId" aria-describedby="userIdFeedback" required>
+						  <button id="idbtn" style="background-color: black; color: white; font-size: 12px;">아이디확인</button>
 						  <div id="userIdFeedback" class="invalid-feedback">
 						   아이디는 영문,숫자 6자 이상 12자이하이여야합니다다
 						  </div>
 						</div>
 					</div>
-					<div>
-						<button id="idbtn">아이디확인</button>
-					</div>
+					
 		
-					<div class="login-register">
-						<p>회원이신가요?<a href="#" class="login-link">로그인하러가기</a></p>
-					</div>
 					  <div class="input-box">
 						<!-- <label for="userPw" class="form-label">비밀번호</label> -->
 						<div class="input-group has-validation">
@@ -101,7 +89,7 @@
 					<div class="input-box">
 					  <!-- <label for="userPwCheck" class="form-label">비밀번호 확인</label> -->
 					  <div class="input-group has-validation">
-						<input type="password" name="userPw" class="form-control is-invalid" id="userPwCheck" aria-describedby="userPwCheckFeedback" required>
+						<input type="password" class="form-control is-invalid" id="userPwCheck" aria-describedby="userPwCheckFeedback" required>
 						<div id="userPwCheckFeedback" class="invalid-feedback">
 						  비밀번호가 일치하지 않습니다.
 						</div>
@@ -112,7 +100,7 @@
 						<!-- <label for="userEmail" class="form-label">이메일</label> -->
 						<div class="input-group has-validation">
 						<input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" placeholder="###@###.###" required>
-						<input type="button" id="mailCheckBtn" value="인증번호받기">
+						<button id="mailCheckBtn" style="background-color: black; color: white; font-size: 12px;">이메일 인증번호받기</button>
 						<div id="userEmailFeedback" class="invalid-feedback">
 							
 						</div>
@@ -122,7 +110,7 @@
 						<div id="mailInputCheck"></div>
 					</div>
 					</div>
-		
+					
 					  <div class="input-box">
 						<!-- <label for="userPhone" class="form-label">휴대폰번호</label> -->
 						<div class="input-group has-validation">
@@ -145,7 +133,7 @@
 					  
 					  
 					  <div class="form-check">
-						  <input class="form-check-input is-invalid" type="checkbox" value="" id="agree" aria-describedby="agreeFeedback" required>
+						  <input class="form-check-input" type="checkbox" value="" id="agree" aria-describedby="agreeFeedback" required>
 						  <label class="form-check-label" for="checkbox">
 							  회원가입에 동의합니다.
 						  </label>
@@ -153,9 +141,9 @@
 							  가입하기전에 동의를 눌러주세요.
 						  </div>
 						</div>
-						<!-- <div class="login-register">
+						<div class="login-register">
 							<p>회원이신가요?<a href="#" class="login-link">로그인</a></p>
-						</div> -->
+						</div>
 						
 						<button class="btn btn-primary" type="submit">회원가입</button>
 				 </form>

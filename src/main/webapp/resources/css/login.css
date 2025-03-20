@@ -74,7 +74,8 @@ main{
 }
 
 .cover_box.active{
-    height: 520px;
+    height: auto;
+    min-height: 1000px
 }
 
 .cover_box .form-box{
