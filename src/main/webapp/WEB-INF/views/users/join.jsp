@@ -30,7 +30,7 @@
 			    <div class="input-group has-validation">
 			      <input type="text" name="userId"  class="form-control is-invalid" id="userId" aria-describedby="userIdFeedback" required>
 			      <div id="userIdFeedback" class="invalid-feedback">
-			        아이디를 입력하세요.
+			        영문,숫자 6자 이상 12자이하이여야합니다다
 			      </div>
 			    </div>
 			</div>
@@ -42,7 +42,7 @@
 			    <div class="input-group has-validation">
 			      <input type="password" name="userPw" class="form-control is-invalid" id="userPw" aria-describedby="userPwFeedback" required>
 			      <div id="userPwFeedback" class="invalid-feedback">
-			        비밀번호를 입력하세요.
+			        영문,숫자 8자 이상 12자이하이여야합니다다
 			      </div>
 			    </div>
 			  </div>
@@ -58,7 +58,7 @@
 			</div>
 			  <div class="col-md-6">
 			    <label for="userEmail" class="form-label">이메일</label>
-			    <input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" value="rml7367@naver.com" required>
+			    <input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" placeholder="###@###.###" required>
 			    <input type="button" id="mailCheckBtn" value="인증번호받기">
 			    <div id="userEmailFeedback" class="invalid-feedback">
 			    	이메일을 입력하세요.
@@ -67,10 +67,10 @@
 				<div id="mailInputCheck"></div>
 			  </div>
 			  <div class="col-md-3">
-			    <label for="userPhone" class="form-label">폰번호</label>
+			    <label for="userPhone" class="form-label">휴대폰번호</label>
 			    <input type="text" name ="userPhone" class="form-control is-invalid" id="userPhone" aria-describedby="userPhoneFeedback" required>
 			    <div id="userPhoneFeedback" class="invalid-feedback">
-			      폰번호를 입력하세요.
+			      휴대대폰번호를 입력하세요.(-포함x)
 			    </div>
 			  </div>
 			  <div class="col-md-3">

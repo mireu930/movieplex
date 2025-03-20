@@ -43,17 +43,31 @@ mailInput.addEventListener("input",()=>{
 })
 
 userId.addEventListener('input', ()=>{
-    
     let feedback = document.getElementById("userIdFeedback");
-
-    if(userId.value.trim() !==''){
+    
+    if(isId(userId.value)){
         feedback.style.display = 'none';
         userId.classList.remove('is-invalid');
-    } else {
+    }else{
         feedback.style.display = 'block';
         userId.classList.add('is-invalid');
-    }
+    };
+
+
+    // if(userId.value.trim() !==''){
+    //     feedback.style.display = 'none';
+    //     userId.classList.remove('is-invalid');
+    // } else {
+    //     feedback.style.display = 'block';
+    //     userId.classList.add('is-invalid');
+    // }
 })
+
+//test 메서드는 정규식과 일치하는지 확인하는메서드
+function isId(v) {
+    let regex = /^[A-Za-z0-9]{6,12}$/
+    return regex.test(v)
+}
 
 idbtn.addEventListener("click",()=>{
     
@@ -75,14 +89,27 @@ userPw.addEventListener('input', ()=>{
     
     let feedback = document.getElementById("userPwFeedback");
 
-    if(userPw.value.trim() !==''){
+    if(isPw(userPw.value)){
         feedback.style.display = 'none';
         userPw.classList.remove('is-invalid');
     } else {
         feedback.style.display = 'block';
         userPw.classList.add('is-invalid');
     }
+
+    // if(userPw.value.trim() !==''){
+    //     feedback.style.display = 'none';
+    //     userPw.classList.remove('is-invalid');
+    // } else {
+    //     feedback.style.display = 'block';
+    //     userPw.classList.add('is-invalid');
+    // }
 })
+
+function isPw(v) {
+    let regex = /^[A-Za-z0-9]{8,12}$/
+    return regex.test(v)
+}
 
 userPwCheck.addEventListener('input',()=>{
     let feedback = document.getElementById("userPwCheckFeedback");
@@ -100,20 +127,39 @@ userEmail.addEventListener('input', ()=>{
    
     let feedback = document.getElementById("userEmailFeedback");
 
-    if(userEmail.value.trim() !==''){
+    if(isEmail(userEmail.value)){
         feedback.style.display = 'none';
         userEmail.classList.remove('is-invalid');
     } else {
         feedback.style.display = 'block';
         userEmail.classList.add('is-invalid');
     }
+    // if(userEmail.value.trim() !==''){
+    //     feedback.style.display = 'none';
+    //     userEmail.classList.remove('is-invalid');
+    // } else {
+    //     feedback.style.display = 'block';
+    //     userEmail.classList.add('is-invalid');
+    // }
 })
 
-userPhone.addEventListener('input', ()=>{
+function isEmail(v) {
+    let regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+    return regex.test(v)
+}
+
+userPhone.addEventListener('input', (e)=>{
     
     let feedback = document.getElementById("userPhoneFeedback");
 
-    if(userPhone.value.trim() !==''){
+    let v = e.target.value.replace(/[^0-9]/g, "")
+    .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+
+    console.log(v)
+
+    e.target.value =v;
+
+    if(v.length>10){
         feedback.style.display = 'none';
         userPhone.classList.remove('is-invalid');
     } else {
