@@ -4,7 +4,7 @@ public class ContentsLikeDTO {
 
 	
 	private Long userNum;
-	private Long reviewId;
+	private Long contentId;
 	
 	
 	public Long getUserNum() {
@@ -13,12 +13,13 @@ public class ContentsLikeDTO {
 	public void setUserNum(Long userNum) {
 		this.userNum = userNum;
 	}
-	public Long getReviewId() {
-		return reviewId;
+	public Long getContentId() {
+		return contentId;
 	}
-	public void setReviewId(Long reviewId) {
-		this.reviewId = reviewId;
+	public void setContentId(Long contentId) {
+		this.contentId = contentId;
 	}
+	
 	
 	
 }

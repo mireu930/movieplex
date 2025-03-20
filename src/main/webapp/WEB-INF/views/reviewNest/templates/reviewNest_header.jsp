@@ -4,7 +4,7 @@
 <header class="border-bottom lh-1 py-3">
 	<div class="row flex-nowrap align-items-center">
 		<div class="col-2 pt-1">
-			<a class="link-secondary" href="#"><img id="logo_img" src="/resources/image/reviewnest_logo2.png"></a>
+			<a class="link-secondary" href="/reviewNest"><img id="logo_img" src="/resources/image/reviewnest_logo2.png"></a>
 		</div>
 
 		<div class="col-3 text-center fs-5 fw-bold">
