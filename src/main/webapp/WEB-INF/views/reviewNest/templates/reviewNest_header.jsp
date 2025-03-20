@@ -3,22 +3,21 @@
 
 <header class="border-bottom lh-1 py-3">
 	<div class="row flex-nowrap align-items-center">
-		<div class="col-4 pt-1">
+		<div class="col-2 pt-1">
 			<a class="link-secondary" href="#"><img id="logo_img" src="/resources/image/reviewnest_logo2.png"></a>
 		</div>
-		<div class="col-4 text-center">
-			<a class="blog-header-logo text-body-emphasis text-decoration-none"
-				href="#"> Large</a>
+
+		<div class="col-3 text-center fs-5 fw-bold">
+			<ul class="nav gap-5">
+				<li><a href="#" class="nav-link px-2 link-secondary">홈</a></li>
+				<!-- <li><a href="#" class="nav-link px-2"></a></li> -->
+				<li><a href="#" class="nav-link px-2 link-secondary">영화</a></li>
+				<!-- <li><a href="#" class="nav-link px-2"></a></li> -->
+				<li><a href="#" class="nav-link px-2 link-secondary" >드라마</a></li>
+			</ul>
 		</div>
-		<div class="col-4 d-flex justify-content-end align-items-center">
-			<a class="link-secondary" href="#" aria-label="Search"> <svg
-					xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-					fill="none" stroke="currentColor" stroke-linecap="round"
-					stroke-linejoin="round" stroke-width="2" class="mx-3" role="img"
-					viewBox="0 0 24 24">
-							<title>Search</title><circle cx="10.5" cy="10.5" r="7.5"></circle>
-							<path d="M21 21l-5.2-5.2"></path></svg>
-			</a> <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
+		<div class="col-7 d-flex justify-content-end align-items-center gap-3">
+			<a class="btn btn-sm btn-outline-secondary" href="#">로그인</a>
 		</div>
 	</div>
 </header>

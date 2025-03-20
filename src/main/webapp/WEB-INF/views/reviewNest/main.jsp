@@ -24,9 +24,8 @@
 			url="/WEB-INF/views/reviewNest/templates/reviewNest_header.jsp"></c:import>
 	</div>
 
-	<main class="container maincss">
-		<div>
-			<class ="p-4 p-md-5 mb-4 rounded text-body-emphasisbg-body-secondary">
+	<main class="container">
+		<div class ="p-4 p-md-5 mb-4 rounded text-body-emphasisbg-body-secondary">
 			<div id="carouselExampleAutoplaying" class="carousel slide"
 				data-bs-ride="carousel">
 				<div class="carousel-inner">
@@ -39,7 +38,7 @@
 							alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="/resources/image/test_nest3.jpg" class="d-block w-100"
+						<img src="/resources/image/test_nest4.jpeg" class="d-block w-100"
 							alt="...">
 					</div>
 				</div>
