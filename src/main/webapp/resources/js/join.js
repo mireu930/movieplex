@@ -6,6 +6,10 @@ const userName = document.getElementById("userName");
 const idbtn = document.getElementById("idbtn");
 const userPwCheck = document.getElementById("userPwCheck");
 const mailCheckBtn = document.getElementById("mailCheckBtn");
+const mailInput = document.getElementById("mailInput");
+const mailInputCheck = document.getElementById("mailInputCheck");
+
+let code = "";
 
 mailCheckBtn.addEventListener("click", () => {
     let email = userEmail.value;
@@ -14,12 +18,32 @@ mailCheckBtn.addEventListener("click", () => {
     fetch("/users/mailCheck?email="+email)
     .then(r=>r.text())
     .then(r=>{
+
+        console.log(r)
+        
+        code = r;
         alert("인증번호가 전송되었습니다.")
+        console.log("code:"+code)
     })
 })
 
+mailInput.addEventListener("input",()=>{
+ 
+    let inputNum = mailInput.value;
+    console.log(inputNum)
+    console.log("code:"+code)
+    if(inputNum===code){
+        mailInput.classList.remove('is-invalid');
+        mailInputCheck.innerText = "인증번호가 일치합니다."
+    } else {
+        mailInput.classList.add('is-invalid');
+        mailInputCheck.innerText = "인증번호가 일치하지 않습니다."
+    }
+    
+})
+
 userId.addEventListener('input', ()=>{
-    console.log("input");
+    
     let feedback = document.getElementById("userIdFeedback");
 
     if(userId.value.trim() !==''){
@@ -32,7 +56,7 @@ userId.addEventListener('input', ()=>{
 })
 
 idbtn.addEventListener("click",()=>{
-    console.log("click")
+    
 
     fetch("./check?userId="+userId.value)
     .then(r=>r.text())
@@ -48,7 +72,7 @@ idbtn.addEventListener("click",()=>{
 
 
 userPw.addEventListener('input', ()=>{
-    console.log("input");
+    
     let feedback = document.getElementById("userPwFeedback");
 
     if(userPw.value.trim() !==''){
@@ -73,7 +97,7 @@ userPwCheck.addEventListener('input',()=>{
 })
 
 userEmail.addEventListener('input', ()=>{
-    console.log("input");
+   
     let feedback = document.getElementById("userEmailFeedback");
 
     if(userEmail.value.trim() !==''){
@@ -86,7 +110,7 @@ userEmail.addEventListener('input', ()=>{
 })
 
 userPhone.addEventListener('input', ()=>{
-    console.log("input");
+    
     let feedback = document.getElementById("userPhoneFeedback");
 
     if(userPhone.value.trim() !==''){
@@ -99,7 +123,7 @@ userPhone.addEventListener('input', ()=>{
 })
 
 userName.addEventListener('input', ()=>{
-    console.log("input");
+    
     let feedback = document.getElementById("userNameFeedback");
 
     if(userName.value.trim() !==''){

@@ -58,12 +58,13 @@
 			</div>
 			  <div class="col-md-6">
 			    <label for="userEmail" class="form-label">이메일</label>
-			    <input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" required>
+			    <input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" value="rml7367@naver.com" required>
 			    <input type="button" id="mailCheckBtn" value="인증번호받기">
 			    <div id="userEmailFeedback" class="invalid-feedback">
 			    	이메일을 입력하세요.
 			    </div>
-			    
+			    <input type="text" id="mailInput" class="form-control is-invalid" placeholder="인증번호 6자리를 입력해주세요" aria-describedby="mailInputCheck" required>
+				<div id="mailInputCheck"></div>
 			  </div>
 			  <div class="col-md-3">
 			    <label for="userPhone" class="form-label">폰번호</label>

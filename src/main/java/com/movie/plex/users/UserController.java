@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -35,6 +36,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
+	@ResponseBody //메소드가 반환한 객체를 자동으로 json.xml향태로 변환해주는 역할, 데이터를 직접 클라이언트에 전달할ㅇ때 사용
 	public String mailCheck(String email) throws Exception {
 		return mailSend.joinEmail(email);
 	}
