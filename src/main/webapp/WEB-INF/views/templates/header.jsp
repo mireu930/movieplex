@@ -1,35 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-<nav class="navbar navbar-expand-xxl navbar-dark text-center headercss"aria-label="Seventh navbar example">
-	<div class="container-fluid row align-items-start offset-md-2 parent">
-
-		<div class="collapse navbar-collapse col" id="navbarsExampleXxl">
-			<div class="moviecss">
-				<ul class="navbar-nav me-auto mb-2 mb-xl-0 main_menu">
-					<li class="nav-item"><a class="nav-link" href="#">영화</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">예매</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">ReviewNest</a></li>
-				</ul>
-			</div>
-			
-			<div class="logocss">
-				<a class="navbar-brand col" href="#"><img id="logo" src="/resources/image/logo_clean.png"></a>
-			</div>
-			<div class="admincss">
-				<ul class="navbar-nav me-auto mb-2 mb-xl-0 col">
-					<li class="nav-item"><a class="nav-link" href="#">공지사항</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">QNA</a></li>
-				</ul>
-			</div>
-			<div class="usercss">
-				<ul class="navbar-nav me-auto mb-2 mb-xl-0 col">
-					<li class="nav-item"><a class="nav-link" href="#">로그인</a></li>
-				</ul>
-			</div>
+<div class="container header">
+	<header
+		class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
+		<div class="col-md-1 mb-2 mb-md-0">
+			<!-- <a href="/"
+				class="d-inline-flex link-body-emphasis text-decoration-none"> <svg
+					class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+					<use xlink:href="#bootstrap"></use></svg>
+			</a> -->
 		</div>
-	</div>
-</nav>
+		<div class="d-flex justify-content-between align-items-center px-4 gap-5 fs-5 fw-bold">
+		    <!-- 왼쪽 메뉴 -->
+		    <ul class="nav d-flex justify-content-center gap-5">
+		        <li><a href="#" class="nav-link px-2 link-secondary">영화</a></li>
+		        <li><a href="#" class="nav-link px-2">예매</a></li>
+		        <li><a href="#" class="nav-link px-2">ReviewNest</a></li>
+		    </ul>
+		
+		    <!-- 중앙에 위치할 div -->
+		    <div class="logoDiv text-center flex-shrink-0">
+		        <a><img src="/resources/image/logo_clean.png"></a>
+		    </div>
+		
+		    <!-- 오른쪽 메뉴 -->
+		    <ul class="nav d-flex justify-content-center gap-5">
+		        <li><a href="#" class="nav-link px-2 link-secondary">공지사항</a></li>
+		        <li><a href="#" class="nav-link px-2">FAQ</a></li>
+		        <li><a href="#" class="nav-link px-2">QNA</a></li>
+		    </ul>
+		</div>
+		<div class="col-md-1 text-end">
+			<button type="button" class="btn btn-outline-primary me-2">Login</button>
+		</div>
+	</header>
+</div>
