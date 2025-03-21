@@ -20,5 +20,5 @@
             <value>classpath:/apiKey.properties</value>
         </list>
     </property>
-</bean>
+	</bean>
 </beans>
