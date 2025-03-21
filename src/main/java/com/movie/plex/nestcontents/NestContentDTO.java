@@ -4,21 +4,21 @@ import java.sql.Date;
 
 public class NestContentDTO {
 		
-		private Long contentID;
+		private Long contentId;
 		private String contentTitle;
 		private String shortPoster;
 		private String longPoster;
 		private Date releaseDate;
 		private String overView;
-		private Long popularity;
+		private Double popularity;
 		private Long kind;
 		
 		
-		public Long getContentID() {
-			return contentID;
+		public Long getContentId() {
+			return contentId;
 		}
-		public void setContentID(Long contentID) {
-			this.contentID = contentID;
+		public void setContentID(Long contentId) {
+			this.contentId = contentId;
 		}
 		public String getContentTitle() {
 			return contentTitle;
@@ -50,10 +50,10 @@ public class NestContentDTO {
 		public void setOverView(String overView) {
 			this.overView = overView;
 		}
-		public Long getPopularity() {
+		public Double getPopularity() {
 			return popularity;
 		}
-		public void setPopularity(Long popularity) {
+		public void setPopularity(Double popularity) {
 			this.popularity = popularity;
 		}
 		public Long getKind() {
