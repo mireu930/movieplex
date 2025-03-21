@@ -8,8 +8,8 @@
 		INSERT ALL 
 		<foreach collection="list" item="item">
 		INTO MOVIES
-		(MOVIEID, MOVIETITLE,SHORTPOSTER,LONGPOSTER, RELEASEDATE, OVERVIEW, POPULARITY, TICKETPRICE, MOVIECHECK)
-		VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster, jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.releaseDate},#{item.overView}, #{item.popularity},#{item.ticketPrice},#{item.movieCheck})
+		(MOVIEID, MOVIETITLE,SHORTPOSTER,LONGPOSTER, VIDEO, RELEASEDATE, OVERVIEW, POPULARITY, TICKETPRICE, MOVIECHECK)
+		VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster, jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.video, jdbcType=VARCHAR},#{item.releaseDate},#{item.overView}, #{item.popularity},#{item.ticketPrice},#{item.movieCheck})
 		</foreach>
 		SELECT 1 FROM DUAL
 	</insert>
