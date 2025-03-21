@@ -12,4 +12,13 @@
 		<!-- 총업로드파일양 -->
 		<property name="maxUploadSize" value="31457280"></property>
 	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+        <list>
+            <value>classpath:database/configs/database.properties</value>
+            <value>classpath:/apiKey.properties</value>
+        </list>
+    </property>
+</bean>
 </beans>

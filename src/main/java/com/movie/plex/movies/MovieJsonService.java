@@ -11,6 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,9 @@ public class MovieJsonService {
 	
 	@Autowired
 	private MovieDAO movieDAO;
+	
+	@Value("${tmdb.apiKey}")
+	private String tmdbApiKey;
 
 	public int addJsonList() throws Exception {
 		RestTemplate restTemplate = new RestTemplate();
@@ -40,7 +44,7 @@ public class MovieJsonService {
 		//먼저 총 페이지를 알기 위해 불러오기
 		String jsonString = restTemplate.getForObject(
 				"https://api.themoviedb.org/3/discover/movie?"
-				+ "api_key=3c5060d60049b6d4659d85b884d76adb"
+				+ "api_key=" + tmdbApiKey
 				+ "&region=KR&language=ko-KR"
 				+ "&primary_release_date.gte=2025-02-25"
 				+ "&with_original_language=ko"
@@ -61,7 +65,7 @@ public class MovieJsonService {
 			//System.out.println(i);
 			String jsons = restTemplate.getForObject(
 					"https://api.themoviedb.org/3/discover/movie"
-					+ "?api_key=3c5060d60049b6d4659d85b884d76adb"
+					+ "?api_key=" + tmdbApiKey
 					+ "&region=KR"
 					+ "&language=ko-KR"
 					+ "&primary_release_date.gte=2025-02-25"
