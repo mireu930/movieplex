@@ -1,5 +1,7 @@
 package com.movie.plex.movies;
 
+import java.net.URI;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,21 +10,30 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
-@Controller
-public class MovieJsonController {
+@Component
+public class MovieJson{
+	
+	@Autowired
+	private MovieDAO movieDAO;
+	
 	@Value("${tmdb.apiKey}")
 	private String tmdbApiKey;
-	
-	@RequestMapping(value="/test")
-	public void movieJsonTest() throws Exception{
 
-		
+	public int addListJson() throws Exception{
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -110,5 +121,6 @@ public class MovieJsonController {
 			}
 
 		}
+		return movieDAO.addJsonList(dtos);
 	}
 }
