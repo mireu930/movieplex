@@ -23,6 +23,7 @@ public class MovieTest extends SampleTestCase{
 //			System.out.println(dto.getMovieId());
 //		}
 		assertNotEquals(0, result);
+		//pr test
 	}
 
 }
