@@ -3,7 +3,7 @@
 
 ### My Custom ###
 database.properties
-email-context.xml
+apiKey.properties
 
 ### Eclipse ###
 .metadata

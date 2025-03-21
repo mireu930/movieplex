@@ -37,7 +37,7 @@ main{
 .cover_box {
     position: relative;
     width: 400px;
-    height: 400px;
+    height: 600px;
     background: transparent;
     border: 2px solid white;
     border-radius: 20px;

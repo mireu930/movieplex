@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+		<bean id="mailSender" class = "org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- 메일서버주소 -->
+      <property name="host" value="smtp.gmail.com" />
+      <property name="port" value="587" />
+      <property name="username" value="${gamil.id}" />
+      <property name="password" value="${gamail.pw}" />
+      <property name="javaMailProperties">
+         <props>
+         <!-- 이메일전송에 smtp 프로토콜사용 -->
+               <prop key="mail.transport.protocol">smtp</prop>
+               <!-- SMTP 서버 인증을 사용 (이메일/비밀번호 필요) -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- gmail의 경우 보안문제 업데이트로 인해 SSLSocketFactory를 추가해야 smtp 사용 가능. -->
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+                <!-- TLS 보안 전송을 활성화 (보안 강화를 위해 필요) -->
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <!-- 이메일 전송 디버깅 로그 활성화 -->
+                <prop key="mail.debug">true</prop>
+                <!-- SSL(웹사이트와 브라우저 간의 데이터를 암호화하여 보호하는 보안 프로토콜) 인증을 신뢰할 도메인 지정 -->
+                <prop key="mail.smtp.ssl.trust">smtp.gmail.com</prop>
+                <!-- TLS 1.2 프로토콜을 사용하여 보안 강화 -->
+				<prop key="mail.smtp.ssl.protocols">TLSv1.2</prop>
+         </props>
+      </property>
+
+   </bean>
+</beans>

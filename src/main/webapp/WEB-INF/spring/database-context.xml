@@ -7,13 +7,21 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
-	<context:property-placeholder location="classpath:database/configs/database.properties"/>
+	<!-- <context:property-placeholder location="classpath:database/configs/database.properties"/> -->
 	
 	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:database/configs/database.properties"></property>
 	</bean>
 	
 	<util:properties location="classpath:database/configs/database.properties"></util:properties> -->
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+        <list>
+            <value>classpath:database/configs/database.properties</value>
+            <value>classpath:/apiKey.properties</value>
+        </list>
+    </property>
+	</bean>
 	
 	
 	
@@ -34,6 +42,9 @@
 		<constructor-arg name = "sqlSessionFactory" ref= "sqlSessionFactoryBean"></constructor-arg>
 	</bean>
 	
-	
+	<bean class="com.movie.plex.users.KakaoApi" id="kakaoApi">
+		<property name="kakaoApi" value="${kakao.api}"/>
+		<property name="kakaoRedirectUrl" value="${kakao.redirect_url}"/>
+	</bean>
 	
 </beans>
