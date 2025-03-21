@@ -53,13 +53,6 @@
 						<div class="login-register">
 							<p>미회원이신가요?<a href="#" class="register-link">회원가입하기</a></p>
 						</div>
-					  
-					  <%-- <div>
-						<a id="kakao-login-btn" href="${urlKakao}"> <img
-							src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg"
-							width="150px" alt="카카오 로그인 버튼" />
-						</a>
-					</div> --%>
 				</form>
 			</div>
 

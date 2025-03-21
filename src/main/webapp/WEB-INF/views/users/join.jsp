@@ -15,7 +15,7 @@
 <title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
-<link rel="stylesheet" href="/resources/css/login.css">
+<!-- <link rel="stylesheet" href="/resources/css/login.css"> -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
 
@@ -64,7 +64,7 @@
 		
 					  <div class="input-box">
 						<!-- <label for="userEmail" class="form-label">이메일</label> -->
-						<input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" aria-describedby="userEmailFeedback" placeholder="###@###.###" required>
+						<input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" required>
 						<input type="button" class="btn-primary" id="mailCheckBtn" value="이메일인증번호받기">
 						<div id="userEmailFeedback" class="invalid-feedback">
 							이메일을 입력하세요.
@@ -82,7 +82,7 @@
 					  </div>
 					  <div class="input-box">
 						<label for="userName" class="form-label">이름</label>
-						<input type="text" name ="userName" class="form-control is-invalid" id="userName" aria-describedby="userNameFeedback" required>
+						<input type="text" name ="userName" class="form-control is-invalid" id="userName" value="${name}" aria-describedby="userNameFeedback" required>
 						<div id="userNameFeedback" class="invalid-feedback">
 						  이름을 입력하세요.
 						</div>

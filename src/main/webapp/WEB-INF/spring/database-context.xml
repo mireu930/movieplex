@@ -14,14 +14,6 @@
 	</bean>
 	
 	<util:properties location="classpath:database/configs/database.properties"></util:properties> -->
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-    <property name="locations">
-        <list>
-            <value>classpath:database/configs/database.properties</value>
-            <value>classpath:/apiKey.properties</value>
-        </list>
-    </property>
-	</bean>
 	
 	
 	
