@@ -10,7 +10,7 @@ public class ReviewDTO {
 			private Date reviewDate;
 			private Long reviewRate;
 			private Long userNum;
-			private Long movieId;
+			private Long contentId;
 			
 			
 			public Long getReviewId() {
@@ -43,12 +43,12 @@ public class ReviewDTO {
 			public void setUserNum(Long userNum) {
 				this.userNum = userNum;
 			}
-			public Long getMovieId() {
-				return movieId;
+			public Long getContentId() {
+				return contentId;
 			}
-			public void setMovieId(Long movieId) {
-				this.movieId = movieId;
-			} 
+			public void setContentId(Long contentId) {
+				this.contentId = contentId;
+			}
 			
 			
 }

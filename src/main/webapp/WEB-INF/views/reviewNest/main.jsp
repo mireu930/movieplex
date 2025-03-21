@@ -15,6 +15,8 @@
 <meta name="generator" content="Hugo 0.122.0">
 <title>ReviewNest</title>
 
+<link href="/resources/image/reviewnest_title.png" rel="shortcut icon" type="image/x-icon">
+
 <link rel="stylesheet" href="/resources/css/reviewNestMain.css">
 
 </head>
@@ -25,20 +27,20 @@
 	</div>
 
 	<main class="container">
-		<div class ="p-4 p-md-5 mb-4 rounded text-body-emphasisbg-body-secondary">
+		<div class ="p-5 p-md-6 mb-5 w-100 rounded text-body-emphasisbg-body-secondary">
 			<div id="carouselExampleAutoplaying" class="carousel slide"
 				data-bs-ride="carousel">
-				<div class="carousel-inner">
+				<div class="carousel-inner" width="960px">
 					<div class="carousel-item active">
-						<img src="/resources/image/test_nest1.jpg" class="d-block w-100"
+						<img src="/resources/image/stella.jpg" class="d-block w-100"
 							alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="/resources/image/test_nest2.jpg" class="d-block w-100"
+						<img src="/resources/image/un.jpg" class="d-block w-100"
 							alt="...">
 					</div>
 					<div class="carousel-item">
-						<img src="/resources/image/test_nest4.jpeg" class="d-block w-100"
+						<img src="/resources/image/top.jpg" class="d-block w-100"
 							alt="...">
 					</div>
 				</div>
@@ -54,15 +56,15 @@
 				</button>
 			</div>
 		</div>
-
+		<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰네스트 HOT 랭킹</strong>
 		<div class="row mb-2">
 			<div class="col-md-6">
 				<div
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
-						<strong class="d-inline-block mb-2 text-primary-emphasis">World</strong>
-						<h3 class="mb-0">Featured post</h3>
-						<div class="mb-1 text-body-secondary">Nov 12</div>
+						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
+						<h3 class="mb-0">제목</h3>
+						<br>
 						<p class="card-text mb-auto">This is a wider card with
 							supporting text below as a natural lead-in to additional content.</p>
 						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
@@ -73,11 +75,11 @@
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"
 							xmlns="http://www.w3.org/2000/svg" role="img"
-							aria-label="Placeholder: Thumbnail"
 							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><rect width="100%" height="100%"
-								fill="#55595c"></rect>
-							<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+							<title>Placeholder</title><img src="/resources/image/17.jpg" width="200" height="250">
+								<rect width="200" height="250"></rect>
+	
+						</svg>
 					</div>
 				</div>
 			</div>
@@ -85,9 +87,59 @@
 				<div
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
-						<strong class="d-inline-block mb-2 text-success-emphasis">Design</strong>
-						<h3 class="mb-0">Post title</h3>
-						<div class="mb-1 text-body-secondary">Nov 11</div>
+						<div class="mb-1 text-body-secondary">TODAY'S DRAMA</div>
+						<h3 class="mb-0">제목</h3>
+						<br>
+						<p class="card-text mb-auto">This is a wider card with
+							supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+							Continue reading <svg class="bi">
+								<use xlink:href="#chevron-right"></use></svg>
+						</a>
+					</div>
+					<div class="col-auto d-none d-lg-block">
+						<svg class="bd-placeholder-img" width="200" height="250"
+							xmlns="http://www.w3.org/2000/svg" role="img"
+							preserveAspectRatio="xMidYMid slice" focusable="false">
+							<title>Placeholder</title><img src="/resources/image/iu.jpg" width="200" height="250">
+								<rect width="200" height="250"></rect>
+	
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div
+					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col p-4 d-flex flex-column position-static">
+						<div class="mb-1 text-body-secondary">MOVIE RECOMMEND</div>
+						<h3 class="mb-0">제목</h3>
+						<br>
+						<p class="card-text mb-auto">This is a wider card with
+							supporting text below as a natural lead-in to additional content.</p>
+						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
+							Continue reading <svg class="bi">
+								<use xlink:href="#chevron-right"></use></svg>
+						</a>
+					</div>
+					<div class="col-auto d-none d-lg-block">
+						<svg class="bd-placeholder-img" width="200" height="250"
+							xmlns="http://www.w3.org/2000/svg" role="img"
+							preserveAspectRatio="xMidYMid slice" focusable="false">
+							<title>Placeholder</title><img src="/resources/image/in.jpg" width="200" height="250">
+								<rect width="200" height="250"></rect>
+						</svg>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div
+					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col p-4 d-flex flex-column position-static">
+						<!-- <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong> -->
+						<div class="mb-1 text-body-secondary">DRAMA RECOMMEND</div>
+						<h3 class="mb-0">제목</h3>
+						<br>
 						<p class="mb-auto">This is a wider card with supporting text
 							below as a natural lead-in to additional content.</p>
 						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
@@ -98,11 +150,10 @@
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"
 							xmlns="http://www.w3.org/2000/svg" role="img"
-							aria-label="Placeholder: Thumbnail"
 							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><rect width="100%" height="100%"
-								fill="#55595c"></rect>
-							<text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+							<title>Placeholder</title><img src="/resources/image/nego.jpg" width="200" height="250">
+								<rect width="200" height="250"></rect>
+						</svg>
 					</div>
 				</div>
 			</div>
