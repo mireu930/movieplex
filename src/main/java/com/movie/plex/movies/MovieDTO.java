@@ -7,6 +7,7 @@ public class MovieDTO {
 	private String movieTitle;
 	private String shortPoster;
 	private String longPoster;
+	private String video;
 	private Date releaseDate;
 	private String overView;
 	private Double popularity;
@@ -49,11 +50,18 @@ public class MovieDTO {
 	public void setOverView(String overView) {
 		this.overView = overView;
 	}
-	public Double getPopulartity() {
+	
+	public String getVideo() {
+		return video;
+	}
+	public void setVideo(String video) {
+		this.video = video;
+	}
+	public Double getPopularity() {
 		return popularity;
 	}
-	public void setPopulartity(Double populartity) {
-		this.popularity = populartity;
+	public void setPopularity(Double popularity) {
+		this.popularity = popularity;
 	}
 	public Long getTicketPrice() {
 		return ticketPrice;

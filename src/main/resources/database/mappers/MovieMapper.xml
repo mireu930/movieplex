@@ -2,15 +2,26 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.movie.plex.movies.MovieDAO">
+
+<mapper namespace="com.movie.plex.movies.MovieDAO">
 	<insert id="addJsonList" parameterType="List">
-		INSERT ALL 
+		INSERT ALL
 		<foreach collection="list" item="item">
-		INTO MOVIES
-		(MOVIEID, MOVIETITLE,SHORTPOSTER,LONGPOSTER, RELEASEDATE, OVERVIEW, POPULARITY, TICKETPRICE, MOVIECHECK)
-		VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster, jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.releaseDate},#{item.overView}, #{item.popularity},#{item.ticketPrice},#{item.movieCheck})
+			INTO MOVIES
+			(MOVIEID, MOVIETITLE,SHORTPOSTER,LONGPOSTER, VIDEO, RELEASEDATE, OVERVIEW,
+			POPULARITY, TICKETPRICE, MOVIECHECK)
+			VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster,
+			jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.video,
+			jdbcType=VARCHAR},#{item.releaseDate},#{item.overView},
+			#{item.popularity},#{item.ticketPrice},#{item.movieCheck})
 		</foreach>
 		SELECT 1 FROM DUAL
 	</insert>
-  </mapper>
+
+	<select id="getMainList" resultType="MovieDTO">
+		SELECT * FROM (
+		SELECT ROWNUM R, A.*
+		FROM (SELECT * FROM MOVIES ORDER BY POPULARITY DESC) A)
+		WHERE R BETWEEN 1 AND 9
+	</select>
+</mapper>
