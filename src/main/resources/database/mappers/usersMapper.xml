@@ -13,4 +13,12 @@
   		VALUES(USERNUM_SEQ.NEXTVAL, #{userId}, #{userPw},#{userEmail},#{userPhone},#{userName},0,SYSDATE,0,0)
   	</insert>
   	
+  	<insert id="kakaoJoin" parameterType="UserDTO">
+  		INSERT INTO USERS
+  		VALUES(USERNUM_SEQ.NEXTVAL, #{userId}, #{userPw},#{userEmail},#{userPhone},#{userName},0,SYSDATE,0,1)
+  	</insert>
+  	
+  	<select id="findEmail" parameterType="String" resultType="UserDTO">
+  		SELECT * FROM USERS WHERE USEREMAIL =#{userEmail}
+  	</select>
   </mapper>

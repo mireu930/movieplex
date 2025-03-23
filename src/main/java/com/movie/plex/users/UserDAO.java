@@ -19,5 +19,13 @@ public class UserDAO {
 	public int join(UserDTO userDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"join", userDTO);
 	}
+	
+	public int kakaoJoin(UserDTO userDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"kakaoJoin", userDTO);
+	}
+	
+	public UserDTO findEmail(String email) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"findEmail", email);
+	}
 
 }

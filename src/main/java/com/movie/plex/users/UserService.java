@@ -28,4 +28,12 @@ public class UserService {
 	public UserDTO idCheck(UserDTO userDTO) throws Exception {
 		return userDAO.getLogin(userDTO);
 	}
+	
+	public int kakaoJoin(UserDTO userDTO) throws Exception {
+		return userDAO.kakaoJoin(userDTO);
+	}
+	
+	public UserDTO findEmail(String email) throws Exception {
+		return userDAO.findEmail(email);
+	}
 }

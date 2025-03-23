@@ -6,8 +6,8 @@
 		<!-- 메일서버주소 -->
       <property name="host" value="smtp.gmail.com" />
       <property name="port" value="587" />
-      <property name="username" value="${gamil.id}" />
-      <property name="password" value="${gamail.pw}" />
+      <property name="username" value="${gmail.id}" />
+      <property name="password" value="${gmail.pw}" />
       <property name="javaMailProperties">
          <props>
          <!-- 이메일전송에 smtp 프로토콜사용 -->
@@ -28,4 +28,5 @@
       </property>
 
    </bean>
+
 </beans>

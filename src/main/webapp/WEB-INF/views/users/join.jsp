@@ -28,7 +28,7 @@
 		<div class="cover_box">
 			<div class = "form-box register">
 				<h2>register</h2>
-				<form action = "./join" method = "post" enctype="multipart/form-data">
+				<form action = "/login/oauth2/code/kakao" method = "post" enctype="multipart/form-data">
 					  <div class="input-box">
 						
 						<div class="input-group has-validation">
@@ -63,29 +63,22 @@
 					</div>
 		
 					  <div class="input-box">
-						<!-- <label for="userEmail" class="form-label">이메일</label> -->
-						<input type="text" name = "userEmail" class="form-control is-invalid" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" required>
-						<input type="button" class="btn-primary" id="mailCheckBtn" value="이메일인증번호받기">
-						<div id="userEmailFeedback" class="invalid-feedback">
-							이메일을 입력하세요.
-						</div>
-						<input type="text" id="mailInput" class="form-control is-invalid" placeholder="인증번호 6자리를 입력해주세요" aria-describedby="mailInputCheck" required>
-						<div id="mailInputCheck"></div>
+						 <label for="userEmail" class="form-label">이메일</label>
+						<input type="text" name = "userEmail" class="form-control" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" required>
+						
 					  </div>
 		
 					  <div class="input-box">
-						<!-- <label for="userPhone" class="form-label">휴대폰번호</label> -->
+						<label for="userPhone" class="form-label">휴대폰번호</label>
 						<input type="text" name ="userPhone" class="form-control is-invalid" id="userPhone" aria-describedby="userPhoneFeedback" required>
 						<div id="userPhoneFeedback" class="invalid-feedback">
 						  휴대대폰번호를 입력하세요.(-포함x)
 						</div>
 					  </div>
+					  
 					  <div class="input-box">
 						<label for="userName" class="form-label">이름</label>
-						<input type="text" name ="userName" class="form-control is-invalid" id="userName" value="${name}" aria-describedby="userNameFeedback" required>
-						<div id="userNameFeedback" class="invalid-feedback">
-						  이름을 입력하세요.
-						</div>
+						<input type="text" name ="userName" class="form-control" id="userName" value="${name}" aria-describedby="userNameFeedback" required>
 					  </div>
 					  
 					  
