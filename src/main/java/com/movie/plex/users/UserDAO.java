@@ -27,5 +27,9 @@ public class UserDAO {
 	public UserDTO findEmail(String email) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"findEmail", email);
 	}
+	
+	public UserDTO getDetail(UserDTO userDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getDetail", userDTO);
+	}
 
 }

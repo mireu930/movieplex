@@ -36,4 +36,8 @@ public class UserService {
 	public UserDTO findEmail(String email) throws Exception {
 		return userDAO.findEmail(email);
 	}
+	
+	public UserDTO getDetail(UserDTO userDTO) throws Exception {
+		return userDAO.getDetail(userDTO);
+	}
 }

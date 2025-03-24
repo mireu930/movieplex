@@ -21,4 +21,8 @@
   	<select id="findEmail" parameterType="String" resultType="UserDTO">
   		SELECT * FROM USERS WHERE USEREMAIL =#{userEmail}
   	</select>
+  	
+  	<select id="getDetail" parameterType="UserDTO" resultType="UserDTO">
+  		SELECT * FROM USERS WHERE USERID = #{userId}
+  	</select>
   </mapper>
