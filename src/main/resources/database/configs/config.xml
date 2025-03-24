@@ -7,8 +7,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.movie.plex.movies.MovieDTO" alias="MovieDTO"/>
-		
-		
 		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
 		
 		<typeAlias type="java.util.Map" alias="Map"/> 

@@ -25,7 +25,9 @@
 		<c:import
 			url="/WEB-INF/views/reviewNest/templates/reviewNest_header.jsp"></c:import>
 	</div>
-
+	<div>
+	<img src="/resources/image/ban.jpg">
+	
 	<main class="container">
 		<div class ="p-5 p-md-6 mb-5 w-100 rounded text-body-emphasisbg-body-secondary">
 			<div id="carouselExampleAutoplaying" class="carousel slide"
@@ -159,6 +161,7 @@
 			</div>
 		</div>
 	</main>
+</div>
 	<c:import
 		url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
