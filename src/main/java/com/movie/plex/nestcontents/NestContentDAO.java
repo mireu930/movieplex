@@ -18,4 +18,7 @@ public class NestContentDAO {
 		return sqlSession.insert(NAMESPACE+"addJsonList", nestContentDTOs);
 	}
 
+	public int addJsonTVList(List<NestContentDTO> nestContentDTOs ) throws Exception {
+		return sqlSession.insert(NAMESPACE+"addJsonTVList", nestContentDTOs);
+	}
 }

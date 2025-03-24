@@ -12,12 +12,13 @@ public class NestContentDTO {
 		private String overView;
 		private Double popularity;
 		private Long kind;
+		private String country;
 		
 		
 		public Long getContentId() {
 			return contentId;
 		}
-		public void setContentID(Long contentId) {
+		public void setContentId(Long contentId) {
 			this.contentId = contentId;
 		}
 		public String getContentTitle() {
@@ -62,6 +63,14 @@ public class NestContentDTO {
 		public void setKind(Long kind) {
 			this.kind = kind;
 		}
+		public String getCountry() {
+			return country;
+		}
+		public void setCountry(String country) {
+			this.country = country;
+		}
+		
+		
 		
 		
 		
