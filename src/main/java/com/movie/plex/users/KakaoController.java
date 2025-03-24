@@ -54,7 +54,7 @@ public class KakaoController {
 	    } else {
 	    	model.addAttribute("name", nickname);
 	    	model.addAttribute("email", email);
-	    	return "users/join";	    	
+	    	return "users/kakaoJoin";	    	
 	    }
 
 	}

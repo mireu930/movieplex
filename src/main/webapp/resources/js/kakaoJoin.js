@@ -5,9 +5,6 @@ const userPhone = document.getElementById("userPhone");
 const userName = document.getElementById("userName");
 const idbtn = document.getElementById("idbtn");
 const userPwCheck = document.getElementById("userPwCheck");
-const mailCheckBtn = document.getElementById("mailCheckBtn");
-const mailInput = document.getElementById("mailInput");
-const mailInputCheck = document.getElementById("mailInputCheck");
 const agree = document.getElementById("agree");
 
 
@@ -91,62 +88,7 @@ userPwCheck.addEventListener('input',()=>{
     }
 })
 
-userEmail.addEventListener('input', ()=>{
-   
-    let feedback = document.getElementById("userEmailFeedback");
-    
-    if(isEmail(userEmail.value)){
-        feedback.style.display = 'none';
-        userEmail.classList.remove('is-invalid');
-    } else {
-        feedback.style.display = 'block';
-        userEmail.classList.add('is-invalid');
-    }
-    // if(userEmail.value.trim() !==''){
-        //     feedback.style.display = 'none';
-    //     userEmail.classList.remove('is-invalid');
-    // } else {
-    //     feedback.style.display = 'block';
-    //     userEmail.classList.add('is-invalid');
-    // }
-})
 
-function isEmail(v) {
-    let regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
-    return regex.test(v)
-}
-let code = "";
-
-mailCheckBtn.addEventListener("click", () => {
-    let email = userEmail.value;
-    console.log(email);
-
-    fetch("/users/mailCheck?email="+email)
-    .then(r=>r.text())
-    .then(r=>{
-
-        console.log(r)
-        
-        code = r;
-        alert("인증번호가 전송되었습니다.")
-        console.log("code:"+code)
-    })
-})
-
-mailInput.addEventListener("input",()=>{
- 
-    let inputNum = mailInput.value;
-    console.log(inputNum)
-    console.log("code:"+code)
-    if(inputNum===code&&mailInput.value.trim()!==''){
-        mailInput.classList.remove('is-invalid');
-        mailInputCheck.innerText = "인증번호가 일치합니다."
-    } else {
-        mailInput.classList.add('is-invalid');
-        mailInputCheck.innerText = "인증번호가 일치하지 않습니다."
-    }
-    
-})
 
 userPhone.addEventListener('input', (e)=>{
     
@@ -168,18 +110,7 @@ userPhone.addEventListener('input', (e)=>{
     }
 })
 
-userName.addEventListener('input', ()=>{
-    
-    let feedback = document.getElementById("userNameFeedback");
 
-    if(userName.value.trim() !==''){
-        feedback.style.display = 'none';
-        userName.classList.remove('is-invalid');
-    } else {
-        feedback.style.display = 'block';
-        userName.classList.add('is-invalid');
-    }
-})
 
 let label = document.querySelector('label[for="checkbox"]');
 

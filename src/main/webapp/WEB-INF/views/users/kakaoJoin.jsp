@@ -15,7 +15,7 @@
 <title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
-<!-- <link rel="stylesheet" href="/resources/css/login.css"> -->
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
 
@@ -32,7 +32,7 @@
 					  <div class="input-box">
 						
 						<div class="input-group has-validation">
-						  <input type="text" name="userId"  class="form-control is-invalid" id="userId" placeholder="ID" aria-describedby="userIdFeedback" required>
+						  <input type="text" name="userId"  class="form-control is-invalid" id="joinuserId" placeholder="ID" aria-describedby="userIdFeedback" required>
 						  <div id="userIdFeedback" class="invalid-feedback">
 						   아이디는 영문,숫자 6자 이상 12자이하이여야합니다다
 						  </div>
@@ -45,7 +45,7 @@
 					  <div class="input-box">
 						<!-- <label for="userPw" class="form-label">비밀번호</label> -->
 						<div class="input-group has-validation">
-						  <input type="password" name="userPw" class="form-control is-invalid" id="userPw" aria-describedby="userPwFeedback" required>
+						  <input type="password" name="userPw" class="form-control is-invalid" id="joinuserPw" aria-describedby="userPwFeedback" required>
 						  <div id="userPwFeedback" class="invalid-feedback">
 							영문,숫자 8자 이상 12자이하이여야합니다다
 						  </div>
@@ -64,7 +64,7 @@
 		
 					  <div class="input-box">
 						 <label for="userEmail" class="form-label">이메일</label>
-						<input type="text" name = "userEmail" class="form-control" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" required>
+						<input type="text" name = "userEmail" class="form-control" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" readonly>
 						
 					  </div>
 		
@@ -78,7 +78,7 @@
 					  
 					  <div class="input-box">
 						<label for="userName" class="form-label">이름</label>
-						<input type="text" name ="userName" class="form-control" id="userName" value="${name}" aria-describedby="userNameFeedback" required>
+						<input type="text" name ="userName" class="form-control" id="userName" value="${name}" aria-describedby="userNameFeedback" readonly>
 					  </div>
 					  
 					  
@@ -100,11 +100,11 @@
 
 		</div>
 	</main>
+	<script src="/resources/js/kakaoJoin.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 <!-- footer -->
 <c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
-<script src="/resources/js/join.js"></script>
 </body>
 </html>

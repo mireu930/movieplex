@@ -146,12 +146,12 @@
 			</div>
 		</div>
 	</main>
+	<script src="/resources/js/login.js"></script>
+	<script src="/resources/js/join.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 <!-- footer -->
- <script src="/resources/js/login.js"></script>
- <script src="/resources/js/join.js"></script>
 <c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </body>
 </html>
