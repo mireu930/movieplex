@@ -1,0 +1,39 @@
+package com.movie.plex.users;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserDAO userDAO;
+	
+	public UserDTO getLogin(UserDTO userDTO) throws Exception {
+		UserDTO result = userDAO.getLogin(userDTO);
+		
+		if(result != null) {
+			if(result.getUserPw().equals(userDTO.getUserPw())) {
+				return result;
+			}
+		}
+		
+		return null;
+	}
+	
+	public int join(UserDTO userDTO) throws Exception {
+		return userDAO.join(userDTO);
+	}
+	
+	public UserDTO idCheck(UserDTO userDTO) throws Exception {
+		return userDAO.getLogin(userDTO);
+	}
+	
+	public int kakaoJoin(UserDTO userDTO) throws Exception {
+		return userDAO.kakaoJoin(userDTO);
+	}
+	
+	public UserDTO findEmail(String email) throws Exception {
+		return userDAO.findEmail(email);
+	}
+}

@@ -34,6 +34,9 @@
 		<constructor-arg name = "sqlSessionFactory" ref= "sqlSessionFactoryBean"></constructor-arg>
 	</bean>
 	
-	
+	<bean class="com.movie.plex.users.KakaoApi" id="kakaoApi">
+		<property name="kakaoApi" value="${kakao.api}"/>
+		<property name="kakaoRedirectUrl" value="${kakao.redirect_url}"/>
+	</bean>
 	
 </beans>

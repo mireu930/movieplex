@@ -4,6 +4,7 @@
 ### My Custom ###
 apiKey.properties
 database.properties
+apiKey.properties
 
 ### Eclipse ###
 .metadata
