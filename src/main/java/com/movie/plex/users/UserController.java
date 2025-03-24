@@ -95,15 +95,19 @@ public class UserController {
 	
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
+		String a = "redirect:/";
+		
 		String accessToken = (String) session.getAttribute("accessToken");
 
 	    // 2. accessToken이 있을 경우 카카오 로그아웃 수행
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
 	        session.removeAttribute("accessToken"); // 토큰 삭제
+	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
+	        a = "redirect:"+kakaoUrl;
 	    }
-		session.invalidate();
-		return "redirect:/";
+	    session.invalidate();
+		return a;
 	}
 	
 	@RequestMapping(value = "join",method = RequestMethod.GET)

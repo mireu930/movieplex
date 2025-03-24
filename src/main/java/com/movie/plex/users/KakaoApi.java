@@ -174,6 +174,8 @@ public class KakaoApi {
 	        while((line = br.readLine()) != null){
 	            responseSb.append(line);
 	        }
+	        br.close();
+	        
 	        String result = responseSb.toString();
 	        log.info("kakao logout - responseBody = {}", result);
 
