@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
+@RequestMapping(value = "/login/oauth2/code/*")
 public class KakaoController {
 	
 	@Autowired
@@ -20,7 +21,7 @@ public class KakaoController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
+	@RequestMapping(value = "kakao", method = RequestMethod.GET)
 	public String kakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
 		System.out.println("kakaologin");
 	    // 1. 인가 코드 받기 (@RequestParam String code)
@@ -59,7 +60,7 @@ public class KakaoController {
 
 	}
 	
-	@RequestMapping(value = "/login/oauth2/code/kakao",method = RequestMethod.POST)
+	@RequestMapping(value = "kakao",method = RequestMethod.POST)
 	public String kakaoLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
 		int result = userService.kakaoJoin(userDTO);
 		
@@ -67,5 +68,21 @@ public class KakaoController {
 		model.addAttribute("path", "/");
 		
 		return "commons/result";
+	}
+	
+	@RequestMapping(value = "check", method = RequestMethod.GET)
+	public String idCheck(UserDTO userDTO, Model model) throws Exception {
+		
+		userDTO = userService.idCheck(userDTO);
+		//중복 0
+		int result =0;
+		
+		if(userDTO== null) {
+			result =1; //중복 x
+		}
+		
+		model.addAttribute("result", result);
+		
+		return "commons/ajax";
 	}
 }

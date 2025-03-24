@@ -18,18 +18,8 @@ userId.addEventListener('input', ()=>{
         feedback.style.display = 'block';
         userId.classList.add('is-invalid');
     };
-
-
-    // if(userId.value.trim() !==''){
-    //     feedback.style.display = 'none';
-    //     userId.classList.remove('is-invalid');
-    // } else {
-    //     feedback.style.display = 'block';
-    //     userId.classList.add('is-invalid');
-    // }
 })
 
-//test 메서드는 정규식과 일치하는지 확인하는메서드
 function isId(v) {
     let regex = /^[A-Za-z0-9]{6,12}$/
     return regex.test(v)
@@ -61,14 +51,6 @@ userPw.addEventListener('input', ()=>{
         feedback.style.display = 'block';
         userPw.classList.add('is-invalid');
     }
-
-    // if(userPw.value.trim() !==''){
-        //     feedback.style.display = 'none';
-    //     userPw.classList.remove('is-invalid');
-    // } else {
-        //     feedback.style.display = 'block';
-    //     userPw.classList.add('is-invalid');
-    // }
 })
 
 function isPw(v) {
@@ -87,8 +69,6 @@ userPwCheck.addEventListener('input',()=>{
         userPwCheck.classList.add('is-invalid');
     }
 })
-
-
 
 userPhone.addEventListener('input', (e)=>{
     
@@ -128,7 +108,7 @@ agree.addEventListener("change",()=>{
 })
 
 document.addEventListener("DOMContentLoaded", function () {
-    const form = document.querySelector("form[action='./join']");
+    const form = document.querySelector("form[action='/login/oauth2/code/kakao']");
     if (!form) return; // 해당 폼이 없을 경우 실행 방지
 
     const submitButton = form.querySelector("button[type='submit']");

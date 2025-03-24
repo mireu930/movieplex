@@ -15,7 +15,7 @@
 <title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
-
+<link rel="stylesheet" href="/resources/css/kakaoJoin.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 <link href="https://fonts.cdnfonts.com/css/poppins" rel="stylesheet">
 
@@ -33,14 +33,13 @@
 						
 						<div class="input-group has-validation">
 						  <input type="text" name="userId"  class="form-control is-invalid" id="joinuserId" placeholder="ID" aria-describedby="userIdFeedback" required>
+						  <button id="idbtn" style="background-color: black; color: white; font-size: 12px;">아이디확인</button>
 						  <div id="userIdFeedback" class="invalid-feedback">
 						   아이디는 영문,숫자 6자 이상 12자이하이여야합니다다
 						  </div>
 						</div>
 					</div>
-					<div>
-						<button id="idbtn">아이디확인</button>
-					</div>
+				
 		
 					  <div class="input-box">
 						<!-- <label for="userPw" class="form-label">비밀번호</label> -->
@@ -55,7 +54,7 @@
 					<div class="input-box">
 					  <!-- <label for="userPwCheck" class="form-label">비밀번호 확인</label> -->
 					  <div class="input-group has-validation">
-						<input type="password" name="userPw" class="form-control is-invalid" id="userPwCheck" aria-describedby="userPwCheckFeedback" required>
+						<input type="password" class="form-control is-invalid" id="userPwCheck" aria-describedby="userPwCheckFeedback" required>
 						<div id="userPwCheckFeedback" class="invalid-feedback">
 						  비밀번호가 일치하지 않습니다.
 						</div>
@@ -63,34 +62,34 @@
 					</div>
 		
 					  <div class="input-box">
-						 <label for="userEmail" class="form-label">이메일</label>
+						 <div class="input-group has-validation">
 						<input type="text" name = "userEmail" class="form-control" id="userEmail" value="${email}" aria-describedby="userEmailFeedback" readonly>
-						
+						</div>
 					  </div>
 		
 					  <div class="input-box">
-						<label for="userPhone" class="form-label">휴대폰번호</label>
+						<div class="input-group has-validation">
 						<input type="text" name ="userPhone" class="form-control is-invalid" id="userPhone" aria-describedby="userPhoneFeedback" required>
 						<div id="userPhoneFeedback" class="invalid-feedback">
 						  휴대대폰번호를 입력하세요.(-포함x)
 						</div>
 					  </div>
-					  
+					  </div>
 					  <div class="input-box">
-						<label for="userName" class="form-label">이름</label>
+						<div class="input-group has-validation">
 						<input type="text" name ="userName" class="form-control" id="userName" value="${name}" aria-describedby="userNameFeedback" readonly>
 					  </div>
+					  </div>
 					  
-					  
-						<div class="form-check">
-						  <input class="form-check-input is-invalid" type="checkbox" value="" id="agree" aria-describedby="agreeFeedback" required>
-						  <label class="form-check-label" for="checkbox">
+					  <div class="form-check">
+						<input class="form-check-input" type="checkbox" value="" id="agree" aria-describedby="agreeFeedback" required>
+						<label class="form-check-label" for="checkbox">
 							회원가입에 동의합니다.
-						  </label>
-						  <div id="checkboxFeedback" class="invalid-feedback">
+						</label>
+						<div id="checkboxFeedback" class="invalid-feedback">
 							가입하기전에 동의를 눌러주세요.
-						  </div>
 						</div>
+					  </div>
 					 
 						<button class="btn btn-primary" type="submit">회원가입</button>
 					  
