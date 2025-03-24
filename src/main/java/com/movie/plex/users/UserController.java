@@ -95,6 +95,13 @@ public class UserController {
 	
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
+		String accessToken = (String) session.getAttribute("accessToken");
+
+	    // 2. accessToken이 있을 경우 카카오 로그아웃 수행
+	    if (accessToken != null) {
+	        kakaoApi.kakaoLogout(accessToken);
+	        session.removeAttribute("accessToken"); // 토큰 삭제
+	    }
 		session.invalidate();
 		return "redirect:/";
 	}
