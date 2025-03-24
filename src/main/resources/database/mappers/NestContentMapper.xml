@@ -13,4 +13,23 @@
 		</foreach>
 		SELECT 1 FROM DUAL
 	</insert>
+	
+	<insert id="addJsonTVList" parameterType="List">
+		INSERT ALL
+    <foreach collection="list" item="item" open="" close="" separator=" ">
+        INTO NESTCONTENTS2
+        (CONTENTID, CONTENTTITLE, SHORTPOSTER, LONGPOSTER, RELEASEDATE, OVERVIEW, POPULARITY, KIND)
+ 			VALUES
+            (#{item.contentId}, 
+            #{item.contentTitle}, 
+            #{item.shortPoster, jdbcType=VARCHAR}, 
+            #{item.longPoster, jdbcType=VARCHAR},
+            #{item.releaseDate}, 
+            #{item.overView}, 
+            #{item.popularity}, 
+            #{item.kind})
+    </foreach>
+    	SELECT 1 FROM DUAL
+</insert>
+	
   </mapper>

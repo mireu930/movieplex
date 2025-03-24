@@ -26,7 +26,7 @@
 			url="/WEB-INF/views/reviewNest/templates/reviewNest_header.jsp"></c:import>
 	</div>
 	<div>
-	<img src="/resources/image/ban.jpg">
+	<img src="/resources/image/ban.jpg" width="100%" height="100px">
 	
 	<main class="container">
 		<div class ="p-5 p-md-6 mb-5 w-100 rounded text-body-emphasisbg-body-secondary">
