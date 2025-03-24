@@ -22,10 +22,12 @@
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
-		<!-- 컨텐츠 넣는 부분 -->
+		<div class="adminSidebar">
+		<c:import url="/WEB-INF/views/templates/adminSideBar.jsp"></c:import>
+		</div>
 	</main>
 	<!-- footer -->
-	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
+	<%-- <c:import url="/WEB-INF/views/templates/footer.jsp"></c:import> --%>
 
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </body>

@@ -4,32 +4,40 @@ import java.sql.Date;
 
 public class NestContentDTO {
 		
-		private Long movieId;
-		private String movieTitle;
-		private String moviePoster;
+		private Long contentId;
+		private String contentTitle;
+		private String shortPoster;
+		private String longPoster;
 		private Date releaseDate;
 		private String overView;
 		private Double popularity;
 		private Long kind;
+		private String country;
 		
 		
-		public Long getMovieId() {
-			return movieId;
+		public Long getContentId() {
+			return contentId;
 		}
-		public void setMovieId(Long movieId) {
-			this.movieId = movieId;
+		public void setContentId(Long contentId) {
+			this.contentId = contentId;
 		}
-		public String getMovieTitle() {
-			return movieTitle;
+		public String getContentTitle() {
+			return contentTitle;
 		}
-		public void setMovieTitle(String movieTitle) {
-			this.movieTitle = movieTitle;
+		public void setContentTitle(String contentTitle) {
+			this.contentTitle = contentTitle;
 		}
-		public String getMoviePoster() {
-			return moviePoster;
+		public String getShortPoster() {
+			return shortPoster;
 		}
-		public void setMoviePoster(String moviePoster) {
-			this.moviePoster = moviePoster;
+		public void setShortPoster(String shortPoster) {
+			this.shortPoster = shortPoster;
+		}
+		public String getLongPoster() {
+			return longPoster;
+		}
+		public void setLongPoster(String longPoster) {
+			this.longPoster = longPoster;
 		}
 		public Date getReleaseDate() {
 			return releaseDate;
@@ -55,6 +63,16 @@ public class NestContentDTO {
 		public void setKind(Long kind) {
 			this.kind = kind;
 		}
+		public String getCountry() {
+			return country;
+		}
+		public void setCountry(String country) {
+			this.country = country;
+		}
+		
+		
+		
+		
 		
 		
 		

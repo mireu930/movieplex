@@ -1,21 +1,33 @@
-.card-img-top {
-  height: 500px; 
-  width: 400px;
+header {
+    height: 100px; /* 원하는 높이 설정 */
 }
 
-.header{
-  	max-width: 100vw !important;	
-	background-color: #003092 !important; 
+.maincss{
+    margin-top: 20px;
+
 }
-.nav-item{
-	font-size: 20px !important;
-	font-weight: bold !important;
-	
+#logo_img{
+    height: 60px;
+    width: 160px;
 }
 
-.logoDiv img{
-	width: 150px;
+
+
+.carousel-inner {
+      width: 960px;
+      height: 500px;
+    } 
+    
+    .carousel-item img {
+    width: 960px;  
+    height: 500px; 
+   
 }
+ .hot_rank {
+	font-size: large;
+	font-weight: bolder;
+ }
+
 .bd-placeholder-img {
 	font-size: 1.125rem;
 	text-anchor: middle;
