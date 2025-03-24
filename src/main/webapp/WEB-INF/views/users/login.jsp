@@ -66,7 +66,7 @@
 						  <input type="text" name="userId"  class="form-control is-invalid" id="joinuserId" aria-describedby="userIdFeedback" required>
 						  <button id="idbtn" style="background-color: black; color: white; font-size: 12px;">아이디확인</button>
 						  <div id="userIdFeedback" class="invalid-feedback">
-						   아이디는 영문,숫자 6자 이상 12자이하이여야합니다다
+						   아이디는 영문,숫자 6자 이상 12자이하이여야합니다다(아이디확인해주십시오)
 						  </div>
 						</div>
 					</div>

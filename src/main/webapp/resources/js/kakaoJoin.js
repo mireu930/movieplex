@@ -7,18 +7,27 @@ const idbtn = document.getElementById("idbtn");
 const userPwCheck = document.getElementById("userPwCheck");
 const agree = document.getElementById("agree");
 
-
+let idcheck = false;
 userId.addEventListener('input', ()=>{
     let feedback = document.getElementById("userIdFeedback");
     
     if(isId(userId.value)){
         feedback.style.display = 'none';
-        userId.classList.remove('is-invalid');
+        
     }else{
         feedback.style.display = 'block';
         userId.classList.add('is-invalid');
     };
+
+    idcheck = false;
+    checkIdMatch();
 })
+
+function checkIdMatch() {
+    if(!idcheck){
+        userId.classList.add('is-invalid');
+    }
+}
 
 function isId(v) {
     let regex = /^[A-Za-z0-9]{6,12}$/
@@ -33,8 +42,11 @@ idbtn.addEventListener("click",()=>{
         if(r.trim()=='0'){
             alert('중복된 아이디입니다.')
             userId.classList.add('is-invalid');
+            idcheck=false;
         } else {
             alert('사용 가능한 아이디입니다.')
+            userId.classList.remove('is-invalid');
+            idcheck=true;
         }
     })
 })
@@ -51,6 +63,7 @@ userPw.addEventListener('input', ()=>{
         feedback.style.display = 'block';
         userPw.classList.add('is-invalid');
     }
+    checkPasswordMatch();
 })
 
 function isPw(v) {
@@ -58,17 +71,19 @@ function isPw(v) {
     return regex.test(v)
 }
 
-userPwCheck.addEventListener('input',()=>{
+userPwCheck.addEventListener('input',checkPasswordMatch);
+
+function checkPasswordMatch() {
     let feedback = document.getElementById("userPwCheckFeedback");
-    
-    if(userPw.value==userPwCheck.value){
+
+    if (userPw.value === userPwCheck.value && userPw.value !== "") {
         feedback.style.display = 'none';
         userPwCheck.classList.remove('is-invalid');
-    }else {
+    } else {
         feedback.style.display = 'block';
         userPwCheck.classList.add('is-invalid');
     }
-})
+}
 
 userPhone.addEventListener('input', (e)=>{
     
