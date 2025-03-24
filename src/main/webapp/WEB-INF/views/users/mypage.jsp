@@ -33,7 +33,7 @@
 		</div>
 	</main>
 
-	<script src="/resources/js/adminPage.js"></script>
+	<script src="/resources/js/userPage.js"></script>
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </body>
 </html>

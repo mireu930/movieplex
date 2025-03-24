@@ -5,10 +5,12 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -62,8 +64,15 @@ public class UserController {
 		userDTO = userService.getLogin(userDTO);
 		
 		if(userDTO != null) {
-			session.setAttribute("user", userDTO);
-			return "redirect:/";
+			 if (userDTO.getUserOut() == 1) {
+		            // 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+		            model.addAttribute("result", "비활성화된 사용자입니다. 관리자에게 문의하세요.");
+		            model.addAttribute("path", "./login");
+		            return "commons/result";  // 비활성화된 사용자 메시지 출력
+		        }else {
+		        	session.setAttribute("user", userDTO);
+		        	return "redirect:/";
+		        }
 		}
 		
 		model.addAttribute("result", "로그인실패");
@@ -109,9 +118,17 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
-	public UserDTO mypage(UserDTO userDTO, HttpSession session) throws Exception {
+	public UserDTO mypage(UserDTO userDTO, HttpSession session, Model model) throws Exception {
 		return (UserDTO)session.getAttribute("user");
 	}
+	
+	@RequestMapping(value = "mypageData", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDTO getUserInfo(HttpSession session) {
+	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
+	    return userDTO; // JSON 형식으로 반환
+	}
+	
 	
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public UserDTO admin(HttpSession session) throws Exception {

@@ -28,8 +28,8 @@ public class UserDAO {
 		return sqlSession.selectOne(NAMESPACE+"findEmail", email);
 	}
 	
-	public UserDTO getDetail(UserDTO userDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"getDetail", userDTO);
+	public UserDTO getDetail(Long userId) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getDetail", userId);
 	}
 
 }
