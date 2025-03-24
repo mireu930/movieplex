@@ -34,12 +34,11 @@
 		</div>
 		<div class="col-md-1 text-end">
 			<c:if test="${empty user}">
-			<a class="nav-link" href="/users/login">로그인</a>
+				<a class="nav-link px-2 link-secondary" href="/users/login">로그인</a>				
 			</c:if>
 			<c:if test="${not empty user}">
-			<a class="nav-link" href="/users/logout">로그아웃</a>
+				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
 			</c:if>
-			
 		</div>
 	</header>
 </div>
