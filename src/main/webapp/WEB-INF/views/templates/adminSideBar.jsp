@@ -9,25 +9,19 @@
 		<!-- 사이드 바에서 선택시 js로 active 속성 변경 해줘야 합니다! 그래야 파란색 바가 해당 페이지로 이동합니다! -->
 		<ul class="nav nav-pills flex-column mb-auto">
 			<li class="nav-item">
-				<a href="javascript:void(0);" class="nav-link" onclick="setActive(this)">
+				<a href="javascript:void(0);" data-section="user" class="nav-link" onclick="setActive(this)">
 					<img src="/resources/image/admin_user.png" style="width: 30px; height: auto;" class="me-2"> 회원
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="javascript:void(0);" class="nav-link" onclick="setActive(this)">
+				<a href="javascript:void(0);" data-section="movies" class="nav-link" onclick="setActive(this)">
 					<img src="/resources/image/admin_table.png" style="width: 30px; height: auto;" class="me-2"> 영화 목록
 				</a>
 			</li>
 			<ul class="nav nav-pills flex-column mb-auto">
 				<li class="nav-item">
-					<a href="javascript:void(0);" class="nav-link" onclick="setActive(this)">
-						<img src="/resources/image/admin_user.png" style="width: 30px; height: auto;" class="me-2"> 회원
-					</a>
-				</li>
-				<li class="nav-item">
-					<a href="javascript:void(0);" class="nav-link" onclick="setActive(this)">
-						<img src="/resources/image/admin_table.png" style="width: 30px; height: auto;" class="me-2"> 영화
-						목록
+					<a href="javascript:void(0);" data-section="theater" class="nav-link" onclick="setActive(this)">
+						<img src="/resources/image/admin_user.png" style="width: 30px; height: auto;" class="me-2"> 상영 테이블
 					</a>
 				</li>
 			</ul>
