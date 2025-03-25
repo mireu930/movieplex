@@ -48,8 +48,9 @@
 						</div>
 					 
 						<button class="btn btn-primary" type="submit">로그인</button>
-						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoApi}&redirect_uri=${redirectUrl}">
-       						<img src="/resources/image/kakao_login_medium.png">
+		
+						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoApi}&redirect_uri=${redirectUrl}" class="btn btn-warning">
+							 카카오로그인
        						</a>
 						<div class="login-register">
 							<p>미회원이신가요?<a href="#" class="register-link">회원가입하기</a></p>
