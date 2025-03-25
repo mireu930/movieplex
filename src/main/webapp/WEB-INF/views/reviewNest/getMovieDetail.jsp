@@ -20,14 +20,15 @@
 <link rel="stylesheet" href="/resources/css/reviewNestMain.css">
 </head>
 <body>
-	<!-- header -->
 	<div class="container">
 	<c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_header.jsp"></c:import>
 	</div>
+			
 	<main>
-	<!-- 컨텐츠 넣는 부분 -->
-	
-	
+				<div class="container-detail"  style="width: 100%; height: 400px; overflow: hidden;">
+				     <img src="https://image.tmdb.org/t/p/w1280/${content.longPoster}"  class="img-fluid"  style="object-fit: cover; object-position: center top; width: 100%; height: 100%;">
+			   </div>
+			
 	</main>
 	
 <!-- footer -->

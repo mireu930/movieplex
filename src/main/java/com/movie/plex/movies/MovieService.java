@@ -10,6 +10,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.movie.plex.nestcontents.NestContentDTO;
+
 @Service
 public class MovieService {
 	
@@ -19,4 +21,5 @@ public class MovieService {
 	public List<MovieDTO> getMainList() throws Exception{
 		return movieDAO.getMainList();
 	}
+	
 }

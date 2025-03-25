@@ -27,7 +27,7 @@
 	</div>
 	<div>
 	<img src="/resources/image/ban.jpg" width="100%" height="100px">
-	
+	</div>
 	<main class="container">
 		<div class ="p-5 p-md-6 mb-5 w-100 rounded text-body-emphasisbg-body-secondary">
 			<div id="carouselExampleAutoplaying" class="carousel slide"
@@ -58,7 +58,11 @@
 				</button>
 			</div>
 		</div>
+		
 		<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰네스트 HOT 랭킹</strong>
+			
+	
+		
 		<div class="row mb-2">
 			<div class="col-md-6">
 				<div
@@ -80,7 +84,7 @@
 							preserveAspectRatio="xMidYMid slice" focusable="false">
 							<title>Placeholder</title><img src="/resources/image/17.jpg" width="200" height="250">
 								<rect width="200" height="250"></rect>
-	
+	 
 						</svg>
 					</div>
 				</div>
@@ -138,7 +142,6 @@
 				<div
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
-						<!-- <strong class="d-inline-block mb-2 text-success-emphasis">Design</strong> -->
 						<div class="mb-1 text-body-secondary">DRAMA RECOMMEND</div>
 						<h3 class="mb-0">제목</h3>
 						<br>
@@ -161,7 +164,7 @@
 			</div>
 		</div>
 	</main>
-</div>
+
 	<c:import
 		url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
