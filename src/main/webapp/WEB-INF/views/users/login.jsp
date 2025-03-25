@@ -42,8 +42,9 @@
 						</div>
 					  </div>
 					  <div class ="remember-forget">
-						<label><input type ="checkbox">remember me</label>
-						<a href="#">forget password?</a>
+						<!-- <label><input type ="checkbox">remember me</label> -->
+						<input type="button" id="forgetPw" data-bs-toggle="modal" data-bs-target="#exampleModal" value="forget password?"
+						style="background-color: transparent; border-color: transparent;">
 						</div>
 					 
 						<button class="btn btn-primary" type="submit">로그인</button>
@@ -145,12 +146,33 @@
 				 </form>
 			</div>
 		</div>
+
+		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h1 class="modal-title fs-5" id="exampleModalLabel">이메일을 입력해주세요</h1>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+				  <div class="mb-3">
+					<label for="fogetUserEmail" class="col-form-label"></label>
+					<textarea data-board-num="" class="form-control is-invalid" id="fogetUserEmail" placeholder="xxx@xxx.xxx"></textarea>
+				  </div>
+				</div>
+				<div class="modal-footer">
+				  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				  <button type="button" class="btn btn-primary" id="emailTransport" data-bs-dismiss="modal">전송</button>
+				</div>
+			  </div>
+			</div>
+		  </div>
 	</main>
 	<script src="/resources/js/login.js"></script>
 	<script src="/resources/js/join.js"></script>
 	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+	<c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
 <!-- footer -->
 <c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 </body>

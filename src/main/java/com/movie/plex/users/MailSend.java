@@ -62,6 +62,18 @@ public class MailSend {
 			e.printStackTrace();
 		}
 	}
+	
+	public String forgetEmail(String email, String pw) {
+		String setForm =".com";
+		String toMail = email;
+		String title = "비밀번호 메일입니다.";
+		String content = 
+				"비밀번호는"+pw+"입니다."+
+				"<br>"+
+				"로그인페이지에서 로그인부탁드립니다.";
+		mailSend(setForm, toMail, title, content);
+		return pw;
+	}
 		
 	
 }

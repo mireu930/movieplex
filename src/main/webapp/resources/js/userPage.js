@@ -163,3 +163,23 @@ function delteUserInfo(userId) {
         alert(error.message);
     })
 }
+
+function loadPayInfo() {
+
+}
+
+function loadPoint() {
+
+}
+
+function loadReview() {
+
+}
+
+function loadCoupon() {
+    fetch("/coupon/list")
+    .then(result=>result.json)
+    .then(c=>{
+        document.getElementById('mainContents').innerHTML = ``
+    })
+}

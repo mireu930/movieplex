@@ -50,6 +50,21 @@ public class UserController {
 		return mailSend.joinEmail(email);
 	}
 	
+	@RequestMapping(value = "forgetPw", method = RequestMethod.GET)
+	public String forgetPw(String email, String pw, Model model) throws Exception {
+		
+		UserDTO userDTO = userService.findEmail(email);
+		
+		if(email.equals(userDTO.getUserEmail())) {
+			userDTO = userService.getDetail(userDTO.getUserId());
+			pw = userDTO.getUserPw();
+			mailSend.forgetEmail(email, pw);
+			return "이메일로 비밀번호가 전송되었습니다.";
+		} else {
+			return "해당메일이 존재하지 않습니다.";
+		}
+	}
+	
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String getLogin(Model model) throws Exception {

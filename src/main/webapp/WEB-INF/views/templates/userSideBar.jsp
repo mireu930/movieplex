@@ -21,28 +21,28 @@
 				</a>
 			</li>
 			<li class="nav-item">
-				<a href="javascript:void(0);" data-section="payment" class="nav-link" onclick="setActive(this)">
+				<a href="javascript:void(0);" data-section="payment" class="nav-link" onclick="setActive(this); loadPayInfo()">
 					<ion-icon name="card-outline" class="me-2"></ion-icon>
 					결제내역
 				</a>
 			</li>
 		
 				<li class="nav-item">
-					<a href="javascript:void(0);" data-section="point" class="nav-link" onclick="setActive(this)">
+					<a href="javascript:void(0);" data-section="point" class="nav-link" onclick="setActive(this); loadPoint()">
 						 <ion-icon name="wallet-outline" class="me-2"></ion-icon>
 						포인트
 					</a>
 				</li>
 				
 				<li class="nav-item">
-					<a href="javascript:void(0);" data-section="review" class="nav-link" onclick="setActive(this)">
+					<a href="javascript:void(0);" data-section="review" class="nav-link" onclick="setActive(this); loadReview()">
 						<ion-icon name="chatbubble-ellipses-outline" class="me-2"></ion-icon> 
 						관람평
 					</a>
 				</li>
 				
 				<li class="nav-item">
-					<a href="javascript:void(0);" data-section="coupon" class="nav-link" onclick="setActive(this)">
+					<a href="javascript:void(0);" data-section="coupon" class="nav-link" onclick="setActive(this); loadCoupon()">
 						<ion-icon name="pricetag-outline" class="me-2"></ion-icon>
 						쿠폰
 					</a>
