@@ -43,7 +43,7 @@
 					  </div>
 					  <div class ="remember-forget">
 						<!-- <label><input type ="checkbox">remember me</label> -->
-						<input type="button" id="forgetPw" data-bs-toggle="modal" data-bs-target="#exampleModal" value="forget password?"
+						<input type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" value="forget password?"
 						style="background-color: transparent; border-color: transparent;">
 						</div>
 					 

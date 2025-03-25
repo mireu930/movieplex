@@ -55,14 +55,12 @@ public class UserController {
 		
 		UserDTO userDTO = userService.findEmail(email);
 		
-		if(email.equals(userDTO.getUserEmail())) {
+		if(userDTO!=null&&email.equals(userDTO.getUserEmail())) {
 			userDTO = userService.getDetail(userDTO.getUserId());
 			pw = userDTO.getUserPw();
-			mailSend.forgetEmail(email, pw);
-			return "이메일로 비밀번호가 전송되었습니다.";
-		} else {
-			return "해당메일이 존재하지 않습니다.";
-		}
+			
+		} 
+		return mailSend.forgetEmail(email, pw);
 	}
 	
 	
@@ -141,19 +139,12 @@ public class UserController {
 	@ResponseBody
 	public UserDTO getUserInfo(HttpSession session) {
 	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
-	    return userDTO; // JSON 형식으로 반환
-	}
-	
-	@RequestMapping(value = "mypageData/{userId}", method = RequestMethod.GET)
-	@ResponseBody
-	public UserDTO getUserInfo(HttpSession session, @RequestParam("userId") String userId) {
-	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
-	    return userDTO; // JSON 형식으로 반환
+	    return userDTO;
 	}
 	
 	@RequestMapping(value = "update",method = RequestMethod.POST)
 	@ResponseBody
-	public int update(Model model,
+	public UserDTO  update(HttpSession session,
 					@RequestParam("userId") String userId, 
 					@RequestParam("userName") String userName,
 					@RequestParam("userEmail") String userEmail,
@@ -174,8 +165,14 @@ public class UserController {
 		userDTO.setUserPw(userPw);
 		
 		int result = userService.update(userDTO);
-				
-		return result;
+		
+		if(result>0) {
+			userDTO = userService.getDetail(userId);
+			session.setAttribute("user", userDTO);
+			return userDTO;
+		} else {
+			return null;
+		}
 	}
 	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)

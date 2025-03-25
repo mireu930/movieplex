@@ -23,9 +23,9 @@ function loadUserInfo() {
          <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
                 <h2>내 정보</h2>
                 <p><strong>아이디:</strong> ${user.userId}</p>
-                <p><strong>이름:</strong><span id="displayUserName">${user.userName}</span></p>
-                <p><strong>이메일:</strong><span id="displayUserEmail">${user.userEmail}</span></p>
-                <p><strong>폰번호:</strong><span id="displayUserPhone">${user.userPhone}</span></p>
+                <p><strong>이름:</strong>${user.userName}</p>
+                <p><strong>이메일:</strong>${user.userEmail}</p>
+                <p><strong>폰번호:</strong>${user.userPhone}</p>
                 <p><strong>등급:</strong> ${user.userGrade}</p>
                 <p><strong>가입일:</strong> ${user.registDate}</p>
                 <p><strong>로그인형태:</strong> ${loginType}</p>
@@ -36,7 +36,7 @@ function loadUserInfo() {
                 `;
 
                 document.getElementById('editBtn').addEventListener('click', ()=> {
-                    editUserInfo(user.userId);
+                    editUserInfo(user);
                 });
 
                 document.getElementById('deleteBtn').addEventListener('click', ()=> {
@@ -48,10 +48,8 @@ function loadUserInfo() {
 	})
 }
 
-function editUserInfo(userId){
-    fetch(`/users/mypageData?userId=${userId}`)
-    .then(result => result.json())
-    .then(user=> {
+function editUserInfo(user){
+
         document.getElementById("mainContents").innerHTML=`
         <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
             <h2>정보 수정하기</h2>
@@ -83,20 +81,11 @@ function editUserInfo(userId){
             </form>
         </div>
         `
-        document.getElementById("userName").innerText = user.userName;
-        document.getElementById("userEmail").innerText = user.userEmail;
-        document.getElementById("userPhone").innerText = user.userPhone;
+    
 
-        document.getElementById("savebtn").addEventListener("click",()=>{
-            update()
-        })
-        document.getElementById("cancelbtn").addEventListener("click",()=>{
-            loadUserInfo();
-        })
-    })
-    .catch(error=>{
-        alert(error.message);
-    })
+        document.getElementById("savebtn").addEventListener("click",update)
+
+        document.getElementById("cancelbtn").addEventListener("click",loadUserInfo)
 }
 
 function update() {
@@ -120,24 +109,23 @@ function update() {
         headers:{
             "Content-type":"application/x-www-form-urlencoded"
         },
-        body: param
+        body: param.toString()
     })
     .then(result => result.json())
-    .then(result=>{
-        if(result=='0'){
-            alert("수정실패.")
-        } else {
+    .then(user=>{
+        console.log(user);
+        if(!user){
+            alert("수정실패.");
+            return;
+        } 
             alert("수정되었습니다")
-            document.getElementById("displayUserName").innerText = userName;
-            document.getElementById("displayUserEmail").innerText = userEmail;
-            document.getElementById("displayUserPhone").innerText = userPhone;
             loadUserInfo();
-        }
        
     })
     .catch(error=>{
         alert(error.message);
     })
+
 }
 
 function delteUserInfo(userId) {
@@ -152,7 +140,7 @@ function delteUserInfo(userId) {
     .then(result=>{
         let con = confirm("정말 탈퇴하시겠습니까?");
 
-        if(confirm){
+        if(con){
             if(result==='1'){
                 alert('탈퇴되었습니다.')
                 location.reload();
