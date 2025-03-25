@@ -16,7 +16,11 @@ public class MovieService {
 	@Autowired
 	private MovieDAO movieDAO;
 	
-	public List<MovieDTO> getMainList() throws Exception{
-		return movieDAO.getMainList();
+	public List<MovieDTO> getList() throws Exception{
+		return movieDAO.getList();
+	}
+	
+	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
+		return movieDAO.getMovieTitle(movieDTO);
 	}
 }

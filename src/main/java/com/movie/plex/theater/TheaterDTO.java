@@ -1,6 +1,7 @@
 package com.movie.plex.theater;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class TheaterDTO {
 	private Long theaterId;
@@ -52,5 +53,24 @@ public class TheaterDTO {
 	}
 	public void setKind(Long kind) {
 		this.kind = kind;
+	}
+	
+	
+	//출력용 getter
+	
+	public String getPrintStart() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterStart);
+		}
+		
+		return "";
+	}
+	
+	public String getPrintEnd() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterEnd);
+		}
+		
+		return "";
 	}
 }

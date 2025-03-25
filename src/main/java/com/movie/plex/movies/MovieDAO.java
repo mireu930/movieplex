@@ -18,7 +18,11 @@ public class MovieDAO {
 		return sqlSession.insert(NAMESPACE + "addJsonList", dtos);
 	}
 	
-	public List<MovieDTO> getMainList() throws Exception{
+	public List<MovieDTO> getList() throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getMainList");
+	}
+	
+	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getMovieTitle", movieDTO);
 	}
 }

@@ -24,4 +24,8 @@
 		FROM (SELECT * FROM MOVIES ORDER BY POPULARITY DESC) A)
 		WHERE R BETWEEN 1 AND 9
 	</select>
+	
+	<select id="getMovieTitle" parameterType="MovieDTO" resultType="MovieDTO">
+		SELECT MOVIETITLE FROM MOVIES m WHERE MOVIEID = #{movieId} 
+	</select>
 </mapper>

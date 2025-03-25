@@ -14,12 +14,10 @@ public class MovieController {
 	@Autowired
 	private MovieService movieService;
 	
-//	@RequestMapping(value="/getMainList", method=RequestMethod.GET)
-//	public void getMainList(Model model) throws Exception{
-//		List<MovieDTO> dtos = movieService.getMainList();
-//		
-//		model.addAttribute("topMovieList", dtos);
-//		
-//		
-//	}
+	@RequestMapping(value="/getList", method=RequestMethod.GET)
+	public void getList(Model model) throws Exception{
+		List<MovieDTO> dtos = movieService.getList();
+		
+		model.addAttribute("topMovieList", dtos);
+	}
 }

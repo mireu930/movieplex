@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.plex.theater.TheaterDAO">
+	<insert id="addTheater" parameterType="TheaterDTO">
+		INSERT INTO THEATER(THEATERID, THEATERSTART, THEATEREND, THEATERDATE,THEATERNAME, MOVIEID, KIND)
+		VALUES(THEATER_SEQ.NEXTVAL, #{theaterStart}, #{theaterEnd}, 
+		${theaterDate},${theaterName}, ${movieId}, 0)
+	</insert>
+	
+	<select id="getList" parameterType="TheaterDTO" resultType="TheaterDTO">
+		SELECT * FROM THEATER WHERE MOVIEID = #{movieId} AND TRUNC(THEATERDATE) = #{theaterDate}
+	</select>
+	
+	<select id="getDayList" parameterType="TheaterDTO" resultType="TheaterDTO">
+		SELECT * FROM THEATER WHERE THEATERNAME = #{theaterName} AND TRUNC(THEATERDATE) = #{theaterDate}
+	</select>
+</mapper>
