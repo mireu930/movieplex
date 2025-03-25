@@ -22,7 +22,15 @@
   		SELECT * FROM USERS WHERE USEREMAIL =#{userEmail}
   	</select>
   	
-  	<select id="getDetail" parameterType="UserDTO" resultType="UserDTO">
+  	<select id="getDetail" parameterType="String" resultType="UserDTO">
   		SELECT * FROM USERS WHERE USERID = #{userId}
   	</select>
+  	
+  	<update id="update" parameterType="UserDTO">
+  		UPDATE USERS SET USERNAME=#{userName}, USEREMAIL=#{userEmail}, USERPHONE=#{userPhone}, USERPW=#{userPw} WHERE USERID = #{userId}
+  	</update>
+  	
+  	<update id="inactive" parameterType="UserDTO">
+  		UPDATE USERS SET USEROUT=#{userOut} WHERE USERID=#{userId}
+  	</update>
   </mapper>

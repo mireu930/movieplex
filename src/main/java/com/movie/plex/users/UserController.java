@@ -129,6 +129,52 @@ public class UserController {
 	    return userDTO; // JSON 형식으로 반환
 	}
 	
+	@RequestMapping(value = "mypageData/{userId}", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDTO getUserInfo(HttpSession session, @RequestParam("userId") String userId) {
+	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
+	    return userDTO; // JSON 형식으로 반환
+	}
+	
+	@RequestMapping(value = "update",method = RequestMethod.POST)
+	@ResponseBody
+	public int update(Model model,
+					@RequestParam("userId") String userId, 
+					@RequestParam("userName") String userName,
+					@RequestParam("userEmail") String userEmail,
+					@RequestParam("userPhone") String userPhone,
+					@RequestParam("userPw") String userPw) throws Exception {
+		System.out.println("update");
+		System.out.println(userId);
+		System.out.println(userName);
+		System.out.println(userEmail);
+		System.out.println(userPhone);
+		System.out.println(userPw);
+		
+		UserDTO userDTO = userService.getDetail(userId);
+		
+		userDTO.setUserName(userName);
+		userDTO.setUserEmail(userEmail);
+		userDTO.setUserPhone(userPhone);
+		userDTO.setUserPw(userPw);
+		
+		int result = userService.update(userDTO);
+				
+		return result;
+	}
+	
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@ResponseBody
+	public int delete(@RequestParam("userId") String userid, HttpSession session) throws Exception {
+		System.out.println("delete");
+		UserDTO userDTO = userService.getDetail(userid);
+		userDTO.setUserOut(1L);
+		
+		int result = userService.inactive(userDTO);
+		session.invalidate();
+		return result;
+	}
+	
 	
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public UserDTO admin(HttpSession session) throws Exception {

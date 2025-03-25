@@ -37,7 +37,15 @@ public class UserService {
 		return userDAO.findEmail(email);
 	}
 	
-	public UserDTO getDetail(Long userId) throws Exception {
+	public UserDTO getDetail(String userId) throws Exception {
 		return userDAO.getDetail(userId);
+	}
+	
+	public int update(UserDTO userDTO) throws Exception {
+		return userDAO.update(userDTO);
+	}
+	
+	public int inactive(UserDTO userDTO) throws Exception {
+		return userDAO.inactive(userDTO);
 	}
 }
