@@ -39,5 +39,9 @@ public class UserDAO {
 	public int inactive(UserDTO userDTO) throws Exception{
 		return sqlSession.update(NAMESPACE+"inactive", userDTO);
 	}
+	
+	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
+	}
 
 }

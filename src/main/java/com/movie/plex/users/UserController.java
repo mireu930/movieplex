@@ -1,9 +1,11 @@
 package com.movie.plex.users;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -70,6 +72,7 @@ public class UserController {
 		model.addAttribute("redirectUrl", kakaoApi.getKakaoRedirectUrl());
 		return "users/login";
 	}
+	
 	
 	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
@@ -185,6 +188,13 @@ public class UserController {
 		int result = userService.inactive(userDTO);
 		session.invalidate();
 		return result;
+	}
+	
+	@RequestMapping(value = "couponList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		return userService.couponList(userDTO);
 	}
 	
 	

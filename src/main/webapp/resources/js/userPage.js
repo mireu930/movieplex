@@ -165,9 +165,23 @@ function loadReview() {
 }
 
 function loadCoupon() {
-    fetch("/coupon/list")
-    .then(result=>result.json)
+    fetch("/users/couponList")
+    .then(result=>result.json())
     .then(c=>{
-        document.getElementById('mainContents').innerHTML = ``
+        console.log(c)
+
+        let couponHtml = '';
+
+        c.forEach(item =>{
+            couponHtml+= `
+            
+            <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
+                <p><strong>쿠폰이름:</strong>${item.couponDTO.couponName}</p>
+                <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p>    
+            </div>
+            `          
+        })
+
+        document.getElementById('mainContents').innerHTML = couponHtml;
     })
 }
