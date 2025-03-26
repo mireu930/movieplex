@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.boards.qna.QnaDAO">
+  	<select id="getList" resultType="QnaDTO">
+		SELECT * FROM QNA
+	</select>
+	
+	<select id="getDetail" resultType="QnaDTO" parameterType="QnaDTO">
+		SELECT * FROM QNA WHERE QNANUM =#{qnaNum}
+	</select>
+	
+	<insert id="add" parameterType="QnaDTO">
+		INSERT INTO QNA
+		VALUES (QNANUM_SEQ.NEXTVAL,#{boardTitle},#{boardContents},SYSDATE,0,0,0,0,#{userNum})
+	</insert>
+	
+	<insert id="addFile" parameterType="QnaFilesDTO">
+		INSERT INTO QNAFILES VALUES (FILENUM_SEQ.NEXTVAL, #{fileName}, #{oldName}, #{qnaNum})
+	</insert>
+	
+	<update id="update" parameterType="QnaDTO">
+		UPDATE QNA SET BOARDTITLE=#{boardTitle}, BOARDCONTENTS=#{boardContents} WHERE QNANUM=#{qnaNum}
+	</update>
+	
+	<update id="updateHit" parameterType="QnaDTO">
+		UPDATE QNA SET BOARDHIT=BOARDHIT+1 WHERE QNANUM=#{qnaNum}
+	</update>
+	
+	<delete id="delete" parameterType="QnaDTO">
+		DELETE QNA WHERE QNANUM =#{qnaNum}
+	</delete>
+	
+	<select id="getFileDetail" parameterType="QnaFilesDTO" resultType="QnaFilesDTO">
+		SELECT * FROM QNAFILES WHERE FILENUM = #{fileNum}
+	</select>
+	
+	<delete id="deleteFile" parameterType="QnaFilesDTO">
+		DELETE QNAFILES WHERE FILENUM = #{fileNum}
+	</delete>
+	
+	<delete id="deleteFileAll" parameterType="QnaFilesDTO">
+		DELETE QNAFILES WHERE QNANUM = #{qnaNum}
+	</delete>
+	
+  </mapper>

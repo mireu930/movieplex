@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.boards.notice.NoticeDAO">
+	<select id="getList" resultType="NoticeDTO">
+		SELECT * FROM NOTICE
+	</select>
+	
+	<select id="getDetail" parameterType="NoticeDTO" resultType="NoticeDTO">
+		SELECT * FROM NOTICE WHERE NOTICENUM =#{noticeNum}
+	</select>
+	
+	<insert id="add" parameterType="NoticeDTO">
+		INSERT INTO NOTICE
+		VALUES (NOTICENUM_SEQ.NEXTVAL,#{boardTitle},#{boardContents},SYSDATE,0,0,0,0,#{userNum})
+	</insert>
+	
+	<insert id="addFile" parameterType="NoticeFilesDTO">
+		INSERT INTO NOTICEFILES VALUES (FILENUM_SEQ.NEXTVAL, #{fileName}, #{oldName}, #{noticeNum})
+	</insert>
+	
+	<update id="update" parameterType="NoticeDTO">
+		UPDATE NOTICE SET BOARDTITLE=#{boardTitle}, BOARDCONTENTS=#{boardContents} WHERE NOTICE=#{noticeNum}
+	</update>
+	
+	<update id="updateHit" parameterType="NoticeDTO">
+		UPDATE NOTICE SET BOARDHIT=BOARDHIT+1 WHERE NOTICENUM=#{noticeNum}
+	</update>
+	
+	<delete id="delete" parameterType="NoticeDTO">
+		DELETE NOTICE WHERE NOTICENUM =#{noticeNum}
+	</delete>
+	
+	<select id="getFileDetail" parameterType="NoticeFilesDTO" resultType="NoticeFilesDTO">
+		SELECT * FROM NOTICEFILES WHERE FILENUM = #{fileNum}
+	</select>
+	
+	<delete id="deleteFile" parameterType="NoticeFilesDTO">
+		DELETE NOTICEFILES WHERE FILENUM = #{fileNum}
+	</delete>
+	
+	<delete id="deleteFileAll" parameterType="NoticeFilesDTO">
+		DELETE NOTICEFILES WHERE NOTICENUM = #{noticeNum}
+	</delete>
+  </mapper>
