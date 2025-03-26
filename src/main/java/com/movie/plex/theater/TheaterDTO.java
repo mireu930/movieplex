@@ -1,35 +1,50 @@
 package com.movie.plex.theater;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+
+import com.movie.plex.movies.MovieDTO;
 
 public class TheaterDTO {
 	private Long theaterId;
-	private Date theaterStart;
-	private Date theaterEnd;
+	private Timestamp theaterStart;
+	private Timestamp theaterEnd;
 	private Date theaterDate;
 	private String theaterName;
 	private Long movieId;
 	private Long kind;
 	
+	private MovieDTO movieDTO;
+	
+	public MovieDTO getMovieDTO() {
+		return movieDTO;
+	}
+	public void setMovieDTO(MovieDTO movieDTO) {
+		this.movieDTO = movieDTO;
+	}
 	public Long getTheaterId() {
 		return theaterId;
 	}
 	public void setTheaterId(Long theaterId) {
 		this.theaterId = theaterId;
 	}
-	public Date getTheaterStart() {
+	
+	
+	
+	public Timestamp getTheaterStart() {
 		return theaterStart;
 	}
-	public void setTheaterStart(Date theaterStart) {
+	public void setTheaterStart(Timestamp theaterStart) {
 		this.theaterStart = theaterStart;
 	}
-	public Date getTheaterEnd() {
+	public Timestamp getTheaterEnd() {
 		return theaterEnd;
 	}
-	public void setTheaterEnd(Date theaterEnd) {
+	public void setTheaterEnd(Timestamp theaterEnd) {
 		this.theaterEnd = theaterEnd;
 	}
+	
 	public Date getTheaterDate() {
 		return theaterDate;
 	}

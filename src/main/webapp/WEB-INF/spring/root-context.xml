@@ -17,7 +17,7 @@
     <property name="locations">
         <list>
             <value>classpath:database/configs/database.properties</value>
-            <value>classpath:/apiKey.properties</value>
+            <!-- <value>classpath:apiKey.properties</value> -->
         </list>
     </property>
 	</bean>

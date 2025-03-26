@@ -19,5 +19,8 @@ public class TheaterService {
 		return theaterDAO.getList(theaterDTO);
 	}
 	
+	public List<TheaterDTO> getDayList(TheaterDTO theaterDTO) throws Exception{
+		return theaterDAO.getDayList(theaterDTO);
+	}
 	
 }

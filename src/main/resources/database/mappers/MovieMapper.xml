@@ -28,4 +28,8 @@
 	<select id="getMovieTitle" parameterType="MovieDTO" resultType="MovieDTO">
 		SELECT MOVIETITLE FROM MOVIES m WHERE MOVIEID = #{movieId} 
 	</select>
+	
+	<select id="getList" resultType="MovieDTO">
+		SELECT * FROM MOVIES
+	</select>
 </mapper>

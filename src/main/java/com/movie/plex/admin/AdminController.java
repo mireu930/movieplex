@@ -19,29 +19,19 @@ public class AdminController {
 	@Autowired
 	private MovieService movieService;
 
-	
 	@RequestMapping(value = "/mainPage", method=RequestMethod.GET)
 	public String adminTheater() throws Exception{
 		return "/admin/adminMainPage";
 	}
 	
-	@RequestMapping(value="/getTheaterPage", method=RequestMethod.GET)
-	public String getTheaterPage(Model model) throws Exception{
-		List<MovieDTO> dtos =  movieService.getList();
-		
-		model.addAttribute("list", dtos);
-		
-		return "admin/adminTheater";
-	}
 	
 	@RequestMapping(value="addTheaterForm", method=RequestMethod.GET)
-	public String addTheaterForm(TheaterDTO theaterDTO, Model model) throws Exception{
-		MovieDTO movieDTO = new MovieDTO();
-		movieDTO.setMovieId(theaterDTO.getMovieId());
-		movieDTO = movieService.getMovieTitle(movieDTO);
-		model.addAttribute("movieDTO", movieDTO);
+	public String addTheaterForm(Model model) throws Exception{
+		List<MovieDTO> dtos = movieService.getList();
+		model.addAttribute("movieList", dtos);
 		
-		return "/admin/adminAddTheaterForm";
+		return "/admin/theater/adminAddTheaterForm";
 	}
+
 	
 }

@@ -5,16 +5,46 @@
 
 <mapper namespace="com.movie.plex.theater.TheaterDAO">
 	<insert id="addTheater" parameterType="TheaterDTO">
-		INSERT INTO THEATER(THEATERID, THEATERSTART, THEATEREND, THEATERDATE,THEATERNAME, MOVIEID, KIND)
-		VALUES(THEATER_SEQ.NEXTVAL, #{theaterStart}, #{theaterEnd}, 
+		INSERT INTO
+		THEATER(THEATERID, THEATERSTART, THEATEREND, THEATERDATE,THEATERNAME,
+		MOVIEID, KIND)
+		VALUES(THEATER_SEQ.NEXTVAL, #{theaterStart},
+		#{theaterEnd},
 		${theaterDate},${theaterName}, ${movieId}, 0)
 	</insert>
-	
-	<select id="getList" parameterType="TheaterDTO" resultType="TheaterDTO">
-		SELECT * FROM THEATER WHERE MOVIEID = #{movieId} AND TRUNC(THEATERDATE) = #{theaterDate}
+
+	<select id="getList" parameterType="TheaterDTO"
+		resultType="TheaterDTO">
+		SELECT * FROM THEATER WHERE MOVIEID = #{movieId} AND
+		TRUNC(THEATERDATE) = #{theaterDate}
 	</select>
-	
-	<select id="getDayList" parameterType="TheaterDTO" resultType="TheaterDTO">
-		SELECT * FROM THEATER WHERE THEATERNAME = #{theaterName} AND TRUNC(THEATERDATE) = #{theaterDate}
+
+	<select id="getDayList" parameterType="TheaterDTO"
+		resultMap="getDayListResult">
+		SELECT M.MOVIETITLE, T.*
+		FROM (
+		SELECT *
+		FROM THEATER
+		WHERE
+		THEATERNAME = #{theaterName}
+		AND TRUNC(THEATERDATE) = #{theaterDate}
+		) T
+		JOIN MOVIES M ON T.MOVIEID = M.MOVIEID
 	</select>
+	<resultMap type="TheaterDTO" id="getDayListResult">
+		<id column="theaterId" property="theaterId" />
+		<result column="THEATERID" property="theaterId" />
+		<result column="THEATERSTART" property="theaterStart" />
+		<result column="THEATEREND" property="theaterEnd" />
+		<result column="THEATERDATE" property="theaterDate" />
+		<result column="THEATERNAME" property="theaterName" />
+		<result column="MOVIEID" property="movieId" />
+		<result column="KIND" property="kind" />
+
+		<!-- 1대 1 관계에서는 association -->
+		<association property="movieDTO" javaType="MovieDTO">
+			<result column="MOVIETITLE" property="movieTitle" />
+		</association>
+
+	</resultMap>
 </mapper>

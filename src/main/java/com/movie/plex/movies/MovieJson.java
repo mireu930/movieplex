@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-@Component
+@Service
+//@PropertySource("classpath:/apiKey.properties")
 public class MovieJson{
 	
 	@Autowired
@@ -33,7 +35,7 @@ public class MovieJson{
 	@Value("${tmdb.apiKey}")
 	private String tmdbApiKey;
 
-	public int addListJson() throws Exception{
+	public List<MovieDTO> addListJson() throws Exception{
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -121,6 +123,26 @@ public class MovieJson{
 			}
 
 		}
-		return movieDAO.addJsonList(dtos);
+		return dtos;
+		//return movieDAO.addJsonList(dtos);
+	}
+
+	public Long getRuntime(MovieDTO movieDTO) throws Exception{
+		
+		
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", "application/json;charset=utf-8");
+		
+		String url = "https://api.themoviedb.org/3/movie/" + movieDTO.getMovieId() + "?api_key=" + tmdbApiKey;
+		String jsonString = restTemplate.getForObject(url, String.class);
+		
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonString);
+		
+		Long runTime = (Long)jsonObject.get("runtime");
+		
+		return runTime;
+		
 	}
 }

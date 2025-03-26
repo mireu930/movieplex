@@ -1,45 +1,30 @@
-/* 제목 input에 ... 처리 */
-.movie-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  /* 본문 전체 flex 정렬 */
+.layout-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between; /* ✅ 핵심 */
+  align-items: flex-start;
+}
+
+.center-box {
+  flex: 1 1 60%;
+  min-width: 400px;
+}
+
+.right-wrapper {
+  flex: 0 0 300px;
+  max-width: 300px;
+}
+
+
+@media (max-width: 768px) {
   .layout-wrapper {
-    display: flex;
-    gap: 10px;
-  }
-  
-  /* 각 영역 크기 조절 */
-  .left-box {
-    flex: 0.5;
-    /* border: 2px solid rgb(212, 212, 212); */
-    padding: 10px;
-  }
-  
-  .center-box {
-    flex: 2.7;
-    /* border: 2px solid red; */
-    padding: 10px;
-  }
-  
-  .right-wrapper {
-    flex: 1.3;
-    display: flex;
     flex-direction: column;
-    gap: 20px;
   }
-  
-  .right-box {
-    padding: 10px;
+
+  .center-box,
+  .right-wrapper {
+    width: 100%;
+    max-width: 100%;
   }
-  
-  .right-box.middle {
-    /* border: 2px solid gold; */
-  }
-  
-  .right-box.bottom {
-    /* border: 2px solid purple; */
-  }
-  
+}
