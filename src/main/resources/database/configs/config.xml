@@ -20,6 +20,7 @@
 		<typeAlias type="com.movie.plex.boards.qna.QnaDTO" alias="QnaDTO"/>
 		<typeAlias type="com.movie.plex.boards.qna.QnaFilesDTO" alias="QnaFilesDTO"/>
 		
+		<typeAlias type="com.movie.plex.pages.Pager" alias="Pager"/>
 		<typeAlias type="java.util.Map" alias="Map"/> 
 		<typeAlias type="java.util.List" alias="List"/>
 	</typeAliases>
