@@ -1,5 +1,7 @@
 package com.movie.plex.users;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +37,21 @@ public class UserService {
 	
 	public UserDTO findEmail(String email) throws Exception {
 		return userDAO.findEmail(email);
+	}
+	
+	public UserDTO getDetail(String userId) throws Exception {
+		return userDAO.getDetail(userId);
+	}
+	
+	public int update(UserDTO userDTO) throws Exception {
+		return userDAO.update(userDTO);
+	}
+	
+	public int inactive(UserDTO userDTO) throws Exception {
+		return userDAO.inactive(userDTO);
+	}
+	
+	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+		return userDAO.couponList(userDTO);
 	}
 }

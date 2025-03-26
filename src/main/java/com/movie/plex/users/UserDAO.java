@@ -27,5 +27,21 @@ public class UserDAO {
 	public UserDTO findEmail(String email) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"findEmail", email);
 	}
+	
+	public UserDTO getDetail(String userId) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getDetail", userId);
+	}
+	
+	public int update(UserDTO userDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"update", userDTO);
+	}
+	
+	public int inactive(UserDTO userDTO) throws Exception{
+		return sqlSession.update(NAMESPACE+"inactive", userDTO);
+	}
+	
+	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
+	}
 
 }

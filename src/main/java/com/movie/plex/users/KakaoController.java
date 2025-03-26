@@ -45,13 +45,21 @@ public class KakaoController {
 	    
 	    if(userDTO!=null) {
 	    	userDTO = userService.getLogin(userDTO);
-	    	session.setAttribute("accessToken", accessToken);
-	    	session.setAttribute("userEmail", email);
-	    	session.setAttribute("userName", nickname);
+	    	 if (userDTO.getUserOut() == 1) {
+		            // 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+		            model.addAttribute("result", "비활성화된 사용자입니다. 관리자에게 문의하세요.");
+		            model.addAttribute("path", "/users/login");
+		            return "commons/result";  // 비활성화된 사용자 메시지 출력
+		        }else {
+		        	session.setAttribute("accessToken", accessToken);
+		        	session.setAttribute("userEmail", email);
+		        	session.setAttribute("userName", nickname);
+		        	
+		        	session.setAttribute("user", userDTO);
+		        	
+		        	return "redirect:/";		        	
+		        }
 	    	
-	    	session.setAttribute("user", userDTO);
-	    	
-	    	return "redirect:/";
 	    } else {
 	    	model.addAttribute("name", nickname);
 	    	model.addAttribute("email", email);

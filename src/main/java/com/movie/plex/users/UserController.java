@@ -1,18 +1,23 @@
 package com.movie.plex.users;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -47,27 +52,19 @@ public class UserController {
 		return mailSend.joinEmail(email);
 	}
 	
-//	@RequestMapping(value = "/login/oauth2/code/kakao", method = RequestMethod.GET)
-//	public String kakaoLogin(@RequestParam String code){
-//		System.out.println("kakaologin");
-//	    // 1. 인가 코드 받기 (@RequestParam String code)
-//
-//	    // 2. 토큰 받기
-//	    String accessToken = kakaoApi.getAccessToken(code);
-//	    System.out.println(accessToken);
-//
-//	    // 3. 사용자 정보 받기
-//	    Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
-//
-//	    String email = (String)userInfo.get("email");
-//	    String nickname = (String)userInfo.get("nickname");
-//
-//	    System.out.println("email = " + email);
-//	    System.out.println("nickname = " + nickname);
-//	    System.out.println("accessToken = " + accessToken);
-//
-//	    return "redirect:/result";
-//	}
+	@RequestMapping(value = "forgetPw", method = RequestMethod.GET)
+	public String forgetPw(String email, String pw, Model model) throws Exception {
+		
+		UserDTO userDTO = userService.findEmail(email);
+		
+		if(userDTO!=null&&email.equals(userDTO.getUserEmail())) {
+			userDTO = userService.getDetail(userDTO.getUserId());
+			pw = userDTO.getUserPw();
+			
+		} 
+		return mailSend.forgetEmail(email, pw);
+	}
+	
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public String getLogin(Model model) throws Exception {
@@ -77,13 +74,21 @@ public class UserController {
 	}
 	
 	
+	
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String getLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
 		userDTO = userService.getLogin(userDTO);
 		
 		if(userDTO != null) {
-			session.setAttribute("user", userDTO);
-			return "redirect:/";
+			 if (userDTO.getUserOut() == 1) {
+		            // 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+		            model.addAttribute("result", "비활성화된 사용자입니다. 관리자에게 문의하세요.");
+		            model.addAttribute("path", "./login");
+		            return "commons/result";  // 비활성화된 사용자 메시지 출력
+		        }else {
+		        	session.setAttribute("user", userDTO);
+		        	return "redirect:/";
+		        }
 		}
 		
 		model.addAttribute("result", "로그인실패");
@@ -126,6 +131,76 @@ public class UserController {
 		}
 		
 		return "commons/result";
+	}
+	
+	@RequestMapping(value = "mypage", method = RequestMethod.GET)
+	public UserDTO mypage(UserDTO userDTO, HttpSession session, Model model) throws Exception {
+		return (UserDTO)session.getAttribute("user");
+	}
+	
+	@RequestMapping(value = "mypageData", method = RequestMethod.GET)
+	@ResponseBody
+	public UserDTO getUserInfo(HttpSession session) {
+	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
+	    return userDTO;
+	}
+	
+	@RequestMapping(value = "update",method = RequestMethod.POST)
+	@ResponseBody
+	public UserDTO  update(HttpSession session,
+					@RequestParam("userId") String userId, 
+					@RequestParam("userName") String userName,
+					@RequestParam("userEmail") String userEmail,
+					@RequestParam("userPhone") String userPhone,
+					@RequestParam("userPw") String userPw) throws Exception {
+		System.out.println("update");
+		System.out.println(userId);
+		System.out.println(userName);
+		System.out.println(userEmail);
+		System.out.println(userPhone);
+		System.out.println(userPw);
+		
+		UserDTO userDTO = userService.getDetail(userId);
+		
+		userDTO.setUserName(userName);
+		userDTO.setUserEmail(userEmail);
+		userDTO.setUserPhone(userPhone);
+		userDTO.setUserPw(userPw);
+		
+		int result = userService.update(userDTO);
+		
+		if(result>0) {
+			userDTO = userService.getDetail(userId);
+			session.setAttribute("user", userDTO);
+			return userDTO;
+		} else {
+			return null;
+		}
+	}
+	
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
+	@ResponseBody
+	public int delete(@RequestParam("userId") String userid, HttpSession session) throws Exception {
+		System.out.println("delete");
+		UserDTO userDTO = userService.getDetail(userid);
+		userDTO.setUserOut(1L);
+		
+		int result = userService.inactive(userDTO);
+		session.invalidate();
+		return result;
+	}
+	
+	@RequestMapping(value = "couponList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		return userService.couponList(userDTO);
+	}
+	
+	
+	@RequestMapping(value = "admin", method = RequestMethod.GET)
+	public UserDTO admin(HttpSession session) throws Exception {
+		return (UserDTO)session.getAttribute("user");
 	}
 	
 }
