@@ -87,6 +87,7 @@ public class UserController {
 		            return "commons/result";  // 비활성화된 사용자 메시지 출력
 		        }else {
 		        	session.setAttribute("user", userDTO);
+		        	System.out.println(session.getAttribute("user"));
 		        	return "redirect:/";
 		        }
 		}

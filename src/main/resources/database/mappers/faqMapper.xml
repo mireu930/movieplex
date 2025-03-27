@@ -4,17 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.movie.plex.boards.faq.FaqDAO">
-  	<select id="getList" resultType="FaqDTO">
+  	<select id="getList" resultMap="getResult">
 		SELECT * FROM FAQ
+		JOIN USERS
+		USING(USERNUM)
 	</select>
 	
-	<select id="getDetail" parameterType="FaqDTO" resultType="FaqDTO">
-		SELECT * FROM FAQ WHERE FAQNUM =#{faqNum}
+	<select id="getDetail" parameterType="FaqDTO" resultMap="getResult">
+		SELECT * FROM FAQ 
+		JOIN USERS
+		USING(USERNUM)
+		WHERE FAQNUM =#{faqNum}
 	</select>
 	
 	<insert id="add" parameterType="FaqDTO">
 		INSERT INTO FAQ
-		VALUES (FAQNUM_SEQ.NEXTVAL,#{boardTitle},#{boardContents},SYSDATE,0,0,0,0,#{userNum})
+		VALUES (FAQNUM_SEQ.NEXTVAL,#{boardTitle},#{boardContents},SYSDATE,0,#{userNum})
 	</insert>
 	
 	<insert id="addFile" parameterType="FaqFilesDTO">
@@ -44,5 +49,26 @@
 	<delete id="deleteFileAll" parameterType="FaqFilesDTO">
 		DELETE FAQFILES WHERE FAQNUM = #{faqNum}
 	</delete>
+	
+	<resultMap type="FaqDTO" id="getResult">
+  		<id column="FAQNUM" property="faqNum"/>
+  		<result column="BOARDTITLE" property="boardTitle"/>
+  		<result column="BOARDCONTENTS" property="boardContents"/>
+  		<result column="BOARDDATE" property="boardDate"/>
+  		<result column="BOARDHIT" property="boardHit"/>
+  		<result column="USERNUM" property="userNum"/>
+  		
+  		<association property="userDTO" javaType="UserDTO">
+	  		<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		</association>
+  	</resultMap>
 	
   </mapper>

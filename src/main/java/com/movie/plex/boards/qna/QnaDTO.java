@@ -1,6 +1,7 @@
 package com.movie.plex.boards.qna;
 
 import com.movie.plex.boards.BoardDTO;
+import com.movie.plex.users.UserDTO;
 
 public class QnaDTO extends BoardDTO {
 	
@@ -8,6 +9,15 @@ public class QnaDTO extends BoardDTO {
 	private Long boardRef;
 	private Long boardStep;
 	private Long boardDepth;
+	private UserDTO userDTO;
+
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 	
 	public Long getqnaNum() {
 		return qnaNum;

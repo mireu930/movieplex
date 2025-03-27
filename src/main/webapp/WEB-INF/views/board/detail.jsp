@@ -15,6 +15,7 @@
 <title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/board.css">
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>
@@ -22,7 +23,50 @@
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
-		<!-- 컨텐츠 넣는 부분 -->
+	<div class="content-wrapper">
+		<c:if test="${kind eq 'notice'}">
+			<h2>공지사항</h2>
+		</c:if>
+		<c:if test="${kind eq 'qna'}">
+			<h2>QNA</h2>
+		</c:if>
+		<c:if test="${kind eq 'faq'}">
+			<h2>FAQ</h2>
+		</c:if>
+		<table class="table table-striped table-hover">
+		 	<thead>
+			    <tr>
+			      <th scope="col">제목</th>
+			      <th scope="col">내용</th>
+			      <th scope="col">작성자</th>
+			      <th scope="col">조회수</th>
+			    </tr>
+			  </thead>
+			<tbody>
+			    <tr>
+			      <th scope="row">${dto.boardTitle}</th>
+			      <td>${dto.boardContents}</td>
+			      <td>${dto.userDTO.userName}</td>
+			      <td>${dto.boardHit}</td>
+			    </tr>
+			</tbody>
+		</table>
+		</div>
+		<div class="btn-container">
+			<c:if test="${kind eq 'faq'}">
+				<a href="./update?faqNum=${dto.faqNum}" class ="btn btn-success">수정</a>	
+				<a href="./delete?faqNum=${dto.faqNum}" class ="btn btn-danger">삭제</a>
+			</c:if>	
+			<c:if test="${kind eq 'notice'}">
+				<a href="./update?noticeNum=${dto.noticeNum}" class ="btn btn-success">수정</a>	
+				<a href="./delete?noticeNum=${dto.noticeNum}" class ="btn btn-danger">삭제</a>
+			</c:if>	
+			<c:if test="${kind eq 'qna'}">
+				<a href="./update?boardNum=${dto.qnaNum}" class ="btn btn-success">수정</a>	
+				<a href="./delete?boardNum=${dto.qnaNum}" class ="btn btn-danger">삭제</a>
+				<a href="./reply?boardNum=${dto.qnaNum}" class ="btn btn-primary">댓글쓰기</a>
+			</c:if>		
+		</div>
 	</main>
 	<!-- footer -->
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
