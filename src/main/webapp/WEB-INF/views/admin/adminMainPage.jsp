@@ -11,10 +11,12 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>Album example · Bootstrap v5.3</title>
+<link rel="icon" href="/resources/image/admin_page.png"/> 
+<title>관리자 페이지</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/calendar.css">
+<link rel="stylesheet" href="/resources/css/adminAddTheaterForm.css">
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>
@@ -22,19 +24,19 @@
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main >
-		<div class="d-flex">
+		<div id="contents">
 			<div class="adminSidebar">
 				<c:import url="/WEB-INF/views/templates/adminSideBar.jsp"></c:import>
 			</div>
-			<div class="mainContents">
+			<div id="mainContents">
 
 
 			</div>
 		</div>
 	</main>
-
-	<!-- <script src="/resources/js/calendar.js"></script> -->
 	<script src="/resources/js/adminPage.js"></script>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </body>
 </html>

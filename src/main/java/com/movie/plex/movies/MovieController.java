@@ -9,17 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
+@RequestMapping("/movies/*")
 public class MovieController {
 	
 	@Autowired
 	private MovieService movieService;
 	
-//	@RequestMapping(value="/getMainList", method=RequestMethod.GET)
-//	public void getMainList(Model model) throws Exception{
-//		List<MovieDTO> dtos = movieService.getMainList();
-//		
-//		model.addAttribute("topMovieList", dtos);
-//		
-//		
-//	}
+	@Autowired
+	private MovieJson movieJson;
+	
+	@RequestMapping(value="getRuntime")
+	public String getRuntime(MovieDTO movieDTO, Model model) throws Exception{
+		System.out.println("!!!");
+		Long runTime = movieJson.getRuntime(movieDTO);
+		
+		model.addAttribute("result", runTime);
+		
+		return "/admin/theater/ajaxResult";
+	}
 }
