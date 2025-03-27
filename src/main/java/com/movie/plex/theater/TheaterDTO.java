@@ -10,12 +10,12 @@ public class TheaterDTO {
 	private Long theaterId;
 	private Timestamp theaterStart;
 	private Timestamp theaterEnd;
-	private Date theaterDate;
 	private String theaterName;
 	private Long movieId;
 	private Long kind;
-	
 	private MovieDTO movieDTO;
+	
+	
 	
 	public MovieDTO getMovieDTO() {
 		return movieDTO;
@@ -31,7 +31,6 @@ public class TheaterDTO {
 	}
 	
 	
-	
 	public Timestamp getTheaterStart() {
 		return theaterStart;
 	}
@@ -43,13 +42,6 @@ public class TheaterDTO {
 	}
 	public void setTheaterEnd(Timestamp theaterEnd) {
 		this.theaterEnd = theaterEnd;
-	}
-	
-	public Date getTheaterDate() {
-		return theaterDate;
-	}
-	public void setTheaterDate(Date theaterDate) {
-		this.theaterDate = theaterDate;
 	}
 	public String getTheaterName() {
 		return theaterName;
@@ -75,7 +67,7 @@ public class TheaterDTO {
 	
 	public String getPrintStart() {
 		if(theaterStart != null) {
-			return new SimpleDateFormat("HH:mm").format(theaterStart);
+			return new SimpleDateFormat("MM-dd HH:mm").format(theaterStart);
 		}
 		
 		return "";
@@ -83,7 +75,7 @@ public class TheaterDTO {
 	
 	public String getPrintEnd() {
 		if(theaterStart != null) {
-			return new SimpleDateFormat("HH:mm").format(theaterEnd);
+			return new SimpleDateFormat("MM-dd HH:mm").format(theaterEnd);
 		}
 		
 		return "";

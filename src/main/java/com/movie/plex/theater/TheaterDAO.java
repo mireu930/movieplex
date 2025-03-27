@@ -18,11 +18,15 @@ public class TheaterDAO {
 		return sqlSession.insert(NAMESPACE + "addTheater", theaterDTO); 
 	}
 
-	public List<TheaterDTO> getList(TheaterDTO theaterDTO) {
+	public List<TheaterDTO> getList(TheaterDTO theaterDTO) throws Exception{
 		
 		return sqlSession.selectList(NAMESPACE + "getList", theaterDTO);
 	}
-	public List<TheaterDTO> getDayList(TheaterDTO theaterDTO){
+	public List<TheaterDTO> getDayList(TheaterDTO theaterDTO)throws Exception{
 		return sqlSession.selectList(NAMESPACE + "getDayList", theaterDTO);
+	}
+	
+	public int checkTime(TheaterDTO theaterDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "checkTime", theaterDTO);
 	}
 }

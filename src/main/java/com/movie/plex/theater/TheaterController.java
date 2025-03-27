@@ -21,7 +21,6 @@ public class TheaterController {
 
 	@RequestMapping(value = "getDayList", method = RequestMethod.GET)
 	public String getList(TheaterDTO theaterDTO, Model model) throws Exception {
-		System.out.println(theaterDTO.getTheaterDate());
 		List<TheaterDTO> dtos = theaterService.getDayList(theaterDTO);
 		System.out.println(dtos.size());
 
@@ -31,12 +30,11 @@ public class TheaterController {
 	}
 	
 	@RequestMapping(value="addTheater", method=RequestMethod.GET)
-	public void addTheater(TheaterDTO theaterDTO) throws Exception{
-		System.out.println("성공");
-		System.out.println(theaterDTO.getMovieId());
-		System.out.println(theaterDTO.getTheaterName());
-		//System.out.println(theaterDTO.getTheaterStart());
-		System.out.println(theaterDTO.getTheaterDate());
+	public String addTheater(TheaterDTO theaterDTO, Model model) throws Exception{
+		int result = theaterService.addTheater(theaterDTO);
+		model.addAttribute("result", result);
+		System.out.println("addTheater 완료");
+		return "/admin/theater/ajaxResult";
 	}
 
 }

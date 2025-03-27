@@ -33,11 +33,13 @@ contents.addEventListener("click", (e) => {
         contents.classList.add("d-flex");
         mainContents.classList.add("flex-grow-1", "p-4");
         fetch(url)
-        .then(res => res.text())
-        .then(res => {
-            mainContents.innerHTML = res;
-        })
-        
+            .then(res => res.text())
+            .then(res => {
+                mainContents.innerHTML = res;
+
+
+            })
+
     }
 })
 
@@ -45,26 +47,32 @@ contents.addEventListener("click", (e) => {
 
 //영화 조회
 mainContents.addEventListener("click", (e) => {
-    if(e.target.getAttribute("id") == "fetchScheduleBtn"){
+    if (e.target.getAttribute("id") == "fetchScheduleBtn") {
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
-        let selectedName="";
-        if(selectedRadio){
-            selectedName = selectedRadio.id;
-            console.log(selectedName);
-        }
+        let selectedName = selectedRadio ? selectedRadio.id : "";
         let selectedDate = document.getElementById("theaterDate").value;
-        console.log(selectedDate);
-        
-        let url = `/theater/getDayList?theaterDate=${selectedDate}&theaterName=${selectedName}`;
+        if(selectedName == "" || selectedDate == ""){
+            alert("모든 정보를 입력하세요!");
+            return;
+        } 
+        const date = `${selectedDate} 00:00:00`;
+        let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
         fetch(url)
-        .then(r => r.text())
-        .then(r => {
-            const scheduleList = document.getElementById("scheduleList");
-            scheduleList.innerHTML = r;
-        })
+            .then(r => r.text())
+            .then(r => {
+                const scheduleList = document.getElementById("scheduleList");
+                scheduleList.innerHTML = r;
+            })
     }
-
 })
+
+mainContents.addEventListener("change", (e) => {
+    if (e.target.name == "theater") {
+        const scheduleList = document.getElementById("scheduleList");
+        scheduleList.innerHTML = "";
+    }
+})
+
 
 let runTime = 0;
 
@@ -72,107 +80,145 @@ let startTime = "";
 let endTime = "";
 let selectedMovie = "";
 
-//영화 러닝 타임
-mainContents.addEventListener("change", (e)=>{
-    if(e.target.getAttribute("id") == "selectOption"){
+//영화 러닝 타임 불러오기
+mainContents.addEventListener("change", (e) => {
+    if (e.target.getAttribute("id") == "selectOption") {
         console.log(e.target.value);
         selectedMovie = e.target.value;
         let url = `/movies/getRuntime?movieId=${e.target.value}`;
         fetch(url)
-        .then(r=>r.text())
-        .then(r => {
-            runTime = r;
+            .then(r => r.text())
+            .then(r => {
+                runTime = parseInt(r);
 
-            const runningTimeDisplay = document.getElementById("runningTimeDisplay");
-            runningTimeDisplay.innerText=runTime;
-        })
+                const runningTimeDisplay = document.getElementById("runningTimeDisplay");
+                runningTimeDisplay.innerText = runTime;
+
+                //영화가 변경되었을 때 다시 러닝타임으로 끝나는 시간 계산하기
+                calculationEndTime();
+            })
     }
 })
 
-//러닝 타임 계산 후 종료시간 계산
+//러닝타임으로 끝나는 시간 계산하기
 mainContents.addEventListener("change", (e) => {
     if (e.target.getAttribute("id") === "startTime") {
-        let sTime = document.getElementById("startTime");
-        let eTime = document.getElementById("endTime");
 
-        if (!sTime.value) return; // 입력값이 없으면 중단
-
-        let [hours, minutes] = sTime.value.split(":").map(Number);
-        const totalMinutes = hours * 60 + minutes;
-
-        // // runTime이 존재하는지 확인
-        // if (!runTime || isNaN(runTime)) {
-        //     console.warn("⚠️ 러닝타임이 유효하지 않음:", runTime);
-        //     return;
-        // }
-
-        const endTimeMin = totalMinutes + parseInt(runTime);
-
-        console.log(endTimeMin);
-        
-        const resultHours = Math.floor(endTimeMin / 60);
-        const resultMinutes = endTimeMin % 60;
-
-        const resultTime = `${String(resultHours).padStart(2, '0')}:${String(resultMinutes).padStart(2, '0')}`;
-        eTime.value = resultTime;
-
-        startTime = sTime.value
-        endTime = resultTime;
+        calculationEndTime();
     }
 });
+let startDate = ""
+let endDate = ""
+//시작시간으로 종료시간 계산하는 함수(러닝타임 포함)
+function calculationEndTime() {
+    let sTime = document.getElementById("startTime");
+    let eTime = document.getElementById("endTime");
+    if (!sTime.value || isNaN(runTime)) return;
 
+    let [hours, minutes] = sTime.value.split(":").map(Number);
+
+    let selectedDate = document.getElementById("theaterDate").value;
+    let [year, month, day] = selectedDate.split("-").map(Number);
+
+    startDate = new Date(year, month - 1, day, hours, minutes);
+    endDate = new Date(startDate.getTime() + parseInt(runTime) * 60000);
+
+    //24시간 넘어갈 시 처리해주는 코드
+    let endhours = endDate.getHours();
+    let endMinutes = endDate.getMinutes();
+
+    if (endhours >= 24) {
+        endhours = endhours % 24;
+    }
+
+    startTime = sTime.value;
+
+    //intput type=date 의 value 값의 넣어주기 위한 형변환
+    endTime = `${String(endhours).padStart(2, '0')}:${String(endMinutes).padStart(2, '0')}`;
+    eTime.value = endTime;
+
+    if (endDate.getDate() !== startDate.getDate()) {
+        alert("⚠️ 종료 시간이 다음 날로 넘어갑니다!");
+    }
+}
+
+//상영정보추가
 mainContents.addEventListener("click", (e) => {
-    if(e.target.getAttribute("id") == "add_btn"){
+    if (e.target.getAttribute("id") == "add_btn") {
         const theaterDate = document.getElementById("theaterDate");
         const theaterName = document.getElementById("theaterName");
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
-        let selectedName="";
-        if(selectedRadio){
-            selectedName = selectedRadio.id;
-            console.log(selectedName);
-        }
+        let selectedName = selectedRadio ? selectedRadio.id : "";
 
         let selectedDate = document.getElementById("theaterDate").value;
-        console.log(selectedDate);
-        
-        const fullDateStart = `${selectedDate} ${startTime}:00`;
-        const fullDateEnd = `${selectedDate} ${endTime}:00`;
-        //let url = `/theater/addTheater?movieId=${selectedMovie}&theaterName=${selectedName}&theaterDate=${selectedDate}`;
-        //let url = `/theater/addTheater`;
 
+        startDate = formatToTimeStamp(startDate);
+        endDate = formatToTimeStamp(endDate);
+
+        if (selectedDate == "" || selectedMovie == "" || selectedName == "" || startTime == "" || endTime == "") {
+            alert("모든 정보를 입력하세요");
+            return;
+        }
+    
         const params = new URLSearchParams({
             movieId: selectedMovie,
             theaterName: selectedName,
-            theaterStart: fullDateStart,
-            theaterEnd: fullDateEnd,
-            theaterDate: selectedDate
-          });
-          
-        const url = `/theater/addTheater?${params.toString()}`;
-          
-        fetch(url)
-        .then(r => r.text())
-        .then(r => {
+            theaterStart: startDate,
+            theaterEnd: endDate,
+        });
 
-        })
+        const url = `/theater/addTheater?${params.toString()}`;
+
+        fetch(url)
+            .then(r => r.text())
+            .then(r => {
+                if (r * 1 == 1) {
+                    alert("상영 정보가 추가 되었습니다.");
+
+                    document.getElementById("fetchScheduleBtn").click();
+                    document.getElementById("reset_btn").click();
+                } else {
+                    alert("상영시간이 겹칩니다. 시간을 변경하세요.");
+                }
+
+            })
+            .catch((e) => {
+                console.log(e);
+                alert("관리자에게 문의하세요");
+            })
     }
 })
 
 mainContents.addEventListener("click", (e) => {
-    if(e.target.getAttribute("id") == "reset_btn"){
-        const resetOption = document.getElementById("selectOption");
-        resetOption.value= "default";
+    if (e.target.getAttribute("id") == "reset_btn") {
         const resetStart = document.getElementById("startTime");
         resetStart.value = "";
         const resetEnd = document.getElementById("endTime");
         resetEnd.value = "";
         const resetRuntime = document.getElementById("runningTimeDisplay");
         resetRuntime.innerText = "";
-        const resetName = document.getElementById("theaterName");
-        resetName.value = "default";
+        const selectedRadio = document.querySelector('input[name="theater"]:checked');
+        if (selectedRadio) selectedRadio.checked = false;
+
+        selectedMovie = "";
+        runTime = 0;
+        startTime = "";
+        endTime = "";
     }
 })
 
+//자바 스크립트의 Date 객체를 자바 TimeStamp 형식으로 받을 수 있게
+//변경하는 함수
+function formatToTimeStamp(dateObj){
+    const yyyy = dateObj.getFullYear();
+    const MM = String(dateObj.getMonth() + 1).padStart(2,"0");
+    const dd = String(dateObj.getDate()).padStart(2,"0");
+    const hh = String(dateObj.getHours()).padStart(2, "0");
+    const mm = String(dateObj.getMinutes()).padStart(2,'0');
+    const ss = "00";
+
+    return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
+}
 
 
 
@@ -180,17 +226,17 @@ mainContents.addEventListener("click", (e) => {
 //예매하기 할 때 사용할 js admin에서는 필요 없음
 
 //contents.classList.add("d-flex");
-        // fetch("/admin/getTheaterPage")
-        //     .then(r => r.text())
-        //     .then(r => {
-        //         let e = document.createAttribute("style");
-        //         e.value = "display: flex; gap: 20px; width: 100%;";
-        //         mainContents.setAttributeNode(e);
-        //         //console.log(r);
-        //         mainContents.innerHTML = r;
-        //         act();
+// fetch("/admin/getTheaterPage")
+//     .then(r => r.text())
+//     .then(r => {
+//         let e = document.createAttribute("style");
+//         e.value = "display: flex; gap: 20px; width: 100%;";
+//         mainContents.setAttributeNode(e);
+//         //console.log(r);
+//         mainContents.innerHTML = r;
+//         act();
 
-        //     })
+//     })
 
 
 // let checkMovieId="";
@@ -233,7 +279,7 @@ mainContents.addEventListener("click", (e) => {
 //         fetch(url)
 //         .then(res => res.text())
 //         .then(res => {
-//             document.getElementById("theaterArea").innerHTML=res          
+//             document.getElementById("theaterArea").innerHTML=res
 //         })
 //     }
 // })

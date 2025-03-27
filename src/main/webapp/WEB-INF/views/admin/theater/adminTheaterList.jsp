@@ -6,7 +6,8 @@
 	<li class="list-group-item">
 		<div>
 			<strong>${t.movieDTO.movieTitle}</strong><br> 
-			<span class="fw-semibold text-secondary">${t.printStart} ~${t.printEnd}</span>
+			<span class="fw-semibold text-secondary">${t.theaterName}관</span>
+			<span class="fw-semibold text-secondary">${t.printStart} ~ ${t.printEnd}</span>
 		</div>
 	</li>
 </c:forEach>

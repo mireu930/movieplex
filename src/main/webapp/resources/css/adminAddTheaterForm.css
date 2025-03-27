@@ -1,21 +1,26 @@
 .layout-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
-  justify-content: space-between; /* ✅ 핵심 */
+  gap: 16px;               /* 🔽 gap 줄여서 너무 멀리 안 떨어지게 */
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
 .center-box {
-  flex: 1 1 60%;
-  min-width: 400px;
+  flex: 0 0 58%;           /* 🔽 기존보다 살짝 줄임 (예: 60% → 58%) */
+  min-width: 320px;
 }
 
 .right-wrapper {
-  flex: 0 0 300px;
-  max-width: 300px;
+  flex: 0 0 360px;         /* 🔼 여전히 고정폭, 하지만 위치가 더 오른쪽으로 당겨짐 */
+  max-width: 360px;
+  margin-left: auto;       /* 💡 자동으로 오른쪽에 바짝 붙도록 */
 }
 
+#scheduleList {
+  max-height: 400px;      /* 👈 적절한 높이 설정 */
+  overflow-y: auto;       /* 👈 세로 스크롤만 생기게 */
+}
 
 @media (max-width: 768px) {
   .layout-wrapper {
