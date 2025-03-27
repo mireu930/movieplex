@@ -36,5 +36,13 @@ public class TheaterController {
 		System.out.println("addTheater 완료");
 		return "/admin/theater/ajaxResult";
 	}
-
+	
+	@RequestMapping(value="deleteTheater", method=RequestMethod.GET)
+	public String deleteTheater(TheaterDTO theaterDTO, Model model) throws Exception{
+		int result = theaterService.deleteTheater(theaterDTO);
+		
+		model.addAttribute("result", result);
+		
+		return "/admin/theater/ajaxResult";
+	}
 }

@@ -36,8 +36,6 @@ contents.addEventListener("click", (e) => {
             .then(res => res.text())
             .then(res => {
                 mainContents.innerHTML = res;
-
-
             })
 
     }
@@ -51,10 +49,10 @@ mainContents.addEventListener("click", (e) => {
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
         let selectedName = selectedRadio ? selectedRadio.id : "";
         let selectedDate = document.getElementById("theaterDate").value;
-        if(selectedName == "" || selectedDate == ""){
+        if (selectedName == "" || selectedDate == "") {
             alert("모든 정보를 입력하세요!");
             return;
-        } 
+        }
         const date = `${selectedDate} 00:00:00`;
         let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
         fetch(url)
@@ -159,7 +157,7 @@ mainContents.addEventListener("click", (e) => {
             alert("모든 정보를 입력하세요");
             return;
         }
-    
+
         const params = new URLSearchParams({
             movieId: selectedMovie,
             theaterName: selectedName,
@@ -176,7 +174,19 @@ mainContents.addEventListener("click", (e) => {
                     alert("상영 정보가 추가 되었습니다.");
 
                     document.getElementById("fetchScheduleBtn").click();
-                    document.getElementById("reset_btn").click();
+
+                    const resetStart = document.getElementById("startTime");
+                    resetStart.value = "";
+                    const resetEnd = document.getElementById("endTime");
+                    resetEnd.value = "";
+                    const resetRuntime = document.getElementById("runningTimeDisplay");
+                    resetRuntime.innerText = "";
+                    const resetMovie = document.getElementById("selectOption")
+                    resetMovie.value = "default";
+
+                    runTime = 0;
+                    startTime = "";
+                    endTime = "";
                 } else {
                     alert("상영시간이 겹칩니다. 시간을 변경하세요.");
                 }
@@ -189,6 +199,7 @@ mainContents.addEventListener("click", (e) => {
     }
 })
 
+//초기화 버튼
 mainContents.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") == "reset_btn") {
         const resetStart = document.getElementById("startTime");
@@ -197,6 +208,8 @@ mainContents.addEventListener("click", (e) => {
         resetEnd.value = "";
         const resetRuntime = document.getElementById("runningTimeDisplay");
         resetRuntime.innerText = "";
+        const resetMovie = document.getElementById("selectOption")
+        resetMovie.value = "default";
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
         if (selectedRadio) selectedRadio.checked = false;
 
@@ -209,18 +222,41 @@ mainContents.addEventListener("click", (e) => {
 
 //자바 스크립트의 Date 객체를 자바 TimeStamp 형식으로 받을 수 있게
 //변경하는 함수
-function formatToTimeStamp(dateObj){
+function formatToTimeStamp(dateObj) {
     const yyyy = dateObj.getFullYear();
-    const MM = String(dateObj.getMonth() + 1).padStart(2,"0");
-    const dd = String(dateObj.getDate()).padStart(2,"0");
+    const MM = String(dateObj.getMonth() + 1).padStart(2, "0");
+    const dd = String(dateObj.getDate()).padStart(2, "0");
     const hh = String(dateObj.getHours()).padStart(2, "0");
-    const mm = String(dateObj.getMinutes()).padStart(2,'0');
+    const mm = String(dateObj.getMinutes()).padStart(2, '0');
     const ss = "00";
 
     return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
 }
 
 
+//---------------------------------------삭제하기-----------------------------------------------
+
+mainContents.addEventListener("click", (e) => {
+    if (e.target.getAttribute("id") == "del_btn") {
+        const theaterId = e.target.getAttribute("data-theater-id");
+        let url = `/theater/deleteTheater?theaterId=${theaterId}`;
+        fetch(url)
+            .then(r => r.text())
+            .then(r => {
+                console.log(r);
+                if (parseInt(r) == 1) {
+                    alert("삭제가 완료 되었습니다.");
+                    e.target.parentElement.parentElement.parentElement.remove();
+                } else {
+                    //이건 나중에 좀 생각해봐야함..... 삭제가 가능하게 할 건지..말건지...
+                    alert("이미 예약한 고객이 있어 삭제가 불가합니다.");
+                }
+            })
+            .catch(e => {
+                alert("관리자에게 문의하세요");
+            })
+    }
+})
 
 
 //예매하기 할 때 사용할 js admin에서는 필요 없음

@@ -50,6 +50,10 @@
 		</association>
 
 	</resultMap>
+	
+	<delete id="deleteTheater" parameterType="TheaterDTO">
+		DELETE THEATER WHERE THEATERID = #{theaterId}
+	</delete>
 
 	<select id="checkTime" parameterType="TheaterDTO" resultType="int">
 		SELECT COUNT(*)
@@ -57,6 +61,10 @@
 		WHERE THEATERNAME = #{theaterName}
 		AND THEATERSTART &lt; #{theaterEnd}
 		AND THEATEREND &gt; #{theaterStart}
+	</select>
+	
+	<select id="deleteCheck" parameterType="TheaterDTO" resultType="int">
+		SELECT COUNT(*) FROM MOVIEBOOKS WHERE THEATERID = #{theaterId}
 	</select>
 
 </mapper>

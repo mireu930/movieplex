@@ -29,4 +29,14 @@ public class TheaterDAO {
 	public int checkTime(TheaterDTO theaterDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "checkTime", theaterDTO);
 	}
+
+	public int deleteCheck(TheaterDTO theaterDTO) {
+		return sqlSession.selectOne(NAMESPACE + "deleteCheck", theaterDTO);
+		
+	}
+
+	public int deleteTheater(TheaterDTO theaterDTO) {
+		return sqlSession.delete(NAMESPACE + "deleteTheater", theaterDTO);
+		
+	}
 }

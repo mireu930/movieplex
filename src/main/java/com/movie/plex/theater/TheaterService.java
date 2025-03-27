@@ -32,4 +32,14 @@ public class TheaterService {
 	public int checkTime(TheaterDTO theaterDTO) throws Exception{
 		return theaterDAO.checkTime(theaterDTO);
 	}
+
+	public int deleteTheater(TheaterDTO theaterDTO) {
+		int result = theaterDAO.deleteCheck(theaterDTO);
+		System.out.println("!!!!!!" + result);
+		if(result == 0) {
+			result = theaterDAO.deleteTheater(theaterDTO);
+			return result;
+		}
+		return 0;
+	}
 }
