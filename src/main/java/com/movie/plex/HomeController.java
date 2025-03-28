@@ -31,7 +31,7 @@ public class HomeController {
 	public String home(Model model) throws Exception{
 		logger.info("Welcome home! The client locale is {}.");
 		
-		List<MovieDTO> dtos = movieService.getList();
+		List<MovieDTO> dtos = movieService.getMainList();
 		model.addAttribute("topMovieList", dtos);
 		return "main";
 	}

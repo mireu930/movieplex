@@ -16,13 +16,13 @@
 		    <!-- 왼쪽 메뉴 -->
 		    <ul class="nav d-flex justify-content-center gap-5">
 		        <li><a href="#" class="nav-link px-2 ">영화</a></li>
-		        <li><a href="#" class="nav-link px-2">예매</a></li>
+		        <li><a href="/movieBooks/booking" class="nav-link px-2">예매</a></li>
 		        <li><a href="#" class="nav-link px-2">ReviewNest</a></li>
 		    </ul>
 		
 		    <!-- 중앙에 위치할 div -->
 		    <div class="logoDiv text-center flex-shrink-0">
-		        <a><img src="/resources/image/logo_clean.png"></a>
+		        <a href="/"><img src="/resources/image/logo_clean.png"></a>
 		    </div>
 		
 		    <!-- 오른쪽 메뉴 -->

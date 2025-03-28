@@ -17,6 +17,21 @@
 		resultType="TheaterDTO">
 		SELECT * FROM THEATER WHERE MOVIEID = #{movieId}
 	</select>
+	
+	<select id="getTheaterList" parameterType="TheaterDTO" resultMap="getDayListResult">
+		SELECT T.*, M.MOVIETITLE
+		FROM THEATER T
+		JOIN
+		MOVIES M
+		ON T.MOVIEID = M.MOVIEID
+		WHERE TRUNC(THEATERSTART) = #{theaterStart}
+		<if test="theaterName != null">
+			AND THEATERNAME = #{theaterName}
+		</if>
+		<if test="movieId != null">
+			AND T.MOVIEID = #{movieId}
+		</if>
+	</select>
 
 	<select id="getDayList" parameterType="TheaterDTO"
 		resultMap="getDayListResult">
@@ -66,5 +81,6 @@
 	<select id="deleteCheck" parameterType="TheaterDTO" resultType="int">
 		SELECT COUNT(*) FROM MOVIEBOOKS WHERE THEATERID = #{theaterId}
 	</select>
-
+	
+	
 </mapper>

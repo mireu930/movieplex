@@ -239,8 +239,16 @@ function formatToTimeStamp(dateObj) {
 mainContents.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") == "del_btn") {
         const theaterId = e.target.getAttribute("data-theater-id");
-        let url = `/theater/deleteTheater?theaterId=${theaterId}`;
-        fetch(url)
+        let param = new URLSearchParams();
+        param.append("theaterId", theaterId);
+        let url = `/theater/deleteTheater`;
+        fetch(url,{
+            method: 'POST',
+            headers:{
+                "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body:param
+        })
             .then(r => r.text())
             .then(r => {
                 console.log(r);
