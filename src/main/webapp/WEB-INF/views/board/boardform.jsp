@@ -44,7 +44,7 @@
 			    	</c:if>
 			    
 			    
-			   <div class="col-md-12">
+			   <div class="col-md-9">
 			     <label for="boardTitle" class="form-label">제목</label>
 			      <input type="text" name="boardTitle" value="${dto.boardTitle}"  class="form-control is-invalid" id="boardTitle" aria-describedby="boardTitleFeedback">
 			      <div id="boardTitleFeedback" class="invalid-feedback">
@@ -52,9 +52,9 @@
 			      </div>
 			   </div>
 
-			  <div class="col-md-12">
+			  <div class="col-md-9">
 			    <label for="boardContent" class="form-label">내용</label>
-			      <textarea name="boardContents" class="form-control is-invalid" id="boardContents" rows="5" aria-describedby="boardContentsFeedback">${dto.boardContents}</textarea>
+			      <textarea name="boardContents" class="form-control is-invalid" id="boardContents" rows="15" aria-describedby="boardContentsFeedback">${dto.boardContents}</textarea>
 			      <div id="boardContentsFeedback" class="invalid-feedback">
 			        Please choose a detail.
 			      </div>

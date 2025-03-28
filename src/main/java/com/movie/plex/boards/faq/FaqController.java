@@ -1,5 +1,6 @@
 package com.movie.plex.boards.faq;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -37,9 +38,26 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
-	public ModelAndView getDetail(FaqDTO faqDTO) throws Exception {
+	public ModelAndView getDetail(FaqDTO faqDTO, HttpSession session) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		faqDTO = faqService.getDetail(faqDTO);
+		
+		Object obj = session.getAttribute("updateFaqHit");
+		boolean check = false;
+		
+		if(obj!=null) {
+			HashSet<Long> ar = (HashSet<Long>)obj;
+			if(!ar.contains(faqDTO.getFaqNum())) {
+				ar.add(faqDTO.getFaqNum());
+				check = true;
+			}
+		}else {
+			HashSet<Long> num = new HashSet<Long>();
+			num.add(faqDTO.getFaqNum());
+			session.setAttribute("updateFaqHit", num);
+			check=true;
+		}
+		
+		faqDTO = faqService.getDetail(faqDTO, check);
 		
 		modelAndView.addObject("dto", faqDTO);
 		modelAndView.setViewName("board/detail");
@@ -69,7 +87,7 @@ public class FaqController {
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public ModelAndView update(FaqDTO faqDTO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		faqDTO = faqService.getDetail(faqDTO);
+		faqDTO = faqService.getDetail(faqDTO, false);
 		
 		modelAndView.addObject("dto", faqDTO);
 		modelAndView.setViewName("board/boardform");

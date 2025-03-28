@@ -23,35 +23,37 @@
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
-	<div class="content-wrapper">
-		<c:if test="${kind eq 'notice'}">
-			<h2>공지사항</h2>
-		</c:if>
-		<c:if test="${kind eq 'qna'}">
-			<h2>QNA</h2>
-		</c:if>
-		<c:if test="${kind eq 'faq'}">
-			<h2>FAQ</h2>
-		</c:if>
-		<table class="table table-striped table-hover">
-		 	<thead>
-			    <tr>
-			      <th scope="col">제목</th>
-			      <th scope="col">내용</th>
-			      <th scope="col">작성자</th>
-			      <th scope="col">조회수</th>
-			    </tr>
-			  </thead>
-			<tbody>
-			    <tr>
-			      <th scope="row">${dto.boardTitle}</th>
-			      <td>${dto.boardContents}</td>
-			      <td>${dto.userDTO.userName}</td>
-			      <td>${dto.boardHit}</td>
-			    </tr>
-			</tbody>
-		</table>
-		</div>
+			<div class="content-wrapper">
+			  <c:if test="${kind eq 'notice'}">
+			    <h2>공지사항</h2>
+			  </c:if>
+			  <c:if test="${kind eq 'qna'}">
+			    <h2>QNA</h2>
+			  </c:if>
+			  <c:if test="${kind eq 'faq'}">
+			    <h2>FAQ</h2>
+			  </c:if>
+			  <div class="table-container" style="width: 80%;">
+			    <table class="table table-striped table-hover" style="width: 100%; font-size: 1.2em;">
+			      <thead>
+			        <tr>
+			          <th scope="col">제목</th>
+			          <th scope="col">작성자</th>
+			          <th scope="col">조회수</th>
+			        </tr>
+			        <tr>
+			          <td>${dto.boardTitle}</td>
+			          <td>${dto.userDTO.userName}</td>
+			          <td>${dto.boardHit}</td>
+			        </tr>
+			      </thead>
+			    </table>
+			    <div class="form-group" style="width: 100%;">
+			      <label for="boardContents">내용</label>
+			      <textarea id="boardContents" class="form-control" rows="20" style="width: 100%; font-size: 1.1em;" readonly>${dto.boardContents}</textarea>
+			    </div>
+			  </div>
+			</div>
 		<div class="btn-container">
 			<c:if test="${kind eq 'faq'}">
 				<a href="./update?faqNum=${dto.faqNum}" class ="btn btn-success">수정</a>	
@@ -62,9 +64,9 @@
 				<a href="./delete?noticeNum=${dto.noticeNum}" class ="btn btn-danger">삭제</a>
 			</c:if>	
 			<c:if test="${kind eq 'qna'}">
-				<a href="./update?boardNum=${dto.qnaNum}" class ="btn btn-success">수정</a>	
-				<a href="./delete?boardNum=${dto.qnaNum}" class ="btn btn-danger">삭제</a>
-				<a href="./reply?boardNum=${dto.qnaNum}" class ="btn btn-primary">댓글쓰기</a>
+				<a href="./update?qnaNum=${dto.qnaNum}" class ="btn btn-success">수정</a>	
+				<a href="./delete?qnaNum=${dto.qnaNum}" class ="btn btn-danger">삭제</a>
+				<a href="./reply?qnaNum=${dto.qnaNum}" class ="btn btn-primary">댓글쓰기</a>
 			</c:if>		
 		</div>
 	</main>

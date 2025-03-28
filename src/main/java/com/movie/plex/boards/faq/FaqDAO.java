@@ -34,4 +34,8 @@ public class FaqDAO {
 	public int delete(FaqDTO faqDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"delete", faqDTO);
 	}
+	
+	public int updateHit(FaqDTO faqDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"updateHit", faqDTO);
+	}
 }

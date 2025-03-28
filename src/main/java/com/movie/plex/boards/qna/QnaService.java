@@ -16,7 +16,10 @@ public class QnaService {
 		return qnaDAO.getList();
 	}
 	
-	public QnaDTO getDetail(QnaDTO qnaDTO) throws Exception {
+	public QnaDTO getDetail(QnaDTO qnaDTO, boolean check) throws Exception {
+		if(check) {
+			qnaDAO.updateHit(qnaDTO);
+		}
 		return qnaDAO.getDetail(qnaDTO);
 	}
 	

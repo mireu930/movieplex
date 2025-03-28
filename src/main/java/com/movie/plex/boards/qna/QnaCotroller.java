@@ -1,5 +1,6 @@
 package com.movie.plex.boards.qna;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -37,9 +38,26 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
-	public ModelAndView getDetail(QnaDTO qnaDTO) throws Exception {
+	public ModelAndView getDetail(QnaDTO qnaDTO, HttpSession session) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		qnaDTO = qnaService.getDetail(qnaDTO);
+		
+		Object obj = session.getAttribute("updateQnaHit");
+		boolean check = false;
+		
+		if(obj!=null) {
+			HashSet<Long> ar = (HashSet<Long>)obj;
+			if(!ar.contains(qnaDTO.getqnaNum())) {
+				ar.add(qnaDTO.getqnaNum());
+				check = true;
+			}
+		}else {
+			HashSet<Long> num = new HashSet<Long>();
+			num.add(qnaDTO.getqnaNum());
+			session.setAttribute("updateQnaHit", num);
+			check=true;
+		}
+		
+		qnaDTO = qnaService.getDetail(qnaDTO,check);
 		
 		modelAndView.addObject("dto", qnaDTO);
 		modelAndView.setViewName("board/detail");
@@ -70,7 +88,7 @@ public class QnaCotroller {
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public ModelAndView update(QnaDTO qnaDTO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		qnaDTO = qnaService.getDetail(qnaDTO);
+		qnaDTO = qnaService.getDetail(qnaDTO,false);
 		
 		modelAndView.addObject("dto", qnaDTO);
 		modelAndView.setViewName("board/boardform");

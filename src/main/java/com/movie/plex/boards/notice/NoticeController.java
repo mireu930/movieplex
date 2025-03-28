@@ -1,5 +1,6 @@
 package com.movie.plex.boards.notice;
 
+import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.movie.plex.users.UserDTO;
@@ -38,9 +40,26 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
-	public ModelAndView getDetail(NoticeDTO noticeDTO) throws Exception {
+	public ModelAndView getDetail(NoticeDTO noticeDTO, HttpSession session) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		noticeDTO = noticeService.getDetail(noticeDTO);
+		
+		Object obj = session.getAttribute("updateNoticeHit");
+		boolean check = false;
+		
+		if(obj!=null) {
+			HashSet<Long> ar = (HashSet<Long>)obj;
+			if(!ar.contains(noticeDTO.getNoticeNum())) {
+				ar.add(noticeDTO.getNoticeNum());
+				check = true;
+			}
+		}else {
+			HashSet<Long> num = new HashSet<Long>();
+			num.add(noticeDTO.getNoticeNum());
+			session.setAttribute("updateNoticeHit", num);
+			check=true;
+		}
+		
+		noticeDTO = noticeService.getDetail(noticeDTO,check);
 		
 		modelAndView.addObject("dto", noticeDTO);
 		modelAndView.setViewName("board/detail");
@@ -70,7 +89,7 @@ public class NoticeController {
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public ModelAndView update(NoticeDTO noticeDTO) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		noticeDTO = noticeService.getDetail(noticeDTO);
+		noticeDTO = noticeService.getDetail(noticeDTO,false);
 		
 		modelAndView.addObject("dto", noticeDTO);
 		modelAndView.setViewName("board/boardform");

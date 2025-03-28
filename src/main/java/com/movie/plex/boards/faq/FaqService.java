@@ -16,7 +16,10 @@ public class FaqService {
 		return faqDAO.getList();
 	}
 	
-	public FaqDTO getDetail(FaqDTO faqDTO) throws Exception {
+	public FaqDTO getDetail(FaqDTO faqDTO, boolean check) throws Exception {
+		if(check) {
+			faqDAO.updateHit(faqDTO);			
+		}
 		return faqDAO.getDetail(faqDTO);
 	}
 	

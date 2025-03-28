@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/board.css">
 
+ <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>
 <body>
@@ -61,9 +64,9 @@
 	      <td>
 	      <c:catch>
 	      <c:forEach begin ="1" end="${ar.boardDepth}" varStatus="ar2">
-	      -
+	      
 	      <c:if test="${ar2.last}">
-	      Re
+	      <ion-icon name="return-down-forward-outline"></ion-icon>
 	      </c:if>
 	      </c:forEach> 
 	      </c:catch>
