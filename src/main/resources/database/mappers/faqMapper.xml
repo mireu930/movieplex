@@ -4,22 +4,39 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.movie.plex.boards.faq.FaqDAO">
-  	<select id="getList" resultMap="getResult">
-		SELECT * FROM FAQ
-		JOIN USERS
-		USING(USERNUM)
+  	<select id="getList" resultMap="getResult" parameterType="Pager">
+		SELECT * FROM (SELECT ROWNUM R,M.* FROM (
+				SELECT *
+				FROM FAQ F
+	    		JOIN USERS U ON F.USERNUM = U.USERNUM
+			<include refid="search"/>
+		ORDER BY FAQNUM DESC)M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}							
 	</select>
 	
-	<select id="getDetail" parameterType="FaqDTO" resultMap="getResult">
+	<select id="getTotalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(FAQNUM) 
+			FROM FAQ F
+		    JOIN USERS U ON F.USERNUM = U.USERNUM
+		<include refid="search"/> 
+	</select>
+	
+	<select id="getDetail" resultMap="getDetailResult" parameterType="FaqDTO">
 		SELECT * FROM FAQ 
-		JOIN USERS
+		LEFT OUTER JOIN USERS
 		USING(USERNUM)
+		LEFT OUTER JOIN FAQFILES
+		USING (FAQNUM)
 		WHERE FAQNUM =#{faqNum}
 	</select>
 	
 	<insert id="add" parameterType="FaqDTO">
+		<selectKey order="BEFORE" keyProperty="faqNum" resultType="Long">
+			SELECT FAQNUM_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+	
 		INSERT INTO FAQ
-		VALUES (FAQNUM_SEQ.NEXTVAL,#{boardTitle},#{boardContents},SYSDATE,0,#{userNum})
+		VALUES (#{faqNum},#{boardTitle},#{boardContents},SYSDATE,0,#{userNum})
 	</insert>
 	
 	<insert id="addFile" parameterType="FaqFilesDTO">
@@ -70,5 +87,47 @@
 	  		<result column="SNS" property="sns"/>
   		</association>
   	</resultMap>
-	
+  	
+  	 <resultMap type="FaqDTO" id="getDetailResult">
+  		<id column="FAQNUM" property="faqNum"/>
+  		<result column="BOARDTITLE" property="boardTitle"/>
+  		<result column="BOARDCONTENTS" property="boardContents"/>
+  		<result column="BOARDDATE" property="boardDate"/>
+  		<result column="BOARDHIT" property="boardHit"/>
+  		<result column="USERNUM" property="userNum"/>
+	  		
+	  	  <association property="userDTO" javaType="UserDTO">
+	  		<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		  </association>
+	  		
+  		<collection property="faqFilesDTOs" javaType="List" ofType="FaqFilesDTO">
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="OLDNAME" property="oldName"/>
+  		</collection>
+  		
+  	</resultMap>
+  	
+		<sql id="search">
+			WHERE
+		    <choose>
+		        <when test="kind == 'k2'">
+		            U.USERNAME LIKE '%' || #{search} || '%'
+		        </when>
+		        <when test="kind == 'k3'">
+		            U.USERNAME LIKE '%' || #{search} || '%' OR F.BOARDTITLE LIKE '%' || #{search} || '%'
+		        </when>
+		        <otherwise>
+		            F.BOARDTITLE LIKE '%' || #{search} || '%'
+		        </otherwise>	
+		    </choose>	
+		</sql>	
   </mapper>

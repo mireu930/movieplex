@@ -11,8 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.movie.plex.pages.Pager;
 import com.movie.plex.users.UserDTO;
 
 @Controller
@@ -28,11 +30,12 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView getList() throws Exception {
+	public ModelAndView getList(Pager pager) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		List<QnaDTO> list = qnaService.getList();
+		List<QnaDTO> list = qnaService.getList(pager);
 		
 		modelAndView.addObject("list", list);
+		modelAndView.addObject("pager", pager);
 		modelAndView.setViewName("board/list");
 		return modelAndView;
 	}
@@ -74,8 +77,8 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public String add(QnaDTO qnaDTO) throws Exception {
-		int result = qnaService.add(qnaDTO);
+	public String add(QnaDTO qnaDTO, HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = qnaService.add(qnaDTO, session, attaches);
 		String a="";
 		
 		if(result>0) {
@@ -97,8 +100,8 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public ModelAndView update2(QnaDTO qnaDTO) throws Exception {
-		int result = qnaService.update(qnaDTO);
+	public ModelAndView update2(QnaDTO qnaDTO, HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = qnaService.update(qnaDTO,session,attaches);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -109,8 +112,8 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
-	public ModelAndView delete(QnaDTO qnaDTO) throws Exception {
-		int result = qnaService.delete(qnaDTO);
+	public ModelAndView delete(QnaDTO qnaDTO, HttpSession session) throws Exception {
+		int result = qnaService.delete(qnaDTO, session);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -126,13 +129,36 @@ public class QnaCotroller {
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "fileDelete", method = RequestMethod.POST)
-	public void fileDelete() throws Exception {
+	@RequestMapping(value = "reply", method = RequestMethod.GET)
+	public String reply(HttpSession session, Model model, @ModelAttribute("reply")QnaDTO qnaDTO) throws Exception {
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
+		model.addAttribute("user", userDTO);
+		return "board/boardform";
+	}
+	
+	@RequestMapping(value = "reply", method = RequestMethod.POST)
+	public String reply(QnaDTO qnaDTO) throws Exception {
+		int result = qnaService.reply(qnaDTO);
+		String a ="";
 		
+		if(result>0) {
+			a="redirect:./list";
+		}
+		
+		return a;
+	}
+	
+	@RequestMapping(value = "fileDelete", method = RequestMethod.POST)
+	public String fileDelete(QnaFilesDTO qnaFilesDTO, HttpSession session, Model model) throws Exception {
+		int result = qnaService.fileDelete(qnaFilesDTO, session);
+		model.addAttribute("result", result);
+		return "commons/ajax";
 	}
 	
 	@RequestMapping(value = "fileDown", method = RequestMethod.GET)
-	public void fileDown() throws Exception {
-		
+	public String fileDown(QnaFilesDTO qnaFilesDTO, Model model) throws Exception {
+		qnaFilesDTO = qnaService.getFileDetail(qnaFilesDTO);
+		model.addAttribute("file", qnaFilesDTO);
+		return "fileDown";
 	}
 }

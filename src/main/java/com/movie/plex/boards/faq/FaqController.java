@@ -11,8 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.movie.plex.boards.qna.QnaFilesDTO;
+import com.movie.plex.pages.Pager;
 import com.movie.plex.users.UserDTO;
 
 @Controller
@@ -28,9 +32,9 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView getList() throws Exception {
+	public ModelAndView getList(Pager pager) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
-		List<FaqDTO> list = faqService.getList();
+		List<FaqDTO> list = faqService.getList(pager);
 		
 		modelAndView.addObject("list", list);
 		modelAndView.setViewName("board/list");
@@ -73,8 +77,8 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public String add(FaqDTO faqDTO) throws Exception {
-		int result = faqService.add(faqDTO);
+	public String add(FaqDTO faqDTO, HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = faqService.add(faqDTO,session,attaches);
 		String a="";
 		
 		if(result>0) {
@@ -97,8 +101,8 @@ public class FaqController {
 
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public ModelAndView update2(FaqDTO faqDTO) throws Exception {
-		int result = faqService.update(faqDTO);
+	public ModelAndView update2(FaqDTO faqDTO,HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = faqService.update(faqDTO,session,attaches);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -109,8 +113,8 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
-	public ModelAndView delete(FaqDTO faqDTO) throws Exception {
-		int result = faqService.delete(faqDTO);
+	public ModelAndView delete(FaqDTO faqDTO, HttpSession session) throws Exception {
+		int result = faqService.delete(faqDTO,session);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -128,12 +132,16 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "fileDelete", method = RequestMethod.POST)
-	public void fileDelete() throws Exception {
-		
+	public String fileDelete(FaqFilesDTO faqFilesDTO, HttpSession session, Model model) throws Exception {
+		int result = faqService.fileDelete(faqFilesDTO, session);
+		model.addAttribute("result", result);
+		return "commons/ajax";
 	}
 	
 	@RequestMapping(value = "fileDown", method = RequestMethod.GET)
-	public void fileDown() throws Exception {
-		
+	public String fileDown(FaqFilesDTO faqFilesDTO, Model model) throws Exception {
+		faqFilesDTO = faqService.getFileDetail(faqFilesDTO);
+		model.addAttribute("file", faqFilesDTO);
+		return "fileDown";
 	}
 }

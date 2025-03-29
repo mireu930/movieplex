@@ -11,9 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.movie.plex.pages.Pager;
 import com.movie.plex.users.UserDTO;
 
 @Controller
@@ -29,10 +30,10 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "list", method = RequestMethod.GET)
-	public ModelAndView getList() throws Exception {
+	public ModelAndView getList(Pager pager) throws Exception {
 		
 		ModelAndView modelAndView = new ModelAndView();
-		List<NoticeDTO> list = noticeService.getList();
+		List<NoticeDTO> list = noticeService.getList(pager);
 		
 		modelAndView.addObject("list", list);
 		modelAndView.setViewName("board/list");
@@ -75,8 +76,8 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
-	public String add(NoticeDTO noticeDTO) throws Exception {
-		int result = noticeService.add(noticeDTO);
+	public String add(NoticeDTO noticeDTO, HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = noticeService.add(noticeDTO, session, attaches);
 		String a="";
 		
 		if(result>0) {
@@ -98,8 +99,8 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.POST)
-	public ModelAndView update2(NoticeDTO noticeDTO) throws Exception {
-		int result = noticeService.update(noticeDTO);
+	public ModelAndView update2(NoticeDTO noticeDTO, HttpSession session, MultipartFile [] attaches) throws Exception {
+		int result = noticeService.update(noticeDTO, session, attaches);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -110,8 +111,8 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
-	public ModelAndView delete(NoticeDTO noitiNoticeDTO) throws Exception {
-		int result = noticeService.delete(noitiNoticeDTO);
+	public ModelAndView delete(NoticeDTO noticeDTO, HttpSession session) throws Exception {
+		int result = noticeService.delete(noticeDTO, session);
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
@@ -128,12 +129,16 @@ public class NoticeController {
 	}
 	
 	@RequestMapping(value = "fileDelete", method = RequestMethod.POST)
-	public void fileDelete() throws Exception {
-		
+	public String fileDelete(NoticeFilesDTO noticeFilesDTO, HttpSession session, Model model) throws Exception {
+		int result = noticeService.fileDelete(noticeFilesDTO, session);
+		model.addAttribute("result", result);
+		return "commons/ajax";
 	}
 	
 	@RequestMapping(value = "fileDown", method = RequestMethod.GET)
-	public void fileDown() throws Exception {
-		
+	public String fileDown(NoticeFilesDTO noticeFilesDTO, Model model) throws Exception {
+		noticeFilesDTO = noticeService.getFileDetail(noticeFilesDTO);
+		model.addAttribute("file", noticeFilesDTO);
+		return "fileDown";
 	}
 }

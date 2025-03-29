@@ -53,21 +53,61 @@
 			      <textarea id="boardContents" class="form-control" rows="20" style="width: 100%; font-size: 1.1em;" readonly>${dto.boardContents}</textarea>
 			    </div>
 			  </div>
-			</div>
-		<div class="btn-container">
-			<c:if test="${kind eq 'faq'}">
-				<a href="./update?faqNum=${dto.faqNum}" class ="btn btn-success">수정</a>	
-				<a href="./delete?faqNum=${dto.faqNum}" class ="btn btn-danger">삭제</a>
-			</c:if>	
-			<c:if test="${kind eq 'notice'}">
-				<a href="./update?noticeNum=${dto.noticeNum}" class ="btn btn-success">수정</a>	
-				<a href="./delete?noticeNum=${dto.noticeNum}" class ="btn btn-danger">삭제</a>
-			</c:if>	
-			<c:if test="${kind eq 'qna'}">
-				<a href="./update?qnaNum=${dto.qnaNum}" class ="btn btn-success">수정</a>	
-				<a href="./delete?qnaNum=${dto.qnaNum}" class ="btn btn-danger">삭제</a>
-				<a href="./reply?qnaNum=${dto.qnaNum}" class ="btn btn-primary">댓글쓰기</a>
-			</c:if>		
+			  
+				<div class="btn-detail-container">
+					<c:if test="${kind eq 'faq'}">
+						<a href="./update?faqNum=${dto.faqNum}" class ="btn btn-success">수정</a>	
+						<a href="./delete?faqNum=${dto.faqNum}" class ="btn btn-danger">삭제</a>
+					</c:if>	
+					<c:if test="${kind eq 'notice'}">
+						<a href="./update?noticeNum=${dto.noticeNum}" class ="btn btn-success">수정</a>	
+						<a href="./delete?noticeNum=${dto.noticeNum}" class ="btn btn-danger">삭제</a>
+					</c:if>	
+					<c:if test="${kind eq 'qna'}">
+						<a href="./update?qnaNum=${dto.qnaNum}" class ="btn btn-success">수정</a>	
+						<a href="./delete?qnaNum=${dto.qnaNum}" class ="btn btn-danger">삭제</a>
+						<a href="./reply?qnaNum=${dto.qnaNum}" class ="btn btn-primary">댓글쓰기</a>
+					</c:if>		
+				</div>
+				
+				<div class="file-download-container">
+				    첨부 파일
+				    <ul class="file-list">
+				        <c:choose>
+				            <c:when test="${kind eq 'faq'}">
+				                <c:forEach items="${dto.faqFilesDTOs}" var="f">
+				                    <li>
+				                        <a href="./fileDown?fileNum=${f.fileNum}">
+				                            <i class="fas fa-download"></i> ${f.oldName}
+				                        </a>
+				                    </li>
+				                </c:forEach>
+				            </c:when>
+				            <c:when test="${kind eq 'notice'}">
+				                <c:forEach items="${dto.noticeFilesDTOs}" var="f">
+				                    <li>
+				                        <a href="./fileDown?fileNum=${f.fileNum}">
+				                            <i class="fas fa-download"></i> ${f.oldName}
+				                        </a>
+				                    </li>
+				                </c:forEach>
+				            </c:when>
+				            <c:when test="${kind eq 'qna'}">
+				                <c:forEach items="${dto.qnaFilesDTOs}" var="f">
+				                    <li>
+				                        <a href="./fileDown?fileNum=${f.fileNum}">
+				                            <i class="fas fa-download"></i> ${f.oldName}
+				                        </a>
+				                    </li>
+				                </c:forEach>
+				            </c:when>
+				            <c:otherwise>
+				                <li>첨부된 파일이 없습니다.</li>
+				            </c:otherwise>
+				        </c:choose>
+				    </ul>
+				</div>
+				
 		</div>
 	</main>
 	<!-- footer -->

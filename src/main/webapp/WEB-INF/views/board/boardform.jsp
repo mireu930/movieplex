@@ -25,7 +25,9 @@
 	<main>
 		<div class = "row col-md-8 offset-md-2">
 			<form class="row g-3" action = "" method = "post" enctype="multipart/form-data">
-
+					<c:if test="${not empty reply.qnaNum}">
+						<input type="hidden" name="qnaNum" value="${reply.qnaNum}" id="qnaNum">
+					</c:if>
 			    
 			    	<c:if test="${kind eq 'notice'}">
 			            <c:if test="${not empty dto.noticeNum}">
@@ -59,20 +61,66 @@
 			        Please choose a detail.
 			      </div>
 			  </div>
+			  
+			  <div class="mb-3">
+				  <c:if test="${kind eq 'faq'}">
+				  	<c:forEach items="${dto.faqFilesDTOs}" var="f">
+				  		<div class="alert alert-secondary" role="alert">
+				  		${f.oldName} <span data-file-num="${f.fileNum}" data-kind="${kind}" class="badge text-bg-secondary files-delete">x</span>
+						</div>
+				  	</c:forEach>				  
+					<div class="files-container">
+						<div id ="files" data-files-size="${dto.faqFilesDTOs.size()}">					
+							<button type="button" id="btn1">파일추가</button>	
+						</div>
+						<div class="btn-container">
+							<button class="btn btn-primary" type="submit">등록</button>
+							<a href="./list" class ="btn btn-danger">취소</a>	
+						</div>
+					</div>
+				  </c:if>
+				  <c:if test="${kind eq 'notice'}">
+				  	<c:forEach items="${dto.noticeFilesDTOs}" var="f">
+				  		<div class="alert alert-secondary" role="alert">
+				  		${f.oldName} <span data-file-num="${f.fileNum}" data-kind="${kind}" class="badge text-bg-secondary files-delete">x</span>
+						</div>	
+				  	</c:forEach>
+					<div class="files-container">
+						<div id ="files" data-files-size="${dto.noticeFilesDTOs.size()}">					
+							<button type="button" id="btn1">파일추가</button>	
+						</div>
+						<div class="btn-container">
+							<button class="btn btn-primary" type="submit">등록</button>
+							<a href="./list" class ="btn btn-danger">취소</a>	
+						</div>
+					</div>				  				  
+				  </c:if>
+				  <c:if test="${kind eq 'qna'}">
+				  	<c:forEach items="${dto.qnaFilesDTOs}" var="f">
+				  		<div class="alert alert-secondary" role="alert">
+				  		${f.oldName} <span data-file-num="${f.fileNum}" data-kind="${kind}" class="badge text-bg-secondary files-delete">x</span>
+						</div>
+				  	</c:forEach>
+					<div class="files-container">
+						<div id ="files" data-files-size="${dto.qnaFilesDTOs.size()}">					
+							<button type="button" id="btn1">파일추가</button>	
+						</div>
+						<div class="btn-container">
+							<button class="btn btn-primary" type="submit">등록</button>
+							<a href="./list" class ="btn btn-danger">취소</a>	
+						</div>
+					</div>				  	
+				  </c:if>
+			  </div>
 
 			   <input type="hidden" name="userNum" value="${user.userNum}" class="form-control" id="userNum" required>
-			  
-			  <div class="btn-container d-flex justify-content-end gap-2">
-			    <button class="btn btn-primary" type="submit">등록</button>
-			    <a href="./list" class ="btn btn-danger">취소</a>	
-			  </div>
 			  
 			</form>
 		</div>
 	</main>
 	<!-- footer -->
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
-
+	<script type="module" src="/resources/js/fileManager.js"></script>
 	<c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
 </body>
 </html>
