@@ -77,8 +77,10 @@ public class NoticeService {
 		
 		if(result > 0) {
 			String path = session.getServletContext().getRealPath("/resources/images/notice/");
-			for(NoticeFilesDTO noticeFilesDTO:((NoticeDTO)noticeDTO).getNoticeFilesDTOs()) {
-				fileManager.delete(path, noticeFilesDTO.getFileName());
+			if (noticeDTO != null && noticeDTO.getNoticeFilesDTOs() != null) {
+			    for (NoticeFilesDTO noticeFilesDTO : noticeDTO.getNoticeFilesDTOs()) {
+			        fileManager.delete(path, noticeFilesDTO.getFileName());
+			    }
 			}
 		}
 		
@@ -101,6 +103,20 @@ public class NoticeService {
 	
 	public NoticeFilesDTO getFileDetail(NoticeFilesDTO noticeFilesDTO) throws Exception {
 		return noticeDAO.getFileDetail(noticeFilesDTO);
+	}
+	
+	public String detailFiles(HttpSession session, MultipartFile files)throws Exception{
+		String path = session.getServletContext().getRealPath("/resources/images/notice/");
+		System.out.println(path);
+		String fileName = fileManager.file(path, files);
+		System.out.println(fileName);
+		return fileName;
+		
+	}
+	
+	public void deleteFile(NoticeFilesDTO noticeFilesDTO, HttpSession session) throws Exception {
+		String path = session.getServletContext().getRealPath("/resources/images/notice/");
+		fileManager.delete(path, noticeFilesDTO.getFileName());
 	}
 	
 	private NoticeFilesDTO save(MultipartFile attach, ServletContext context) throws Exception {

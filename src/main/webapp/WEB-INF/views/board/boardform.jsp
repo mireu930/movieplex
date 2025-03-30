@@ -17,7 +17,14 @@
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/board.css">
 
+<c:import url="/WEB-INF/views/templates/summernote.jsp"></c:import>
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+
+<style>
+  .note-editor .note-editable {
+    background-color: white !important; /* 텍스트 입력 배경색을 흰색으로 */
+  }
+</style>
 </head>
 <body>
 	<!-- header -->
@@ -122,5 +129,6 @@
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 	<script type="module" src="/resources/js/fileManager.js"></script>
 	<c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
+	<script src="/resources/js/summernote.js"></script>
 </body>
 </html>

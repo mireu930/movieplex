@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.movie.plex.boards.notice.NoticeFilesDTO;
 import com.movie.plex.boards.qna.QnaDTO;
 import com.movie.plex.boards.qna.QnaFilesDTO;
 import com.movie.plex.files.FileManager;
@@ -104,6 +105,20 @@ public class FaqService {
 	
 	public FaqFilesDTO getFileDetail(FaqFilesDTO faqFilesDTO) throws Exception {
 		return faqDAO.getFileDetail(faqFilesDTO);
+	}
+	
+	public String detailFiles(HttpSession session, MultipartFile files)throws Exception{
+		String path = session.getServletContext().getRealPath("/resources/images/faq/");
+		System.out.println(path);
+		String fileName = fileManager.file(path, files);
+		System.out.println(fileName);
+		return fileName;
+		
+	}
+	
+	public void deleteFile(FaqFilesDTO faqFilesDTO, HttpSession session) throws Exception {
+		String path = session.getServletContext().getRealPath("/resources/images/faq/");
+		fileManager.delete(path, faqFilesDTO.getFileName());
 	}
 	
 	private FaqFilesDTO save(MultipartFile attach, ServletContext context) throws Exception {

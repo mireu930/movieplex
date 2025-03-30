@@ -49,9 +49,31 @@
 			      </thead>
 			    </table>
 			    <div class="form-group" style="width: 100%;">
-			      <label for="boardContents">내용</label>
-			      <textarea id="boardContents" class="form-control" rows="20" style="width: 100%; font-size: 1.1em;" readonly>${dto.boardContents}</textarea>
-			    </div>
+				  <label for="boardContents">내용</label>
+				  <div id="boardContents" class="form-control" style="width: 100%; font-size: 1.1em; min-height: 300px; overflow-y: auto; white-space: pre-line;">
+				  	<c:choose>
+				  		<c:when test="${kind eq 'faq'}">
+				  			<c:forEach items="${dto.faqFilesDTOs}" var="file">
+					      		<img src="/resources/images/faq/${file.fileName}" 
+					           class="card-img-top rounded" width="200px" height="200px" alt="">
+				    		</c:forEach>
+				  		</c:when>
+				  		<c:when test="${kind eq 'qna'}">
+				  			<c:forEach items="${dto.qnaFilesDTOs}" var="file">
+						      <img src="/resources/images/qna/${file.fileName}" 
+						           class="card-img-top rounded" width="200px" height="200px" alt="">
+				    		</c:forEach>
+				  		</c:when>
+				  		<c:when test="${kind eq 'notice'}">
+				  			<c:forEach items="${dto.noticeFilesDTOs}" var="file">
+					      		<img src="/resources/images/notice/${file.fileName}" 
+					           class="card-img-top rounded" width="200px" height="200px" alt="">
+				   			 </c:forEach>
+				  		</c:when>	
+				  	</c:choose>
+				    ${dto.boardContents}
+				  </div>
+				</div>				
 			  </div>
 			  
 				<div class="btn-detail-container">

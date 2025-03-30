@@ -85,7 +85,6 @@ btn1.addEventListener("click", function(){
   let label = document.createElement('label');
   let formLabel = document.createAttribute('class');
   formLabel.value = 'form-label';
-  label.innerHTML = '첨부파일';
   
   label.setAttributeNode(formLabel);
   
@@ -110,6 +109,9 @@ btn1.addEventListener("click", function(){
   child.setAttributeNode(na);
   child.setAttributeNode(c);
   child.setAttributeNode(d);
+
+  child.style.width = '300px';
+  child.style.height = '40px';
 
   div.append(child);
 

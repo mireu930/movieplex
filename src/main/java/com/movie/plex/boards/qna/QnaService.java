@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.movie.plex.boards.faq.FaqDTO;
+import com.movie.plex.boards.notice.NoticeFilesDTO;
 import com.movie.plex.files.FileManager;
 import com.movie.plex.pages.Pager;
 
@@ -104,6 +105,20 @@ public class QnaService {
 	
 	public QnaFilesDTO getFileDetail(QnaFilesDTO qnaFilesDTO) throws Exception {
 		return qnaDAO.getFileDetail(qnaFilesDTO);
+	}
+	
+	public String detailFiles(HttpSession session, MultipartFile files)throws Exception{
+		String path = session.getServletContext().getRealPath("/resources/images/qna/");
+		System.out.println(path);
+		String fileName = fileManager.file(path, files);
+		System.out.println(fileName);
+		return fileName;
+		
+	}
+	
+	public void deleteFile(QnaFilesDTO qnaFilesDTO, HttpSession session) throws Exception {
+		String path = session.getServletContext().getRealPath("/resources/images/qna/");
+		fileManager.delete(path, qnaFilesDTO.getFileName());
 	}
 	
 	public int reply(QnaDTO qnaDTO) throws Exception {

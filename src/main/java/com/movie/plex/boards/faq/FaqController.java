@@ -15,6 +15,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.movie.plex.boards.notice.NoticeFilesDTO;
 import com.movie.plex.boards.qna.QnaFilesDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.users.UserDTO;
@@ -143,5 +144,24 @@ public class FaqController {
 		faqFilesDTO = faqService.getFileDetail(faqFilesDTO);
 		model.addAttribute("file", faqFilesDTO);
 		return "fileDown";
+	}
+	
+	@RequestMapping(value = "detailFiles", method = RequestMethod.POST)
+	public String detailFiles (MultipartFile uploadFile,HttpSession session, Model model)throws Exception{
+		String fileName = faqService.detailFiles(session, uploadFile);
+		
+		fileName = "/resources/images/faq/"+fileName;
+		
+		model.addAttribute("result", fileName);
+		
+		return "commons/ajax";
+	}
+	
+	@RequestMapping(value = "detailFilesDelete", method = RequestMethod.POST)
+	public String detailFilesDelete(HttpSession session, FaqFilesDTO faqFilesDTO, Model model) throws Exception {
+		System.out.println("detailFilesDelete");
+		faqService.deleteFile(faqFilesDTO, session);
+		model.addAttribute("result", 1);
+		return "commons/ajax";
 	}
 }

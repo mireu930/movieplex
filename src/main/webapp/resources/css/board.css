@@ -95,6 +95,10 @@ table a {
     gap: 10px;
 }
 
+.alert {
+    width: 75%;
+}
+
 .file-download-container {
     width: 80%;
     margin-top: 20px;

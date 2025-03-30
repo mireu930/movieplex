@@ -141,4 +141,23 @@ public class NoticeController {
 		model.addAttribute("file", noticeFilesDTO);
 		return "fileDown";
 	}
+	
+	@RequestMapping(value = "detailFiles", method = RequestMethod.POST)
+	public String detailFiles (MultipartFile uploadFile,HttpSession session, Model model)throws Exception{
+		String fileName = noticeService.detailFiles(session, uploadFile);
+		
+		fileName = "/resources/images/notice/"+fileName;
+		
+		model.addAttribute("result", fileName);
+		
+		return "commons/ajax";
+	}
+	
+	@RequestMapping(value = "detailFilesDelete", method = RequestMethod.POST)
+	public String detailFilesDelete(HttpSession session, NoticeFilesDTO noticeFilesDTO, Model model) throws Exception {
+		System.out.println("detailFilesDelete");
+		noticeService.deleteFile(noticeFilesDTO, session);
+		model.addAttribute("result", 1);
+		return "commons/ajax";
+	}
 }
