@@ -4,9 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.movie.plex.users.UserDAO">
-  	<select id="userList" resultType="UserDTO">
-  		SELECT * FROM USERS
+  	<select id="userList" resultType="UserDTO" parameterType="Pager">
+  		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+			SELECT * 
+			FROM USERS
+			<include refid="search"/>
+			ORDER BY USERNUM DESC) M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}
   	</select>
+  	
+  	<select id="getTotalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(USERNUM) 
+			FROM USERS
+		<include refid="search"/> 
+	</select>
   
   	<select id="getLogin" resultType="UserDTO" parameterType="UserDTO">
   		SELECT * FROM USERS WHERE USERID=#{userId}
@@ -72,4 +83,19 @@
   		</association>
   		
   	</resultMap>
+  	
+  		<sql id="search">
+			WHERE
+		    <choose>
+		        <when test="kind == 'k1'">
+		            USERID LIKE '%' || #{search} || '%'
+		        </when>
+		        <when test="kind == 'k2'">
+		            USERNAME LIKE '%' || #{search} || '%'
+		        </when>
+		        <otherwise>
+		            USEROUT LIKE '%' || #{search} || '%'
+		        </otherwise>	
+		    </choose>	
+		</sql>
   </mapper>

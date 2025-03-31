@@ -9,9 +9,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.movie.plex.movies.MovieDTO;
 import com.movie.plex.movies.MovieService;
+import com.movie.plex.pages.Pager;
 import com.movie.plex.theater.TheaterDTO;
 import com.movie.plex.users.UserDTO;
 import com.movie.plex.users.UserService;
@@ -40,9 +42,18 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "userList", method = RequestMethod.GET)
-	public String userList(Model model) throws Exception {
-		List<UserDTO> list = userService.userList();
+	public String userList(Model model, Pager pager,@RequestParam(required = false)String search, @RequestParam(required = false)String kind) throws Exception {
+		if(search != null) {
+			pager.setSearch(search);
+		}
+		
+		if(kind != null) {
+			pager.setKind(kind);
+		}
+		
+		List<UserDTO> list = userService.userList(pager);
 		model.addAttribute("userList", list);
+		model.addAttribute("pager", pager);
 		return "/admin/user/list";
 	}
 	

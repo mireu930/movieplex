@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.pages.Pager;
+
 @Service
 public class UserService {
 
@@ -55,7 +57,12 @@ public class UserService {
 		return userDAO.couponList(userDTO);
 	}
 	
-	public List<UserDTO> userList() throws Exception {
-		return userDAO.userList();
+	public List<UserDTO> userList(Pager pager) throws Exception {
+		Long totalCount = userDAO.getTotalCount(pager);
+		
+		pager.makeNum();
+		pager.makePage(totalCount);
+		
+		return userDAO.userList(pager);
 	}
 }
