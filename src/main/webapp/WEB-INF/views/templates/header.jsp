@@ -27,9 +27,9 @@
 		
 		    <!-- 오른쪽 메뉴 -->
 		    <ul class="nav d-flex justify-content-center gap-5">
-		        <li><a href="#" class="nav-link px-2 link-secondary">공지사항</a></li>
-		        <li><a href="#" class="nav-link px-2 link-secondary">FAQ</a></li>
-		        <li><a href="#" class="nav-link px-2 link-secondary">QNA</a></li>
+		        <li><a href="/notice/list" class="nav-link px-2 link-secondary">공지사항</a></li>
+		        <li><a href="/faq/list" class="nav-link px-2 link-secondary">FAQ</a></li>
+		        <li><a href="/qna/list" class="nav-link px-2 link-secondary">QNA</a></li>
 		    </ul>
 		</div>
 		<div class="col-md-1 text-end">

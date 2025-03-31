@@ -49,7 +49,15 @@ public class UserController {
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
 	@ResponseBody //메소드가 반환한 객체를 자동으로 json.xml향태로 변환해주는 역할, 데이터를 직접 클라이언트에 전달할ㅇ때 사용
 	public String mailCheck(String email) throws Exception {
-		return mailSend.joinEmail(email);
+			UserDTO userDTO = userService.findEmail(email);
+			
+			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
+				System.out.println("이미있음");
+				return mailSend.alreadyEmail();
+			} else {	
+				System.out.println("새로가입");
+				return mailSend.joinEmail(email);
+			}			
 	}
 	
 	@RequestMapping(value = "forgetPw", method = RequestMethod.GET)
@@ -87,6 +95,7 @@ public class UserController {
 		            return "commons/result";  // 비활성화된 사용자 메시지 출력
 		        }else {
 		        	session.setAttribute("user", userDTO);
+		        	System.out.println(session.getAttribute("user"));
 		        	return "redirect:/";
 		        }
 		}

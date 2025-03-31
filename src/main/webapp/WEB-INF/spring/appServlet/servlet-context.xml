@@ -24,8 +24,22 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
+		<beans:property name="order" value="1"></beans:property>
 	</beans:bean>
-	<beans:bean
+
+	
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0">
+			
+		</beans:property>
+	</beans:bean>
+	
+	
+	<context:component-scan base-package="com.movie.plex" />
+	
+	
+
+	<beans:bean>
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="locations">
 			<beans:list>
@@ -34,10 +48,6 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-
-	<context:component-scan
-		base-package="com.movie.plex" />
-
 
 
 </beans:beans>

@@ -46,6 +46,10 @@ public class MailSend {
 		return code;
 	}
 	
+	public String alreadyEmail() {
+		return "이미 존재하는 이메일입니다.";
+	}
+	
 	// 이메일 전송 메소드
 	public void mailSend(String setFrom, String toMail, String title, String content) { 
 		MimeMessage message = mailSender.createMimeMessage();

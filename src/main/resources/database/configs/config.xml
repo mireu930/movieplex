@@ -14,7 +14,14 @@
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>
 		<typeAlias type="com.movie.plex.coupon.CouponDTO" alias="CouponDTO"/>
 		<typeAlias type="com.movie.plex.couponConnect.CouponConnectDTO" alias="CouponConnectDTO"/>
+		<typeAlias type="com.movie.plex.boards.faq.FaqDTO" alias="FaqDTO"/>
+		<typeAlias type="com.movie.plex.boards.faq.FaqFilesDTO" alias="FaqFilesDTO"/>
+		<typeAlias type="com.movie.plex.boards.notice.NoticeDTO" alias="NoticeDTO"/>
+		<typeAlias type="com.movie.plex.boards.notice.NoticeFilesDTO" alias="NoticeFilesDTO"/>
+		<typeAlias type="com.movie.plex.boards.qna.QnaDTO" alias="QnaDTO"/>
+		<typeAlias type="com.movie.plex.boards.qna.QnaFilesDTO" alias="QnaFilesDTO"/>
 		
+		<typeAlias type="com.movie.plex.pages.Pager" alias="Pager"/>
 		<typeAlias type="java.util.Map" alias="Map"/> 
 		<typeAlias type="java.util.List" alias="List"/>
 	</typeAliases>
