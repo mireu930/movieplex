@@ -42,7 +42,7 @@
 			</c:if>
 			<c:if test="${not empty user and user.userId eq 'sss'}">
 				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
-				<a class="nav-link px-2 link-secondary" href="/users/admin">관리자페이지</a>
+				<a class="nav-link px-2 link-secondary" href="/admin/mainPage">관리자페이지</a>
 			</c:if>
 		</div>
 	</header>
