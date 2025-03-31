@@ -117,10 +117,13 @@ mailCheckBtn.addEventListener("click", () => {
     .then(r=>{
 
         console.log(r)
-        
-        code = r;
-        alert("인증번호가 전송되었습니다.")
-        console.log("code:"+code)
+        if(r==="?? ???? ??????."){
+            alert("이미 있는 이메일입니다. 다른이메일 인증부탁드립니다.")
+        } else {
+            code = r;
+            alert("인증번호가 전송되었습니다.")
+        }
+
     })
 })
 
