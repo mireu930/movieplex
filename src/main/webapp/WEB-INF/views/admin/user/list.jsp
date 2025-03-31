@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <label for="" class="form-label" style="font-size: 1.2em; font-weight: bold;">회원정보</label>
 
-<form id="list_form" style="width: 600px; margin: 20px auto;">
+<form id="list_form" action="/admin/userList" method="GET" style="width: 600px; margin: 20px auto;">
     <input type="hidden" name="page" id="pageNum">
     <div class="row mb-3">
      <div class="col-md-3">

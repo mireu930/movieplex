@@ -42,14 +42,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "userList", method = RequestMethod.GET)
-	public String userList(Model model, Pager pager,@RequestParam(required = false)String search, @RequestParam(required = false)String kind) throws Exception {
-		if(search != null) {
-			pager.setSearch(search);
-		}
-		
-		if(kind != null) {
-			pager.setKind(kind);
-		}
+	public String userList(Model model, Pager pager) throws Exception {
 		
 		List<UserDTO> list = userService.userList(pager);
 		model.addAttribute("userList", list);

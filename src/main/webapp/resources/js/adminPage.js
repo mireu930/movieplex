@@ -86,36 +86,27 @@ mainContents.addEventListener("click",(e)=>{
 })
 
 //회원정보 검색처리
-document.addEventListener("DOMContentLoaded", function() {
-    if (!document.getElementById("list_form").hasAttribute("data-listener-added")) {
-        let list_form = document.getElementById("list_form");
+mainContents.addEventListener("click",()=>{
+    let list_form = document.getElementById("list_form");
 
-        if (list_form) {
-            list_form.addEventListener("submit", (e) => {
-                e.preventDefault(); // 기본 폼 제출 동작 방지
-                console.log("ok3"); // 콘솔 로그로 확인
+    if(list_form){
+    list_form.addEventListener("submit",(e)=>{
+        e.preventDefault(); //페이지 이동막기
+       
+        let formData = new FormData(e.target);
+        let list = new URLSearchParams(formData).toString();
+        
+        fetch(`/admin/userList?${list}`)
+        .then(r=>r.text())
+        .then(r=>{
+            console.log(r)
+            mainContents.innerHTML = r;
 
-                let formData = new FormData(e.target);
-                let list = new URLSearchParams(formData).toString();
-                
-                fetch(`/admin/userList?${list}`)
-                    .then((r) => r.text()) // 응답을 텍스트로 변환
-                    .then((r) => {
-                        console.log(r); // 서버에서 반환된 데이터 확인
-                        mainContents.innerHTML = r; // 반환된 HTML로 mainContents 갱신
-
-                        initEventListeners(); // 이벤트 리스너 초기화
-                    })
-                    .catch((err) => {
-                        console.error("Error during fetch:", err); // 오류 확인
-                    });
-            });
-
-            // 이미 리스너가 등록되었음을 표시
-            document.getElementById("list_form").setAttribute("data-listener-added", "true");
-        }
+            initEventListeners();
+            })
+        })
     }
-});
+})
 
 function initEventListeners() {
     let newForm = document.getElementById("list_form");
