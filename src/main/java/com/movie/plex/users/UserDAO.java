@@ -44,4 +44,7 @@ public class UserDAO {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
 	}
 
+	public List<UserDTO> userList() throws Exception {
+		return sqlSession.selectList(NAMESPACE+"userList");
+	}
 }

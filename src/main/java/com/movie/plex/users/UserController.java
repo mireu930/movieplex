@@ -205,11 +205,4 @@ public class UserController {
 		userDTO = (UserDTO)session.getAttribute("user");
 		return userService.couponList(userDTO);
 	}
-	
-	
-	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public UserDTO admin(HttpSession session) throws Exception {
-		return (UserDTO)session.getAttribute("user");
-	}
-	
 }

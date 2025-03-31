@@ -25,7 +25,17 @@ contents.addEventListener("click", (e) => {
     let kind = target?.getAttribute("data-kind");
     //console.log(e.target.getAttribute("id"));
     if (kind == "user") {
-        mainContents.innerHTML = "";
+        let url = '/admin/userList'
+        
+        contents.classList.add("d-flex");
+        mainContents.classList.add("flex-grow-1", "p-4");
+
+        fetch(url)
+        .then(r => r.text())
+        .then(r=>{
+            mainContents.innerHTML = r;
+        })
+ 
     } else if (kind == "movies") {
         mainContents.innerHTML = "";
     } else if (kind == "theater") {
@@ -41,6 +51,24 @@ contents.addEventListener("click", (e) => {
     }
 })
 
+//회원 조회
+
+
+//회원 상세정보
+mainContents.addEventListener("click", (e) => {
+    let target = e.target.closest("td[id='userId']");
+
+    if (target) {
+        let userId = target.textContent.trim();
+
+        fetch(`/admin/userDetail?userId=${userId}`)
+            .then((res) => res.text()) 
+            .then((data) => {
+                mainContents.innerHTML = data;
+            })
+            .catch((error) => console.error(error));
+    }
+});
 
 
 //영화 조회

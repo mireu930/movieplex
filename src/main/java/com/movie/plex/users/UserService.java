@@ -54,4 +54,8 @@ public class UserService {
 	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
 		return userDAO.couponList(userDTO);
 	}
+	
+	public List<UserDTO> userList() throws Exception {
+		return userDAO.userList();
+	}
 }
