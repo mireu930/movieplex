@@ -17,27 +17,17 @@
 
 <link href="/resources/image/reviewnest_title.png" rel="shortcut icon" type="image/x-icon">
 
-<link rel="stylesheet" href="/resources/css/reviewNestDetail.css">
+<link rel="stylesheet" href="/resources/css/reviewNestMain.css">
 </head>
 <body>
+	<!-- header -->
 	<div class="container">
 	<c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_header.jsp"></c:import>
 	</div>
-			
 	<main>
-				<div class="container-detail"  style="width: 100%; height: 450px; overflow: hidden;">
-				     <img src="https://image.tmdb.org/t/p/w1280/${content.longPoster}"  class="img-fluid"  style="object-fit: cover; object-position: center top; width: 100%; height: 100%;">
-			   </div>
-			   <div class="container-body" >
-				  <img src="https://image.tmdb.org/t/p/w200/${content.shortPoster}" >
-				
-				  <div class="text" style="flex: 1;">
-				    <h2 style="margin-bottom: 10px; font-weight: bold;">${content.contentTitle}</h2>
-				    <p style="color: #666; margin-bottom: 50px;">${content.releaseDate}</p>
-				    <p>${content.overView}</p>
-				  </div>
-				</div>
-			
+	<!-- 컨텐츠 넣는 부분 -->
+	
+	
 	</main>
 	
 <!-- footer -->

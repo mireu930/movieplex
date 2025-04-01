@@ -29,7 +29,7 @@
 			<div class="container">
 				<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰네스트 영화 인기 순위</strong>
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
-					<c:forEach items="${movieList }" var="content" varStatus="status">
+					<c:forEach items="${movieList}" var="content" varStatus="status">
 						<div class="col">
 							<div class="card shadow-sm">
 								<a href="/reviewNest/getMovieDetail?contentId=${content.contentId}">
@@ -37,6 +37,11 @@
 							 	</a>
 								<div class="card-body">
 									<p class="card-text">${content.contentTitle}</p>
+									<div class="d-flex justify-content-end">
+										<button id="likeButton" data-usernum=" ${userNum}" data-contentid=" ${contentId}" data-kind="0">
+										    <span class="heart-icon">🤍 </span>
+										</button>
+									</div>
 									<div class="d-flex justify-content-between align-items-center">
 									</div>
 								</div>
@@ -47,29 +52,48 @@
 			</div>
 			
 			<nav aria-label="Page navigation example" class="mb-5">
-			  <ul class="pagination d-flex justify-content-center mt-5 ">
-			    <li class="page-item">
-			      <button class="page-link pages arrow text-white"  id="start" data-page-num="${pager.start-1}" aria-label="Previous">
+			  <ul class="pagination d-flex justify-content-center mt-5">
+			    <!-- Previous Button -->
+			    <li class="page-item ${pager.page <= 1 ? 'disabled' : ''}">
+			      <a class="page-link pages arrow text-white" 
+			         href="?page=${pager.page - 1}" 
+			         aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
-				  </button>
+			      </a>
 			    </li>
-			    <c:forEach begin="${pager.start}" end="${pager.end}" var="i">
-			    <li class="page-item">
-					<button class="page-link pages  page-number"  id="page-i" data-page-num="${i}">${i}</button></li>
-			    </c:forEach>
-			    <li class="page-item ${pager.endCheck?'disabled':''}">
-			      <button class="page-link pages arrow text-white" id="end" data-page-num="${pager.end+1}" aria-label="Next">
+			    
+			    <!-- Page Number Buttons -->
+			    <c:if test="${pager.start > 0 && pager.end > 0}">
+				    <c:forEach begin="${pager.start}" end="${pager.end}" var="i">
+				      <li class="page-item ${pager.page == i ? 'active' : ''}">
+				        <a class="page-link pages page-number" 
+				           href="?page=${i}" 
+				           data-page-num="${i}"> ${i}</a>
+				      </li>
+				    </c:forEach>
+				  </c:if> 
+			
+			    <!-- Next Button -->
+			    <li class="page-item ${pager.endCheck ? 'disabled' : ''}">
+			      <a class="page-link pages arrow text-white" 
+			         href="?page=${pager.page + 1}" 
+			         aria-label="Next">
 			        <span aria-hidden="true">&raquo;</span>
-				  </button>
+			      </a>
 			    </li>
+			
 			  </ul>
-			</nav>
-	
-	</main>
+			</nav> 
+
+</main>
+			
+
 	
 <!-- footer -->
 <c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
+<c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+<script src="/resources/js/toggleLike.js"></script>
 </body>
 </html>

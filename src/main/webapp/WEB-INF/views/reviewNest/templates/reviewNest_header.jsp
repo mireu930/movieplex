@@ -16,8 +16,12 @@
 				<li><a href="/reviewNest/getTvList" class="nav-link px-2 link-secondary" >시리즈</a></li>
 			</ul>
 		</div>
+		
 		<div class="col-7 d-flex justify-content-end align-items-center gap-3">
-			<a class="btn btn-sm btn-outline-secondary" href="#">로그인</a>
+			<ul class="nav gap-4">
+				<li><a href="/reviewNest/mypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
+				<li><a class="btn btn-sm btn-outline-secondary" href="#">로그인</a></li>
+			</ul>
 		</div>
 	</div>
 </header>

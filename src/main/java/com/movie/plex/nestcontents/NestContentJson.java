@@ -115,8 +115,9 @@ public class NestContentJson{
 					"https://api.themoviedb.org/3/discover/tv?"
 							+  "api_key=" + tmdbApiKey
 							+ "&with_origin_country=KR"
-							+ "&first_air_date.gte=2025-01-01"
+							+ "&first_air_date.gte=2024-11-11"
 							+ "&with_original_language=ko"
+							+"&language=ko-KR"
 							+ "&include_adult=false&include_video=false",
 							String.class);
 			
@@ -140,8 +141,9 @@ public class NestContentJson{
 						"https://api.themoviedb.org/3/discover/tv?"
 								+  "api_key=" + tmdbApiKey
 								+ "&with_origin_country=KR"
-								+ "&first_air_date.gte=2025-01-01"
+								+ "&first_air_date.gte=2024-11-11"
 								+ "&with_original_language=ko"
+								+ "&language=ko-KR"
 								+ "&include_adult=false&include_video=false"
 								 + "&page=" + i,
 								String.class);

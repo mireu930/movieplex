@@ -56,12 +56,12 @@ public class Pager {
 				this.setEnd(end);
 				
 				//5. curBlock이 마지막 블럭이면
-//				/*
-//				 * if(totalBlock == curBlock) { this.setEnd(totalPage); this.setEndcheck(true);
-//				 */
-//				}
-				
-				
+
+					if(totalBlock == curBlock) { 
+						this.setEnd(totalPage); 
+						this.setEndCheck(true);
+				}
+		
 				
 		}
 		
@@ -88,6 +88,7 @@ public class Pager {
 			}
 			return page; //안전한 페이지 번호를 반환
 		}
+		
 		public void setPage(Long page) {
 			this.page = page;
 		}

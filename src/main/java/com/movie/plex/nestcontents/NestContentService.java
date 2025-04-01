@@ -21,19 +21,19 @@ public class NestContentService {
 		
 		pager.makeNum();
 		List<NestContentDTO> movieList = nestContentDAO.getMovieList(pager);
-		System.out.println("Service getMovieList");
+		//System.out.println("Service getMovieList");
 		
 		return movieList;
 	}
 	
 	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
-		Long TvtotalCount = nestContentDAO.getTvTotalCount(pager);
-		
-		pager.make(TvtotalCount);
+		Long tvtotalCount = nestContentDAO.getTvTotalCount(pager);
+	
+		pager.make(tvtotalCount);
 		
 		pager.makeNum();
 		List<NestContentDTO> tvList = nestContentDAO.getTvList(pager);
-		
+		System.out.println(tvtotalCount);
 		return tvList;
 	}
 	
