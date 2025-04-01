@@ -55,7 +55,7 @@
 					</p>
 					<div class="collapse" id="collapseExample">
 					  <div class="card card-body">
-					     <textarea class="form-control" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요"></textarea>
+					     <textarea class="form-control" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요ㅇㅇㅇ"></textarea>
 						    <button class="btn mt-2"  type="submit">저장</button>
 						 </div>
 					  </div>
