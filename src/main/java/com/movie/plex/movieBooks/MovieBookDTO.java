@@ -2,12 +2,21 @@ package com.movie.plex.movieBooks;
 
 import java.sql.Date;
 
+import com.movie.plex.users.UserDTO;
+
 public class MovieBookDTO {
 	private Long bookId;
 	private Date bookDate;
-	private Long userName;
+	private Long userNum;
 	private Long theaterId;
+	private UserDTO userDTO;
 	
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 	public Long getBookId() {
 		return bookId;
 	}
@@ -20,11 +29,11 @@ public class MovieBookDTO {
 	public void setBookDate(Date bookDate) {
 		this.bookDate = bookDate;
 	}
-	public Long getUserName() {
-		return userName;
+	public Long getUserNum() {
+		return userNum;
 	}
-	public void setUserName(Long userName) {
-		this.userName = userName;
+	public void setUserNum(Long userNum) {
+		this.userNum = userNum;
 	}
 	public Long getTheaterId() {
 		return theaterId;

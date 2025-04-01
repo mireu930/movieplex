@@ -128,6 +128,11 @@ function update() {
 }
 
 function delteUserInfo(userId) {
+    let con = confirm("정말 탈퇴하시겠습니까?");
+
+    if (!con) {
+        return;
+    }
 
     fetch(`/users/delete?userId=${userId}`, {
         method: 'POST',
@@ -137,14 +142,12 @@ function delteUserInfo(userId) {
     })
     .then(result=>result.text())
     .then(result=>{
-        let con = confirm("정말 탈퇴하시겠습니까?");
-
-        if(con){
             if(result==='1'){
                 alert('탈퇴되었습니다.')
                 location.reload();
+            } else {
+                alert("취소되었습니다.");
             }
-        }
     })
     .catch(error=>{
         alert(error.message);
@@ -152,7 +155,62 @@ function delteUserInfo(userId) {
 }
 
 //결제내역
-function loadPayInfo() {
+function loadPayInfo(page=1) {
+    fetch(`/users/paymentList?page=${page}`)
+    .then(result=>result.json())
+    .then(p=>{
+        console.log(p)
+        let paymentHtml = '';
+
+        paymentHtml += `
+        <table style="width: 600px; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #ddd; text-align: left;">
+                        <th style="padding: 10px; border-bottom: 2px solid #bbb;">결제금액</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #bbb;">결제승인여부</th>
+                    </tr>
+                </thead>`
+        p.list.forEach(item=>{
+            paymentHtml += `
+   
+                <tbody>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.payAmounts}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.payCheck == 0 ? "<span style='color: red;'>미승인</span>": item.payCheck == 1 ? "<span style='color: blue;'>승인</span>":"<span style='color: green;'>환불</span>"}</td>
+                        </tr>
+                </tbody>
+            `
+        })
+        paymentHtml += `</table>`
+
+        let pager = p.pager;
+        paymentHtml += `
+                <div class="pagination-wrapper" style="width: 600px; margin: 20px auto;">
+            <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                
+                <li class="page-item"><button class="page-link pages" data-page-num="${pager.start-1}">Previous</button></li>
+        `
+        for(let i = pager.start; i<=pager.end;i++){
+
+            paymentHtml += `
+            <li class="page-item"><button class="page-link pages" data-page-num="${i}">${i}</button></li>
+            `
+        }
+
+        paymentHtml += `
+               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link pages" data-page-num="${pager.end+1}">Next</button></li>
+            </ul>
+        </nav>
+        </div>
+        `
+        
+        document.getElementById('mainContents').innerHTML = paymentHtml;
+    })
+}
+
+//예매내역
+function loadBookInfo() {
 
 }
 
@@ -163,13 +221,38 @@ function loadPoint() {
 
 //관람평
 function loadReview(page=1) {
-    fetch(`/users/reviewList?page=${page}`)
+    let kind = document.querySelector("select[name='kind']")?.value || "k1"; 
+    let search = document.querySelector("input[name='search']")?.value || "";
+
+    fetch(`/users/reviewList?page=${page}&kind=${kind}&search=${encodeURIComponent(search)}`)
     .then(result=>result.json())
     .then(r=>{
         console.log(r)
         let reviewHtml = '';
+        let pager = r.pager || { search: "", start: 1, end: 1, endCheck: true };
 
         reviewHtml += `
+        <form id="list_form" action="/user/reviewList" method="GET" style="width: 600px; margin: 20px auto;">
+            <input type="hidden" name="page" id="pageNum">
+            <div class="row mb-3">
+            <div class="col-md-3">
+                <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                <select class="form-select" name="kind" id="inlineFormSelectPref">
+                <option value="k1">리뷰내용</option>
+                <option value="k2">등록날짜</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label class="visually-hidden" for="inlineFormInputGroupUsername"></label>
+                <input type="text" name="search" value="${pager.search}" class="form-control" id="inlineFormInputGroupUsername" placeholder="검색어를 입력하세요">
+            </div>
+            
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">검색</button>
+            </div>
+            
+            </div>
+        </form>
         <table style="width: 600px; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #ddd; text-align: left;">
@@ -190,7 +273,6 @@ function loadReview(page=1) {
         })
         reviewHtml += `</table>`
 
-        let pager = r.pager;
         reviewHtml += `
                 <div class="pagination-wrapper" style="width: 600px; margin: 20px auto;">
             <nav aria-label="Page navigation example">
@@ -215,6 +297,25 @@ function loadReview(page=1) {
         document.getElementById('mainContents').innerHTML = reviewHtml;
     })
 }
+
+mainContents.addEventListener("submit", function (e) {
+    if (e.target && e.target.id === "list_form") {
+        e.preventDefault(); 
+        loadReview(); 
+    }
+});
+
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".pages");
+
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+       if(pageNum){
+        loadReview(pageNum);
+       }
+    }
+})
 
 function reviewDetail(reviewId) {
     fetch(`/users/reviewDetail?reviewId=${reviewId}`)
@@ -249,18 +350,6 @@ function reviewDetail(reviewId) {
         `
     })
 }
-
-mainContents.addEventListener("click",(e)=>{
-    let page = e.target.closest(".pages");
-
-    if(page){
-        let pageNum = page.getAttribute("data-page-num");
-
-       if(pageNum){
-        loadReview(pageNum);
-       }
-    }
-})
 
 //쿠폰
 function loadCoupon() {

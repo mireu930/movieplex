@@ -67,11 +67,19 @@ public class UserDAO {
 		return sqlSession.selectList(NAMESPACE+"reviewList", pager);
 	}
 	
-	public Long reviewTotalCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"reviewTotalCount");
+	public Long reviewTotalCount(Pager pager) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"reviewTotalCount", pager);
 	}
 	
 	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"reviewDetail", reviewDTO);
+	}
+	
+	public List<UserDTO> paymentList(Pager pager) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"paymentList", pager);
+	}
+	
+	public Long paymentTotalCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"paymentTotalCount");
 	}
 }

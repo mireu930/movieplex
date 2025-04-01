@@ -2,6 +2,8 @@ package com.movie.plex.users;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,15 +77,27 @@ public class UserService {
 		return userDAO.withdraw(userDTO);
 	}
 	
-	public List<UserDTO> reviewList(Pager pager) throws Exception {
-		Long reviewTotalCount = userDAO.reviewTotalCount();
+	public List<UserDTO> reviewList(Pager pager, HttpSession session, UserDTO userDTO) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		Long reviewTotalCount = userDAO.reviewTotalCount(pager);
 		
 		pager.makeNum();
 		pager.makePage(reviewTotalCount);
+		
 		return userDAO.reviewList(pager);
 	}
 	
 	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
 		return userDAO.reviewDetail(reviewDTO);
+	}
+	
+	public List<UserDTO> paymentList(Pager pager) throws Exception {
+		Long paymentTotalCount = userDAO.paymentTotalCount();
+		
+		pager.makeNum();
+		pager.makePage(paymentTotalCount);
+		
+		return userDAO.paymentList(pager);
 	}
 }

@@ -215,7 +215,7 @@ public class UserController {
 	public Map<String, Object> reviewList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.reviewList(pager);
+		List<UserDTO> list = userService.reviewList(pager,session,userDTO);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -229,5 +229,20 @@ public class UserController {
 	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
 		reviewDTO = userService.reviewDetail(reviewDTO);
 		return reviewDTO;
+	}
+	
+	@RequestMapping(value = "paymentList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.paymentList(pager);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		
+		return map;
 	}
 }
