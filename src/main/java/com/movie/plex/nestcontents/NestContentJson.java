@@ -115,8 +115,9 @@ public class NestContentJson{
 					"https://api.themoviedb.org/3/discover/tv?"
 							+  "api_key=" + tmdbApiKey
 							+ "&with_origin_country=KR"
-							+ "&first_air_date.gte=2025-01-01"
+							+ "&first_air_date.gte=2024-11-11"
 							+ "&with_original_language=ko"
+							+"&language=ko-KR"
 							+ "&include_adult=false&include_video=false",
 							String.class);
 			
@@ -140,21 +141,23 @@ public class NestContentJson{
 						"https://api.themoviedb.org/3/discover/tv?"
 								+  "api_key=" + tmdbApiKey
 								+ "&with_origin_country=KR"
-								+ "&first_air_date.gte=2025-01-01"
+								+ "&first_air_date.gte=2024-11-11"
 								+ "&with_original_language=ko"
-								+ "&include_adult=false&include_video=false",
+								+ "&language=ko-KR"
+								+ "&include_adult=false&include_video=false"
+								 + "&page=" + i,
 								String.class);
 				
 				JSONObject parse = (JSONObject) jsonParser.parse(jsons);
 				JSONArray result = (JSONArray) parse.get("results");
-				int count = 0;
+				
 				for(Object obj : result) {
 					JSONObject dto = (JSONObject) obj;
 					NestContentDTO nestContentDTO = new NestContentDTO();
 					
 						nestContentDTO.setContentId(Long.parseLong(dto.get("id").toString()));
 						
-						nestContentDTO.setContentTitle(dto.get("name").toString());
+						nestContentDTO.setContentTitle(dto.get("original_name").toString());
 						
 						if(dto.get("poster_path") != null) {
 							nestContentDTO.setShortPoster(dto.get("poster_path").toString());
@@ -184,14 +187,12 @@ public class NestContentJson{
 						nestContentDTO.setKind(1L);
 						
 						nestContentDTOs.add(nestContentDTO);
-						if(nestContentDTO.getContentId()==276257) {
-							count++;
-						}
-						System.out.println(nestContentDTO.getContentId());
+						
+						
 					}
-				System.out.println(count);
+				
 				}
-			List <NestContentDTO> ar = new ArrayList<NestContentDTO>();
+			
 	
 			return nestContentDAO.addJsonTVList(nestContentDTOs);
 		

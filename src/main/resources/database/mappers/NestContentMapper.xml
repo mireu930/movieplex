@@ -16,20 +16,89 @@
 	
 	<insert id="addJsonTVList" parameterType="List">
 		INSERT ALL
-    <foreach collection="list" item="item" open="" close="" separator=" ">
-        INTO NESTCONTENTS2
-        (CONTENTID, CONTENTTITLE, SHORTPOSTER, LONGPOSTER, RELEASEDATE, OVERVIEW, POPULARITY, KIND)
- 			VALUES
-            (#{item.contentId}, 
-            #{item.contentTitle}, 
-            #{item.shortPoster, jdbcType=VARCHAR}, 
-            #{item.longPoster, jdbcType=VARCHAR},
-            #{item.releaseDate}, 
-            #{item.overView}, 
-            #{item.popularity}, 
-            #{item.kind})
-    </foreach>
+	    <foreach collection="list" item="item" open="" close="" separator=" ">
+	        INTO NESTCONTENTS
+	        (CONTENTID, CONTENTTITLE, SHORTPOSTER, LONGPOSTER, RELEASEDATE, OVERVIEW, POPULARITY, KIND)
+	 			VALUES
+	            (#{item.contentId}, 
+	            #{item.contentTitle}, 
+	            #{item.shortPoster, jdbcType=VARCHAR}, 
+	            #{item.longPoster, jdbcType=VARCHAR},
+	            #{item.releaseDate}, 
+	            #{item.overView}, 
+	            #{item.popularity}, 
+	            #{item.kind})
+	    </foreach>
     	SELECT 1 FROM DUAL
-</insert>
+	</insert>
+	
+	<select id="getTotalCount" parameterType="Pager" resultType="Long">
+			SELECT COUNT(CONTENTID) 
+			FROM NESTCONTENTS
+			WHERE KIND=0
+			AND SHORTPOSTER IS NOT NULL
+			AND LONGPOSTER IS NOT NULL
+	</select>
+
+	<select id="getMovieList"  parameterType="Pager" resultType="nestContentDTO">
+			SELECT * FROM
+				(SELECT ROWNUM R, M.* FROM
+					(
+						SELECT * 
+						FROM NESTCONTENTS
+						WHERE KIND=0
+							AND SHORTPOSTER IS NOT NULL
+							AND LONGPOSTER IS NOT NULL
+						ORDER BY POPULARITY DESC
+					) M
+				)
+			WHERE R BETWEEN #{startNum} AND #{endNum}
+	</select>
+
+	<select id="getTvTotalCount" parameterType="Pager" resultType="Long">
+			SELECT COUNT(CONTENTID) 
+			FROM NESTCONTENTS
+			WHERE KIND=1
+			AND SHORTPOSTER IS NOT NULL
+			AND LONGPOSTER IS NOT NULL
+	</select>
+	
+	<select id="getTvList" parameterType="Pager" resultType="nestContentDTO">
+			SELECT * FROM
+				(SELECT ROWNUM R, M.* FROM
+					(
+						SELECT * 
+						FROM NESTCONTENTS
+						WHERE KIND=1
+						AND SHORTPOSTER IS NOT NULL
+						AND LONGPOSTER IS NOT NULL
+						ORDER BY POPULARITY DESC
+					) M
+				)
+			WHERE R BETWEEN #{startNum} AND #{endNum}
+	</select>
+
+	<select id="getMovieDetail" parameterType="nestContentDTO" resultType="nestContentDTO">
+			SELECT *
+			FROM NESTCONTENTS
+			WHERE CONTENTID=#{contentId}
+	</select>
+	
+	<select id="getTvDetail" parameterType="nestContentDTO" resultType="nestContentDTO">
+			SELECT *
+			FROM NESTCONTENTS
+			WHERE CONTENTID=#{contentId}
+	</select>
+
+
+
+
+
+
+
+
+
+
+
 	
   </mapper>
