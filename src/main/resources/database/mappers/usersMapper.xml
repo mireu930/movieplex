@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.users.UserDAO">
+  	<select id="getLogin" resultType="UserDTO" parameterType="UserDTO">
+  		SELECT * FROM USERS WHERE USERID=#{userId}
+  	</select>
+  	
+  	<insert id="join" parameterType="UserDTO">
+  		INSERT INTO USERS
+  		VALUES(USERNUM_SEQ.NEXTVAL, #{userId}, #{userPw},#{userEmail},#{userPhone},#{userName},0,SYSDATE,0,0)
+  	</insert>
+  	
+  	<insert id="kakaoJoin" parameterType="UserDTO">
+  		INSERT INTO USERS
+  		VALUES(USERNUM_SEQ.NEXTVAL, #{userId}, #{userPw},#{userEmail},#{userPhone},#{userName},0,SYSDATE,0,1)
+  	</insert>
+  	
+  	<select id="findEmail" parameterType="String" resultType="UserDTO">
+  		SELECT * FROM USERS WHERE USEREMAIL =#{userEmail}
+  	</select>
+  	
+  	<select id="getDetail" parameterType="String" resultType="UserDTO">
+  		SELECT * FROM USERS WHERE USERID = #{userId}
+  	</select>
+  	
+  	<update id="update" parameterType="UserDTO">
+  		UPDATE USERS SET USERNAME=#{userName}, USEREMAIL=#{userEmail}, USERPHONE=#{userPhone}, USERPW=#{userPw} WHERE USERID = #{userId}
+  	</update>
+  	
+  	<update id="inactive" parameterType="UserDTO">
+  		UPDATE USERS SET USEROUT=#{userOut} WHERE USERID=#{userId}
+  	</update>
+  	
+  	<select id="couponList" resultMap="getCouponList" parameterType="UserDTO">
+  		SELECT u.USERNUM, u.USERID, u.USERPW, u.USEREMAIL, u.USERPHONE, 
+        u.USERNAME, u.USERGRADE, u.REGISTDATE, u.USEROUT, u.SNS,
+        c.COUPONNUM, c.COUPONNAME, c.COUPONCOST
+         FROM users u
+			JOIN COUPONCONNECT cc
+				ON U.USERNUM = CC.USERNUM 
+			JOIN COUPON c
+				ON CC.COUPONNUM = C.COUPONNUM 
+		WHERE u.USERID=#{userId}
+  	</select>
+  	
+  	<resultMap type="CouponConnectDTO" id="getCouponList">
+  			<id column="USERNUM" property="userNum"/>
+  			<id column="COUPONNUM" property="couponNum"/>
+  		
+  		<association property="userDTO" javaType="UserDTO">
+	  		<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		</association>
+  		
+  		<association property="couponDTO" javaType="CouponDTO">
+  			<result column="COUPONNAME" property="couponName"/>
+  			<result column="COUPONCOST" property="couponCost"/>
+  		</association>
+  		
+  	</resultMap>
+  </mapper>

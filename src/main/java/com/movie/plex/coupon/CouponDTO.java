@@ -1,11 +1,11 @@
 package com.movie.plex.coupon;
 
+
 public class CouponDTO {
 	private Long couponNum;
 	private String couponName;
 	private Long couponCost;
-	private Long userNum;
-	
+
 	public Long getCouponNum() {
 		return couponNum;
 	}
@@ -23,13 +23,6 @@ public class CouponDTO {
 	}
 	public void setCouponCost(Long couponCost) {
 		this.couponCost = couponCost;
-	}
-	public Long getUserNum() {
-		return userNum;
-	}
-	public void setUserNum(Long userNum) {
-		this.userNum = userNum;
-	}
-	
+	}	
 	
 }

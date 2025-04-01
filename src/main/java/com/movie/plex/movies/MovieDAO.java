@@ -24,5 +24,11 @@ public class MovieDAO {
 		return sqlSession.selectList(NAMESPACE + "getMainList");
 	}
 	
+	public List<MovieDTO> getList() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getList");
+	}
 	
+	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getMovieTitle", movieDTO);
+	}
 }
