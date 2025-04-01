@@ -36,11 +36,11 @@
 			<c:if test="${empty user}">
 				<a class="nav-link px-2 link-secondary" href="/users/login">로그인</a>				
 			</c:if>
-			<c:if test="${not empty user and user.userId ne 'sss'}">
+			<c:if test="${not empty user and user.userGrade ne 4}">
 				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
 				<a class="nav-link px-2 link-secondary" href="/users/mypage">마이페이지</a>
 			</c:if>
-			<c:if test="${not empty user and user.userId eq 'sss'}">
+			<c:if test="${not empty user and user.userGrade eq 4}">
 				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
 				<a class="nav-link px-2 link-secondary" href="/admin/mainPage">관리자페이지</a>
 			</c:if>

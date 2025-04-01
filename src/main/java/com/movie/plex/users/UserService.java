@@ -65,4 +65,12 @@ public class UserService {
 		
 		return userDAO.userList(pager);
 	}
+	
+	public int adminUpdate(UserDTO userDTO) throws Exception {
+		return userDAO.adminUpdate(userDTO);
+	}
+	
+	public int withdraw(UserDTO userDTO) throws Exception {
+		return userDAO.withdraw(userDTO);
+	}
 }

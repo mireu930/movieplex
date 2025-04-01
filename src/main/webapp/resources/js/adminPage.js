@@ -102,20 +102,54 @@ mainContents.addEventListener("click",()=>{
             console.log(r)
             mainContents.innerHTML = r;
 
-            initEventListeners();
             })
         })
     }
 })
 
-function initEventListeners() {
-    let newForm = document.getElementById("list_form");
-    if (newForm) {
-        newForm.addEventListener("submit", (e) => {
-            // 다시 검색 처리할 수 있도록 함
-        });
+//관리자등록
+mainContents.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "adminbtn") {
+        
+        let selectedUserId = document.getElementById("userId")?.textContent.trim(); 
+
+            console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("먼저 회원을 선택하세요!");
+                return;
+            }
+    
+            fetch(`/admin/adminUpdate?userId=${selectedUserId}`)
+                .then(r => r.text())
+                .then(r => {
+                    let con = confirm("관리자로 등록하시겠습니까?");
+                    if (con) {
+                        alert(r.trim() == '0' ? "이미 관리자입니다." : "관리자로 변경되었습니다.");
+                        location.reload();
+                    }
+                });
     }
-}
+});
+
+//영구탈퇴
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "withdrawbtn") {
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        fetch(`/admin/withdraw?userId=${selectedUserId}`)
+        .then(r => r.text())
+        .then(r => {
+            let con = confirm("영구히 탈퇴하시겠습니까?")
+
+            if(con){
+                alert(r.trim()=='0'?"실패":"영구탈퇴되었습니다.");
+                location.reload();
+            }
+        })
+    }
+})
+    
+
 
 
 

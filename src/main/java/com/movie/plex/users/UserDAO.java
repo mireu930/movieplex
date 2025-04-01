@@ -53,4 +53,12 @@ public class UserDAO {
 	public Long getTotalCount(Pager pager) throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
 	}
+	
+	public int adminUpdate(UserDTO userDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"adminUpdate", userDTO);
+	}
+	
+	public int withdraw(UserDTO userDTO) throws Exception {
+		return sqlSession.delete(NAMESPACE+"withdraw", userDTO);
+	}
 }

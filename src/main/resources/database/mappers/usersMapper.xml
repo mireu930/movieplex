@@ -49,6 +49,14 @@
   		UPDATE USERS SET USEROUT=#{userOut} WHERE USERID=#{userId}
   	</update>
   	
+  	<update id="adminUpdate" parameterType="UserDTO">
+  		UPDATE USERS SET USERGRADE=4 WHERE USERID=#{userId}
+  	</update>
+  	
+  	<delete id="withdraw" parameterType="UserDTO">
+  		DELETE USERS WHERE USERID=#{userId}
+  	</delete>
+  	
   	<select id="couponList" resultMap="getCouponList" parameterType="UserDTO">
   		SELECT u.USERNUM, u.USERID, u.USERPW, u.USEREMAIL, u.USERPHONE, 
         u.USERNAME, u.USERGRADE, u.REGISTDATE, u.USEROUT, u.SNS,

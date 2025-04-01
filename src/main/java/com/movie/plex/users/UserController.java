@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.movie.plex.pages.Pager;
+
 @Controller
 @RequestMapping(value = "/users/*")
 public class UserController {

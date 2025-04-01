@@ -57,4 +57,20 @@ public class AdminController {
 		return "/admin/user/detail";
 	}
 	
+	@RequestMapping(value = "adminUpdate", method = RequestMethod.GET)
+	public String adminUpdate(UserDTO userDTO, Model model) throws Exception {
+		userDTO = userService.getDetail(userDTO.getUserId());
+		int result = userService.adminUpdate(userDTO);
+		model.addAttribute("result", result);
+		return "commons/ajax";
+	}
+	
+	@RequestMapping(value ="withdraw", method = RequestMethod.GET)
+	public String withdraw(UserDTO userDTO, Model model) throws Exception {
+		userDTO = userService.getDetail(userDTO.getUserId());
+		int result = userService.withdraw(userDTO);
+		model.addAttribute("result", result);
+		return "commons/ajax";
+	}
+	
 }
