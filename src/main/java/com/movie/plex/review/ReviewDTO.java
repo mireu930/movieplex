@@ -2,6 +2,8 @@ package com.movie.plex.review;
 
 import java.sql.Date;
 
+import com.movie.plex.users.UserDTO;
+
 public class ReviewDTO {
 
 	
@@ -11,8 +13,22 @@ public class ReviewDTO {
 			private Long reviewRate;
 			private Long userNum;
 			private Long contentId;
+			private Long kind;
+			private UserDTO userDTO;
 			
 			
+			public UserDTO getUserDTO() {
+				return userDTO;
+			}
+			public void setUserDTO(UserDTO userDTO) {
+				this.userDTO = userDTO;
+			}
+			public Long getKind() {
+				return kind;
+			}
+			public void setKind(Long kind) {
+				this.kind = kind;
+			}
 			public Long getReviewId() {
 				return reviewId;
 			}

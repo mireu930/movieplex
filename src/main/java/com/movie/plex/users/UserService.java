@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewDTO;
 
 @Service
 public class UserService {
@@ -72,5 +73,17 @@ public class UserService {
 	
 	public int withdraw(UserDTO userDTO) throws Exception {
 		return userDAO.withdraw(userDTO);
+	}
+	
+	public List<UserDTO> reviewList(Pager pager) throws Exception {
+		Long reviewTotalCount = userDAO.reviewTotalCount();
+		
+		pager.makeNum();
+		pager.makePage(reviewTotalCount);
+		return userDAO.reviewList(pager);
+	}
+	
+	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
+		return userDAO.reviewDetail(reviewDTO);
 	}
 }

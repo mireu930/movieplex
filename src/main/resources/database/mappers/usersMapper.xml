@@ -18,6 +18,10 @@
 			FROM USERS
 		<include refid="search"/> 
 	</select>
+	
+	<select id="reviewTotalCount" resultType="Long">
+		SELECT COUNT(REVIEWID) FROM REVIEW
+	</select>
   
   	<select id="getLogin" resultType="UserDTO" parameterType="UserDTO">
   		SELECT * FROM USERS WHERE USERID=#{userId}
@@ -69,6 +73,20 @@
 		WHERE u.USERID=#{userId}
   	</select>
   	
+  	<select id="reviewList" resultMap="getReviewList" parameterType="Pager">
+		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+			SELECT * FROM REVIEW r
+			LEFT OUTER JOIN USERS u
+			ON r.USERNUM = U.USERNUM
+			WHERE U.USERID = #{userDTO.userId}
+			ORDER BY r.REVIEWID DESC)M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}
+  	</select>
+  	
+  	<select id="reviewDetail" resultType="ReviewDTO" parameterType="ReviewDTO">
+  		SELECT * FROM REVIEW WHERE REVIEWID = #{reviewId}
+  	</select>
+  	
   	<resultMap type="CouponConnectDTO" id="getCouponList">
   			<id column="USERNUM" property="userNum"/>
   			<id column="COUPONNUM" property="couponNum"/>
@@ -90,6 +108,28 @@
   			<result column="COUPONCOST" property="couponCost"/>
   		</association>
   		
+  	</resultMap>
+  	
+  	<resultMap type="ReviewDTO" id="getReviewList">
+  		<id column="REVIEWID" property="reviewId"/>
+  		<result column="REVIEWCONTENTS" property="reviewContents"/>
+  		<result column="REVIEWDATE" property="reviewDate"/>
+  		<result column="REVIEWRATE" property="reviewRate"/>
+  		<result column="USERNUM" property="userNum"/>
+  		<result column="CONTENTID" property="contentId"/>
+  		<result column="KIND" property="kind"/>
+  		
+  		<association property="userDTO" javaType="UserDTO">
+  			<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		</association>
   	</resultMap>
   	
   		<sql id="search">

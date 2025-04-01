@@ -1,5 +1,3 @@
-
-
 function setActive(element) {
     // 1. 모든 nav-link 요소들을 찾아옴
     const links = document.querySelectorAll('.nav-link');
@@ -11,6 +9,7 @@ function setActive(element) {
     element.classList.add('active');
 }
 
+//내정보
 function loadUserInfo() {
 	fetch("/users/mypageData")
 	.then(result=>result.json())
@@ -152,18 +151,118 @@ function delteUserInfo(userId) {
     })
 }
 
+//결제내역
 function loadPayInfo() {
 
 }
 
+//포인트
 function loadPoint() {
 
 }
 
-function loadReview() {
+//관람평
+function loadReview(page=1) {
+    fetch(`/users/reviewList?page=${page}`)
+    .then(result=>result.json())
+    .then(r=>{
+        console.log(r)
+        let reviewHtml = '';
 
+        reviewHtml += `
+        <table style="width: 600px; border-collapse: collapse;">
+                <thead>
+                    <tr style="background-color: #ddd; text-align: left;">
+                        <th style="padding: 10px; border-bottom: 2px solid #bbb;">리뷰내용</th>
+                        <th style="padding: 10px; border-bottom: 2px solid #bbb;">등록날짜</th>
+                    </tr>
+                </thead>`
+        r.list.forEach(item=>{
+            reviewHtml += `
+   
+                <tbody>
+                        <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;" onclick="reviewDetail(${item.reviewId})">${item.reviewContents}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.reviewDate}</td>
+                        </tr>
+                </tbody>
+            `
+        })
+        reviewHtml += `</table>`
+
+        let pager = r.pager;
+        reviewHtml += `
+                <div class="pagination-wrapper" style="width: 600px; margin: 20px auto;">
+            <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                
+                <li class="page-item"><button class="page-link pages" data-page-num="${pager.start-1}">Previous</button></li>
+        `
+        for(let i = pager.start; i<=pager.end;i++){
+
+            reviewHtml += `
+            <li class="page-item"><button class="page-link pages" data-page-num="${i}">${i}</button></li>
+            `
+        }
+
+        reviewHtml += `
+               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link pages" data-page-num="${pager.end+1}">Next</button></li>
+            </ul>
+        </nav>
+        </div>
+        `
+        
+        document.getElementById('mainContents').innerHTML = reviewHtml;
+    })
 }
 
+function reviewDetail(reviewId) {
+    fetch(`/users/reviewDetail?reviewId=${reviewId}`)
+    .then(r=>r.json())
+    .then(r=>{
+        console.log(r)
+        document.getElementById('mainContents').innerHTML=`
+          
+			    <table style="width: 600px; border-collapse: collapse;">
+			      <thead>
+			        <tr style="background-color: #ddd; text-align: left;">
+			          <th scope="col">작성일</th>
+			          <th scope="col">별점</th>
+			          <th scope="col">컨텐츠id</th>
+			          <th scope="col">종류</th>
+			        </tr>
+			        <tr style="background-color: #f9f9f9;">
+			          <td>${r.reviewDate}</td>
+			          <td>${r.reviewRate}</td>
+			          <td>${r.contentId}</td>
+			          <td>${r.kind}</td>
+			        </tr>
+			      </thead>
+			    </table>
+                <br>
+			    <div class="form-group" style="width: 100%;">
+				  <label for="reviewContents">내용</label>
+				  <div id="reviewContents" class="form-control" style="width: 100%; font-size: 1.1em; min-height: 300px;">
+				    ${r.reviewContents}
+				  </div>
+				</div>
+        `
+    })
+}
+
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".pages");
+
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+       if(pageNum){
+        loadReview(pageNum);
+       }
+    }
+})
+
+//쿠폰
 function loadCoupon() {
     fetch("/users/couponList")
     .then(result=>result.json())

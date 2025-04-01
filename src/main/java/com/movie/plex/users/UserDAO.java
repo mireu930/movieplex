@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewDTO;
 
 @Repository
 public class UserDAO {
@@ -60,5 +61,17 @@ public class UserDAO {
 	
 	public int withdraw(UserDTO userDTO) throws Exception {
 		return sqlSession.delete(NAMESPACE+"withdraw", userDTO);
+	}
+	
+	public List<UserDTO> reviewList(Pager pager) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"reviewList", pager);
+	}
+	
+	public Long reviewTotalCount() throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"reviewTotalCount");
+	}
+	
+	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"reviewDetail", reviewDTO);
 	}
 }

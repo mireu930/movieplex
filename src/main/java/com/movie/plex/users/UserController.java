@@ -1,5 +1,6 @@
 package com.movie.plex.users;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewDTO;
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -206,5 +208,26 @@ public class UserController {
 	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		return userService.couponList(userDTO);
+	}
+	
+	@RequestMapping(value = "reviewList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> reviewList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.reviewList(pager);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
+	}
+	
+	@RequestMapping(value = "reviewDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
+		reviewDTO = userService.reviewDetail(reviewDTO);
+		return reviewDTO;
 	}
 }
