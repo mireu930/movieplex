@@ -2,6 +2,8 @@ package com.movie.plex.movieBooks;
 
 import java.sql.Date;
 
+import com.movie.plex.theater.SeatDTO;
+import com.movie.plex.theater.TheaterDTO;
 import com.movie.plex.users.UserDTO;
 
 public class MovieBookDTO {
@@ -10,7 +12,16 @@ public class MovieBookDTO {
 	private Long userNum;
 	private Long theaterId;
 	private UserDTO userDTO;
+	private TheaterDTO theaterDTO;
 	
+	
+	
+	public TheaterDTO getTheaterDTO() {
+		return theaterDTO;
+	}
+	public void setTheaterDTO(TheaterDTO theaterDTO) {
+		this.theaterDTO = theaterDTO;
+	}
 	public UserDTO getUserDTO() {
 		return userDTO;
 	}

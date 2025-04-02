@@ -14,9 +14,14 @@ public class TheaterDTO {
 	private Long movieId;
 	private Long kind;
 	private MovieDTO movieDTO;
+	private SeatDTO seatDTO;
 	
-	
-	
+	public SeatDTO getSeatDTO() {
+		return seatDTO;
+	}
+	public void setSeatDTO(SeatDTO seatDTO) {
+		this.seatDTO = seatDTO;
+	}
 	public MovieDTO getMovieDTO() {
 		return movieDTO;
 	}
@@ -63,7 +68,7 @@ public class TheaterDTO {
 	}
 	
 	
-	//출력용 getter
+	//異쒕젰�슜 getter
 	
 	public String getPrintStart() {
 		if(theaterStart != null) {

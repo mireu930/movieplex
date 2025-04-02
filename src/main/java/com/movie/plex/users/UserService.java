@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -105,5 +106,23 @@ public class UserService {
 		pager.makePage(paymentTotalCount);
 		
 		return userDAO.paymentList(pager);
+	}
+	
+	public int paymentUpdate(UserDTO userDTO) throws Exception {
+		return userDAO.paymentUpdate(userDTO);
+	}
+	
+	public List<UserDTO> bookList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		 userDTO = (UserDTO)session.getAttribute("user");
+		
+		Long bookTotalCount = userDAO.bookTotalCount(userDTO);
+		
+		pager.makeNum();
+		pager.makePage(bookTotalCount);
+		return userDAO.bookList(pager);
+	}
+	
+	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return userDAO.bookDetail(movieBookDTO);
 	}
 }

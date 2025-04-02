@@ -80,8 +80,15 @@ public class AdminController {
 	@RequestMapping(value = "couponAdd", method = RequestMethod.POST)
 	public String couponAdd(CouponDTO couponDTO,Model model) throws Exception {
 		System.out.println("couponAdd");
-		int result  = couponService.couponAdd(couponDTO);
+		couponService.couponAdd(couponDTO);
 		return "redirect:./mainPage";
 	}
 	
+	@RequestMapping(value = "paymentUpdate", method = RequestMethod.GET)
+	public String paymentUpdate(UserDTO userDTO, Model model) throws Exception {
+		userDTO = userService.getDetail(userDTO.getUserId());
+		int result = userService.paymentUpdate(userDTO);
+		model.addAttribute("result", result);
+		return "commons/ajax";
+	}
 }

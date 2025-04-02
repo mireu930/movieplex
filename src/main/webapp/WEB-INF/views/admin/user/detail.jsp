@@ -17,4 +17,5 @@
 
                 <input type="button" id="adminbtn" class="btn btn-success" value="관리자등록">
                 <input type="button" id="withdrawbtn" class="btn btn-danger" value="영구탈퇴">
+                <input type="button" id="paymentbtn" class="btn btn-primary" value="입금승인">
             </div>

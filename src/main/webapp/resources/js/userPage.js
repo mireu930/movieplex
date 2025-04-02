@@ -14,7 +14,6 @@ function loadUserInfo() {
 	fetch("/users/mypageData")
 	.then(result=>result.json())
 	.then(user=> {
-        console.log(user);
 
         const loginType = user.sns === 0 ? "일반": "SNS";
 
@@ -189,29 +188,118 @@ function loadPayInfo(page=1) {
             <nav aria-label="Page navigation example">
             <ul class="pagination">
                 
-                <li class="page-item"><button class="page-link pages" data-page-num="${pager.start-1}">Previous</button></li>
+                <li class="page-item"><button class="page-link paymentPages" data-page-num="${pager.start-1}">Previous</button></li>
         `
         for(let i = pager.start; i<=pager.end;i++){
 
             paymentHtml += `
-            <li class="page-item"><button class="page-link pages" data-page-num="${i}">${i}</button></li>
+            <li class="page-item"><button class="page-link paymentPages" data-page-num="${i}">${i}</button></li>
             `
         }
 
         paymentHtml += `
-               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link pages" data-page-num="${pager.end+1}">Next</button></li>
+               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link paymentPages" data-page-num="${pager.end+1}">Next</button></li>
             </ul>
         </nav>
         </div>
         `
         
         document.getElementById('mainContents').innerHTML = paymentHtml;
+
     })
 }
 
-//예매내역
-function loadBookInfo() {
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".paymentPages");
 
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+       if(pageNum){
+        loadPayInfo(pageNum);
+       }
+    }
+})
+
+//예매내역
+function loadBookInfo(page=1) {
+    fetch(`/users/bookList?page=${page}`)
+    .then(result=>result.json())
+    .then(b=>{
+        console.log(b)
+        let bookHtml = '';
+
+        bookHtml += '<div style="display: flex; flex-wrap: wrap; gap: 20px;">'
+        b.list.forEach(item=>{
+            bookHtml += `
+                <div style="width: 250px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
+                    <img src="${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
+                    <div style="padding: 15px;">
+                        <h3 style="font-size: 16px; margin: 0 0 10px;">${item.theaterDTO.movieDTO.movieTitle}</h3>
+                        <p style="color: #555; font-size: 14px; margin: 0;">예매 날짜: ${item.bookDate}</p>
+                    </div>
+                </div>
+            `
+        })
+        bookHtml += `</div>`
+
+        let pager = b.pager;
+        bookHtml += `
+                <div class="pagination-wrapper" style="width: 600px; margin: 20px auto;">
+            <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                
+                <li class="page-item"><button class="page-link bookPages" data-page-num="${pager.start-1}">Previous</button></li>
+        `
+        for(let i = pager.start; i<=pager.end;i++){
+
+            bookHtml += `
+            <li class="page-item"><button class="page-link bookPages" data-page-num="${i}">${i}</button></li>
+            `
+        }
+
+        bookHtml += `
+               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link bookPages" data-page-num="${pager.end+1}">Next</button></li>
+            </ul>
+        </nav>
+        </div>
+        `
+        
+        document.getElementById('mainContents').innerHTML = bookHtml;
+    })
+}
+
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".bookPages");
+
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+       if(pageNum){
+        loadBookInfo(pageNum);
+       }
+    }
+})
+
+function bookDetail(bookId){
+    fetch(`/users/bookDetail?bookId=${bookId}`)
+    .then(r=>r.json())
+    .then(b=>{
+        console.log(b)
+        document.getElementById('mainContents').innerHTML=`
+            <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
+                <img src="${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
+                
+                <div style="padding: 20px; text-align: left;">
+                    <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${b.theaterDTO.movieDTO.movieTitle}</h2>
+
+                    <p style="margin: 5px 0;"><strong>영화관:</strong> ${b.theaterDTO.theaterName}</p>
+                    <p style="margin: 5px 0;"><strong>좌석:</strong> ${b.theaterDTO.seatDTO.seat}</p>
+                    <p style="margin: 5px 0;"><strong>날짜:</strong> ${b.bookDate}</p>
+
+            </div>
+        `;
+    })
 }
 
 //포인트
@@ -227,7 +315,7 @@ function loadReview(page=1) {
     fetch(`/users/reviewList?page=${page}&kind=${kind}&search=${encodeURIComponent(search)}`)
     .then(result=>result.json())
     .then(r=>{
-        console.log(r)
+ 
         let reviewHtml = '';
         let pager = r.pager || { search: "", start: 1, end: 1, endCheck: true };
 
@@ -278,17 +366,17 @@ function loadReview(page=1) {
             <nav aria-label="Page navigation example">
             <ul class="pagination">
                 
-                <li class="page-item"><button class="page-link pages" data-page-num="${pager.start-1}">Previous</button></li>
+                <li class="page-item"><button class="page-link reviewPages" data-page-num="${pager.start-1}">Previous</button></li>
         `
         for(let i = pager.start; i<=pager.end;i++){
 
             reviewHtml += `
-            <li class="page-item"><button class="page-link pages" data-page-num="${i}">${i}</button></li>
+            <li class="page-item"><button class="page-link reviewPages" data-page-num="${i}">${i}</button></li>
             `
         }
 
         reviewHtml += `
-               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link pages" data-page-num="${pager.end+1}">Next</button></li>
+               <li class="page-item ${pager.endCheck?'disabled':''}"><button class="page-link reviewPages" data-page-num="${pager.end+1}">Next</button></li>
             </ul>
         </nav>
         </div>
@@ -306,7 +394,7 @@ mainContents.addEventListener("submit", function (e) {
 });
 
 mainContents.addEventListener("click",(e)=>{
-    let page = e.target.closest(".pages");
+    let page = e.target.closest(".reviewPages");
 
     if(page){
         let pageNum = page.getAttribute("data-page-num");
@@ -321,7 +409,7 @@ function reviewDetail(reviewId) {
     fetch(`/users/reviewDetail?reviewId=${reviewId}`)
     .then(r=>r.json())
     .then(r=>{
-        console.log(r)
+        
         document.getElementById('mainContents').innerHTML=`
           
 			    <table style="width: 600px; border-collapse: collapse;">
@@ -356,7 +444,6 @@ function loadCoupon() {
     fetch("/users/couponList")
     .then(result=>result.json())
     .then(c=>{
-        console.log(c)
 
         let couponHtml = '';
 

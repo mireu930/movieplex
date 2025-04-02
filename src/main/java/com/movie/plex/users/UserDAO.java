@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -86,5 +87,21 @@ public class UserDAO {
 	
 	public Long paymentTotalCount() throws Exception {
 		return sqlSession.selectOne(NAMESPACE+"paymentTotalCount");
+	}
+	
+	public int paymentUpdate(UserDTO userDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"paymentUpdate", userDTO);
+	}
+	
+	public List<UserDTO> bookList(Pager pager) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"bookList", pager);
+	}
+	
+	public Long bookTotalCount(UserDTO userDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"bookTotalCount", userDTO);
+	}
+	
+	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"bookDetail", movieBookDTO);
 	}
 }

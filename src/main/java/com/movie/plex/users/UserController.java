@@ -23,6 +23,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.coupon.CouponService;
 import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -267,5 +268,25 @@ public class UserController {
 		map.put("pager", pager);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "bookList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.bookList(pager, userDTO, session);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
+	}
+	
+	@RequestMapping(value = "bookDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return userService.bookDetail(movieBookDTO);
 	}
 }

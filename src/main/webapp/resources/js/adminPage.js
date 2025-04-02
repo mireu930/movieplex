@@ -115,18 +115,20 @@ mainContents.addEventListener("click", (e) => {
 
             console.log(selectedUserId);
             if (!selectedUserId) {
-                alert("먼저 회원을 선택하세요!");
+                alert("회원을 선택하세요!");
                 return;
+            }
+
+            let con = confirm("관리자로 등록하시겠습니까?");
+            if (!con) {
+                return; 
             }
     
             fetch(`/admin/adminUpdate?userId=${selectedUserId}`)
                 .then(r => r.text())
                 .then(r => {
-                    let con = confirm("관리자로 등록하시겠습니까?");
-                    if (con) {
                         alert(r.trim() == '0' ? "이미 관리자입니다." : "관리자로 변경되었습니다.");
                         location.reload();
-                    }
                 });
     }
 });
@@ -136,15 +138,43 @@ mainContents.addEventListener("click",(e)=>{
     if(e.target.id === "withdrawbtn") {
         let selectedUserId = document.getElementById("userId")?.textContent.trim()
 
+        let con = confirm("영구히 탈퇴하시겠습니까?")
+
+        if (!con) {
+            return; 
+        }
+
         fetch(`/admin/withdraw?userId=${selectedUserId}`)
         .then(r => r.text())
         .then(r => {
-            let con = confirm("영구히 탈퇴하시겠습니까?")
-
-            if(con){
                 alert(r.trim()=='0'?"실패":"영구탈퇴되었습니다.");
                 location.reload();
+        })
+    }
+})
+
+//입금승인
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "paymentbtn"){
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("회원을 선택하세요!");
+                return;
             }
+
+            let con = confirm("입금 승인인하시겠습니까?");
+
+            if (!con) {
+                return; 
+            }
+
+        fetch(`/admin/paymentUpdate?userId=test`)
+        .then(r=>r.text())
+        .then(r=>{
+            alert(r.trim()=='0'?"실패":"입금승인되었습니다.");
+            location.reload();
         })
     }
 })
