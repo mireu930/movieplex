@@ -3,6 +3,8 @@ package com.movie.plex.movieBooks;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.movie.plex.movies.MovieDTO;
 import com.movie.plex.movies.MovieService;
 import com.movie.plex.theater.TheaterDTO;
+import com.movie.plex.users.UserDTO;
+import com.movie.plex.users.UserService;
 
 @Controller
 @RequestMapping("/movieBooks/*")
@@ -24,6 +28,8 @@ public class MovieBookController {
 	private MovieService movieService;
 	@Autowired
 	private MovieBookService bookService;
+	@Autowired
+	private UserService userService;
 	
 	
 	@RequestMapping(value="booking", method = RequestMethod.GET)
@@ -33,16 +39,30 @@ public class MovieBookController {
 		model.addAttribute("list", dtos);
 	}
 	
-	@RequestMapping(value="seatBook", method = RequestMethod.GET)
-	public void seatBook(Long theaterId, Model model) throws Exception{
+//	@RequestMapping(value="seatBook", method = RequestMethod.GET)
+//	public void seatBook(Long theaterId, Model model) throws Exception{
+//		TheaterDTO dto = bookService.getMovieInfo(theaterId);
+//		
+//		model.addAttribute("theaterDTO", dto);
+//		
+//	}
+	@RequestMapping(value="seatBook", method = RequestMethod.POST)
+	public String seatBook(Long theaterId, Model model, HttpSession session) throws Exception{
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
-		
+		Object user = session.getAttribute("user");
+//		if(user == null) {
+//			System.out.println("유저 없음");
+//			model.addAttribute("result", 0);
+//			return "/commons/ajax";
+//		}
+		//System.out.println(theaterId);
 		model.addAttribute("theaterDTO", dto);
 		
+		return "/movieBooks/seatBook";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="getSeats", method=RequestMethod.GET)
+	@RequestMapping(value="getSeats", method=RequestMethod.POST)
 	public List<String> getSeats(Long theaterId,Model model) throws Exception{
 		List<String> seats = bookService.getSeats(theaterId);
 //		ObjectMapper objectMapper = new ObjectMapper();
@@ -54,8 +74,14 @@ public class MovieBookController {
 		return seats;
 	}
 	
-	@RequestMapping(value="paymentPage", method=RequestMethod.GET)
-	public void paymentPage() throws Exception{
+	@RequestMapping(value="paymentPage", method=RequestMethod.POST)
+	public void paymentPage(Long theaterId, Model model, HttpSession session) throws Exception{
+		TheaterDTO dto = bookService.getMovieInfo(theaterId);
+		UserDTO user = (UserDTO)session.getAttribute("user");
+		List<UserDTO> coupons = userService.couponList(user);
+		model.addAttribute("theaterDTO", dto);
+		model.addAttribute("coupons", coupons);
+		
 		System.out.println("paymentPage");
 	}
 }

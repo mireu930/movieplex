@@ -1,57 +1,89 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div class="container payment-container">
+	<div class="row payment no-gutters">
+		<!-- 좌측 A 영역 -->
 
-<div class="payment-container">
-    <!-- 매장 정보 -->
-    <div class="payment-section store-info">
-        <div class="title">매장 정보</div>
-        <img src="/path/to/poster.jpg" alt="영화 포스터">
-        <div class="store-details">
-            <p>진격의 거인 완결편 더 라스트 어택</p>
-            <p>2025.04.01 (화) 18:05 ~ 20:39</p>
-            <p>강동/1관 · 2D(자막)</p>
-            <p>성인 1명</p>
-        </div>
-    </div>
+		<div class="col-md-9 payment-left">
+			<h3>결제</h3>
 
-    <!-- 할인 적용 -->
-    <div class="payment-section discount-section">
-        <div class="title">할인 적용</div>
-        <div class="discount-buttons">
-            <button>할인쿠폰</button>
-            <button>VIP 영화쿠폰</button>
-            <button>메가박스 관람권</button>
-            <button>무비패스 관람권</button>
-            <button>페이즈 금액권</button>
-            <button>스토어 교환권</button>
-        </div>
-    </div>
+			<div class="payment-infoSection">
+			<div class="payment-top">
+				<div>
+					<h5>예매 정보</h5>
+				</div>
 
-    <!-- 결제 수단 -->
-    <div class="payment-section payment-method">
-        <div class="title">결제 수단</div>
-        <label><input type="radio" name="payment" checked> JoongAng PAY</label><br>
-        <label><input type="radio" name="payment"> 내통장결제</label>
-    </div>
+				<div class="payment-info">
+					<div class="movImg">
+						<img
+							src="https://image.tmdb.org/t/p/w500${theaterDTO.movieDTO.shortPoster}"
+							id="moviePoster" alt="${theaterDTO.movieDTO.movieTitle}">
+					</div>
+					<ul class="list">
+						<li id="movieNm">${theaterDTO.movieDTO.movieTitle}</li>
+						<li><span id="playDe">${theaterDTO.printDate}</span> <span
+							id="playTime">${theaterDTO.timeStart}~
+								${theaterDTO.timeEnd}</span></li>
+						<li><span id="brchNm">${theaterDTO.theaterName}관</span></li>
+						<li id="totalPeople"></li>
+					</ul>
+				</div>
+			</div>
 
-    <!-- 결제 금액 -->
-    <div class="payment-section payment-summary">
-        <div class="title">결제 금액</div>
-        <div class="summary-item">
-            <span>성인 1명:</span> <span>13,000원</span>
-        </div>
-        <div class="summary-item">
-            <span>금액:</span> <span>13,000원</span>
-        </div>
-        <div class="summary-item">
-            <span>할인적용:</span> <span>0원</span>
-        </div>
-        <hr>
-        <div class="summary-item final-price">
-            <span>최종결제금액:</span> <span>13,000원</span>
-        </div>
-        <button class="payment-btn">결제</button>
-    </div>
+				<div class="row payment-bottom">
+					<div class="col-md-6">
+						<div class="payment-coupon">
+							<h5>쿠폰</h5>
+                            <div>
+                                <select class="form-select form-select-sm" aria-label="Small select example">
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                 </select>
+                            </div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="payment-method">
+							<h5>결제 수단</h5>
+                            <div id="payment-radio">
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="radio" name="method" id="method1" value="0">
+                                    <label class="form-check-label" for="method1">
+                                      무통장 입금
+                                    </label>
+                                    <select id="bank" class="form-select form-select-sm" aria-label="Small select example" disabled>
+                                        <option selected disabled value="default">은행을 선택하세요</option>
+                                        <option value="1">신한은행</option>
+                                        <option value="2">국민은행</option>
+                                        <option value="3">기업은행</option>
+                                        <option value="3">우리은행</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="method" id="method2" value="1">
+                                    <label class="form-check-label" for="method2">
+                                      카드 결제
+                                    </label>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 우측 B 영역 -->
+		<div class="col-md-3 payment-right">
+			<div class="payment-total">
+				<h5>결제 금액</h5>
+				<p>성인 1명: 13,000원</p>
+				<p>할인 적용: 0원</p>
+				<p>최종 결제 금액: 13,000원</p>
+				<button class="btn btn-light">결제</button>
+			</div>
+		</div>
+	</div>
 </div>
-
