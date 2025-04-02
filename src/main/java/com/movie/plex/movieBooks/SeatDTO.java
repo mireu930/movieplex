@@ -1,17 +1,10 @@
-package com.movie.plex.theater;
+package com.movie.plex.movieBooks;
 
 public class SeatDTO {
-	private Long seatId;
 	private String seat;
 	private Long theaterId;
 	private Long bookId;
 	
-	public Long getSeatId() {
-		return seatId;
-	}
-	public void setSeatId(Long seatId) {
-		this.seatId = seatId;
-	}
 	public String getSeat() {
 		return seat;
 	}

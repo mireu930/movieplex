@@ -4,7 +4,7 @@
 
 
 <c:forEach items="${theaterList }" var="t">
-	<li class="list-group-item theater-item" data-movie-id="${t.movieId }">
+	<li class="list-group-item theater-item" data-movie-id="${t.movieId }" data-theater-id="${t.theaterId}">
 		<div style="display: flex; justify-content: space-between;">
 			<div>
 				<strong>${t.movieDTO.movieTitle}</strong><br> 

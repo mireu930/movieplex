@@ -94,5 +94,6 @@ theaterList.addEventListener("click", (e) => {
     const target = e.target.closest(".theater-item");
     if(!target) return;
     
-    window.location.href = `/movieBooks/seatBook?movieId=${target.getAttribute("data-movie-id")}`
+    window.location.href = `/movieBooks/seatBook?theaterId=${target.getAttribute("data-theater-id")}`
 })
+

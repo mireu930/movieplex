@@ -42,4 +42,8 @@ public class TheaterDAO {
 	public List<TheaterDTO> getTheaterList(TheaterDTO theaterDTO) {
 		return sqlSession.selectList(NAMESPACE + "getTheaterList", theaterDTO);
 	}
+
+	public TheaterDTO getMovieInfo(Long theaterId) {
+		return sqlSession.selectOne(NAMESPACE + "getMovieInfo", theaterId);
+	}
 }

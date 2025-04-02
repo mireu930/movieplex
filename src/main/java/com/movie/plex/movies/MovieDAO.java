@@ -29,4 +29,5 @@ public class MovieDAO {
 	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "getMovieTitle", movieDTO);
 	}
+
 }

@@ -32,4 +32,5 @@
 	<select id="getList" resultType="MovieDTO">
 		SELECT * FROM MOVIES
 	</select>
+
 </mapper>
