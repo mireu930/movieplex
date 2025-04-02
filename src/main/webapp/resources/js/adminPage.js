@@ -44,17 +44,34 @@ contents.addEventListener("click", (e) => {
 
 
 //영화 조회
-mainContents.addEventListener("click", (e) => {
-    if (e.target.getAttribute("id") == "fetchScheduleBtn") {
+// mainContents.addEventListener("click", (e) => {
+//     if (e.target.getAttribute("id") == "fetchScheduleBtn") {
+//         const selectedRadio = document.querySelector('input[name="theater"]:checked');
+//         let selectedName = selectedRadio ? selectedRadio.id : "";
+//         let selectedDate = document.getElementById("theaterDate").value;
+//         if (selectedName == "" || selectedDate == "") {
+//             alert("모든 정보를 입력하세요!");
+//             return;
+//         }
+//         const date = `${selectedDate} 00:00:00`;
+//         let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+//         fetch(url)
+//             .then(r => r.text())
+//             .then(r => {
+//                 const scheduleList = document.getElementById("scheduleList");
+//                 scheduleList.innerHTML = r;
+//             })
+//     }
+// })
+let selectedDate = "";
+mainContents.addEventListener("change", (e) => {
+    if (e.target.getAttribute("id") == "theaterDate") {
+        selectedDate = document.getElementById("theaterDate").value;
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
         let selectedName = selectedRadio ? selectedRadio.id : "";
-        let selectedDate = document.getElementById("theaterDate").value;
-        if (selectedName == "" || selectedDate == "") {
-            alert("모든 정보를 입력하세요!");
-            return;
-        }
+
         const date = `${selectedDate} 00:00:00`;
-        let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+        let url = `/theater/getDayList?theaterStart=${date}`;
         fetch(url)
             .then(r => r.text())
             .then(r => {
@@ -66,8 +83,26 @@ mainContents.addEventListener("click", (e) => {
 
 mainContents.addEventListener("change", (e) => {
     if (e.target.name == "theater") {
-        const scheduleList = document.getElementById("scheduleList");
-        scheduleList.innerHTML = "";
+        if (selectedDate == "") {
+            alert("날짜를 선택해주세요");
+             // 현재 클릭한 라디오 버튼 선택 해제
+            const selectedRadio = document.querySelector('input[name="theater"]:checked');
+            if (selectedRadio) {
+                selectedRadio.checked = false;
+            }
+            return;
+        }
+        const selectedRadio = document.querySelector('input[name="theater"]:checked');
+        let selectedName = selectedRadio ? selectedRadio.id : "";
+
+        const date = `${selectedDate} 00:00:00`;
+        let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+        fetch(url)
+            .then(r => r.text())
+            .then(r => {
+                const scheduleList = document.getElementById("scheduleList");
+                scheduleList.innerHTML = r;
+            })
     }
 })
 
@@ -158,7 +193,7 @@ mainContents.addEventListener("click", (e) => {
         startDate = formatToTimeStamp(startDate);
         endDate = formatToTimeStamp(endDate);
 
-        
+
 
         const params = new URLSearchParams({
             movieId: selectedMovie,
@@ -175,7 +210,16 @@ mainContents.addEventListener("click", (e) => {
                 if (r * 1 == 1) {
                     alert("상영 정보가 추가 되었습니다.");
 
-                    document.getElementById("fetchScheduleBtn").click();
+                    // document.getElementById("fetchScheduleBtn").click();
+                    const date = `${selectedDate} 00:00:00`;
+                    let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+                    fetch(url)
+                        .then(r => r.text())
+                        .then(r => {
+                            const scheduleList = document.getElementById("scheduleList");
+                            scheduleList.innerHTML = r;
+                        })
+
 
                     const resetStart = document.getElementById("startTime");
                     resetStart.value = "";
@@ -244,12 +288,12 @@ mainContents.addEventListener("click", (e) => {
         let param = new URLSearchParams();
         param.append("theaterId", theaterId);
         let url = `/theater/deleteTheater`;
-        fetch(url,{
+        fetch(url, {
             method: 'POST',
-            headers:{
-                "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
-            body:param
+            body: param
         })
             .then(r => r.text())
             .then(r => {

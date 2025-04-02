@@ -40,14 +40,16 @@
 		SELECT *
 		FROM THEATER
 		WHERE
-		THEATERNAME = #{theaterName}
-		AND (
+		(
 		TRUNC(THEATERSTART) = #{theaterStart}
 		OR TRUNC(THEATEREND) = #{theaterStart}
-		) )T
+		)
+		<if test="theaterName != null">
+		AND THEATERNAME = #{theaterName}
+		</if>
+		)T
 		JOIN MOVIES M ON
-		T.MOVIEID =
-		M.MOVIEID
+		T.MOVIEID = M.MOVIEID
 		ORDER BY THEATERSTART
 	</select>
 	<resultMap type="TheaterDTO" id="getDayListResult">
