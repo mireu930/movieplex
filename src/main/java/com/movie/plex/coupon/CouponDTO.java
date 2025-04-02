@@ -5,7 +5,21 @@ public class CouponDTO {
 	private Long couponNum;
 	private String couponName;
 	private Long couponCost;
+	private String couponCode;
+	private int count;
 
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
+	}
+	public String getCouponCode() {
+		return couponCode;
+	}
+	public void setCouponCode(String couponCode) {
+		this.couponCode = couponCode;
+	}
 	public Long getCouponNum() {
 		return couponNum;
 	}

@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.movie.plex.coupon.CouponDTO;
+import com.movie.plex.coupon.CouponService;
+import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -29,6 +32,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CouponService couponService;
 	@Autowired
 	private MailSend mailSend;
 	@Autowired
@@ -208,6 +213,24 @@ public class UserController {
 	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		return userService.couponList(userDTO);
+	}
+	
+	@RequestMapping(value = "getCouponByCode", method = RequestMethod.GET)
+	@ResponseBody
+	public CouponDTO getCouponByCode(@RequestParam("couponCode") String couponCode) throws Exception {
+	    return couponService.getCouponByCode(couponCode);
+	}
+	
+	@RequestMapping(value = "couponAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public int couponAdd(CouponConnectDTO couponConnectDTO, HttpSession session, @RequestParam("couponNum") Long couponNum) throws Exception {
+		 UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		 
+		 System.out.println(userDTO.getUserNum());
+		 System.out.println(couponNum);
+		couponConnectDTO.setUserNum(userDTO.getUserNum());
+		couponConnectDTO.setCouponNum(couponNum);
+		return userService.couponAdd(couponConnectDTO);
 	}
 	
 	@RequestMapping(value = "reviewList", method = RequestMethod.GET)

@@ -1,12 +1,14 @@
 package com.movie.plex.users;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -58,6 +60,10 @@ public class UserService {
 	
 	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
 		return userDAO.couponList(userDTO);
+	}
+	
+	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
+		return userDAO.couponAdd(couponConnectDTO);
 	}
 	
 	public List<UserDTO> userList(Pager pager) throws Exception {

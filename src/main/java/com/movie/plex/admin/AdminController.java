@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.movie.plex.coupon.CouponDTO;
+import com.movie.plex.coupon.CouponService;
 import com.movie.plex.movies.MovieDTO;
 import com.movie.plex.movies.MovieService;
 import com.movie.plex.pages.Pager;
@@ -26,6 +28,8 @@ public class AdminController {
 	private MovieService movieService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CouponService couponService;
 
 	@RequestMapping(value = "/mainPage", method=RequestMethod.GET)
 	public String adminTheater() throws Exception{
@@ -71,6 +75,13 @@ public class AdminController {
 		int result = userService.withdraw(userDTO);
 		model.addAttribute("result", result);
 		return "commons/ajax";
+	}
+	
+	@RequestMapping(value = "couponAdd", method = RequestMethod.POST)
+	public String couponAdd(CouponDTO couponDTO,Model model) throws Exception {
+		System.out.println("couponAdd");
+		int result  = couponService.couponAdd(couponDTO);
+		return "redirect:./mainPage";
 	}
 	
 }

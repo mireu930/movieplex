@@ -34,15 +34,17 @@
 		</div>
 		<div class="col-md-1 text-end">
 			<c:if test="${empty user}">
-				<a class="nav-link px-2 link-secondary" href="/users/login">로그인</a>				
+				<a class="btn btn-outline-primary px-3" href="/users/login">로그인</a>				
 			</c:if>
 			<c:if test="${not empty user and user.userGrade ne 4}">
-				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
-				<a class="nav-link px-2 link-secondary" href="/users/mypage">마이페이지</a>
+				<a class="btn btn-outline-danger px-3" href="/users/logout">로그아웃</a>
+				<a class="btn btn-outline-secondary px-3" href="/users/mypage">마이페이지</a>
 			</c:if>
 			<c:if test="${not empty user and user.userGrade eq 4}">
-				<a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a>
-				<a class="nav-link px-2 link-secondary" href="/admin/mainPage">관리자페이지</a>
+			
+				<a class="btn btn-outline-danger px-3" href="/users/logout">로그아웃</a>
+				<a class="btn btn-outline-secondary px-3" href="/admin/mainPage">관리자페이지</a>
+				
 			</c:if>
 		</div>
 	</header>

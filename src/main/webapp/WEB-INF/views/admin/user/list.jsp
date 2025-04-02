@@ -58,3 +58,46 @@
       </ul>
 </nav>
 </div>
+
+<div style="width: 600px; margin: 20px auto; text-align: right;">
+    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#couponModal">쿠폰 등록</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="couponModal" tabindex="-1" aria-labelledby="couponModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="couponModalLabel">쿠폰 등록</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- 쿠폰 등록 폼 -->
+                <form id="couponForm" action="/admin/couponAdd" method="POST">
+                    <!-- 쿠폰 번호 (예: 자동 증가되도록 서버에서 처리될 경우 숨겨진 값으로 전달) -->
+                    <input type="hidden" id="couponNum" name="couponNum" value="${couponNum}">
+
+                    <!-- 쿠폰 이름 -->
+                    <div class="mb-3">
+                        <label for="couponName" class="form-label">쿠폰 이름</label>
+                        <input type="text" class="form-control" id="couponName" name="couponName" required>
+                    </div>
+
+                    <!-- 쿠폰 비용 -->
+                    <div class="mb-3">
+                        <label for="couponCost" class="form-label">쿠폰 비용</label>
+                        <input type="number" class="form-control" id="couponCost" name="couponCost" required>
+                    </div>
+
+                    <!-- 발급할 쿠폰 개수 -->
+                    <div class="mb-3">
+                        <label for="couponCount" class="form-label">발급 수</label>
+                        <input type="number" class="form-control" id="couponCount" name="count" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">쿠폰 등록</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

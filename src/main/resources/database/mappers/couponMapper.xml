@@ -7,5 +7,14 @@
   	<select id="getList" resultType="CouponDTO">
   		SELECT * FROM COUPON
   	</select>
+  	
+  	 <select id="findCouponByCode" parameterType="String" resultType="CouponDTO">
+    	SELECT * FROM COUPON WHERE couponCode = #{couponCode}
+	</select>
+  	
+  	<insert id="couponAdd" parameterType="CouponDTO">
+  		INSERT INTO COUPON (COUPONNUM, COUPONNAME, COUPONCOST, COUPONCODE)
+  		VALUES (COUPONNUM_SEQ.NEXTVAL, #{couponName}, #{couponCost}, #{couponCode})
+  	</insert>
 	
   </mapper>

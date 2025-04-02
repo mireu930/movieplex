@@ -81,6 +81,11 @@
 		WHERE u.USERID=#{userId}
   	</select>
   	
+  	<insert id="couponAdd" parameterType="CouponConnectDTO">
+  		INSERT INTO COUPONCONNECT
+		VALUES (#{userNum}, #{couponNum}, #{couponCode})
+  	</insert>
+  	
   	<select id="reviewList" resultMap="getReviewList" parameterType="Pager">
 		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
 			SELECT * FROM REVIEW r

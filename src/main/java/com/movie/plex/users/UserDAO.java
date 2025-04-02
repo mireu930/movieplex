@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -45,6 +46,10 @@ public class UserDAO {
 	
 	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
+	}
+	
+	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
+		return sqlSession.insert(NAMESPACE+"couponAdd", couponConnectDTO);
 	}
 
 	public List<UserDTO> userList(Pager pager) throws Exception {

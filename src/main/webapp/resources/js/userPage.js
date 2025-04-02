@@ -364,12 +364,67 @@ function loadCoupon() {
             couponHtml+= `
             
             <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
+                <input type="hidden" name="couponNum" value="${item.couponDTO.couponNum}"> 
                 <p><strong>쿠폰이름:</strong>${item.couponDTO.couponName}</p>
-                <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p>    
+                <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p> 
             </div>
             `          
         })
 
+        couponHtml += `<input type="button" id="couponbtn" class="btn btn-success" value="등록"></input>`
+
         document.getElementById('mainContents').innerHTML = couponHtml;
+
+        document.getElementById('couponbtn').addEventListener('click', ()=> {
+            couponRegister();
+        });
     })
+}
+
+
+function couponRegister() {
+    const couponCode = prompt("쿠폰 코드를 입력하세요:");
+
+    if (!couponCode || couponCode.trim() === "") {
+        return;
+    }
+
+    // encodeURIComponent->
+    // 쿠폰 코드(couponCode) 같은 문자열을 URL 파라미터로 보낼 때, 
+    // 공백이나 특수문자가 포함되어 있으면 올바르게 전달되지 않을 수 있기 때문
+    fetch(`/users/getCouponByCode?couponCode=${encodeURIComponent(couponCode.trim())}`)
+        .then(response => response.json())
+        .then(coupon => {
+            if (!coupon || !coupon.couponNum) {
+                return;
+            }
+
+            const couponNum = coupon.couponNum;
+
+            // 쿠폰 등록 요청
+            fetch(`/users/couponAdd`, {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/x-www-form-urlencoded"
+                },
+                body: `couponNum=${couponNum}&couponCode=${encodeURIComponent(couponCode)}`
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result > 0) {
+                    alert("쿠폰이 등록되었습니다");
+                    location.reload();
+                } else {
+                    alert("쿠폰 등록 실패");
+                }
+            })
+            .catch(error => {
+                console.error("쿠폰 등록 실패:", error);
+                alert("서버 오류가 발생했습니다.");
+            });
+        })
+        .catch(error => {
+            console.error("쿠폰 조회 실패:", error);
+            alert("쿠폰 정보를 가져올 수 없습니다.");
+        });
 }

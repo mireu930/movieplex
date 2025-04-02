@@ -6,9 +6,16 @@ import com.movie.plex.users.UserDTO;
 public class CouponConnectDTO {
 	private Long userNum;
 	private Long couponNum;
+	private String couponCode;
 	private UserDTO userDTO;
 	private CouponDTO couponDTO;
 	
+	public String getCouponCode() {
+		return couponCode;
+	}
+	public void setCouponCode(String couponCode) {
+		this.couponCode = couponCode;
+	}
 	public UserDTO getUserDTO() {
 		return userDTO;
 	}
