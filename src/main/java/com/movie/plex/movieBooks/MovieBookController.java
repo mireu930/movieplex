@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movies.MovieDTO;
 import com.movie.plex.movies.MovieService;
 import com.movie.plex.theater.TheaterDTO;
@@ -30,6 +32,8 @@ public class MovieBookController {
 	private MovieBookService bookService;
 	@Autowired
 	private UserService userService;
+	
+	
 	
 	
 	@RequestMapping(value="booking", method = RequestMethod.GET)
@@ -78,9 +82,9 @@ public class MovieBookController {
 	public void paymentPage(Long theaterId, Model model, HttpSession session) throws Exception{
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		UserDTO user = (UserDTO)session.getAttribute("user");
-		List<UserDTO> coupons = userService.couponList(user);
+		//List<CouponConnectDTO> coupons = userService.couponList(user);
 		model.addAttribute("theaterDTO", dto);
-		model.addAttribute("coupons", coupons);
+		//model.addAttribute("coupons", coupons);
 		
 		System.out.println("paymentPage");
 	}

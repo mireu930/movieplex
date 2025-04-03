@@ -7,7 +7,7 @@ body {
 }
 
 .payment{
-    width: 70%;
+    width: 80%;
     margin: auto !important;   /* 가운데 정렬 */
 }
 
@@ -58,15 +58,45 @@ body {
 }
 
 .payment-total {
-    background-color: #302f2f;
-    color: white;
-    height: 550px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 10px;
+    background-color: #333;
+    height: 400px;
+    color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+.payment-summary {
+    margin: 10px 0;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+.payment-item.discount {
+    background-color: #555;
+}
+
+.payment-item.final {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.payment-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.payment-buttons .btn {
+    width: 48%;
+}
+
 
 .row.no-gutters {
     margin-right: 0;

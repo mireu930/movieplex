@@ -5,8 +5,15 @@ public class MoviePayments {
 	private Long payCheck;
 	private Long payAmounts;
 	private Long bookId;
+	private MovieBookDTO movieBookDTO;
 	
 	
+	public MovieBookDTO getMovieBookDTO() {
+		return movieBookDTO;
+	}
+	public void setMovieBookDTO(MovieBookDTO movieBookDTO) {
+		this.movieBookDTO = movieBookDTO;
+	}
 	public Long getPayId() {
 		return payId;
 	}

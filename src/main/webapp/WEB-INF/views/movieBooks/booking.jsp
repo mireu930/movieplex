@@ -71,6 +71,7 @@
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
 	<script src="/resources/js/booking.js"></script>
 </body>
 

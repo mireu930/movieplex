@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
+
 @Controller
 @RequestMapping(value = "/users/*")
 public class UserController {
@@ -194,7 +196,7 @@ public class UserController {
 	
 	@RequestMapping(value = "couponList", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		return userService.couponList(userDTO);
 	}

@@ -98,12 +98,12 @@ movieList.addEventListener("click", (e) => {
 })
 
 const theaterList = document.getElementById("theater-list");
-let selectedtheaterId = "";
+let selectedTheaterId = "";
 theaterList.addEventListener("click", (e) => {
   const target = e.target.closest(".theater-item");
   if (!target) return;
 
-  selectedtheaterId = target.getAttribute("data-theater-id")
+  selectedTheaterId = target.getAttribute("data-theater-id")
   fetch("/movieBooks/seatBook", {
     method: 'POST',
     headers: {
@@ -113,7 +113,7 @@ theaterList.addEventListener("click", (e) => {
   })
     .then(r => r.text())
     .then(r => {
-      if(r*1 == 0){
+      if (r * 1 == 0) {
         alert("로그인이 필요합니다.");
         window.location.replace("/users/login")
         return;
@@ -134,6 +134,9 @@ theaterList.addEventListener("click", (e) => {
 let adults = "";
 let teens = "";
 
+let sendingSeat = [];
+let paymentPrice = 0;
+
 
 //좌석 선택 창 JS
 function seatBook() {
@@ -152,12 +155,12 @@ function seatBook() {
   const finalBtn = document.getElementById("finalBtn");
 
   //좌석 확인
-  fetch("/movieBooks/getSeats",{
+  fetch("/movieBooks/getSeats", {
     method: "POST",
-    headers:{
-      "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+    headers: {
+      "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
     },
-    body: `theaterId=${selectedtheaterId}`
+    body: `theaterId=${selectedTheaterId}`
   })
     .then(r => r.json())
     .then(r => {
@@ -321,6 +324,8 @@ function seatBook() {
       alert("좌석을 이미 선택하였습니다.");
     }
     console.log(selectedSeat);
+    sendingSeat = selectedSeat;
+    paymentPrice = totalPrice
   })
 
   finalBtn.addEventListener("click", () => {
@@ -328,19 +333,19 @@ function seatBook() {
       alert("좌석을 선택하세요.");
       return;
     }
-    fetch("/movieBooks/paymentPage",{
+    fetch("/movieBooks/paymentPage", {
       method: "POST",
-      headers:{
-        "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
       },
-      body: `theaterId=${selectedtheaterId}`
+      body: `theaterId=${selectedTheaterId}`
     })
-    .then(r => r.text())
-    .then(r => {
-      main.innerHTML = r;
-      //console.log(r);
-      paymentPage();
-    })
+      .then(r => r.text())
+      .then(r => {
+        main.innerHTML = r;
+        //console.log(r);
+        paymentPage();
+      })
   })
 }
 
@@ -349,30 +354,106 @@ function seatBook() {
 //======================================================================================================
 //결제
 
-function paymentPage(){
+function paymentPage() {
   const totalPeople = document.getElementById("totalPeople");
   console.log(adults);
   console.log(`일반 ${adults}`);
-  
-  if(adults != "" && teens == ""){
+
+  if (adults != "" && teens == "") {
     totalPeople.innerText = `일반 ${adults}`
-  } else if(adults == "" && teens != ""){
+  } else if (adults == "" && teens != "") {
     totalPeople.innerText = `청소년 ${teens}`
-  } else{
+  } else {
     totalPeople.innerText = `일반 ${adults} 청소년 ${teens}`
   }
 
   const paymentMethod = document.getElementById("payment-radio");
-
-  paymentMethod.addEventListener("change", (e)=>{
+  const bank = document.getElementById("bank");
+  
+  paymentMethod.addEventListener("change", (e) => {
     const selectedMethod = document.querySelector('input[name="method"]:checked');
-    const bank = document.getElementById("bank");
     console.log(selectedMethod.value);
-    if(selectedMethod.value == 0){
+    if (selectedMethod.value == 0) {
       bank.disabled = false;
-    } else{
+    } else {
       bank.disabled = true;
       bank.value = "default";
     }
   })
+
+  const payBtn = document.getElementById("payBtn");
+
+  payBtn.addEventListener("click", () => {
+    const selectedMethod = document.querySelector('input[name="method"]:checked');
+    if (!selectedMethod) {
+      alert("결제 수단을 선택하세요");
+      return;
+    }
+    if (selectedMethod.value == 1) {
+      let param = new URLSearchParams();
+
+      //여러개 보낼때는 반복문을 사용해야 함함
+      for (let s of sendingSeat) {
+        param.append("seat", s);
+      }
+      param.append("theaterId", selectedTheaterId);
+      param.append("totalPrice", paymentPrice);
+
+      fetch("/moviePayment/movieBookInfo", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        body: param
+      })
+        .then(r => r.json())
+        .then(r => {
+          console.log(r);
+          IMP.init("imp54880348");
+          requestPay(r);
+
+        })
+    }
+  })
+
+
+  function requestPay(r) {
+    IMP.request_pay(
+      {
+        channelKey: r.importChannel,
+        pay_method: "card",
+        merchant_uid: r.bookId, // 주문 고유 번호
+        name: "movieplex",
+        amount: 100,
+        buyer_email: r.userEmail,
+        buyer_name: r.userName,
+        buyer_tel: r.userPhone,
+      },
+      function (response) {
+        if (response.success) {
+          let param = new URLSearchParams();
+          param.append("imp_uid", response.imp_uid);
+          param.append("merchant_uid", response.merchant_uid);
+          param.append("totalPrice", paymentPrice);
+          fetch("/moviePayment/payment/complete", {
+            method: "POST",
+            headers: {
+              "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: param
+          })
+            .then(r => r.text())
+            .then(r => {
+
+            })
+          console.log(response);
+        } else {
+          console.log(response);
+        }
+        // 결제 종료 시 호출되는 콜백 함수
+        // response.imp_uid 값으로 결제 단건조회 API를 호출하여 결제 결과를 확인하고,
+        // 결제 결과를 처리하는 로직을 작성합니다.
+      },
+    );
+  }
 }

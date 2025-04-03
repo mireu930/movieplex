@@ -2,9 +2,48 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.movie.plex.movieBooks.MovieBookDAO">
+
+<mapper namespace="com.movie.plex.movieBooks.MovieBookDAO">
 	<select id="getSeats" parameterType="Long" resultType="String">
-		SELECT SEAT FROM SEATS WHERE THEATERID = #{theaterId}
+		SELECT
+		SEAT FROM SEATS WHERE THEATERID = #{theaterId}
 	</select>
-  </mapper>
+
+	<insert id="addMovieBook" parameterType="MovieBookDTO">
+		INSERT
+		INTO MOVIEBOOKS(BOOKID, BOOKDATE, USERNUM, THEATERID, NOWSTATUS)
+		VALUES(MOVIEBOOKS_SEQ.NEXTVAL, SYSDATE, #{userNum}, #{theaterId}, 0)
+	</insert>
+
+	<select id="getBookId" parameterType="MovieBookDTO"
+		resultType="Long">
+		SELECT BOOKID
+		FROM (
+		SELECT BOOKID
+		FROM MOVIEBOOKS
+		WHERE USERNUM = #{userNum}
+		AND THEATERID = #{theaterId}
+		AND NOWSTATUS = 0
+		ORDER BY BOOKDATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+
+	<insert id="addSeat" parameterType="Map">
+		INSERT ALL
+
+		<foreach collection="seat" item="item">
+			INTO SEATS(SEAT, THEATERID, BOOKID)
+			VALUES(#{item},#{theaterId},#{bookId})
+		</foreach>
+		SELECT 1 FROM DUAL <!-- INSERT ALL 할 때 반드시 있어야 한다. -->
+	</insert>
+	
+	
+	<!-- payment 관련 Mapper -->
+	<insert id="addPayment" parameterType="MoviePayments">
+		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
+		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, #{payAmounts}, #{bookId})
+	</insert>
+</mapper>

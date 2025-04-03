@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
+
 @Service
 public class UserService {
 
@@ -51,7 +53,7 @@ public class UserService {
 		return userDAO.inactive(userDTO);
 	}
 	
-	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO) throws Exception {
 		return userDAO.couponList(userDTO);
 	}
 }

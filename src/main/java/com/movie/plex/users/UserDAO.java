@@ -6,6 +6,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
+
 @Repository
 public class UserDAO {
 	@Autowired
@@ -40,7 +42,7 @@ public class UserDAO {
 		return sqlSession.update(NAMESPACE+"inactive", userDTO);
 	}
 	
-	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
 	}
 
