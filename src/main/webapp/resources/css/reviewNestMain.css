@@ -144,6 +144,10 @@ ul{
     transition: transform 0.2s ease-in-out; /* 클릭 시 하트 애니메이션 */
 }
 
+.nav {
+    flex-wrap: nowrap !important; /* 줄바꿈 방지 */
+    justify-content: center; /* 중앙 정렬 */
+}
 
 
 

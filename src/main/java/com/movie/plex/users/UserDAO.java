@@ -43,5 +43,11 @@ public class UserDAO {
 	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
 	}
+	
+	public UserDTO reviewLogin(UserDTO userDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"reviewLogin", userDTO);
+	}
+	
+	 
 
 }

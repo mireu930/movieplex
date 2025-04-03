@@ -8,9 +8,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewDTO;
 
 	@Controller
 	public class NestContentController {
@@ -38,33 +40,26 @@ import com.movie.plex.pages.Pager;
 		}
 		
 		@RequestMapping(value="/reviewNest/getMovieDetail", method=RequestMethod.GET)
-		public ModelAndView getMovieDetail(NestContentDTO nestContentDTO) throws Exception{
-			//System.out.println("movie detail");
+		public String getMovieDetail(@RequestParam("contentId") Long contentId, Model model)throws Exception{
 			
-			nestContentDTO = nestContentService.getMovieDetail(nestContentDTO);
+			//System.out.println("contentId: " + contentId);
 			
-			ModelAndView mv = new ModelAndView();
-			//model
-			mv.addObject("content", nestContentDTO);
-			//view
-			mv.setViewName("/reviewNest/getMovieDetail");
+			NestContentDTO moviedetail= nestContentService.getMovieDetail(contentId);
+			 model.addAttribute("content", moviedetail);
+			  model.addAttribute("reviewList", moviedetail.getReviewList());
 			
-			return mv;
+			return "/reviewNest/getMovieDetail";
 		}
 		
 		@RequestMapping(value="/reviewNest/getTvDetail", method=RequestMethod.GET)
-		public ModelAndView getTvDetail(NestContentDTO nestContentDTO) throws Exception{
-			//System.out.println("movie detail");
+		public String getTvDetail(@RequestParam("contentId") Long contentId, Model model) throws Exception{
 			
-			nestContentDTO = nestContentService.getTvDetail(nestContentDTO);
+			NestContentDTO tvdetail = nestContentService.getTvDetail(contentId);
 			
-			ModelAndView mv = new ModelAndView();
-			//model
-			mv.addObject("content", nestContentDTO);
-			//view
-			mv.setViewName("/reviewNest/getTvDetail");
+			 model.addAttribute("content", tvdetail);
+			 model.addAttribute("reviewList", tvdetail.getReviewList());
 			
-			return mv;
+			return "/reviewNest/getTvDetail";
 		}
 		
 		

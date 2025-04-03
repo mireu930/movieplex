@@ -11,43 +11,27 @@ public class ReviewService {
 		@Autowired
 		private ReviewDAO reviewDAO;
 		
-		public int addMovieReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.addMovieReview(reviewDTO);
+		
+		public int addReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.addReview(reviewDTO);
 		}
 		
-		public int addTvReivew(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.addTvReview(reviewDTO);
+		public List<ReviewDTO> getReviewList(Long contentId) throws Exception{
+			return reviewDAO.getReviewList(contentId);
 		}
 		
-		public List<ReviewDTO> getMovieReviewList() throws Exception{
-			return reviewDAO.getMovieReviewList();
+		public ReviewDTO getReviewDetail(Long reviewId ) throws Exception {
+			return reviewDAO.getReviewDetail(reviewId);
 		}
 		
-		public List<ReviewDTO> getTvReviewList() throws Exception{
-			return reviewDAO.getTvReviewList();
+		public int updateReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.updateReview(reviewDTO);
 		}
 		
-		public ReviewDTO getMovieReviewDetail(ReviewDTO reviewDTO) throws Exception {
-			return reviewDAO.getMovieReviewDetail(reviewDTO);
+		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.deleteReview(reviewDTO);
 		}
 		
-		public ReviewDTO getTvReviewDetail(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.getTvReviewDetail(reviewDTO);
-		}
 		
-		public int updateMovieReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.updateMovieReview(reviewDTO);
-		}
 		
-		public int updateTvReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.updateTvReview(reviewDTO);
-		}
-		
-		public int deleteMovieReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.deleteMovieReview(reviewDTO);
-		}
-		
-		public int deleteTvReview(ReviewDTO reviewDTO) throws Exception {
-			return reviewDAO.deleteMovieReview(reviewDTO);
-		}
 }

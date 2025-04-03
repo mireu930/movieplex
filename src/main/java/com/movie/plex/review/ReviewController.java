@@ -1,7 +1,9 @@
 package com.movie.plex.review;
 
+import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.movie.plex.users.UserDTO;
@@ -20,98 +23,92 @@ public class ReviewController {
 	@Autowired
 	private ReviewService reviewService;
 
-	@RequestMapping(value = "addMovieReview", method = RequestMethod.GET)
-	public void addMovieReview() throws Exception {
+	@RequestMapping(value = "addReview", method = RequestMethod.GET)
+	public void addReview() throws Exception {
 
 	}
 
-	@RequestMapping(value = "addMovieReview", method = RequestMethod.POST)
-	public String addMovieReview(ReviewDTO reviewDTO, HttpSession session) throws Exception {
+	@RequestMapping(value = "addReview", method = RequestMethod.POST)
+	public String addReview(ReviewDTO reviewDTO, HttpSession session,HttpServletResponse response) throws Exception {
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		if (userDTO == null) {
+	        response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        out.println("<script>alert('로그인이 필요합니다.'); location.href='/users/login';</script>");
+	        out.flush();
+	        return null;
+	    }
+		//System.out.println(reviewDTO.getReviewContents());
+		//System.out.println(reviewDTO.getKind());
 		reviewDTO.setUserNum(userDTO.getUserNum());
-		int result = reviewService.addMovieReview(reviewDTO);
+		int result = reviewService.addReview(reviewDTO);
 
-		return "redirect:./getMovieDetail";
+		if (reviewDTO.getKind() == 0) {
+	        return "redirect:./getMovieDetail?contentId=" + reviewDTO.getContentId();
+	    } else {
+	        return "redirect:./getTvDetail?contentId=" + reviewDTO.getContentId();
+	    }
 	}
 
-	  @RequestMapping(value="addTvReview", method=RequestMethod.GET) 
-		public void addTvReview() throws Exception{
-	 
-	 	}
-	 
-	@RequestMapping(value = "addTvReview", method = RequestMethod.POST)
-		public String addTvReview(ReviewDTO reviewDTO, HttpSession session) throws Exception {
-		UserDTO userDTO = (UserDTO) session.getAttribute("user");
-		reviewDTO.setUserNum(userDTO.getUserNum());
-		int result = reviewService.addTvReivew(reviewDTO);
 
-		return "redirect:./getTvDetail";
-	}
 
-	@RequestMapping(value = "getMovieReviewList", method = RequestMethod.GET)
-	public void getMovieReviewList(Model model) throws Exception {
-		System.out.println("MovieReviewList");
-		List<ReviewDTO> moviear = reviewService.getMovieReviewList();
-
-		model.addAttribute("movieReview", moviear);
-	}
-
-	@RequestMapping(value = "getTvReviewList", method = RequestMethod.GET)
-	public void getTvReviewList(Model model) throws Exception {
-		List<ReviewDTO> tvar = reviewService.getTvReviewList();
-
-		model.addAttribute("getTvList", tvar);
+	@RequestMapping(value = "getReviewList", method = RequestMethod.GET)
+	public String getReviewList(ReviewDTO reviewDTO, @RequestParam("contentId") Long contentId, Model model) throws Exception {
+		
+		List<ReviewDTO> ar = reviewService.getReviewList(contentId);
+		
+		
+		model.addAttribute("reviewList", ar);
+		
+		if (reviewDTO.getKind() == 0) {
+	        return "redirect:./getMovieDetail?contentId=" + reviewDTO.getContentId();
+	    } else {
+	        return "redirect:./getTvDetail?contentId=" + reviewDTO.getContentId();
+	    }
 	}
 	
+	@RequestMapping(value= "/reviewNest/getReviewDetail", method=RequestMethod.GET)
+	public String getReviewDetail(@RequestParam("reviewId") Long reviewId, Model model) throws Exception {
+		
+		ReviewDTO reviewDetail = reviewService.getReviewDetail(reviewId);
+		
+
+	        model.addAttribute("reviewDetail", reviewDetail);
+	        
+	    return "reviewNest/getReviewDetail";
+	}
+
 	
-	@RequestMapping(value="updateMovieReview", method= RequestMethod.GET)
-	public void updateMovieReview(ReviewDTO reviewDTO, Model model) throws Exception {
+	
+	@RequestMapping(value="updateReview", method= RequestMethod.GET)
+	public void updateReview(ReviewDTO reviewDTO, Model model) throws Exception {
 			//reviewDTO = reviewService.updateMovieReview(reviewDTO);
 			model.addAttribute("reviewDTO", reviewDTO);
 	}
-	@RequestMapping(value="updateMovieReview", method=RequestMethod.POST)
-	public String updateMovieReview(ReviewDTO reviewDTO) throws Exception{
-		int result = reviewService.updateMovieReview(reviewDTO);
+	
+	@RequestMapping(value="updateReview", method=RequestMethod.POST)
+	public String updateReview(ReviewDTO reviewDTO) throws Exception{
+		int result = reviewService.updateReview(reviewDTO);
 		
-		return "redirect:./getMovieDetail?reviewId=" +reviewDTO.getReviewId();
+		return "redirect:./getReviewDetail?reviewId=" +reviewDTO.getReviewId();
 	}
 	
 	
-	@RequestMapping(value="updateTvReview", method=RequestMethod.GET)
-	public void updateTvReview(ReviewDTO reviewDTO, Model model) throws Exception {
-		//reviewDTO = reviewService.updateTvReview(reviewDTO);
-		model.addAttribute("reviewDTO", reviewDTO);
-	}
-	@RequestMapping(value="updateTvReview", method=RequestMethod.POST)
-	public String updateTvReview(ReviewDTO reviewDTO) throws Exception{
-		int result = reviewService.updateTvReview(reviewDTO);
-		
-		return "redirect:./getTvDetail?reviewId=" +reviewDTO.getReviewId();
-	}
+
 	
 	
-	@RequestMapping(value="deleteMovieReview", method=RequestMethod.GET)
-	public String deleteMovieReview(ReviewDTO reviewDTO, Model model) throws Exception{
-		int result = reviewService.deleteMovieReview(reviewDTO);
+	@RequestMapping(value="deleteReview", method=RequestMethod.GET)
+	public String deleteReview(ReviewDTO reviewDTO, Model model) throws Exception{
+		int result = reviewService.deleteReview(reviewDTO);
 		String s = "삭제 실패";
 		if(result>0) {
 				s = "삭제 성공";
 		}
 		model.addAttribute("result" ,s);
-		model.addAttribute("path", "./getMovieReviewList");
+		model.addAttribute("path", "./getReviewList");
 		
 		return "commons/result";
 	}
-	@RequestMapping(value="deleteTvReview", method=RequestMethod.GET)
-	public String deleteTvReview(ReviewDTO reviewDTO, Model model) throws Exception{
-		int result = reviewService.deleteMovieReview(reviewDTO);
-		String s = "삭제 실패";
-		if(result>0) {
-				s = "삭제 성공";
-		}
-		model.addAttribute("result" ,s);
-		model.addAttribute("path", "./getTvReviewList");
-		
-		return "commons/result";
-	}
+	
+	
 }

@@ -54,4 +54,16 @@ public class UserService {
 	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
 		return userDAO.couponList(userDTO);
 	}
+	
+	public UserDTO reviewLogin(UserDTO userDTO) throws Exception {
+		UserDTO result = userDAO.getLogin(userDTO);
+		
+		if(result != null) {
+			if(result.getUserPw().equals(userDTO.getUserPw())) {
+				return result;
+			}
+		}
+		
+		return null;
+	}
 }

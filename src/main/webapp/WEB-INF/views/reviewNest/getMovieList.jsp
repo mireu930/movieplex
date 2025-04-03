@@ -94,6 +94,6 @@
 <c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
-<script src="/resources/js/toggleLike.js"></script>
+
 </body>
 </html>

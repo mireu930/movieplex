@@ -69,14 +69,11 @@
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
 						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
-						<h3 class="mb-0">제목</h3>
+						<h5 class="mb-0"><strong>미키 17</strong></h5>
 						<br>
 						<p class="card-text mb-auto">This is a wider card with
 							supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-							Continue reading <svg class="bi">
-								<use xlink:href="#chevron-right"></use></svg>
-						</a>
+						
 					</div>
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"
@@ -93,14 +90,11 @@
 				<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
 						<div class="mb-1 text-body-secondary">TODAY'S DRAMA</div>
-						<h3 class="mb-0">제목</h3>
+						<h5 class="mb-0"><strong>폭삭 속았수다</strong></h5>
 						<br>
 						<p class="card-text mb-auto">This is a wider card with
 							supporting text below as a natural lead-in to additional content.</p>
-						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-							Continue reading <svg class="bi">
-								<use xlink:href="#chevron-right"></use></svg>
-						</a>
+						
 					</div>
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"
@@ -118,14 +112,11 @@
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
 						<div class="mb-1 text-body-secondary">MOVIE RECOMMEND</div>
-						<h3 class="mb-0">제목</h3>
+						<h5 class="mb-0"><strong>인턴</strong></h5>
 						<br>
 						<p class="mb-auto">This is a wider card with supporting text
 							below as a natural lead-in to additional content.</p>
-						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-							Continue reading <svg class="bi">
-								<use xlink:href="#chevron-right"></use></svg>
-						</a>
+						
 					</div>
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"
@@ -142,14 +133,11 @@
 					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
 					<div class="col p-4 d-flex flex-column position-static">
 						<div class="mb-1 text-body-secondary">DRAMA RECOMMEND</div>
-						<h3 class="mb-0">제목</h3>
+						<h5 class="mb-0"><strong>협상의 기술</strong></h5>
 						<br>
 						<p class="mb-auto">This is a wider card with supporting text
 							below as a natural lead-in to additional content.</p>
-						<a href="#" class="icon-link gap-1 icon-link-hover stretched-link">
-							Continue reading <svg class="bi">
-								<use xlink:href="#chevron-right"></use></svg>
-						</a>
+						
 					</div>
 					<div class="col-auto d-none d-lg-block">
 						<svg class="bd-placeholder-img" width="200" height="250"

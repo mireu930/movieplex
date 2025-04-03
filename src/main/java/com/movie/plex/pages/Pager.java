@@ -18,6 +18,9 @@ public class Pager {
 		private Long start;
 		private Long end;
 		private boolean endCheck;
+		private Long lastNum;
+		private String kind;
+		private String search;
 		
 		//시작 번호, 끝번호를 계산하는 메서드 
 		public void makeNum() {
@@ -96,6 +99,11 @@ public class Pager {
 		public Long getPerPage() {
 			if(this.perPage== null) {
 				this.perPage=20L;
+				
+			if(perPage==null|| perPage<1) {
+					this.perPage =5L;
+				}
+			return this.perPage;
 			}
 			
 			return perPage;
@@ -122,34 +130,11 @@ public class Pager {
 			this.endCheck = endCheck;   
 		}
 
-		
-		
-		
-=======
+	
 
-	private Long startNum;
-	private Long lastNum;
-	private Long page;
-	private Long perPage;
-	private Long start;
-	private Long end;
-	private boolean endCheck;
+
 	
-	private String kind;
-	private String search;
 	
-	public boolean isEndCheck() {
-		return endCheck;
-	}
-	
-	public void setEndCheck(boolean endCheck) {
-		this.endCheck = endCheck;
-	}
-	
-	public void makeNum() throws Exception {
-		this.startNum = (this.getPage()-1)*this.getPerPage()+1;
-		this.lastNum = this.getPage()*this.getPerPage();
-	}
 	
 	public void makePage(Long totalCount) throws Exception {
 		if(totalCount<1) {
@@ -177,29 +162,6 @@ public class Pager {
 		}
 	}
 	
-	public Long getStart() {
-		return start;
-	}
-
-	public void setStart(Long start) {
-		this.start = start;
-	}
-
-	public Long getEnd() {
-		return end;
-	}
-
-	public void setEnd(Long end) {
-		this.end = end;
-	}
-	
-	public Long getStartNum() {
-		return startNum;
-	}
-	
-	public void setStartNum(Long startNum) {
-		this.startNum = startNum;
-	}
 	
 	public Long getLastNum() {
 		return lastNum;
@@ -209,27 +171,6 @@ public class Pager {
 		this.lastNum = lastNum;
 	}
 	
-	public Long getPage() {
-		if(page == null || page <1) {
-			this.page =1L;
-		}
-		return page;
-	}
-	
-	public void setPage(Long page) {
-		this.page = page;
-	}
-	
-	public Long getPerPage() {
-		if(perPage==null|| perPage<1) {
-			this.perPage =5L;
-		}
-		return perPage;
-	}
-	
-	public void setPerPage(Long perPage) {
-		this.perPage = perPage;
-	}
 	
 	public String getKind() {
 		if(this.kind == null) {

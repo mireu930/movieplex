@@ -14,6 +14,7 @@
 		<typeAlias type="com.movie.plex.like.ContentsLikeDTO" alias="ContentsLikeDTO"/>
 		<typeAlias type="com.movie.plex.theater.TheaterDTO" alias="TheaterDTO"/>
 		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="com.movie.plex.review.ReviewCommentDTO" alias="ReviewCommentDTO"/>
 	
 		<!-- <typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/> -->
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>
@@ -26,7 +27,6 @@
 		<typeAlias type="com.movie.plex.boards.qna.QnaDTO" alias="QnaDTO"/>
 		<typeAlias type="com.movie.plex.boards.qna.QnaFilesDTO" alias="QnaFilesDTO"/>
 		
-		<typeAlias type="com.movie.plex.pages.Pager" alias="Pager"/>
 		<typeAlias type="java.util.Map" alias="Map"/> 
 		<typeAlias type="java.util.List" alias="List"/>
 	</typeAliases>

@@ -41,12 +41,12 @@ public class NestContentDAO {
 		return sqlSession.selectList(NAMESPACE+"getTvList",pager);
 	}
 	
-	public NestContentDTO getMovieDetail(NestContentDTO nestContentDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"getMovieDetail", nestContentDTO);
+	public NestContentDTO getMovieDetail(Long contentId) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getMovieDetail", contentId);
 	}
 	
-	public NestContentDTO getTvDetail(NestContentDTO nestContentDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getTvDetail", nestContentDTO);
+	public NestContentDTO getTvDetail(Long contentId) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getTvDetail", contentId);
 	}
 	
 	

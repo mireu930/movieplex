@@ -34,11 +34,11 @@ public class UserController {
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
 		
 		userDTO = userService.idCheck(userDTO);
-		//Áßº¹ 0
+		//ï¿½ßºï¿½ 0
 		int result =0;
 		
 		if(userDTO== null) {
-			result =1; //Áßº¹ x
+			result =1; //ï¿½ßºï¿½ x
 		}
 		
 		model.addAttribute("result", result);
@@ -47,15 +47,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
-	@ResponseBody //¸Þ¼Òµå°¡ ¹ÝÈ¯ÇÑ °´Ã¼¸¦ ÀÚµ¿À¸·Î json.xmlÇâÅÂ·Î º¯È¯ÇØÁÖ´Â ¿ªÇÒ, µ¥ÀÌÅÍ¸¦ Á÷Á¢ Å¬¶óÀÌ¾ðÆ®¿¡ Àü´ÞÇÒ¤·¶§ »ç¿ë
+	@ResponseBody //ï¿½Þ¼Òµå°¡ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ json.xmlï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¤ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	public String mailCheck(String email) throws Exception {
 			UserDTO userDTO = userService.findEmail(email);
 			
 			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
-				System.out.println("ÀÌ¹ÌÀÖÀ½");
+				System.out.println("ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½");
 				return mailSend.alreadyEmail();
 			} else {	
-				System.out.println("»õ·Î°¡ÀÔ");
+				System.out.println("ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½");
 				return mailSend.joinEmail(email);
 			}			
 	}
@@ -89,10 +89,10 @@ public class UserController {
 		
 		if(userDTO != null) {
 			 if (userDTO.getUserOut() == 1) {
-		            // »ç¿ëÀÚ°¡ ºñÈ°¼ºÈ­µÈ »óÅÂÀÏ °æ¿ì ·Î±×ÀÎ ½ÇÆÐ Ã³¸®
-		            model.addAttribute("result", "ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚÀÔ´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä.");
+		            // ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+		            model.addAttribute("result", "ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 		            model.addAttribute("path", "./login");
-		            return "commons/result";  // ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚ ¸Þ½ÃÁö Ãâ·Â
+		            return "commons/result";  // ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		        }else {
 		        	session.setAttribute("user", userDTO);
 		        	System.out.println(session.getAttribute("user"));
@@ -100,7 +100,7 @@ public class UserController {
 		        }
 		}
 		
-		model.addAttribute("result", "·Î±×ÀÎ½ÇÆÐ");
+		model.addAttribute("result", "ï¿½Î±ï¿½ï¿½Î½ï¿½ï¿½ï¿½");
 		model.addAttribute("path", "./login");
 		
 		
@@ -113,10 +113,10 @@ public class UserController {
 		
 		String accessToken = (String) session.getAttribute("accessToken");
 
-	    // 2. accessTokenÀÌ ÀÖÀ» °æ¿ì Ä«Ä«¿À ·Î±×¾Æ¿ô ¼öÇà
+	    // 2. accessTokenï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä«Ä«ï¿½ï¿½ ï¿½Î±×¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
-	        session.removeAttribute("accessToken"); // ÅäÅ« »èÁ¦
+	        session.removeAttribute("accessToken"); // ï¿½ï¿½Å« ï¿½ï¿½ï¿½ï¿½
 	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
 	        a = "redirect:"+kakaoUrl;
 	    }
@@ -135,7 +135,7 @@ public class UserController {
 		int result = userService.join(userDTO);
 		
 		if(result > 0) {
-			model.addAttribute("result", "È¸¿ø°¡ÀÔ¼º°ø");
+			model.addAttribute("result", "È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½");
 			model.addAttribute("path", "../");
 		}
 		
@@ -210,6 +210,40 @@ public class UserController {
 	@RequestMapping(value = "admin", method = RequestMethod.GET)
 	public UserDTO admin(HttpSession session) throws Exception {
 		return (UserDTO)session.getAttribute("user");
+	}
+	
+	
+	@RequestMapping(value = "reviewLogin", method = RequestMethod.GET)
+	public String reviewLogin(Model model) throws Exception {
+		model.addAttribute("kakaoApi", kakaoApi.getKakaoApi());
+		model.addAttribute("redirectUrl", kakaoApi.getKakaoRedirectUrl());
+		return "reviewNest/reviewLogin";
+	}
+	
+	
+	
+	@RequestMapping(value = "reviewlogin", method = RequestMethod.POST)
+	public String reviewLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
+		userDTO = userService.getLogin(userDTO);
+		
+		if(userDTO != null) {
+			 if (userDTO.getUserOut() == 1) {
+		            // ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+		            model.addAttribute("result", "ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
+		            model.addAttribute("path", "./reviewNest/login");
+		            return "commons/result";  // ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+		        }else {
+		        	session.setAttribute("user", userDTO);
+		        	System.out.println(session.getAttribute("user"));
+		        	return "redirect:/";
+		        }
+		}
+		
+		model.addAttribute("result", "ï¿½Î±ï¿½ï¿½Î½ï¿½ï¿½ï¿½");
+		model.addAttribute("path", "./reviewNest/login");
+		
+		
+		return "commons/result";
 	}
 	
 }

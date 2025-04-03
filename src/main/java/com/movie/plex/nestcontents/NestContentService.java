@@ -37,11 +37,11 @@ public class NestContentService {
 		return tvList;
 	}
 	
-	public NestContentDTO getMovieDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getMovieDetail(nestContentDTO);
+	public NestContentDTO getMovieDetail(Long contentId) throws Exception {
+		return nestContentDAO.getMovieDetail(contentId);
 	}
 	
-	public NestContentDTO getTvDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getTvDetail(nestContentDTO);
+	public NestContentDTO getTvDetail(Long contentId) throws Exception {
+		return nestContentDAO.getTvDetail(contentId);
 	}
 }
