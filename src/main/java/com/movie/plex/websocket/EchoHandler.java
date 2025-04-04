@@ -18,9 +18,10 @@ import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.movie.plex.users.UserDTO;
 
-@ServerEndpoint("/chatServer2")
+@Component
 public class EchoHandler extends TextWebSocketHandler{
 	
 	@Autowired
@@ -43,6 +44,16 @@ public class EchoHandler extends TextWebSocketHandler{
 		ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
 		
 		int result = chatService.insertMessage(chatMessage);
+		
+		if(result>0) {
+			for(WebSocketSession s: sessions) {
+				int chatRoomNo = 0;
+				
+				if(chatMessage.getChatRoomNo() == chatRoomNo) {
+					s.sendMessage(new TextMessage(new Gson().toJson(chatMessage)));
+				}
+			}
+		}
 	}
 
 	@Override

@@ -20,9 +20,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(echoHandler, "/echo")
-                .addInterceptors(new HttpSessionInterceptor()) // 세션 정보 인터셉터 추가
-                .setAllowedOrigins("http://localhost:80") // CORS 허용
+        registry.addHandler(echoHandler, "/chatServer2")
+                .setAllowedOrigins("*") // CORS 허용
                 .withSockJS(); // SockJS 지원
     }
 }
