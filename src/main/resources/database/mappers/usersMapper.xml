@@ -65,16 +65,29 @@
   		UPDATE USERS SET USERGRADE=4 WHERE USERID=#{userId}
   	</update>
   	
+  	<update id="gradeUpdate" parameterType="UserDTO">
+    UPDATE USERS 
+    SET USERGRADE = 
+        CASE 
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                  >= 16 THEN 3
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                   >= 11 THEN 2
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                  >= 6 THEN 1
+            ELSE 0
+        END
+    WHERE USERID = #{userId} 	
+  	</update>
+  	
   	<delete id="withdraw" parameterType="UserDTO">
   		DELETE USERS WHERE USERID=#{userId}
   	</delete>
   	
   	<select id="couponList" resultMap="getCouponList" parameterType="UserDTO">
-  		SELECT u.USERNUM, u.USERID, u.USERPW, u.USEREMAIL, u.USERPHONE, 
-        u.USERNAME, u.USERGRADE, u.REGISTDATE, u.USEROUT, u.SNS,
-        c.COUPONNUM, c.COUPONNAME, c.COUPONCOST
-         FROM users u
-			JOIN COUPONCONNECT cc
+  		SELECT *
+         FROM COUPONCONNECT cc
+			JOIN users u
 				ON U.USERNUM = CC.USERNUM 
 			JOIN COUPON c
 				ON CC.COUPONNUM = C.COUPONNUM 
@@ -83,8 +96,12 @@
   	
   	<insert id="couponAdd" parameterType="CouponConnectDTO">
   		INSERT INTO COUPONCONNECT
-		VALUES (#{userNum}, #{couponNum}, #{couponCode})
+		VALUES (#{userNum}, #{couponNum}, #{couponCode}, 0)
   	</insert>
+  	
+  	<update id="couponUpdate" parameterType="CouponDTO">
+  		UPDATE COUPONCONNECT SET USED = 1 WHERE COUPONNUM = #{couponNum}
+  	</update>
   	
   	<select id="reviewList" resultMap="getReviewList" parameterType="Pager">
 		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
@@ -157,6 +174,8 @@
   	<resultMap type="CouponConnectDTO" id="getCouponList">
   			<id column="USERNUM" property="userNum"/>
   			<id column="COUPONNUM" property="couponNum"/>
+  			<result column="COUPONCODE" property="couponCode"/>
+  			<result column="USED" property="used"/>
   		
   		<association property="userDTO" javaType="UserDTO">
 	  		<result column="USERID" property="userId"/>
@@ -173,6 +192,8 @@
   		<association property="couponDTO" javaType="CouponDTO">
   			<result column="COUPONNAME" property="couponName"/>
   			<result column="COUPONCOST" property="couponCost"/>
+  			<result column="COUPONCODE" property="couponCode"/>
+  			<result column="USED" property="used"/>
   		</association>
   		
   	</resultMap>

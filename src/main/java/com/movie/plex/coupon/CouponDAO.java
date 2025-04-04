@@ -24,4 +24,8 @@ public class CouponDAO {
 	public CouponDTO findCouponByCode(String couponCode) throws Exception {
 	    return sqlSession.selectOne(NAMESPACE+"findCouponByCode", couponCode);
 	}
+	
+	public int couponUpdate(CouponDTO couponDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"couponUpdate", couponDTO);
+	}
 }

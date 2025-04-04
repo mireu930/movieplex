@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
@@ -59,12 +60,16 @@ public class UserService {
 		return userDAO.inactive(userDTO);
 	}
 	
-	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO) throws Exception {
 		return userDAO.couponList(userDTO);
 	}
 	
 	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
 		return userDAO.couponAdd(couponConnectDTO);
+	}
+	
+	public int couponUpdate(CouponDTO couponDTO) throws Exception {
+		return userDAO.couponUpdate(couponDTO);
 	}
 	
 	public List<UserDTO> userList(Pager pager) throws Exception {

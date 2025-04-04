@@ -34,6 +34,10 @@ public class CouponService {
 		return result;
 	}
 	
+	public int couponUpdate(CouponDTO couponDTO) throws Exception {
+		return couponDAO.couponUpdate(couponDTO);
+	}
+	
     public String generateRandomCouponCode() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         StringBuilder code = new StringBuilder();

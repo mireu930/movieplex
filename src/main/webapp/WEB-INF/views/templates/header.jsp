@@ -47,5 +47,6 @@
 				
 			</c:if>
 		</div>
+		
 	</header>
 </div>

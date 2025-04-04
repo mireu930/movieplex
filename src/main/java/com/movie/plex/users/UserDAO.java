@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
@@ -45,12 +46,16 @@ public class UserDAO {
 		return sqlSession.update(NAMESPACE+"inactive", userDTO);
 	}
 	
-	public List<UserDTO> couponList(UserDTO userDTO) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
 	}
 	
 	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"couponAdd", couponConnectDTO);
+	}
+	
+	public int couponUpdate(CouponDTO couponDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"couponUpdate", couponDTO);
 	}
 
 	public List<UserDTO> userList(Pager pager) throws Exception {

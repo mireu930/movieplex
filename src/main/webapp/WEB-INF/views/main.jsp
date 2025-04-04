@@ -5,7 +5,6 @@
 
 <html data-bs-theme="light">
 <head>
-<script src="/docs/5.3/assets/js/color-modes.js"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,10 +20,35 @@
 <link rel="stylesheet" href="/resources/css/main.css">
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+	<script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://cdn.jsdelivr.net/npm/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<style>
+  .chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    width: 60px;
+    height: 60px;
+    font-size: 14px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+  }
+</style>
 </head>
 <body>
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
+
+		<div>
+			<input type="hidden" name="name" id="name" value="${user.userName}" class="short">
+			<input type="hidden" name="usergrade" id="usergrade" value="${user.userGrade}" class="short">
+			 <button type="button"  class="in chat-button" id="chatbtn"><ion-icon name="chatbubble-outline" size="large"></ion-icon></button>
+		</div>
+
 
 		<div id="myCarousel" class="carousel slide mb-6"
 			data-bs-ride="carousel">
@@ -108,5 +132,51 @@
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+	
+	<script>
+	
+	document.querySelectorAll('.in').forEach(button => {
+	    button.addEventListener('click', (e) => {
+	        let name = document.getElementById('name').value;
+			let usergrade = document.getElementById('usergrade').value;
+	        
+	        if (e.target.dataset.name && e.target.dataset.name.trim() && e.target.dataset.usergrade &&  e.target.dataset.usergrade.trim()  !== '') {
+	            name = e.target.dataset.name;
+				usergrade = e.target.dataset.usergrade;
+	        }
+	        
+	        let child = window.open('/chat', 'chat', 'width=405,height=510');
+	        
+	        child.addEventListener('load', function() {
+	            // 자식 창이 모두 로드된 후 실행
+	            child.connect(name);
+	        });
+
+			let checkClosed = setInterval(() => {
+            if (child.closed) {
+                clearInterval(checkClosed); // 반복 중지
+                enableButtons(); 
+            }
+        }, 500);
+	        
+	        // 버튼 비활성화 및 입력 필드 읽기 전용 설정
+	        document.querySelectorAll('.in').forEach(btn => {
+	            btn.style.opacity = 0.5;
+	            btn.disabled = true;
+	        });
+	        document.getElementById('name').readOnly = true;
+	    });
+	});
+
+	function enableButtons() {
+    document.querySelectorAll('.in').forEach(btn => {
+        btn.style.opacity = 1;
+        btn.disabled = false;
+    });
+    document.getElementById('name').readOnly = false;
+}
+	
+	</script>
+	<script src="/docs/5.3/assets/js/color-modes.js"></script>
 </body>
 </html>

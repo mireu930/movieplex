@@ -1,5 +1,6 @@
 package com.movie.plex.users;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,7 @@ public class UserController {
 		            return "commons/result";  // 비활성화된 사용자 메시지 출력
 		        }else {
 		        	session.setAttribute("user", userDTO);
-		        	System.out.println(session.getAttribute("user"));
+		        	
 		        	return "redirect:/";
 		        }
 		}
@@ -211,9 +212,19 @@ public class UserController {
 	
 	@RequestMapping(value = "couponList", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
-		userDTO = (UserDTO)session.getAttribute("user");
-		return userService.couponList(userDTO);
+	public List<CouponConnectDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+		 userDTO = (UserDTO)session.getAttribute("user");
+		 
+		 List<CouponConnectDTO> couponConnectDTOs = userService.couponList(userDTO);
+		 
+		 List<CouponConnectDTO> filteCoupons = new ArrayList<CouponConnectDTO>();
+		 for(CouponConnectDTO coupon: couponConnectDTOs) {
+			 if(coupon.getUsed()==0) {
+				 filteCoupons.add(coupon);
+			 }
+		 }
+		 
+		return filteCoupons;
 	}
 	
 	@RequestMapping(value = "getCouponByCode", method = RequestMethod.GET)
@@ -288,5 +299,17 @@ public class UserController {
 	@ResponseBody
 	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
 		return userService.bookDetail(movieBookDTO);
+	}
+	
+	@RequestMapping(value = "userCouponUpdate", method = RequestMethod.POST)
+	@ResponseBody
+	public int couponUpdate(@RequestParam("couponNum") Long couponNum) throws Exception {
+		  CouponDTO couponDTO = new CouponDTO();
+		    couponDTO.setCouponNum(couponNum); 
+		
+		int result = userService.couponUpdate(couponDTO);
+		int result2 = couponService.couponUpdate(couponDTO);
+
+		return (result>0&&result2>0)?1:0;
 	}
 }

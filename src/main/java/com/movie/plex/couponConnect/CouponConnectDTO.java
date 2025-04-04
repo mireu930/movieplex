@@ -7,6 +7,14 @@ public class CouponConnectDTO {
 	private Long userNum;
 	private Long couponNum;
 	private String couponCode;
+	private int used;
+	
+	public int getUsed() {
+		return used;
+	}
+	public void setUsed(int used) {
+		this.used = used;
+	}
 	private UserDTO userDTO;
 	private CouponDTO couponDTO;
 	

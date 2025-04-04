@@ -13,8 +13,12 @@
 	</select>
   	
   	<insert id="couponAdd" parameterType="CouponDTO">
-  		INSERT INTO COUPON (COUPONNUM, COUPONNAME, COUPONCOST, COUPONCODE)
-  		VALUES (COUPONNUM_SEQ.NEXTVAL, #{couponName}, #{couponCost}, #{couponCode})
+  		INSERT INTO COUPON (COUPONNUM, COUPONNAME, COUPONCOST, COUPONCODE, USED)
+  		VALUES (COUPONNUM_SEQ.NEXTVAL, #{couponName}, #{couponCost}, #{couponCode}, 0)
   	</insert>
+  	
+  	<update id="couponUpdate" parameterType="CouponDTO">
+  		UPDATE COUPON SET USED = 1 WHERE COUPONNUM=#{couponNum}
+  	</update>
 	
   </mapper>

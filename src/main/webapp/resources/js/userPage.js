@@ -24,7 +24,7 @@ function loadUserInfo() {
                 <p><strong>이름:</strong>${user.userName}</p>
                 <p><strong>이메일:</strong>${user.userEmail}</p>
                 <p><strong>폰번호:</strong>${user.userPhone}</p>
-                <p><strong>등급:</strong> ${user.userGrade}</p>
+                <p><strong>등급:</strong> ${user.userGrade == 4?"🔧 관리자":user.userGrade == 3?"💎VIP":user.userGrade == 2?"🥇골드":user.userGrade == 1?"🥉브론즈":"🌱새싹"}</p>
                 <p><strong>가입일:</strong> ${user.registDate}</p>
                 <p><strong>로그인형태:</strong> ${loginType}</p>
 
@@ -302,11 +302,6 @@ function bookDetail(bookId){
     })
 }
 
-//포인트
-function loadPoint() {
-
-}
-
 //관람평
 function loadReview(page=1) {
     let kind = document.querySelector("select[name='kind']")?.value || "k1"; 
@@ -444,6 +439,7 @@ function loadCoupon() {
     fetch("/users/couponList")
     .then(result=>result.json())
     .then(c=>{
+        console.log(c)
 
         let couponHtml = '';
 
@@ -451,19 +447,27 @@ function loadCoupon() {
             couponHtml+= `
             
             <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
-                <input type="hidden" name="couponNum" value="${item.couponDTO.couponNum}"> 
+                <input type="hidden" name="couponNum" value="${item.couponNum}"> 
                 <p><strong>쿠폰이름:</strong>${item.couponDTO.couponName}</p>
                 <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p> 
+                <input type = "button" id="couponUpdatebtn" class="btn btn-primary" value="업데이트"/>
             </div>
             `          
         })
 
-        couponHtml += `<input type="button" id="couponbtn" class="btn btn-success" value="등록"></input>`
+        couponHtml += `<input type="button" id="couponbtn" class="btn btn-success" value="등록"></input>
+        `
 
         document.getElementById('mainContents').innerHTML = couponHtml;
 
         document.getElementById('couponbtn').addEventListener('click', ()=> {
             couponRegister();
+        });
+
+        document.getElementById('couponUpdatebtn').addEventListener('click', ()=> {
+            c.forEach(item=>{
+                couponUpdate(item.couponNum);
+            })
         });
     })
 }
@@ -514,4 +518,21 @@ function couponRegister() {
             console.error("쿠폰 조회 실패:", error);
             alert("쿠폰 정보를 가져올 수 없습니다.");
         });
+}
+
+function couponUpdate(couponNum) {
+    fetch(`/users/userCouponUpdate`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/x-www-form-urlencoded"
+        },
+        body: `couponNum=${couponNum}`
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        if(r>0){
+            alert("업데이트되었습니다.")
+            location.reload();
+        }
+    })
 }

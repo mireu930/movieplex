@@ -6,7 +6,15 @@ public class CouponDTO {
 	private String couponName;
 	private Long couponCost;
 	private String couponCode;
+	private int used;
 	private int count;
+
+	public int getUsed() {
+		return used;
+	}
+	public void setUsed(int used) {
+		this.used = used;
+	}
 
 	public int getCount() {
 		return count;

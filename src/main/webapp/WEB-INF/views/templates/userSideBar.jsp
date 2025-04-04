@@ -32,12 +32,6 @@
 					예매내역
 				</a>
 			</li>			
-			<li class="nav-item">
-					<a href="javascript:void(0);" data-section="point" class="nav-link" onclick="setActive(this); loadPoint()">
-						 <ion-icon name="wallet-outline" class="me-2"></ion-icon>
-						포인트
-					</a>
-			</li>
 				
 			<li class="nav-item">
 					<a href="javascript:void(0);" data-section="review" class="nav-link" onclick="setActive(this); loadReview()">
