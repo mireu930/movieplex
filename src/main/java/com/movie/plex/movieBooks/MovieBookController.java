@@ -2,6 +2,7 @@ package com.movie.plex.movieBooks;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,9 +34,6 @@ public class MovieBookController {
 	@Autowired
 	private UserService userService;
 	
-	
-	
-	
 	@RequestMapping(value="booking", method = RequestMethod.GET)
 	public void movieBooks(Model model) throws Exception{
 		List<MovieDTO> dtos = movieService.getList();
@@ -43,13 +41,7 @@ public class MovieBookController {
 		model.addAttribute("list", dtos);
 	}
 	
-//	@RequestMapping(value="seatBook", method = RequestMethod.GET)
-//	public void seatBook(Long theaterId, Model model) throws Exception{
-//		TheaterDTO dto = bookService.getMovieInfo(theaterId);
-//		
-//		model.addAttribute("theaterDTO", dto);
-//		
-//	}
+
 	@RequestMapping(value="seatBook", method = RequestMethod.POST)
 	public String seatBook(Long theaterId, Model model, HttpSession session) throws Exception{
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
@@ -87,5 +79,13 @@ public class MovieBookController {
 		//model.addAttribute("coupons", coupons);
 		
 		System.out.println("paymentPage");
+	}
+	@RequestMapping(value="bookSuccessPage", method=RequestMethod.POST)
+	public void bookSuccessPage(Long bookId, Model model) throws Exception{
+		Map<String, Object> map = bookService.bookSuccessPage(bookId);
+		model.addAttribute("theaterDTO", map.get("theaterDTO"));
+		model.addAttribute("seats", map.get("seats"));
+		model.addAttribute("totalPrice", map.get("totalPrice"));
+		
 	}
 }

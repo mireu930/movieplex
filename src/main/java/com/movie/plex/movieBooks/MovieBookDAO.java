@@ -1,5 +1,6 @@
 package com.movie.plex.movieBooks;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -21,21 +22,51 @@ public class MovieBookDAO {
 		return sqlSession.selectList(NAMESPACE + "getSeats", theaterId);
 	}
 
-	public int addSeat(Map<String, Object> map) {
+	public int addSeat(Map<String, Object> map) throws Exception{
 		return sqlSession.insert(NAMESPACE + "addSeat", map);
 	}
 
-	public int addMovieBook(MovieBookDTO movieBookDTO) {
+	public int addMovieBook(MovieBookDTO movieBookDTO) throws Exception{
 		return sqlSession.insert(NAMESPACE + "addMovieBook", movieBookDTO);
 	}
-
-	public Long getBookId(MovieBookDTO movieBookDTO) {
-		return sqlSession.selectOne(NAMESPACE + "getBookId", movieBookDTO);
+	
+	public int addMovieBookBankBook(MovieBookDTO movieBookDTO) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addMovieBookBankBook", movieBookDTO);
 	}
 
-	public int addPayment(MoviePayments dto) {
-		return sqlSession.selectOne(NAMESPACE + "addPayment", dto);
-		
+	public Long getBookId(MovieBookDTO movieBookDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getBookId", movieBookDTO);
+	}
+	
+	public Long getBookIdBankBook(MovieBookDTO movieBookDTO) throws Exception{
+		return sqlSession.selectOne(NAMESPACE +"getBookIdBankBook", movieBookDTO);
+	}
+
+	public int addPayment(MoviePayments dto) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addPayment", dto);
+	}
+	public int addPaymentBankBook(MoviePayments dto) throws Exception{
+		return sqlSession.insert(NAMESPACE + "addPaymentBankBook", dto);
+	}
+
+	public BigDecimal getAmounts(Long bookId) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getAmounts", bookId);
+	}
+
+	public int updateNowStatus(Long bookId) throws Exception{
+		return sqlSession.update(NAMESPACE +"updateNowStatus", bookId);
+	}
+
+	public Long getTheaterId(Long bookId) throws Exception{
+		return sqlSession.selectOne(NAMESPACE + "getTheaterId", bookId);
+	}
+
+	public int deleteSeat(SeatDTO seatDTO) {
+		return sqlSession.delete(NAMESPACE +"deleteSeat", seatDTO);
+	}
+
+	public int deletePay(Long bookId) {
+		return sqlSession.delete(NAMESPACE +"deletePay", bookId);
 	}
 
 }

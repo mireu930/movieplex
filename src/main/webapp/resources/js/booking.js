@@ -369,7 +369,7 @@ function paymentPage() {
 
   const paymentMethod = document.getElementById("payment-radio");
   const bank = document.getElementById("bank");
-  
+
   paymentMethod.addEventListener("change", (e) => {
     const selectedMethod = document.querySelector('input[name="method"]:checked');
     console.log(selectedMethod.value);
@@ -389,17 +389,17 @@ function paymentPage() {
       alert("결제 수단을 선택하세요");
       return;
     }
+    let param = new URLSearchParams();
+
+    //여러개 보낼때는 반복문을 사용해야 함함
+    for (let s of sendingSeat) {
+      param.append("seat", s);
+    }
+    param.append("theaterId", selectedTheaterId);
+    param.append("totalPrice", paymentPrice);
     if (selectedMethod.value == 1) {
-      let param = new URLSearchParams();
 
-      //여러개 보낼때는 반복문을 사용해야 함함
-      for (let s of sendingSeat) {
-        param.append("seat", s);
-      }
-      param.append("theaterId", selectedTheaterId);
-      param.append("totalPrice", paymentPrice);
-
-      fetch("/moviePayment/movieBookInfo", {
+      fetch("/moviePayment/movieBookCard", {
         method: "POST",
         headers: {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -411,6 +411,31 @@ function paymentPage() {
           console.log(r);
           IMP.init("imp54880348");
           requestPay(r);
+
+        })
+    } else if (selectedMethod.value == 0) {
+      const selectedBank = document.getElementById("bank");
+      fetch("/moviePayment/movieBookBankBook", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+        },
+        body: param
+      })
+        .then(r => r.text())
+        .then(r => {
+          console.log(r);
+          main.innerHTML = r
+          const numPeople = document.getElementById("numPeople");
+          const bankName = document.getElementById("bankName");
+          bankName.innerText = selectedBank.value;
+          if (adults != "" && teens == "") {
+            numPeople.innerText = `일반 ${adults}`
+          } else if (adults == "" && teens != "") {
+            numPeople.innerText = `청소년 ${teens}`
+          } else {
+            numPeople.innerText = `일반 ${adults} 청소년 ${teens}`
+          }
 
         })
     }
@@ -435,16 +460,41 @@ function paymentPage() {
           param.append("imp_uid", response.imp_uid);
           param.append("merchant_uid", response.merchant_uid);
           param.append("totalPrice", paymentPrice);
+          param.append("bookId", r.bookId)
           fetch("/moviePayment/payment/complete", {
             method: "POST",
             headers: {
-              "Content-type":"application/x-www-form-urlencoded; charset=UTF-8"
+              "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
             },
             body: param
           })
-            .then(r => r.text())
-            .then(r => {
+            .then(res => res.text())
+            .then(res => {
+              console.log(res);
+              if (res * 1 == 1) {
+                fetch("/movieBooks/bookSuccessPage", {
+                  method: "POST",
+                  headers: {
+                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                  },
+                  body: `bookId=${r.bookId}`
+                })
+                  .then(r => r.text())
+                  .then(r => {
+                    console.log(r);
+                    main.innerHTML = r;
 
+                    const numPeople = document.getElementById("numPeople");
+                    if (adults != "" && teens == "") {
+                      numPeople.innerText = `일반 ${adults}`
+                    } else if (adults == "" && teens != "") {
+                      numPeople.innerText = `청소년 ${teens}`
+                    } else {
+                      numPeople.innerText = `일반 ${adults} 청소년 ${teens}`
+                    }
+
+                  })
+              }
             })
           console.log(response);
         } else {

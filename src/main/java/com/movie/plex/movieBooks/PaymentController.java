@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,26 +24,41 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
-	
-	
 	@RequestMapping(value="payment/complete", method=RequestMethod.POST)
-	public void paymentComplete(String imp_uid, String merchant_uid, Long totalPrice) throws Exception{
+	public String paymentComplete(String imp_uid, String merchant_uid, Long totalPrice, Long bookId, Model model) throws Exception{
 		System.out.println(imp_uid);
 		System.out.println(merchant_uid);
 		System.out.println(totalPrice);
 		System.out.println("complete");
+		int result = paymentService.checkAmounts(imp_uid, merchant_uid, totalPrice, bookId);
+		
+		model.addAttribute("result", result);
+		
+		return "/commons/ajax";
+		
 	}
 	
 	//동일한 이름으로 여러개 받을 때는 RequestParam 사용!
 	@ResponseBody
-	@RequestMapping(value="moviePayment/movieBookInfo", method=RequestMethod.POST)
-	public Map<String, Object> movieBookInfo(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, HttpSession session) throws Exception{
+	@RequestMapping(value="movieBookCard", method=RequestMethod.POST)
+	public Map<String, Object> movieBookCard(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, HttpSession session) throws Exception{
 		System.out.println("payment");
 		System.out.println(seat.size());
 		System.out.println(theaterId);
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		Map<String, Object> result = paymentService.movieBookInfo(seat, theaterId, userDTO, totalPrice);
+		Map<String, Object> result = paymentService.movieBookCard(seat, theaterId, userDTO, totalPrice);
 		
 		return result;
+	}
+	@RequestMapping(value="movieBookBankBook", method=RequestMethod.POST)
+	public String movieBookBankBook(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, HttpSession session, Model model) throws Exception{
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
+		Map<String, Object> result = paymentService.movieBookBankBook(seat, theaterId, totalPrice, userDTO);
+		
+		model.addAttribute("theaterDTO", result.get("theaterDTO"));
+		model.addAttribute("seats", result.get("seats"));
+		model.addAttribute("totalPrice", result.get("totalPrice"));
+		
+		return "/movieBooks/bookSuccessBankPage";
 	}
 }

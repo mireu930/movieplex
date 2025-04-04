@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="/resources/css/booking.css">
 	<link rel="stylesheet" href="/resources/css/seatBook.css">
 	<link rel="stylesheet" href="/resources/css/payment.css">
+	<link rel="stylesheet" href="/resources/css/bookSuccessPage.css">
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>
 

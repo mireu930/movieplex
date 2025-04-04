@@ -59,10 +59,10 @@
 											<select id="bank" class="form-select form-select-sm"
 												aria-label="Small select example" disabled>
 												<option selected disabled value="default">은행을 선택하세요</option>
-												<option value="1">신한은행</option>
-												<option value="2">국민은행</option>
-												<option value="3">기업은행</option>
-												<option value="3">우리은행</option>
+												<option value="신한은행">신한은행</option>
+												<option value="국민은행">국민은행</option>
+												<option value="기업은행">기업은행</option>
+												<option value="우리은행">우리은행</option>
 											</select>
 										</div>
 

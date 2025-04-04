@@ -11,6 +11,7 @@
 		<typeAlias type="com.movie.plex.movieBooks.MovieBookDTO" alias="MovieBookDTO" />
 		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
 		<typeAlias type="com.movie.plex.movieBooks.MoviePayments" alias="MoviePayments"/>
+		<typeAlias type="com.movie.plex.movieBooks.SeatDTO" alias="SeatDTO"/>
 	
 		<!-- <typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/> -->
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>
