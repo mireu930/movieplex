@@ -14,6 +14,9 @@
 		<typeAlias type="com.movie.plex.like.ContentsLikeDTO" alias="ContentsLikeDTO"/>
 		<typeAlias type="com.movie.plex.theater.TheaterDTO" alias="TheaterDTO"/>
 		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
+		<typeAlias type="com.movie.plex.movieBooks.MoviePayments" alias="MoviePayments"/>
+		<typeAlias type="com.movie.plex.movieBooks.MovieBookDTO" alias="MovieBookDTO"/>
+		<typeAlias type="com.movie.plex.theater.SeatDTO" alias="SeatDTO"/>
 	
 		<!-- <typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/> -->
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>
@@ -25,6 +28,9 @@
 		<typeAlias type="com.movie.plex.boards.notice.NoticeFilesDTO" alias="NoticeFilesDTO"/>
 		<typeAlias type="com.movie.plex.boards.qna.QnaDTO" alias="QnaDTO"/>
 		<typeAlias type="com.movie.plex.boards.qna.QnaFilesDTO" alias="QnaFilesDTO"/>
+		<typeAlias type="com.movie.plex.websocket.ChatRoom" alias="ChatRoom"/>
+		<typeAlias type="com.movie.plex.websocket.ChatRoomJoin" alias="ChatRoomJoin"/>
+		<typeAlias type="com.movie.plex.websocket.ChatMessage" alias="ChatMessage"/>
 		
 		<typeAlias type="com.movie.plex.pages.Pager" alias="Pager"/>
 		<typeAlias type="java.util.Map" alias="Map"/> 

@@ -1,5 +1,7 @@
 package com.movie.plex.pages;
 
+import com.movie.plex.users.UserDTO;
+
 public class Pager {
 
 		
@@ -135,8 +137,19 @@ public class Pager {
 	private Long end;
 	private boolean endCheck;
 	
+	private UserDTO userDTO;
+	
+
 	private String kind;
 	private String search;
+	
+	public UserDTO getUserDTO() {
+		return userDTO;
+	}
+	
+	public void setUserDTO(UserDTO userDTO) {
+		this.userDTO = userDTO;
+	}
 	
 	public boolean isEndCheck() {
 		return endCheck;

@@ -1,5 +1,7 @@
 package com.movie.plex.users;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,12 +21,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.movie.plex.coupon.CouponDTO;
+import com.movie.plex.coupon.CouponService;
+import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.movieBooks.MovieBookDTO;
+import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewDTO;
+
 @Controller
 @RequestMapping(value = "/users/*")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CouponService couponService;
 	@Autowired
 	private MailSend mailSend;
 	@Autowired
@@ -95,7 +106,7 @@ public class UserController {
 		            return "commons/result";  // 비활성화된 사용자 메시지 출력
 		        }else {
 		        	session.setAttribute("user", userDTO);
-		        	System.out.println(session.getAttribute("user"));
+		        	
 		        	return "redirect:/";
 		        }
 		}
@@ -201,15 +212,104 @@ public class UserController {
 	
 	@RequestMapping(value = "couponList", method = RequestMethod.GET)
 	@ResponseBody
-	public List<UserDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+	public List<CouponConnectDTO> couponList(UserDTO userDTO, HttpSession session) throws Exception {
+		 userDTO = (UserDTO)session.getAttribute("user");
+		 
+		 List<CouponConnectDTO> couponConnectDTOs = userService.couponList(userDTO);
+		 
+		 List<CouponConnectDTO> filteCoupons = new ArrayList<CouponConnectDTO>();
+		 for(CouponConnectDTO coupon: couponConnectDTOs) {
+			 if(coupon.getUsed()==0) {
+				 filteCoupons.add(coupon);
+			 }
+		 }
+		 
+		return filteCoupons;
+	}
+	
+	@RequestMapping(value = "getCouponByCode", method = RequestMethod.GET)
+	@ResponseBody
+	public CouponDTO getCouponByCode(@RequestParam("couponCode") String couponCode) throws Exception {
+	    return couponService.getCouponByCode(couponCode);
+	}
+	
+	@RequestMapping(value = "couponAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public int couponAdd(CouponConnectDTO couponConnectDTO, HttpSession session, @RequestParam("couponNum") Long couponNum) throws Exception {
+		 UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		 
+		 System.out.println(userDTO.getUserNum());
+		 System.out.println(couponNum);
+		couponConnectDTO.setUserNum(userDTO.getUserNum());
+		couponConnectDTO.setCouponNum(couponNum);
+		return userService.couponAdd(couponConnectDTO);
+	}
+	
+	@RequestMapping(value = "reviewList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> reviewList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
-		return userService.couponList(userDTO);
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.reviewList(pager,session,userDTO);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
 	}
 	
-	
-	@RequestMapping(value = "admin", method = RequestMethod.GET)
-	public UserDTO admin(HttpSession session) throws Exception {
-		return (UserDTO)session.getAttribute("user");
+	@RequestMapping(value = "reviewDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
+		reviewDTO = userService.reviewDetail(reviewDTO);
+		return reviewDTO;
 	}
 	
+	@RequestMapping(value = "paymentList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.paymentList(pager);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "bookList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.bookList(pager, userDTO, session);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
+	}
+	
+	@RequestMapping(value = "bookDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return userService.bookDetail(movieBookDTO);
+	}
+	
+	@RequestMapping(value = "userCouponUpdate", method = RequestMethod.POST)
+	@ResponseBody
+	public int couponUpdate(@RequestParam("couponNum") Long couponNum) throws Exception {
+		  CouponDTO couponDTO = new CouponDTO();
+		    couponDTO.setCouponNum(couponNum); 
+		
+		int result = userService.couponUpdate(couponDTO);
+		int result2 = couponService.couponUpdate(couponDTO);
+
+		return (result>0&&result2>0)?1:0;
+	}
 }

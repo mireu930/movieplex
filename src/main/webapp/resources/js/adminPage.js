@@ -25,7 +25,17 @@ contents.addEventListener("click", (e) => {
     let kind = target?.getAttribute("data-kind");
     //console.log(e.target.getAttribute("id"));
     if (kind == "user") {
-        mainContents.innerHTML = "";
+        let url = '/admin/userList'
+
+        contents.classList.add("d-flex");
+        mainContents.classList.add("flex-grow-1", "p-4");
+
+        fetch(url)
+        .then(r => r.text())
+        .then(r=>{
+            mainContents.innerHTML = r;
+        })
+ 
     } else if (kind == "movies") {
         mainContents.innerHTML = "";
     } else if (kind == "theater") {
@@ -40,6 +50,136 @@ contents.addEventListener("click", (e) => {
 
     }
 })
+
+//회원 조회
+
+
+//회원 상세정보
+mainContents.addEventListener("click", (e) => {
+    let target = e.target.closest("td[id='userId']");
+
+    if (target) {
+        let userId = target.textContent.trim();
+
+        fetch(`/admin/userDetail?userId=${userId}`)
+            .then((res) => res.text()) 
+            .then((data) => {
+                mainContents.innerHTML = data;
+            })
+            .catch((error) => console.error(error));
+    }
+});
+
+//회원정보 페이징 처리
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".pages");
+
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+        fetch(`/admin/userList?page=${pageNum}`)
+        .then(r=>r.text())
+        .then(r=>{
+            mainContents.innerHTML = r;
+        })
+    }
+})
+
+//회원정보 검색처리
+mainContents.addEventListener("click",()=>{
+    let list_form = document.getElementById("list_form");
+
+    if(list_form){
+    list_form.addEventListener("submit",(e)=>{
+        e.preventDefault(); //페이지 이동막기
+       
+        let formData = new FormData(e.target);
+        let list = new URLSearchParams(formData).toString();
+        
+        fetch(`/admin/userList?${list}`)
+        .then(r=>r.text())
+        .then(r=>{
+            console.log(r)
+            mainContents.innerHTML = r;
+
+            })
+        })
+    }
+})
+
+//관리자등록
+mainContents.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "adminbtn") {
+        
+        let selectedUserId = document.getElementById("userId")?.textContent.trim(); 
+
+            console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("회원을 선택하세요!");
+                return;
+            }
+
+            let con = confirm("관리자로 등록하시겠습니까?");
+            if (!con) {
+                return; 
+            }
+    
+            fetch(`/admin/adminUpdate?userId=${selectedUserId}`)
+                .then(r => r.text())
+                .then(r => {
+                        alert(r.trim() == '0' ? "이미 관리자입니다." : "관리자로 변경되었습니다.");
+                        location.reload();
+                });
+    }
+});
+
+//영구탈퇴
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "withdrawbtn") {
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        let con = confirm("영구히 탈퇴하시겠습니까?")
+
+        if (!con) {
+            return; 
+        }
+
+        fetch(`/admin/withdraw?userId=${selectedUserId}`)
+        .then(r => r.text())
+        .then(r => {
+                alert(r.trim()=='0'?"실패":"영구탈퇴되었습니다.");
+                location.reload();
+        })
+    }
+})
+
+//입금승인
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "paymentbtn"){
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("회원을 선택하세요!");
+                return;
+            }
+
+            let con = confirm("입금 승인인하시겠습니까?");
+
+            if (!con) {
+                return; 
+            }
+
+        fetch(`/admin/paymentUpdate?userId=test`)
+        .then(r=>r.text())
+        .then(r=>{
+            alert(r.trim()=='0'?"실패":"입금승인되었습니다.");
+            location.reload();
+        })
+    }
+})
+    
+
 
 
 

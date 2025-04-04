@@ -4,6 +4,33 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.movie.plex.users.UserDAO">
+  	<select id="userList" resultType="UserDTO" parameterType="Pager">
+  		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+			SELECT * 
+			FROM USERS
+			<include refid="search"/>
+			ORDER BY USERNUM DESC) M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}
+  	</select>
+  	
+  	<select id="getTotalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(USERNUM) 
+			FROM USERS
+		<include refid="search"/> 
+	</select>
+	
+	<select id="reviewTotalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(REVIEWID)
+		FROM REVIEW r
+    	LEFT OUTER JOIN USERS u ON r.USERNUM = u.USERNUM
+    	WHERE u.USERID = #{userDTO.userId}
+		<include refid="reviewSearch"/>
+	</select>
+	
+	<select id="paymentTotalCount" resultType="Long">
+		SELECT COUNT(PAYID) FROM MOVIEPAYMENTS
+	</select>
+  
   	<select id="getLogin" resultType="UserDTO" parameterType="UserDTO">
   		SELECT * FROM USERS WHERE USERID=#{userId}
   	</select>
@@ -34,21 +61,121 @@
   		UPDATE USERS SET USEROUT=#{userOut} WHERE USERID=#{userId}
   	</update>
   	
+  	<update id="adminUpdate" parameterType="UserDTO">
+  		UPDATE USERS SET USERGRADE=4 WHERE USERID=#{userId}
+  	</update>
+  	
+  	<update id="gradeUpdate" parameterType="UserDTO">
+    UPDATE USERS 
+    SET USERGRADE = 
+        CASE 
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                  >= 16 THEN 3
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                   >= 11 THEN 2
+            WHEN (SELECT COUNT(*) FROM MOVIEBOOKS WHERE USERNUM = (SELECT USERNUM FROM USERS WHERE USERID = #{userId}))
+                  >= 6 THEN 1
+            ELSE 0
+        END
+    WHERE USERID = #{userId} 	
+  	</update>
+  	
+  	<delete id="withdraw" parameterType="UserDTO">
+  		DELETE USERS WHERE USERID=#{userId}
+  	</delete>
+  	
   	<select id="couponList" resultMap="getCouponList" parameterType="UserDTO">
-  		SELECT u.USERNUM, u.USERID, u.USERPW, u.USEREMAIL, u.USERPHONE, 
-        u.USERNAME, u.USERGRADE, u.REGISTDATE, u.USEROUT, u.SNS,
-        c.COUPONNUM, c.COUPONNAME, c.COUPONCOST
-         FROM users u
-			JOIN COUPONCONNECT cc
+  		SELECT *
+         FROM COUPONCONNECT cc
+			JOIN users u
 				ON U.USERNUM = CC.USERNUM 
 			JOIN COUPON c
 				ON CC.COUPONNUM = C.COUPONNUM 
 		WHERE u.USERID=#{userId}
   	</select>
   	
+  	<insert id="couponAdd" parameterType="CouponConnectDTO">
+  		INSERT INTO COUPONCONNECT
+		VALUES (#{userNum}, #{couponNum}, #{couponCode}, 0)
+  	</insert>
+  	
+  	<update id="couponUpdate" parameterType="CouponDTO">
+  		UPDATE COUPONCONNECT SET USED = 1 WHERE COUPONNUM = #{couponNum}
+  	</update>
+  	
+  	<select id="reviewList" resultMap="getReviewList" parameterType="Pager">
+		SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+			SELECT * FROM REVIEW r
+			LEFT OUTER JOIN USERS u
+			ON r.USERNUM = U.USERNUM
+			WHERE U.USERID = #{userDTO.userId}
+			<include refid="reviewSearch"/>
+			ORDER BY r.REVIEWID DESC)M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}
+  	</select>
+
+  	<select id="reviewDetail" resultType="ReviewDTO" parameterType="ReviewDTO">
+  		SELECT * FROM REVIEW WHERE REVIEWID = #{reviewId}
+  	</select>
+  	
+  	<select id="paymentList" resultMap="getPaymentList" parameterType="Pager">
+  	SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+  		SELECT * FROM MOVIEPAYMENTS p
+		LEFT OUTER JOIN MOVIEBOOKS m 
+		ON p.bookid = m.bookid
+		LEFT  OUTER JOIN USERS u 
+		ON u.usernum = m.usernum
+		WHERE u.userid = #{userDTO.userId}
+		ORDER BY p.PAYID DESC)M)	
+	WHERE R BETWEEN #{startNum} AND #{lastNum}	
+  	</select>
+  	
+  	<update id="paymentUpdate" parameterType="UserDTO">
+  		UPDATE MOVIEPAYMENTS SET PAYCHECK = 1 WHERE PAYID IN (
+			SELECT p.payid FROM MOVIEPAYMENTS p
+			LEFT OUTER JOIN MOVIEBOOKS m 
+			ON p.bookid = m.bookid
+			LEFT  OUTER JOIN USERS u 
+			ON u.usernum = m.usernum
+			WHERE u.userid = #{userId})
+  	</update>
+  	
+  	<select id="bookList" resultMap="getBookList" parameterType="Pager">
+  	SELECT * FROM (SELECT ROWNUM R, M.* FROM (
+  		SELECT * FROM MOVIEBOOKS mb
+		LEFT OUTER JOIN USERS u ON MB.USERNUM = U.USERNUM
+		LEFT OUTER JOIN THEATER t ON T.THEATERID = MB.THEATERID 
+		LEFT OUTER JOIN MOVIES mv ON MV.MOVIEID = T.MOVIEID
+		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
+		WHERE U.USERID = #{userDTO.userId}
+		ORDER BY mb.BOOKDATE DESC)M)
+		WHERE R BETWEEN #{startNum} AND #{lastNum}
+  	</select>
+  	
+  	<select id="bookTotalCount" resultType="Long" parameterType="UserDTO">
+  		SELECT COUNT(MB.BOOKID) FROM MOVIEBOOKS mb
+		LEFT OUTER JOIN USERS u ON MB.USERNUM = U.USERNUM
+		LEFT OUTER JOIN THEATER t ON T.THEATERID = MB.THEATERID 
+		LEFT OUTER JOIN MOVIES mv ON MV.MOVIEID = T.MOVIEID
+		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
+    	WHERE u.USERID = #{userId}
+	</select>
+	
+	<select id="bookDetail" resultMap="getBookList"  resultType="MovieBookDTO">
+  		SELECT * FROM MOVIEBOOKS mb
+		LEFT OUTER JOIN USERS u ON MB.USERNUM = U.USERNUM
+		LEFT OUTER JOIN THEATER t ON T.THEATERID = MB.THEATERID 
+		LEFT OUTER JOIN MOVIES mv ON MV.MOVIEID = T.MOVIEID
+		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
+		WHERE MB.BOOKID = #{bookId}	
+	</select>
+  	
+  	
   	<resultMap type="CouponConnectDTO" id="getCouponList">
   			<id column="USERNUM" property="userNum"/>
   			<id column="COUPONNUM" property="couponNum"/>
+  			<result column="COUPONCODE" property="couponCode"/>
+  			<result column="USED" property="used"/>
   		
   		<association property="userDTO" javaType="UserDTO">
 	  		<result column="USERID" property="userId"/>
@@ -65,7 +192,123 @@
   		<association property="couponDTO" javaType="CouponDTO">
   			<result column="COUPONNAME" property="couponName"/>
   			<result column="COUPONCOST" property="couponCost"/>
+  			<result column="COUPONCODE" property="couponCode"/>
+  			<result column="USED" property="used"/>
   		</association>
   		
   	</resultMap>
+  	
+  	<resultMap type="ReviewDTO" id="getReviewList">
+  		<id column="REVIEWID" property="reviewId"/>
+  		<result column="REVIEWCONTENTS" property="reviewContents"/>
+  		<result column="REVIEWDATE" property="reviewDate"/>
+  		<result column="REVIEWRATE" property="reviewRate"/>
+  		<result column="USERNUM" property="userNum"/>
+  		<result column="CONTENTID" property="contentId"/>
+  		<result column="KIND" property="kind"/>
+  		
+  		<association property="userDTO" javaType="UserDTO">
+  			<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		</association>
+  	</resultMap>
+  	
+  	<resultMap type="MoviePayments" id="getPaymentList">
+  		<id column="PAYID" property="payId"/>
+  		<result column="PAYCHECK" property="payCheck"/>
+  		<result column="PAYAMOUNTS" property="payAmounts"/>
+  		<result column="BOOKID" property="bookId"/>
+  		
+  		<association property="movieBookDTO" javaType="MovieBookDTO">
+  			<result column="BOOKDATE" property="bookDate"/>
+  			<result column="USERNUM" property="userNum"/>
+  			<result column="THEATERID" property="theaterId"/>
+  			
+  			<association property="userDTO" javaType="UserDTO">
+	  			<result column="USERID" property="userId"/>
+		  		<result column="USERPW" property="userPw"/>
+		  		<result column="USEREMAIL" property="userEmail"/>
+		  		<result column="USERPHONE" property="userPhone"/>
+		  		<result column="USERNAME" property="userName"/>
+		  		<result column="USERGRADE" property="userGrade"/>
+		  		<result column="REGISTDATE" property="registDate"/>
+		  		<result column="USEROUT" property="userOut"/>
+		  		<result column="SNS" property="sns"/>  			
+  			</association>
+  		</association>
+  	</resultMap>
+  	
+  	<resultMap type="MovieBookDTO" id="getBookList">
+  			<id column="BOOKID" property="bookId"/>
+  		 	<result column="BOOKDATE" property="bookDate"/>
+  			<result column="USERNUM" property="userNum"/>
+  			<result column="THEATERID" property="theaterId"/>
+  			
+			<association property="userDTO" javaType="UserDTO">
+	  			<result column="USERID" property="userId"/>
+		  		<result column="USERPW" property="userPw"/>
+		  		<result column="USEREMAIL" property="userEmail"/>
+		  		<result column="USERPHONE" property="userPhone"/>
+		  		<result column="USERNAME" property="userName"/>
+		  		<result column="USERGRADE" property="userGrade"/>
+		  		<result column="REGISTDATE" property="registDate"/>
+		  		<result column="USEROUT" property="userOut"/>
+		  		<result column="SNS" property="sns"/>  			
+  			</association>
+  			
+  			<association property="theaterDTO" javaType="TheaterDTO">
+  					<id column="THEATERID" property="theaterId"/>
+  					<result column="THEATERSTART" property="theaterStart" />
+					<result column="THEATEREND" property="theaterEnd" />
+					<result column="THEATERNAME" property="theaterName" />
+					<result column="MOVIEID" property="movieId" />
+					<result column="KIND" property="kind" />
+  				
+  					<association property="seatDTO" javaType="SeatDTO">
+		  				<result column="SEAT" property="seat"/>
+					</association>
+					
+					<association property="movieDTO" javaType="MovieDTO">
+						<result column="MOVIETITLE" property="movieTitle"/>
+						<result column="SHORTPOSTER" property="shortPoster"/>
+						<result column="LONGPOSTER" property="longPoster"/>
+					</association>
+  			</association>
+  	</resultMap>
+  	
+  		<sql id="search">
+			WHERE
+		    <choose>
+		        <when test="kind == 'k1'">
+		            USERID LIKE '%' || #{search} || '%'
+		        </when>
+		        <when test="kind == 'k2'">
+		            USERNAME LIKE '%' || #{search} || '%'
+		        </when>
+		        <otherwise>
+		            USEROUT LIKE '%' || #{search} || '%'
+		        </otherwise>	
+		    </choose>	
+		</sql>
+		
+	<sql id="reviewSearch">
+			<choose>
+		        <when test="kind == 'k1'">
+		           AND r.REVIEWCONTENTS LIKE '%' || #{search} || '%'
+		        </when>
+		        <when test="kind == 'k2'">
+		           AND r.REVIEWDATE LIKE '%' || #{search} || '%'
+		        </when>
+		        <otherwise>
+		           AND r.REVIEWID LIKE '%' || #{search} || '%'
+		        </otherwise>	
+		    </choose>
+		</sql>
   </mapper>
