@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import com.movie.plex.movieBooks.SeatDTO;
 import com.movie.plex.movies.MovieDTO;
 
 public class TheaterDTO {
