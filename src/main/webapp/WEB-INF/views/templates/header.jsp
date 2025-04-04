@@ -30,6 +30,7 @@
 		        <li><a href="/notice/list" class="nav-link px-2 link-secondary">공지사항</a></li>
 		        <li><a href="/faq/list" class="nav-link px-2 link-secondary">FAQ</a></li>
 		        <li><a href="/qna/list" class="nav-link px-2 link-secondary">QNA</a></li>
+		        <li><a href="/chatRoom" class="nav-link px-2 link-secondary">채팅</a></li>
 		    </ul>
 		</div>
 		<div class="col-md-1 text-end">
