@@ -3,6 +3,8 @@ package com.movie.plex.users;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -21,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+
 import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.coupon.CouponService;
 import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
+
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -45,11 +49,11 @@ public class UserController {
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
 		
 		userDTO = userService.idCheck(userDTO);
-		//Áßº¹ 0
+		//ï¿½ßºï¿½ 0
 		int result =0;
 		
 		if(userDTO== null) {
-			result =1; //Áßº¹ x
+			result =1; //ï¿½ßºï¿½ x
 		}
 		
 		model.addAttribute("result", result);
@@ -58,15 +62,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
-	@ResponseBody //¸Þ¼Òµå°¡ ¹ÝÈ¯ÇÑ °´Ã¼¸¦ ÀÚµ¿À¸·Î json.xmlÇâÅÂ·Î º¯È¯ÇØÁÖ´Â ¿ªÇÒ, µ¥ÀÌÅÍ¸¦ Á÷Á¢ Å¬¶óÀÌ¾ðÆ®¿¡ Àü´ÞÇÒ¤·¶§ »ç¿ë
+	@ResponseBody //ï¿½Þ¼Òµå°¡ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ json.xmlï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ò¤ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 	public String mailCheck(String email) throws Exception {
 			UserDTO userDTO = userService.findEmail(email);
 			
 			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
-				System.out.println("ÀÌ¹ÌÀÖÀ½");
+				System.out.println("ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½");
 				return mailSend.alreadyEmail();
 			} else {	
-				System.out.println("»õ·Î°¡ÀÔ");
+				System.out.println("ï¿½ï¿½ï¿½Î°ï¿½ï¿½ï¿½");
 				return mailSend.joinEmail(email);
 			}			
 	}
@@ -100,10 +104,10 @@ public class UserController {
 		
 		if(userDTO != null) {
 			 if (userDTO.getUserOut() == 1) {
-		            // »ç¿ëÀÚ°¡ ºñÈ°¼ºÈ­µÈ »óÅÂÀÏ °æ¿ì ·Î±×ÀÎ ½ÇÆÐ Ã³¸®
-		            model.addAttribute("result", "ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚÀÔ´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä.");
+		            // ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+		            model.addAttribute("result", "ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. ï¿½ï¿½ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
 		            model.addAttribute("path", "./login");
-		            return "commons/result";  // ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚ ¸Þ½ÃÁö Ãâ·Â
+		            return "commons/result";  // ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		        }else {
 		        	session.setAttribute("user", userDTO);
 		        	
@@ -111,7 +115,7 @@ public class UserController {
 		        }
 		}
 		
-		model.addAttribute("result", "·Î±×ÀÎ½ÇÆÐ");
+		model.addAttribute("result", "ï¿½Î±ï¿½ï¿½Î½ï¿½ï¿½ï¿½");
 		model.addAttribute("path", "./login");
 		
 		
@@ -124,10 +128,10 @@ public class UserController {
 		
 		String accessToken = (String) session.getAttribute("accessToken");
 
-	    // 2. accessTokenÀÌ ÀÖÀ» °æ¿ì Ä«Ä«¿À ·Î±×¾Æ¿ô ¼öÇà
+	    // 2. accessTokenï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ Ä«Ä«ï¿½ï¿½ ï¿½Î±×¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
-	        session.removeAttribute("accessToken"); // ÅäÅ« »èÁ¦
+	        session.removeAttribute("accessToken"); // ï¿½ï¿½Å« ï¿½ï¿½ï¿½ï¿½
 	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
 	        a = "redirect:"+kakaoUrl;
 	    }
@@ -146,7 +150,7 @@ public class UserController {
 		int result = userService.join(userDTO);
 		
 		if(result > 0) {
-			model.addAttribute("result", "È¸¿ø°¡ÀÔ¼º°ø");
+			model.addAttribute("result", "È¸ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½");
 			model.addAttribute("path", "../");
 		}
 		
@@ -248,68 +252,6 @@ public class UserController {
 	@RequestMapping(value = "reviewList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> reviewList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
-		userDTO = (UserDTO)session.getAttribute("user");
-		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.reviewList(pager,session,userDTO);
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("list", list);
-		map.put("pager", pager);
-		return map;
-	}
-	
-	@RequestMapping(value = "reviewDetail", method = RequestMethod.GET)
-	@ResponseBody
-	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
-		reviewDTO = userService.reviewDetail(reviewDTO);
-		return reviewDTO;
-	}
-	
-	@RequestMapping(value = "paymentList", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
-		userDTO = (UserDTO)session.getAttribute("user");
-		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.paymentList(pager);
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("list", list);
-		map.put("pager", pager);
-		
-		return map;
-	}
-	
-	@RequestMapping(value = "bookList", method = RequestMethod.GET)
-	@ResponseBody
-	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
-		userDTO = (UserDTO)session.getAttribute("user");
-		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.bookList(pager, userDTO, session);
 
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("list", list);
-		map.put("pager", pager);
-		return map;
-	}
-	
-	@RequestMapping(value = "bookDetail", method = RequestMethod.GET)
-	@ResponseBody
-	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
-		return userService.bookDetail(movieBookDTO);
-	}
-	
-	@RequestMapping(value = "userCouponUpdate", method = RequestMethod.POST)
-	@ResponseBody
-	public int couponUpdate(@RequestParam("couponNum") Long couponNum) throws Exception {
-		  CouponDTO couponDTO = new CouponDTO();
-		    couponDTO.setCouponNum(couponNum); 
-		
-		int result = userService.couponUpdate(couponDTO);
-		int result2 = couponService.couponUpdate(couponDTO);
 
-		return (result>0&&result2>0)?1:0;
-	}
 }

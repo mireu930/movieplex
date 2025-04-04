@@ -25,6 +25,7 @@ public class MovieController {
 		
 		model.addAttribute("result", runTime);
 		
-		return "/admin/theater/ajaxResult";
+		return "/commons/ajax";
 	}
+	
 }

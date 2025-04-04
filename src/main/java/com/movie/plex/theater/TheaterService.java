@@ -42,4 +42,8 @@ public class TheaterService {
 		}
 		return 0;
 	}
+
+	public List<TheaterDTO> getTheaterList(TheaterDTO theaterDTO) {
+		return theaterDAO.getTheaterList(theaterDTO);
+	}
 }

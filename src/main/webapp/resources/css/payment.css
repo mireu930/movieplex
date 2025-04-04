@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.payment-container {
+    margin: 40px;
+}
+
+.payment{
+    width: 80%;
+    margin: auto !important;   /* 가운데 정렬 */
+}
+
+/* .payment-left{
+    height: 500px;
+}
+.payment-right {
+    height: 500px;
+} */
+
+.payment-coupon, .payment-method {
+    padding: 20px;
+    margin-bottom: 10px;
+    border-bottom: 2px solid black;
+    border-top: 2px solid black;
+}
+.payment-total {
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+.movImg img{
+    width: 100px;
+    height: 140px;
+    object-fit: cover;
+}
+.payment-info{
+    display: flex;
+    margin-bottom: 20px;
+}
+.payment-top{
+    margin-top: 10px;
+}
+
+.payment-infoSection {
+    /* background-color: #e0f7fa; */
+    border-top: 2px solid black;
+}
+
+.payment-coupon {
+    /* background-color: #d4edda; */
+    height: 300px;
+}
+
+.payment-method {
+    /* background-color: #d1ecf1; */
+    height: 300px;
+}
+
+.payment-total {
+    background-color: #333;
+    height: 400px;
+    color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.payment-summary {
+    margin: 10px 0;
+}
+
+.payment-item {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    padding: 8px 0;
+    border-radius: 5px;
+}
+
+.payment-item.discount {
+    background-color: #555;
+}
+
+.payment-item.final {
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.payment-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+
+.payment-buttons .btn {
+    width: 48%;
+}
+
+
+.row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.row.no-gutters > [class*='col-'] {
+    padding-right: 5px;
+    padding-left: 5px;
+}

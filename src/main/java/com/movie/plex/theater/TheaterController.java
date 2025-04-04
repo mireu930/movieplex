@@ -34,15 +34,24 @@ public class TheaterController {
 		int result = theaterService.addTheater(theaterDTO);
 		model.addAttribute("result", result);
 		System.out.println("addTheater 완료");
-		return "/admin/theater/ajaxResult";
+		return "/commons/ajax";
 	}
 	
-	@RequestMapping(value="deleteTheater", method=RequestMethod.GET)
+	@RequestMapping(value="deleteTheater", method=RequestMethod.POST)
 	public String deleteTheater(TheaterDTO theaterDTO, Model model) throws Exception{
 		int result = theaterService.deleteTheater(theaterDTO);
 		
 		model.addAttribute("result", result);
 		
-		return "/admin/theater/ajaxResult";
+		return "/commons/ajax";
+	}
+	
+	@RequestMapping(value="getTheaterList", method=RequestMethod.GET)
+	public String getTheaterList(TheaterDTO theaterDTO, Model model) throws Exception{
+		List<TheaterDTO> theaterList = theaterService.getTheaterList(theaterDTO);
+		
+		model.addAttribute("theaterList", theaterList);
+		
+		return "/movieBooks/bookTheaterList";
 	}
 }
