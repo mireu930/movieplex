@@ -35,4 +35,8 @@ public class ChatDAO {
 	public int insertMessage(ChatMessage chatMessage) throws Exception {
 		return sqlSession.insert(NAMESPACE+"insertMessage", chatMessage);
 	}
+	
+	public List<ChatRoom> getChatRoomJoin(ChatRoomJoin chatRoomJoin) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"getChatRoomJoin", chatRoomJoin);
+	}
 }

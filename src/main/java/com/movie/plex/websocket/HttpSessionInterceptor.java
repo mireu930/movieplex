@@ -7,8 +7,6 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Component
@@ -19,28 +17,23 @@ public class HttpSessionInterceptor implements HandshakeInterceptor {
                                    ServerHttpResponse response, 
                                    WebSocketHandler wsHandler, 
                                    Map<String, Object> attributes) throws Exception {
-        // HttpServletRequest로 변환
-        if (request instanceof ServletServerHttpRequest) {
-            ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
-            HttpServletRequest httpRequest = servletRequest.getServletRequest();
-            HttpSession session = httpRequest.getSession(false);  // 세션 가져오기 (없으면 null)
+      
+		// 예: 요청 파라미터에서 chatRoomNo를 가져와서 넣음
+		if (request instanceof ServletServerHttpRequest) {
+			ServletServerHttpRequest servletRequest = (ServletServerHttpRequest) request;
+			String chatRoomNo = servletRequest.getServletRequest().getParameter("chatRoomNo");
 
-            if (session != null) {
-            	String userName = (String) session.getAttribute("userName");
-                Integer userGrade = (Integer) session.getAttribute("userGrade");// "user" 속성 가져오기
+			if (chatRoomNo != null) {
+				attributes.put("chatRoomNo", Integer.parseInt(chatRoomNo));
+			}
+		}
 
-                attributes.put("userName", userName);
-                attributes.put("userGrade", userGrade);
-            }
-        }
-        return true;
-    }
+		return true; // 핸드셰이크 계속 진행
+	}
 
-    @Override
-    public void afterHandshake(ServerHttpRequest request, 
-                               ServerHttpResponse response, 
-                               WebSocketHandler wsHandler, 
-                               Exception exception) {
-        // 핸드셰이크 후 별도 처리 필요 없음
-    }
+	@Override
+	public void afterHandshake(ServerHttpRequest request, ServerHttpResponse response,
+							   WebSocketHandler wsHandler, Exception exception) {
+		// do nothing
+	}
 }

@@ -16,6 +16,10 @@ public class ChatService {
 		return chatDAO.chatRoomList();
 	}
 	
+	public List<ChatRoom> getChatRoomJoin(ChatRoomJoin chatRoomJoin) throws Exception {
+		return chatDAO.getChatRoomJoin(chatRoomJoin);
+	}
+	
 	public int addChatRoom(ChatRoom chatRoom) throws Exception {
 		return chatDAO.addChatRoom(chatRoom);
 	}

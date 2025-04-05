@@ -1,0 +1,72 @@
+.display-chatting {
+    list-style: none;
+    max-height: 400px;
+    width: 400px;
+    overflow-y: auto;  /* 세로축방향이 넘치면 스크롤처리 */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin: 20px auto;
+}
+
+.display-chatting li {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+
+.myChat {
+    align-self: flex-end;
+    text-align: right;
+    margin-left: auto;
+}
+
+.myChat .chat {
+    background-color: #daf1ff;
+    color: #333;
+    padding: 10px 14px;
+    border-radius: 20px 20px 0 20px;
+    display: inline-block;
+    margin-bottom: 4px;
+}
+
+.otherChat .chat {
+background-color: #eee;
+color: #333;
+padding: 10px 14px;
+border-radius: 20px 20px 20px 0;
+display: inline-block;
+margin-bottom: 4px;
+}
+
+.chatDate {
+    font-size: 0.75em;
+    color: #888;
+}
+
+.input-area {
+    margin: 10px auto;
+    display: flex;
+    gap: 10px;
+    width: 400px;
+}
+
+#inputChatting {
+    flex: 1; 	/* 나머지 남은 공간을 차지지*/
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 1em; /* 부모요소와 1배같다 */
+}
+
+#send {
+    padding: 10px 20px;
+    background-color: #4fa5ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}

@@ -15,8 +15,10 @@
 <title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
+<link rel="stylesheet" href="/resources/css/chat.css">
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+
 </head>
 <body>
 	<!-- header -->
@@ -31,7 +33,7 @@
 					</li>
 				</c:if>
 				<c:if test="${msg.userNum ne user.userNum}">
-					<li>
+					<li class="otherChat">
 						<b>${msg.userId}</b>
 						<p class="chat">${msg.message}</p>
 						<span class="chatDate">${msg.createDate}</span>
@@ -57,7 +59,7 @@
 		const userId = '${user.userId}';
 		const chatRoomNo = '${chatRoomNo}';
 
-		let chattingSocket = new SockJS("/chatServer2");
+		let chattingSocket = new SockJS("/chatServer?chatRoomNo=" + chatRoomNo);
 	</script>
 	<script src="/resources/js/chat.js"></script>
 </body>

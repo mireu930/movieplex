@@ -27,6 +27,9 @@
 			<br><br>
 			<div class="innerOuter" style="padding: 5% 10%; width: 100%;">
 				<h2>채팅방목록</h2>
+				<c:if test="${user.userGrade ne 4}">
+					<div>※관리자와 채팅합니다.</div>
+				</c:if>
 				<br>
 				<br>
 				<table class="table table-hover" align="center">
@@ -46,20 +49,20 @@
 							</tr>
 						</c:when>
 						<c:otherwise>
-							<c:forEach items="${list}" var="chatRoom">
-								<tr>
-									<td>${chatRoom.chatRoomNo}</td>
-									<td>
-										${chatRoom.title}
-										
-											<button class="btn btn-primary"
-											onclick="location.href=`/addChatRoomDetail?chatRoomNo=${chatRoom.chatRoomNo}`">참여</button>
-										
-									</td>
-									<td>${chatRoom.userId}</td>
-									<td>${chatRoom.cnt}</td>
-								</tr>
-							</c:forEach>
+								<c:forEach items="${list}" var="chatRoom">
+									<tr>
+										<td>${chatRoom.chatRoomNo}</td>
+										<td>
+											${chatRoom.title}
+											
+												<button class="btn btn-primary"
+												onclick="location.href=`/addChatRoomDetail?chatRoomNo=${chatRoom.chatRoomNo}`">참여</button>
+											
+										</td>
+										<td>${chatRoom.userId}</td>
+										<td>${chatRoom.cnt}</td>
+									</tr>
+								</c:forEach>
 						</c:otherwise>
 					</c:choose>
 					</tbody>
@@ -82,7 +85,7 @@
 					<!-- 모달 해더 -->
 					<div class="modal-header">
 						<h4 class="modal-title">채팅방 만들기</h4>
-						<button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+						<button type="button" class="btn btn-danger" data-bs-dismiss="modal">×</button>
 					</div>
 					 <form action="/addChatRoom" method="post">
 						<!--  모달 바디 -->
