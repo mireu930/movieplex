@@ -17,7 +17,7 @@ public class NestContentService {
 		//총갯수 가져와서 계산하는 식
 		Long totalCount = nestContentDAO.getTotalCount(pager);
 		
-		pager.make(totalCount);
+		//pager.make(totalCount);
 		
 		pager.makeNum();
 		List<NestContentDTO> movieList = nestContentDAO.getMovieList(pager);
@@ -29,7 +29,7 @@ public class NestContentService {
 	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
 		Long tvtotalCount = nestContentDAO.getTvTotalCount(pager);
 	
-		pager.make(tvtotalCount);
+		//pager.make(tvtotalCount);
 		
 		pager.makeNum();
 		List<NestContentDTO> tvList = nestContentDAO.getTvList(pager);
