@@ -1,6 +1,7 @@
 package com.movie.plex.websocket;
 
 import java.util.ArrayList;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class ChatServer {
 	
 	@OnClose
 	public void handleClose() {
-		System.out.println("Å¬¶óÀÌ¾ðÆ®°¡ Á¾·áÇß½À´Ï´Ù.");
+		System.out.println("Å¬ï¿½ï¿½ï¿½Ì¾ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
 	}
 	
 	@OnMessage
@@ -44,9 +45,9 @@ public class ChatServer {
 	 	if (message.getCode().equals("1")) {
 //	 		int usergrade = getUserGradeFromSession(session);
 //	 		userGrades.put(session, usergrade);
-//	 		System.out.println("»ç¿ëÀÚ µî±Þ ÀúÀå: " + usergrade);
+//	 		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½: " + usergrade);
 //	 		
-//	        if (usergrade != 4) { // °ü¸®ÀÚ°¡ ¾Æ´Ñ °æ¿ì
+//	        if (usergrade != 4) { // ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½
 //	            String notification = "New user connected: " + session.getId();
 //	            sendToAdmins(notification);
 //	        }
@@ -69,7 +70,7 @@ public class ChatServer {
 				}
 	 		}
 	 	} else if (message.getCode().equals("3")) {	
-	 		//º¸³½ »ç¶÷»©°í ³ª¸ÓÁö »ç¶÷¿¡°Ô Àü´ÞÇÑ´Ù.
+	 		//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 	 		for (Session s : sessionList) {
 	 			if (s != session) { //if (userGrades.getOrDefault(s, 0) == 4)
 	 				try {
@@ -84,14 +85,14 @@ public class ChatServer {
 	}
 	
 //	  private int getUserGradeFromSession(Session session) {
-//	        // HttpSessionÀ» È°¿ëÇØ »ç¿ëÀÚ Á¤º¸¸¦ °¡Á®¿À´Â ¹æ¹ý
-//	        // WebSocket¿¡¼­´Â Á÷Á¢ HttpSessionÀ» Á¢±ÙÇÒ ¼ö ¾øÀ¸¹Ç·Î, ÇÁ·ÐÆ®¿£µå¿¡¼­ usergrade¸¦ Àü¼ÛÇÏµµ·Ï ÇØ¾ß ÇÔ
-//	        return 0; // ±âº»°ª (°ü¸®ÀÚ°¡ ¾Æ´Ô)
+//	        // HttpSessionï¿½ï¿½ È°ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+//	        // WebSocketï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ HttpSessionï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½, ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½å¿¡ï¿½ï¿½ usergradeï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ ï¿½Ø¾ï¿½ ï¿½ï¿½
+//	        return 0; // ï¿½âº»ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½Æ´ï¿½)
 //	    }
 //	  
 //	  private void sendToAdmins(String message) {
 //		    for (Session s : sessionList) {
-//		        if (userGrades.getOrDefault(s, 0) == 4) { // usergrade == 4 (°ü¸®ÀÚ)
+//		        if (userGrades.getOrDefault(s, 0) == 4) { // usergrade == 4 (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 //		            try {
 //		                s.getBasicRemote().sendText(message);
 //		            } catch (Exception e) {
@@ -101,7 +102,7 @@ public class ChatServer {
 //		    }
 //		}
 	
-	//Á¢¼ÓÀÚ¸¦ È®ÀÎÇÏ´Â ¸Þ¼­µå
+	//ï¿½ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ È®ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½
 	private void checkSessionList() {
 		System.out.println();
 		System.out.println("[Session List]");
@@ -113,13 +114,13 @@ public class ChatServer {
 	
 	private void clearSessionList() {
 		
-		//List °è¿­ÀÇ ÄÃ·º¼ÇÀº Çâ»óµÈ for¹® ³»¿¡¼­ ¿ä¼Ò Ãß°¡/»èÁ¦ÇÏ´Â Çàµ¿À» ÇÒ ¼ö ¾ø´Ù.
-		//°¡´ÉÇÑ ¹æ¹ýÀº 1. ÀÏ¹Ý forans, 2. Interator ¹æ¹ýÀÌ ÀÖ´Ù.
+		//List ï¿½è¿­ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ forï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ß°ï¿½/ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½àµ¿ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ 1. ï¿½Ï¹ï¿½ forans, 2. Interator ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½.
 		Iterator<Session> iter = sessionList.iterator();
 		
 		while(iter.hasNext()) {
 			if(!(iter.next()).isOpen()) {
-				//È¤½Ã ¿¬°áÀÌ ²÷¾îÁø ¼¼¼ÇÀÌ ÀÖÀ¸¸é ¸®½ºÆ®¿¡¼­ Á¦°ÅÇÑ´Ù.
+				//È¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
 				iter.remove();
 			}
 		}
@@ -128,6 +129,6 @@ public class ChatServer {
 	
 	@OnError
 	public void handleError(Throwable e) {
-		System.out.println("¿¡·¯ ¹ß»ý " + e.getMessage());
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ß»ï¿½ " + e.getMessage());
 	}
 }
