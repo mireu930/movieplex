@@ -85,4 +85,25 @@ public class TheaterDTO {
 		
 		return "";
 	}
+	
+	public String getPrintDate() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("yyyy-MM-dd").format(theaterStart);
+		}
+		return "";
+	}
+	public String getTimeStart() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterStart);
+		}
+		return "";
+	}
+	
+	public String getTimeEnd() {
+		if(theaterEnd != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterEnd);
+		}
+		return "";
+	}
+	
 }

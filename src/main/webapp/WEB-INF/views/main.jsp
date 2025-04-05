@@ -109,7 +109,7 @@
 					<c:forEach items="${topMovieList }" var="top" varStatus="status">
 						<div class="col">
 							<div class="card shadow-sm">
-								<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${top.shortPoster }">
+								<img class="card-img-top" src="https://image.tmdb.org/t/p/w500${top.shortPoster }">
 								<div class="card-body">
 									<p class="card-text">${top.movieTitle}</p>
 									<div class="d-flex justify-content-between align-items-center">

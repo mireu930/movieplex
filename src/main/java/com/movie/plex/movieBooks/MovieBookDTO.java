@@ -2,7 +2,6 @@ package com.movie.plex.movieBooks;
 
 import java.sql.Date;
 
-import com.movie.plex.theater.SeatDTO;
 import com.movie.plex.theater.TheaterDTO;
 import com.movie.plex.users.UserDTO;
 

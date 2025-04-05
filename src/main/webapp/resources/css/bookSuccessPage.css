@@ -1,0 +1,44 @@
+.payment-success {
+	max-width: 600px;
+	margin: 50px auto;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.success-icon {
+	font-size: 50px;
+	color: #0c41d4;
+}
+
+.successBtn {
+	margin-top: 20px;
+}
+
+.success-movie-info {
+	margin-top: 20px;
+	background-color: #e0e0e0;
+	color: #000000;
+	padding: 15px;
+	border-radius: 8px;
+	max-width: 400px; /* 기존보다 줄어든 너비 */
+	margin: 10px auto; /* 중앙 정렬 */
+}
+
+.success-movie-info h5 {
+	margin-bottom: 10px;
+}
+
+.success-movie-info p {
+	margin: 0;
+}
+
+.account-info {
+	margin-top: 10px;
+	background-color: #e0e0e0;
+	color: #000000;
+	padding: 10px;
+	border-radius: 8px;
+	max-width: 400px;
+	margin: 5px auto;
+}

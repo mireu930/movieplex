@@ -35,9 +35,6 @@
 			</div>
 		  </div>
   
-		  <!-- 조회 버튼 -->
-		  <button class="btn btn-primary w-100 mb-3" id="fetchScheduleBtn">조회</button>
-  
 		  <!-- 영화 선택 -->
 		  <label for="movieTitle" class="form-label">🎬 영화 제목</label>
 		  <select id="selectOption" class="form-select mb-2" aria-label="영화 선택">

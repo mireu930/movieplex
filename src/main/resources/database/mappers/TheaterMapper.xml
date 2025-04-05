@@ -7,7 +7,8 @@
 	<insert id="addTheater" parameterType="TheaterDTO">
 		INSERT INTO
 		THEATER(THEATERID, THEATERSTART, THEATEREND, THEATERNAME,
-		MOVIEID, KIND)
+		MOVIEID,
+		KIND)
 		VALUES(THEATER_SEQ.NEXTVAL,
 		#{theaterStart},
 		#{theaterEnd},#{theaterName}, #{movieId}, 0)
@@ -18,6 +19,20 @@
 		SELECT * FROM THEATER WHERE MOVIEID = #{movieId}
 	</select>
 
+	<select id="getTheaterList" parameterType="TheaterDTO"
+		resultMap="getDayListResult">
+		SELECT T.*, M.MOVIETITLE
+		FROM THEATER T
+		JOIN
+		MOVIES M
+		ON T.MOVIEID =
+		M.MOVIEID
+		WHERE TRUNC(THEATERSTART) = #{theaterStart}
+		<if test="movieId != null">
+			AND T.MOVIEID = #{movieId}
+		</if>
+	</select>
+
 	<select id="getDayList" parameterType="TheaterDTO"
 		resultMap="getDayListResult">
 		SELECT M.MOVIETITLE, T.*
@@ -25,14 +40,16 @@
 		SELECT *
 		FROM THEATER
 		WHERE
-		THEATERNAME = #{theaterName}
-		AND (
+		(
 		TRUNC(THEATERSTART) = #{theaterStart}
 		OR TRUNC(THEATEREND) = #{theaterStart}
-		) )T
+		)
+		<if test="theaterName != null">
+		AND THEATERNAME = #{theaterName}
+		</if>
+		)T
 		JOIN MOVIES M ON
-		T.MOVIEID =
-		M.MOVIEID
+		T.MOVIEID = M.MOVIEID
 		ORDER BY THEATERSTART
 	</select>
 	<resultMap type="TheaterDTO" id="getDayListResult">
@@ -50,21 +67,52 @@
 		</association>
 
 	</resultMap>
-	
+
 	<delete id="deleteTheater" parameterType="TheaterDTO">
-		DELETE THEATER WHERE THEATERID = #{theaterId}
+		DELETE THEATER WHERE
+		THEATERID = #{theaterId}
 	</delete>
 
-	<select id="checkTime" parameterType="TheaterDTO" resultType="int">
+	<select id="checkTime" parameterType="TheaterDTO"
+		resultType="int">
 		SELECT COUNT(*)
 		FROM THEATER
-		WHERE THEATERNAME = #{theaterName}
+		WHERE THEATERNAME =
+		#{theaterName}
 		AND THEATERSTART &lt; #{theaterEnd}
-		AND THEATEREND &gt; #{theaterStart}
-	</select>
-	
-	<select id="deleteCheck" parameterType="TheaterDTO" resultType="int">
-		SELECT COUNT(*) FROM MOVIEBOOKS WHERE THEATERID = #{theaterId}
+		AND THEATEREND &gt;
+		#{theaterStart}
 	</select>
 
+	<select id="deleteCheck" parameterType="TheaterDTO"
+		resultType="int">
+		SELECT COUNT(*) FROM MOVIEBOOKS WHERE THEATERID =
+		#{theaterId}
+	</select>
+
+	<select id="getMovieInfo" parameterType="Long" resultMap="getMovieDTO">
+		SELECT *
+		FROM THEATER
+		JOIN
+		MOVIES
+		USING(MOVIEID)
+		WHERE THEATERID = #{theaterId}
+	</select>
+
+	<resultMap type="TheaterDTO" id="getMovieDTO">
+		<id column="theaterId" property="theaterId" />
+		<result column="THEATERID" property="theaterId" />
+		<result column="THEATERSTART" property="theaterStart" />
+		<result column="THEATEREND" property="theaterEnd" />
+		<result column="THEATERNAME" property="theaterName" />
+		<result column="MOVIEID" property="movieId" />
+		<result column="KIND" property="kind" />
+
+		<!-- 1대 1 관계에서는 association -->
+		<association property="movieDTO" javaType="MovieDTO">
+			<result column="MOVIETITLE" property="movieTitle" />
+			<result column="SHORTPOSTER" property="shortPoster" />
+		</association>
+
+	</resultMap> 
 </mapper>
