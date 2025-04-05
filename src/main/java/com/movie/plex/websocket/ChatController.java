@@ -72,4 +72,16 @@ public class ChatController {
 		model.addAttribute("chatRoomNo", chatRoomJoin.getChatRoomNo());
 		return "chat/chatRoomDetail";
 	}
+	
+	@GetMapping(value = "/exit")
+	public String exitChatRoom(ChatRoomJoin chatRoomJoin, HttpSession session) throws Exception {
+		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		
+		chatRoomJoin.setUserNum(userDTO.getUserNum());
+		chatRoomJoin.setChatRoomNo(chatRoomJoin.getChatRoomNo());
+		
+		chatService.exitChatRoom(chatRoomJoin);
+		
+		return "redirect:./chatRoom";
+	}
 }

@@ -61,4 +61,22 @@
 		INSERT INTO CHATMESSAGE
 		VALUES (CMNO_SEQ.NEXTVAL, #{message} , SYSDATE, #{chatRoomNo}, #{userNum})
 	</insert>
+	
+	<delete id="exitChatRoom" parameterType="ChatRoomJoin">
+		DELETE FROM CHATROOMJOIN
+			WHERE USERNUM = #{userNum} AND CHATROOMNO = #{chatRoomNo}
+	</delete>
+	
+	<update id="closeChatRoom" parameterType="ChatRoomJoin">
+		UPDATE CHATROOM
+		   SET STATUS = 'N'
+		 WHERE CHATROOMNO = #{chatRoomNo}
+	</update>
+	
+		<select id="countChatRoomMember" parameterType="ChatRoomJoin" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM CHATROOMJOIN
+		WHERE CHATROOMNO = #{chatRoomNo}
+	</select>
   </mapper>

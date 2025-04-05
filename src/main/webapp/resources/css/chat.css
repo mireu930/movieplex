@@ -54,7 +54,7 @@ margin-bottom: 4px;
 }
 
 #inputChatting {
-    flex: 1; 	/* 나머지 남은 공간을 차지지*/
+    flex: 1; 	/* 나머지 남은 공간을 차지*/
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -64,6 +64,17 @@ margin-bottom: 4px;
 #send {
     padding: 10px 20px;
     background-color: #4fa5ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#exit-btn {
+    width: 30px;
+    padding: 6px 10px;
+    background-color: #ff4f87;
     color: white;
     border: none;
     border-radius: 8px;

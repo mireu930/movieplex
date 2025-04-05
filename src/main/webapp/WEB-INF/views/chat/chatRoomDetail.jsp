@@ -46,7 +46,9 @@
 		<div class="input-area">
 			<textarea rows="3" id="inputChatting"></textarea>
 			<button id="send">전송</button>
+			<button id="exit-btn">X</button>
 		</div>
+
 	</main>
 	<!-- footer -->
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>

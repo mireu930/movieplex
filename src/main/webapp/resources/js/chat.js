@@ -68,3 +68,13 @@ chattingSocket.onmessage = function(e){
     // scrollTop : 스크롤의 위치
     // scrollHeight : 스크롤되는 요소(display)의 전체 높이
 }
+
+document.getElementById("exit-btn").addEventListener("click", exit);
+
+
+function exit() {
+
+    if(confirm("채팅방을 나가시겠습니까?")){
+        location.href = `/exit?chatRoomNo=${chatRoomNo}`;
+    }
+}

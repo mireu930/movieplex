@@ -46,5 +46,18 @@ public class ChatService {
 		chatMessage.setMessage(Utils.newLineHandling(chatMessage.getMessage()));
 		return chatDAO.insertMessage(chatMessage);
 	}
+	
+	public int exitChatRoom(ChatRoomJoin chatRoomJoin) throws Exception {
+		int result = chatDAO.exitChatRoom(chatRoomJoin);
+		
+		if(result>0) {
+			int cnt = chatDAO.countChatRoomMember(chatRoomJoin);
+			
+			if(cnt==0) {
+				result = chatDAO.closeChatRoom(chatRoomJoin);
+			}
+		}
+		return result;
+	}
 
 }
