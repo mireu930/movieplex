@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.movie.plex.movies.MovieDAO;
 import com.movie.plex.movies.MovieDTO;
+import com.movie.plex.theater.SeatDTO;
 import com.movie.plex.theater.TheaterDAO;
 import com.movie.plex.theater.TheaterDTO;
 import com.movie.plex.users.UserDTO;
