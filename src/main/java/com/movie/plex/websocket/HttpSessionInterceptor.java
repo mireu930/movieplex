@@ -9,7 +9,6 @@ import org.springframework.web.socket.server.HandshakeInterceptor;
 
 import java.util.Map;
 
-@Component
 public class HttpSessionInterceptor implements HandshakeInterceptor {
 
     @Override

@@ -10,19 +10,6 @@ public class ChatRoom {
 	    private String userId;
 	    private int cnt;
 
-	    // 기본 생성자
-	    public ChatRoom() {}
-
-	    // 모든 필드를 포함한 생성자
-	    public ChatRoom(int chatRoomNo, String title, String status, Long userNum, String userId, int cnt) {
-	        this.chatRoomNo = chatRoomNo;
-	        this.title = title;
-	        this.status = status;
-	        this.userNum = userNum;
-	        this.userId = userId;
-	        this.cnt = cnt;
-	    }
-
 	    // Getter & Setter
 	    public int getChatRoomNo() { return chatRoomNo; }
 	    public void setChatRoomNo(int chatRoomNo) { this.chatRoomNo = chatRoomNo; }
@@ -42,16 +29,4 @@ public class ChatRoom {
 	    public int getCnt() { return cnt; }
 	    public void setCnt(int cnt) { this.cnt = cnt; }
 
-	    // toString() 오버라이드
-	    @Override
-	    public String toString() {
-	        return "ChatRoom{" +
-	                "chatRoomNo=" + chatRoomNo +
-	                ", title='" + title + '\'' +
-	                ", status='" + status + '\'' +
-	                ", userNum=" + userNum +
-	                ", userId='" + userId + '\'' +
-	                ", cnt=" + cnt +
-	                '}';
-	    }
 	}

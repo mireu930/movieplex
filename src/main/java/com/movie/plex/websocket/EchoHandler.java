@@ -14,7 +14,6 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-@Component
 public class EchoHandler extends TextWebSocketHandler{
 	
 	@Autowired
