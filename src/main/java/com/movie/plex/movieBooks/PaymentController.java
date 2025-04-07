@@ -24,6 +24,7 @@ public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
+	//결제 금액이 맞는지 확인하는 기능
 	@RequestMapping(value="payment/complete", method=RequestMethod.POST)
 	public String paymentComplete(String imp_uid, String merchant_uid, Long totalPrice, Long bookId, Model model) throws Exception{
 		System.out.println(imp_uid);
@@ -41,19 +42,19 @@ public class PaymentController {
 	//동일한 이름으로 여러개 받을 때는 RequestParam 사용!
 	@ResponseBody
 	@RequestMapping(value="movieBookCard", method=RequestMethod.POST)
-	public Map<String, Object> movieBookCard(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, HttpSession session) throws Exception{
+	public Map<String, Object> movieBookCard(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, String usedCoupon, HttpSession session) throws Exception{
 		System.out.println("payment");
 		System.out.println(seat.size());
 		System.out.println(theaterId);
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		Map<String, Object> result = paymentService.movieBookCard(seat, theaterId, userDTO, totalPrice);
+		Map<String, Object> result = paymentService.movieBookCard(seat, theaterId, userDTO, totalPrice, usedCoupon);
 		
 		return result;
 	}
 	@RequestMapping(value="movieBookBankBook", method=RequestMethod.POST)
-	public String movieBookBankBook(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, HttpSession session, Model model) throws Exception{
+	public String movieBookBankBook(@RequestParam("seat") List<String> seat, Long theaterId, Long totalPrice, String usedCoupon, HttpSession session, Model model) throws Exception{
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		Map<String, Object> result = paymentService.movieBookBankBook(seat, theaterId, totalPrice, userDTO);
+		Map<String, Object> result = paymentService.movieBookBankBook(seat, theaterId, totalPrice, userDTO, usedCoupon);
 		
 		model.addAttribute("theaterDTO", result.get("theaterDTO"));
 		model.addAttribute("seats", result.get("seats"));

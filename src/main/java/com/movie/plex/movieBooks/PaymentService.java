@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.coupon.CouponDAO;
+import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movies.MovieService;
 import com.movie.plex.users.UserDTO;
 import com.siot.IamportRestClient.IamportClient;
@@ -16,11 +18,16 @@ import com.siot.IamportRestClient.request.CancelData;
 import com.siot.IamportRestClient.response.IamportResponse;
 import com.siot.IamportRestClient.response.Payment;
 
+import oracle.jdbc.driver.parser.Parseable;
+
 @Service
 public class PaymentService {
 
 	@Autowired
 	private MovieBookService bookService;
+	
+	@Autowired
+	private CouponDAO couponDAO;
 	
 	@Value("${import.channel}")
 	private String importChannel;
@@ -31,8 +38,14 @@ public class PaymentService {
 	private String api_secret;
 	
 	
-	public Map<String, Object> movieBookCard(List<String> seat, Long theaterId, UserDTO userDTO, Long totalPrice) throws Exception{
+	public Map<String, Object> movieBookCard(List<String> seat, Long theaterId, UserDTO userDTO, Long totalPrice, String usedCoupon) throws Exception{
 		Long bookId = bookService.movieBookCard(seat, theaterId, userDTO, totalPrice);
+		if(usedCoupon != "") {
+			CouponConnectDTO connectDTO = new CouponConnectDTO();
+			connectDTO.setUserNum(userDTO.getUserNum());
+			connectDTO.setCouponNum(Long.parseLong(usedCoupon));
+			couponDAO.couponUsed(connectDTO);
+		}
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("bookId", bookId);
 		result.put("importChannel", importChannel);
@@ -75,8 +88,15 @@ public class PaymentService {
 		}
 	}
 
-	public Map<String, Object> movieBookBankBook(List<String> seat, Long theaterId, Long totalPrice, UserDTO userDTO) throws Exception{
-		Long bookId = bookService.movieBookBankBook(seat, theaterId, totalPrice, userDTO);	
+	public Map<String, Object> movieBookBankBook(List<String> seat, Long theaterId, Long totalPrice, UserDTO userDTO,String usedCoupon) throws Exception{
+		Long bookId = bookService.movieBookBankBook(seat, theaterId, totalPrice, userDTO);
+		if(usedCoupon != "") {
+			CouponConnectDTO connectDTO = new CouponConnectDTO();
+			connectDTO.setUserNum(userDTO.getUserNum());
+			connectDTO.setCouponNum(Long.parseLong(usedCoupon));
+			couponDAO.couponUsed(connectDTO);
+		}
+		
 		Map<String, Object> map = bookService.bookSuccessPage(bookId);
 		return map;
 	}

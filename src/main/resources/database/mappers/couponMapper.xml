@@ -20,5 +20,9 @@
   	<update id="couponUpdate" parameterType="CouponDTO">
   		UPDATE COUPON SET USED = 1 WHERE COUPONNUM=#{couponNum}
   	</update>
+  	
+  	<update id="couponUsed" parameterType="CouponConnectDTO">
+  		UPDATE COUPONCONNECT SET USED = 1 WHERE COUPONNUM = #{couponNum} AND USERNUM = #{userNum}
+  	</update>
 	
   </mapper>
