@@ -3,8 +3,6 @@ package com.movie.plex.users;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,14 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
-
 import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.coupon.CouponService;
 import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
-
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -252,6 +248,45 @@ public class UserController {
 	@RequestMapping(value = "reviewList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> reviewList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.reviewList(pager,session,userDTO);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
+	}
+	
+	@RequestMapping(value = "reviewDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public ReviewDTO reviewDetail(ReviewDTO reviewDTO) throws Exception {
+		reviewDTO = userService.reviewDetail(reviewDTO);
+		return reviewDTO;
+	}
+	
+	@RequestMapping(value = "paymentList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.paymentList(pager);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "bookList", method = RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		pager.setUserDTO(userDTO);
+		List<UserDTO> list = userService.bookList(pager, userDTO, session);
 
 
 }

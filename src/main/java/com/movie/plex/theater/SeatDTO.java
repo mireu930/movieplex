@@ -1,4 +1,4 @@
-package com.movie.plex.movieBooks;
+package com.movie.plex.theater;
 
 public class SeatDTO {
 	private String seat;
