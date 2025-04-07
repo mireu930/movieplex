@@ -45,11 +45,11 @@ public class UserController {
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
 		
 		userDTO = userService.idCheck(userDTO);
-		//�ߺ� 0
+		//占쌩븝옙 0
 		int result =0;
 		
 		if(userDTO== null) {
-			result =1; //�ߺ� x
+			result =1; //占쌩븝옙 x
 		}
 		
 		model.addAttribute("result", result);
@@ -58,15 +58,15 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
-	@ResponseBody //�޼ҵ尡 ��ȯ�� ��ü�� �ڵ����� json.xml���·� ��ȯ���ִ� ����, �����͸� ���� Ŭ���̾�Ʈ�� �����Ҥ��� ���
+	@ResponseBody //占쌨소드가 占쏙옙환占쏙옙 占쏙옙체占쏙옙 占쌘듸옙占쏙옙占쏙옙 json.xml占쏙옙占승뤄옙 占쏙옙환占쏙옙占쌍댐옙 占쏙옙占쏙옙, 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙 클占쏙옙占싱억옙트占쏙옙 占쏙옙占쏙옙占쌀ㅿ옙占쏙옙 占쏙옙占�
 	public String mailCheck(String email) throws Exception {
 			UserDTO userDTO = userService.findEmail(email);
 			
 			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
-				System.out.println("�̹�����");
+				System.out.println("占싱뱄옙占쏙옙占쏙옙");
 				return mailSend.alreadyEmail();
 			} else {	
-				System.out.println("���ΰ���");
+				System.out.println("占쏙옙占싸곤옙占쏙옙");
 				return mailSend.joinEmail(email);
 			}			
 	}
@@ -100,10 +100,10 @@ public class UserController {
 		
 		if(userDTO != null) {
 			 if (userDTO.getUserOut() == 1) {
-		            // ����ڰ� ��Ȱ��ȭ�� ������ ��� �α��� ���� ó��
-		            model.addAttribute("result", "��Ȱ��ȭ�� ������Դϴ�. �����ڿ��� �����ϼ���.");
+		            // 占쏙옙占쏙옙微占� 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占싸깍옙占쏙옙 占쏙옙占쏙옙 처占쏙옙
+		            model.addAttribute("result", "占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙都求占�. 占쏙옙占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙占싹쇽옙占쏙옙.");
 		            model.addAttribute("path", "./login");
-		            return "commons/result";  // ��Ȱ��ȭ�� ����� �޽��� ���
+		            return "commons/result";  // 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占� 占쌨쏙옙占쏙옙 占쏙옙占�
 		        }else {
 		        	session.setAttribute("user", userDTO);
 		        	
@@ -111,7 +111,7 @@ public class UserController {
 		        }
 		}
 		
-		model.addAttribute("result", "�α��ν���");
+		model.addAttribute("result", "占싸깍옙占싸쏙옙占쏙옙");
 		model.addAttribute("path", "./login");
 		
 		
@@ -124,10 +124,10 @@ public class UserController {
 		
 		String accessToken = (String) session.getAttribute("accessToken");
 
-	    // 2. accessToken�� ���� ��� īī�� �α׾ƿ� ����
+	    // 2. accessToken占쏙옙 占쏙옙占쏙옙 占쏙옙占� 카카占쏙옙 占싸그아울옙 占쏙옙占쏙옙
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
-	        session.removeAttribute("accessToken"); // ��ū ����
+	        session.removeAttribute("accessToken"); // 占쏙옙큰 占쏙옙占쏙옙
 	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
 	        a = "redirect:"+kakaoUrl;
 	    }
@@ -146,7 +146,7 @@ public class UserController {
 		int result = userService.join(userDTO);
 		
 		if(result > 0) {
-			model.addAttribute("result", "ȸ�����Լ���");
+			model.addAttribute("result", "회占쏙옙占쏙옙占쌉쇽옙占쏙옙");
 			model.addAttribute("path", "../");
 		}
 		
@@ -288,5 +288,28 @@ public class UserController {
 		pager.setUserDTO(userDTO);
 		List<UserDTO> list = userService.bookList(pager, userDTO, session);
 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("list", list);
+		map.put("pager", pager);
+		return map;
+	}
+	
+	@RequestMapping(value = "bookDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return userService.bookDetail(movieBookDTO);
+	}
+	
+	@RequestMapping(value = "userCouponUpdate", method = RequestMethod.POST)
+	@ResponseBody
+	public int couponUpdate(@RequestParam("couponNum") Long couponNum) throws Exception {
+		  CouponDTO couponDTO = new CouponDTO();
+		    couponDTO.setCouponNum(couponNum); 
+		
+		int result = userService.couponUpdate(couponDTO);
+		int result2 = couponService.couponUpdate(couponDTO);
 
+		return (result>0&&result2>0)?1:0;
+	}
 }
