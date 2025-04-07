@@ -34,6 +34,11 @@ body {
     height: 140px;
     object-fit: cover;
 }
+
+.alert{
+    margin-top: 80px;
+}
+
 .payment-info{
     display: flex;
     margin-bottom: 20px;

@@ -74,9 +74,10 @@ public class MovieBookController {
 	public void paymentPage(Long theaterId, Model model, HttpSession session) throws Exception{
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		UserDTO user = (UserDTO)session.getAttribute("user");
-		//List<CouponConnectDTO> coupons = userService.couponList(user);
+		List<CouponConnectDTO> coupons = userService.couponList(user);
+		System.out.println("쿠폰" + coupons.size());
 		model.addAttribute("theaterDTO", dto);
-		//model.addAttribute("coupons", coupons);
+		model.addAttribute("coupons", coupons);
 		
 		System.out.println("paymentPage");
 	}

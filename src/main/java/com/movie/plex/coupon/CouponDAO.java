@@ -7,6 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.movie.plex.couponConnect.CouponConnectDTO;
+
 @Repository
 public class CouponDAO {
 	@Autowired
@@ -27,5 +29,9 @@ public class CouponDAO {
 	
 	public int couponUpdate(CouponDTO couponDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"couponUpdate", couponDTO);
+	}
+	
+	public int couponUsed(CouponConnectDTO connectDTO) throws Exception{
+		return sqlSession.update(NAMESPACE + "couponUsed", connectDTO);
 	}
 }

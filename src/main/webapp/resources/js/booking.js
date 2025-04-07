@@ -356,16 +356,60 @@ function seatBook() {
 
 function paymentPage() {
   const totalPeople = document.getElementById("totalPeople");
-  console.log(adults);
-  console.log(`일반 ${adults}`);
+  const payment_item_adult = document.getElementById("payment-item-adult");
+  const payment_item_teen = document.getElementById("payment-item-teen");
+  const adult_price = document.getElementById("adult-price");
+  const teen_price = document.getElementById("teen-price");
+  const total_amount = document.getElementById("total-amount");
+  const discount_amount = document.getElementById("discount-amount");
+  const final_amount = document.getElementById("final-amount");
+
+  let usedCoupon = "";
+  // console.log(adults);
+  // console.log(`일반 ${adults}`);
 
   if (adults != "" && teens == "") {
     totalPeople.innerText = `일반 ${adults}`
+    payment_item_adult.innerText = `일반 ${adults}`
+    adult_price.innerText = adults * 15000 + "원";
   } else if (adults == "" && teens != "") {
     totalPeople.innerText = `청소년 ${teens}`
+    payment_item_teen.innerText = `청소년 ${teens}`
+    teen_price.innerText = teens * 10000 + "원";
   } else {
     totalPeople.innerText = `일반 ${adults} 청소년 ${teens}`
+    payment_item_teen.innerText = `청소년 ${teens}`
+    payment_item_adult.innerText = `일반 ${adults}`
+    adult_price.innerText = adults * 15000 + "원";
+    payment_item_teen.innerText = `청소년 ${teens}`
+    teen_price.innerText = teens * 10000 + "원";
   }
+  total_amount.innerText = paymentPrice + "원";
+  final_amount.innerText = paymentPrice + "원";
+
+  const selectedCoupon = document.getElementById("selectedCoupon")
+  const couponName = document.getElementById("couponName");
+
+  const couponDelete = document.getElementById("couponDelete");
+
+  selectedCoupon.addEventListener("change", (e)=>{
+    const coupon = e.target.options[e.target.selectedIndex];
+    if(coupon.innerText == couponName.innerText){
+      alert("이미 선택한 쿠폰입니다.");
+      return;
+    }
+    couponName.innerText = coupon.innerText;
+    let discount = coupon.getAttribute("data-coupon-cost");
+    console.log(discount);
+    discount_amount.innerText = discount + "원";
+    final_amount.innerText = (parseInt(paymentPrice) - parseInt(discount)) + "원";
+    usedCoupon = coupon.value;
+  })
+
+  couponDelete.addEventListener("click", () => {
+    couponName.innerText = "";
+    selectedCoupon.value = "default";
+  })
 
   const paymentMethod = document.getElementById("payment-radio");
   const bank = document.getElementById("bank");
@@ -397,6 +441,7 @@ function paymentPage() {
     }
     param.append("theaterId", selectedTheaterId);
     param.append("totalPrice", paymentPrice);
+    param.append("usedCoupon", usedCoupon);
     if (selectedMethod.value == 1) {
 
       fetch("/moviePayment/movieBookCard", {
