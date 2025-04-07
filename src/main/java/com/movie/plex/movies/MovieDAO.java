@@ -31,5 +31,12 @@ public class MovieDAO {
 	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "getMovieTitle", movieDTO);
 	}
+	
+	public List<MovieDTO> getMoviesList() throws Exception {
+		return sqlSession.selectList(NAMESPACE + "getMoviesList");
+	}
 
+	public MovieDTO getDetail(MovieDTO movieDTO) {
+		return sqlSession.selectOne(NAMESPACE + "getDetail", movieDTO);
+	}
 }

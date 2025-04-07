@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import retrofit2.http.GET;
+
 @Controller
 @RequestMapping("/movies/*")
 public class MovieController {
@@ -31,8 +33,16 @@ public class MovieController {
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
 	public void movieList(Model model) throws Exception{
-		List<MovieDTO> list = movieService.getMainList();
+		List<MovieDTO> list = movieService.getMoviesList();
 		model.addAttribute("topMovieList", list);
+	}
+	
+	@RequestMapping(value = "detail", method = RequestMethod.GET)
+	public void detail(MovieDTO movieDTO, Model model) throws Exception{
+		System.out.println(movieDTO.getMovieId());
+		movieDTO = movieService.getDetail(movieDTO);
+		System.out.println(movieDTO.getLongPoster());
+		model.addAttribute("movieDTO", movieDTO);
 	}
 	
 }

@@ -32,5 +32,16 @@
 	<select id="getList" resultType="MovieDTO">
 		SELECT * FROM MOVIES
 	</select>
+	
+	<select id="getMoviesList" resultType="MovieDTO">
+		SELECT * from
+		(SELECT ROWNUM, m.* FROM
+		(SELECT * FROM MOVIES) m) r
+		WHERE ROWNUM BETWEEN 1 AND 12
+	</select>
+	
+	<select id="getDetail" parameterType="MovieDTO" resultType="MovieDTO">
+		SELECT * FROM MOVIES WHERE MOVIEID = #{movieId}
+	</select>
 
 </mapper>

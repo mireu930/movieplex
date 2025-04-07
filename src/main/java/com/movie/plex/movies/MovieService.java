@@ -33,5 +33,14 @@ public class MovieService {
 	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
 		return movieDAO.getMovieTitle(movieDTO);
 	}
+	
+	public List<MovieDTO> getMoviesList() throws Exception{
+		return movieDAO.getMoviesList();
+	}
 
+
+	public MovieDTO getDetail(MovieDTO movieDTO) {
+		return movieDAO.getDetail(movieDTO);
+		
+	}
 }

@@ -12,10 +12,7 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>MoviePlex</title>
-
-<link href="/resources/image/movieplex_title.png" rel="shortcut icon"
-	type="image/x-icon">
+<title>Album example · Bootstrap v5.3</title>
 
 <link rel="stylesheet" href="/resources/css/main.css">
 
@@ -25,7 +22,19 @@
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
-		<!-- 컨텐츠 넣는 부분 -->
+
+		<section class="py-5 text-center container">
+			<div class="row py-lg-5">
+				<div class="col-lg-6 col-md-8 mx-auto">
+					<img src="https://image.tmdb.org/t/p/w500${movieDTO.longPoster }">
+				</div>
+			</div>
+		</section>
+
+		<div class="album py-5 bg-body-tertiary">
+			
+		</div>
+
 	</main>
 	<!-- footer -->
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>

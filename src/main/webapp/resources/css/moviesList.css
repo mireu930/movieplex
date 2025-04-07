@@ -1,5 +1,8 @@
-.album .container {
+.album .movieListSection {
     max-width: 1200px;
+}
+.movieAlbum {
+    background-color: white !important;
 }
 
 /* 카드 크기 고정 */
