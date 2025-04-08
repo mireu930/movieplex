@@ -25,7 +25,7 @@ function loadUserInfo() {
                 <p><strong>이메일:</strong>${user.userEmail}</p>
                 <p><strong>폰번호:</strong>${user.userPhone}</p>
                 <p><strong>등급:</strong> ${user.userGrade == 4?"🔧 관리자":user.userGrade == 3?"💎VIP":user.userGrade == 2?"🥇골드":user.userGrade == 1?"🥉브론즈":"🌱새싹"}</p>
-                <p><strong>가입일:</strong> ${user.registDate}</p>
+                <p><strong>가입일:</strong><span id="registDate"></span></p>
                 <p><strong>로그인형태:</strong> ${loginType}</p>
 
                  <input type="button" id="editBtn" class="btn btn-primary" value="수정">
@@ -40,11 +40,24 @@ function loadUserInfo() {
                 document.getElementById('deleteBtn').addEventListener('click', ()=> {
                     delteUserInfo(user.userId);
                 });
+
+                const raw = `${user.registDate}`;
+               
+                const timestamp = parseInt(raw); // 문자열 → 숫자
+                
+                const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                  year: 'numeric',
+                  month: '2-digit',
+                  day: '2-digit'
+                });
+
+                document.getElementById('registDate').textContent = formattedDate;
 	})
 	.catch(error=>{
 	alert(error.message);
 	})
 }
+
 
 function editUserInfo(user){
 
@@ -231,12 +244,20 @@ function loadBookInfo(page=1) {
 
         bookHtml += '<div style="display: flex; flex-wrap: wrap; gap: 20px;">'
         b.list.forEach(item=>{
+
+            const timestamp = parseInt(item.bookDate);
+            const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
             bookHtml += `
                 <div style="width: 250px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
                     <img src="${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
                     <div style="padding: 15px;">
                         <h3 style="font-size: 16px; margin: 0 0 10px;">${item.theaterDTO.movieDTO.movieTitle}</h3>
-                        <p style="color: #555; font-size: 14px; margin: 0;">예매 날짜: ${item.bookDate}</p>
+                        <p style="color: #555; font-size: 14px; margin: 0;">예매 날짜:${formattedDate}</p>
                     </div>
                 </div>
             `
@@ -286,6 +307,14 @@ function bookDetail(bookId){
     .then(r=>r.json())
     .then(b=>{
         console.log(b)
+
+        const timestamp = parseInt(b.bookDate);
+            const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+
         document.getElementById('mainContents').innerHTML=`
             <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
                 <img src="${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
@@ -295,7 +324,7 @@ function bookDetail(bookId){
 
                     <p style="margin: 5px 0;"><strong>영화관:</strong> ${b.theaterDTO.theaterName}</p>
                     <p style="margin: 5px 0;"><strong>좌석:</strong> ${b.theaterDTO.seatDTO.seat}</p>
-                    <p style="margin: 5px 0;"><strong>날짜:</strong> ${b.bookDate}</p>
+                    <p style="margin: 5px 0;"><strong>날짜:</strong> ${formattedDate}</p>
 
             </div>
         `;
