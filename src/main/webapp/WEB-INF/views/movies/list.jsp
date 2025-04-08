@@ -36,7 +36,8 @@
 				<div class="col-auto">
 					<form class="d-flex align-items-center">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="영화명 검색">
+							<input name="search" type="text" class="form-control"
+								placeholder="영화명 검색">
 							<button type="submit" class="btn btn-primary">🔍</button>
 						</div>
 					</form>
@@ -49,22 +50,27 @@
 				<div
 					class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-2 justify-content-center"
 					id="moviesSection">
-					<c:forEach items="${topMovieList}" var="top" varStatus="status">
+					<c:forEach items="${movieList}" var="m" varStatus="status">
 						<div class="col">
 							<div class="card shadow-sm movie-card"
-								data-movie-id="${top.movieId}">
+								data-movie-id="${m.movieId}">
 								<div class="image-wrapper">
-									<img src="https://image.tmdb.org/t/p/w500/${top.shortPoster}"
-										class="card-img-top" alt="${top.movieTitle}">
+								<c:if test="${not empty m.shortPoster }">
+									<img src="https://image.tmdb.org/t/p/w500/${m.shortPoster}"
+										class="card-img-top" alt="${m.movieTitle}">
+								</c:if>
+								<c:if test="${empty m.shortPoster }">
+									<img src="/resources/image/notFountImg.png"
+										class="card-img-top" alt="${m.movieTitle}">
+								</c:if>
+									
 								</div>
 								<div
 									class="card-body d-flex flex-column justify-content-between">
-									<p class="card-text text-center movie-title">${top.movieTitle}</p>
+									<p class="card-text text-center movie-title">${m.movieTitle}</p>
 									<div
 										class="d-flex justify-content-between align-items-center mt-auto">
 										<button type="button" class="btn btn-sm btn-outline-primary">예매</button>
-										<small class="text-body-secondary">${status.index + 1}
-											위</small>
 									</div>
 								</div>
 							</div>
@@ -75,25 +81,21 @@
 		</div>
 		<nav aria-label="Page navigation example">
 			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<button class="page-link pages" data-page-num="${pager.start - 1}"
-						aria-label="Previous">
-						<span aria-hidden="true">&laquo;</span>
-					</button>
-				</li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
+					<li class="page-item"><a class="page-link"
+						href="./list?page=${pager.start -1}&search=${pager.search}" aria-label="Previous"> <span
+							aria-hidden="true">&laquo;</span>
+					</a></li>
+					<c:forEach begin="${pager.start }" end="${pager.end}" var="i">
+						<!-- i는 page 영역이기 때문에 EL로 작성해야함 -->
+						<li class="page-item ${i == pager.page ? 'active' : ''}"><a class="page-link"
+							href="./list?page=${i }&search=${pager.search}">${i}</a></li>
+					</c:forEach>
 
-
-
-				<li class="page-item ${pager.endCheck?'disabled':''}">
-					<button class="page-link pages" data-page-num="${pager.end + 1}"
-						aria-label="Next">
-						<span aria-hidden="true">&raquo;</span>
-					</button>
-				</li>
-			</ul>
+					<li class="page-item ${pager.endCheck?'disabled':''}"><a
+						class="page-link" href="./list?page=${pager.end + 1}&search=${pager.search}"
+						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+					</a></li>
+				</ul>
 		</nav>
 	</main>
 

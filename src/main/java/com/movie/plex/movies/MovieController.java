@@ -9,6 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.movie.plex.pages.MoviesPager;
+
 import retrofit2.http.GET;
 
 @Controller
@@ -32,9 +34,12 @@ public class MovieController {
 	}
 	
 	@RequestMapping(value="list", method = RequestMethod.GET)
-	public void movieList(Model model) throws Exception{
-		List<MovieDTO> list = movieService.getMoviesList();
-		model.addAttribute("topMovieList", list);
+	public void movieList(Model model,MoviesPager pager) throws Exception{
+		System.out.println(pager.getPage());
+		System.out.println(pager.getSearch());
+		List<MovieDTO> list = movieService.getMoviesList(pager);
+		model.addAttribute("movieList", list);
+		model.addAttribute("pager", pager);
 	}
 	
 	@RequestMapping(value = "detail", method = RequestMethod.GET)
