@@ -58,16 +58,27 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
-	@ResponseBody //占쌨소드가 占쏙옙환占쏙옙 占쏙옙체占쏙옙 占쌘듸옙占쏙옙占쏙옙 json.xml占쏙옙占승뤄옙 占쏙옙환占쏙옙占쌍댐옙 占쏙옙占쏙옙, 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙 클占쏙옙占싱억옙트占쏙옙 占쏙옙占쏙옙占쌀ㅿ옙占쏙옙 占쏙옙占�
+	@ResponseBody
 	public String mailCheck(String email) throws Exception {
 			UserDTO userDTO = userService.findEmail(email);
 			
-			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
-				System.out.println("占싱뱄옙占쏙옙占쏙옙");
+			if(userDTO != null && email.equals(userDTO.getUserEmail())) {				
 				return mailSend.alreadyEmail();
-			} else {	
-				System.out.println("占쏙옙占싸곤옙占쏙옙");
+			} else {
 				return mailSend.joinEmail(email);
+			}			
+	}
+	
+	@RequestMapping(value = "updateMailCheck", method = RequestMethod.GET)
+	@ResponseBody
+	public String updateMailCheck(String email) throws Exception {
+			UserDTO userDTO = userService.findEmail(email);
+			
+			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
+				System.out.println("이미 존재하는 이메일입니다.");
+				return mailSend.alreadyEmail();
+			} else {
+				return "";
 			}			
 	}
 	
@@ -100,10 +111,10 @@ public class UserController {
 		
 		if(userDTO != null) {
 			 if (userDTO.getUserOut() == 1) {
-		            // 占쏙옙占쏙옙微占� 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占싸깍옙占쏙옙 占쏙옙占쏙옙 처占쏙옙
-		            model.addAttribute("result", "占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙都求占�. 占쏙옙占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙占싹쇽옙占쏙옙.");
+				// 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+		            model.addAttribute("result", "비활성화된 계정입니다 관리자에게 문의하세요.");
 		            model.addAttribute("path", "./login");
-		            return "commons/result";  // 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占� 占쌨쏙옙占쏙옙 占쏙옙占�
+		            return "commons/result";  // 비활성화된 사용자 메시지 출력
 		        }else {
 		        	session.setAttribute("user", userDTO);
 		        	
@@ -111,7 +122,7 @@ public class UserController {
 		        }
 		}
 		
-		model.addAttribute("result", "占싸깍옙占싸쏙옙占쏙옙");
+		model.addAttribute("result", "로그인 실패");
 		model.addAttribute("path", "./login");
 		
 		
@@ -130,10 +141,10 @@ public class UserController {
 		
 		String accessToken = (String) session.getAttribute("accessToken");
 
-	    // 2. accessToken占쏙옙 占쏙옙占쏙옙 占쏙옙占� 카카占쏙옙 占싸그아울옙 占쏙옙占쏙옙
+	    // accessToken이 있을 경우 카카오 로그아웃 수행
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
-	        session.removeAttribute("accessToken"); // 占쏙옙큰 占쏙옙占쏙옙
+	        session.removeAttribute("accessToken"); // 토큰 삭제
 	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
 	        a = "redirect:"+kakaoUrl;
 	    }
@@ -152,7 +163,7 @@ public class UserController {
 		int result = userService.join(userDTO);
 		
 		if(result > 0) {
-			model.addAttribute("result", "회占쏙옙占쏙옙占쌉쇽옙占쏙옙");
+			model.addAttribute("result", "회원가입성공");
 			model.addAttribute("path", "../");
 		}
 		
@@ -165,7 +176,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mypageData", method = RequestMethod.GET)
-	@ResponseBody
+	@ResponseBody //메소드가 반환한 객체를 자동으로 json.xml향태로 변환해주는 역할, 데이터를 직접 클라이언트에 전달할때 사용
 	public UserDTO getUserInfo(HttpSession session) {
 	    UserDTO userDTO = (UserDTO) session.getAttribute("user");
 	    return userDTO;

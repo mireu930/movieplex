@@ -93,9 +93,9 @@ public class ReviewController {
 	@RequestMapping(value="deleteMovieReview", method=RequestMethod.GET)
 	public String deleteMovieReview(ReviewDTO reviewDTO, Model model) throws Exception{
 		int result = reviewService.deleteMovieReview(reviewDTO);
-		String s = "靷牅 鞁ろ尐";
+		String s = "昏力 角菩";
 		if(result>0) {
-				s = "靷牅 靹标车";
+				s = "昏力 己傍";
 		}
 		model.addAttribute("result" ,s);
 		model.addAttribute("path", "./getMovieReviewList");
@@ -105,9 +105,9 @@ public class ReviewController {
 	@RequestMapping(value="deleteTvReview", method=RequestMethod.GET)
 	public String deleteTvReview(ReviewDTO reviewDTO, Model model) throws Exception{
 		int result = reviewService.deleteMovieReview(reviewDTO);
-		String s = "靷牅 鞁ろ尐";
+		String s = "昏力 角菩";
 		if(result>0) {
-				s = "靷牅 靹标车";
+				s = "昏力 己傍";
 		}
 		model.addAttribute("result" ,s);
 		model.addAttribute("path", "./getTvReviewList");

@@ -87,7 +87,9 @@ function editUserInfo(user){
                 `
                 if(user.sns==0){
                     userHtml+=`
-                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail}>`
+                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail}>
+                    <div class="invalid-feedback" id="userEmailFeedback"></div>
+                    <button id="mailCheckBtn" style="background-color: black; color: white; font-size: 12px;">이메일 확인</button>`
                 }else {
                     userHtml+=`
                     <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail} readonly>`
@@ -116,6 +118,8 @@ function editUserInfo(user){
 
         let userPw = document.getElementById("userPw");
         let userPhone = document.getElementById("userPhone");
+        let userEmail = document.getElementById("userEmail");
+        let mailCheckBtn = document.getElementById("mailCheckBtn");
         let savebtn = document.getElementById("savebtn");
 
         const form = document.querySelector("form");
@@ -123,6 +127,11 @@ function editUserInfo(user){
         
         function isPw(v) {
             let regex = /^[A-Za-z0-9]{8,12}$/
+            return regex.test(v)
+        }
+
+        function isEmail(v) {
+            let regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
             return regex.test(v)
         }
 
@@ -162,18 +171,56 @@ function editUserInfo(user){
             }
         })
 
-        function toggleSubmitButton() {
-          let invalidInputs = form.querySelectorAll(".is-invalid");
-          if(invalidInputs.length===0){
-            savebtn.disabled = false;
-          }else{
-             savebtn.disabled = true;
-          }
-        }
+        userEmail.addEventListener('input',()=>{
+            let userEmailFeedback = document.getElementById("userEmailFeedback");
 
-        inputs.forEach(input => {
-          input.addEventListener("input", toggleSubmitButton);
-        });
+            if(isEmail(userEmail.value)){
+                userEmailFeedback.style.display = 'none';
+            } else {
+                userEmailFeedback.style.display = 'block';
+                userEmail.classList.add('is-invalid');
+            }
+        })
+
+        mailCheckBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let email = userEmail.value;
+            console.log(email);
+        
+            fetch("/users/updateMailCheck?email="+email)
+            .then(r=>r.text())
+            .then(r=>{
+                console.log(r)
+                if(r==="?? ???? ??????."){
+                    alert("이미 있는 이메일입니다. 다른이메일부탁드립니다.");
+                    userEmail.classList.add('is-invalid');
+                    toggleSubmitButton();
+                } else {
+                    alert("사용가능한 이메일입니다.")
+                    userEmail.classList.remove('is-invalid');
+                    toggleSubmitButton();
+                }
+            })
+            .catch(error=>{
+                console.log(error);
+                alert("에러발생")
+            })
+        })
+
+            
+            function toggleSubmitButton() {
+              let invalidInputs = form.querySelectorAll(".is-invalid");
+              if(invalidInputs.length===0){
+                savebtn.disabled = false;
+              }else{
+                 savebtn.disabled = true;
+              }
+            }
+    
+            inputs.forEach(input => {
+              input.addEventListener("input", toggleSubmitButton);
+            });
+
 
         savebtn.addEventListener("click",update)
         document.getElementById("cancelbtn").addEventListener("click",loadUserInfo)
@@ -559,7 +606,6 @@ function loadCoupon() {
                 <input type="hidden" name="couponNum" value="${item.couponNum}"> 
                 <p><strong>쿠폰이름:</strong>${item.couponDTO.couponName}</p>
                 <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p> 
-                <input type = "button" id="couponUpdatebtn" class="btn btn-primary" value="업데이트"/>
             </div>
             `          
         })
@@ -571,12 +617,6 @@ function loadCoupon() {
 
         document.getElementById('couponbtn').addEventListener('click', ()=> {
             couponRegister();
-        });
-
-        document.getElementById('couponUpdatebtn').addEventListener('click', ()=> {
-            c.forEach(item=>{
-                couponUpdate(item.couponNum);
-            })
         });
     })
 }
@@ -627,21 +667,4 @@ function couponRegister() {
             console.error("쿠폰 조회 실패:", error);
             alert("쿠폰 정보를 가져올 수 없습니다.");
         });
-}
-
-function couponUpdate(couponNum) {
-    fetch(`/users/userCouponUpdate`, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded"
-        },
-        body: `couponNum=${couponNum}`
-    })
-    .then(r=>r.json())
-    .then(r=>{
-        if(r>0){
-            alert("업데이트되었습니다.")
-            location.reload();
-        }
-    })
 }
