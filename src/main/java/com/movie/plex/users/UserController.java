@@ -45,11 +45,13 @@ public class UserController {
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
 		
 		userDTO = userService.idCheck(userDTO);
+
 		//占쌩븝옙 0
 		int result =0;
 		
 		if(userDTO== null) {
 			result =1; //占쌩븝옙 x
+
 		}
 		
 		model.addAttribute("result", result);
@@ -58,15 +60,19 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mailCheck", method = RequestMethod.GET)
+
 	@ResponseBody //占쌨소드가 占쏙옙환占쏙옙 占쏙옙체占쏙옙 占쌘듸옙占쏙옙占쏙옙 json.xml占쏙옙占승뤄옙 占쏙옙환占쏙옙占쌍댐옙 占쏙옙占쏙옙, 占쏙옙占쏙옙占싶몌옙 占쏙옙占쏙옙 클占쏙옙占싱억옙트占쏙옙 占쏙옙占쏙옙占쌀ㅿ옙占쏙옙 占쏙옙占�
+
 	public String mailCheck(String email) throws Exception {
 			UserDTO userDTO = userService.findEmail(email);
 			
 			if(userDTO != null && email.equals(userDTO.getUserEmail())) {
+
 				System.out.println("占싱뱄옙占쏙옙占쏙옙");
 				return mailSend.alreadyEmail();
 			} else {	
 				System.out.println("占쏙옙占싸곤옙占쏙옙");
+
 				return mailSend.joinEmail(email);
 			}			
 	}
@@ -100,10 +106,12 @@ public class UserController {
 		
 		if(userDTO != null) {
 			 if (userDTO.getUserOut() == 1) {
+
 		            // 占쏙옙占쏙옙微占� 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙 占쏙옙占� 占싸깍옙占쏙옙 占쏙옙占쏙옙 처占쏙옙
 		            model.addAttribute("result", "占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占쏙옙都求占�. 占쏙옙占쏙옙占쌘울옙占쏙옙 占쏙옙占쏙옙占싹쇽옙占쏙옙.");
 		            model.addAttribute("path", "./login");
 		            return "commons/result";  // 占쏙옙활占쏙옙화占쏙옙 占쏙옙占쏙옙占� 占쌨쏙옙占쏙옙 占쏙옙占�
+
 		        }else {
 		        	session.setAttribute("user", userDTO);
 		        	
@@ -111,6 +119,7 @@ public class UserController {
 		        }
 		}
 		
+
 		model.addAttribute("result", "占싸깍옙占싸쏙옙占쏙옙");
 		model.addAttribute("path", "./login");
 		
@@ -124,10 +133,12 @@ public class UserController {
 		
 		String accessToken = (String) session.getAttribute("accessToken");
 
+
 	    // 2. accessToken占쏙옙 占쏙옙占쏙옙 占쏙옙占� 카카占쏙옙 占싸그아울옙 占쏙옙占쏙옙
 	    if (accessToken != null) {
 	        kakaoApi.kakaoLogout(accessToken);
 	        session.removeAttribute("accessToken"); // 占쏙옙큰 占쏙옙占쏙옙
+
 	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
 	        a = "redirect:"+kakaoUrl;
 	    }
@@ -146,6 +157,7 @@ public class UserController {
 		int result = userService.join(userDTO);
 		
 		if(result > 0) {
+
 			model.addAttribute("result", "회占쏙옙占쏙옙占쌉쇽옙占쏙옙");
 			model.addAttribute("path", "../");
 		}
@@ -281,6 +293,60 @@ public class UserController {
 		return map;
 	}
 	
+
+	
+	@RequestMapping(value = "reviewLogin", method = RequestMethod.GET)
+	public String reviewLogin(Model model) throws Exception {
+		model.addAttribute("kakaoApi", kakaoApi.getKakaoApi());
+		model.addAttribute("redirectUrl", kakaoApi.getKakaoRedirectUrl());
+		return "reviewNest/reviewLogin";
+	}
+	
+	
+	
+	@RequestMapping(value = "reviewlogin", method = RequestMethod.POST)
+	public String reviewLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
+		userDTO = userService.getLogin(userDTO);
+		
+		if(userDTO != null) {
+			 if (userDTO.getUserOut() == 1) {
+		            // ����ڰ� ��Ȱ��ȭ�� ������ ��� �α��� ���� ó��
+		            model.addAttribute("result", "��Ȱ��ȭ�� ������Դϴ�. �����ڿ��� �����ϼ���.");
+		            model.addAttribute("path", "./reviewNest/login");
+		            return "commons/result";  // ��Ȱ��ȭ�� ����� �޽��� ���
+		        }else {
+		        	session.setAttribute("user", userDTO);
+		        	System.out.println(session.getAttribute("user"));
+		        	return "redirect:/";
+		        }
+		}
+		
+		model.addAttribute("result", "�α��ν���");
+		model.addAttribute("path", "./reviewNest/login");
+		
+		
+		return "commons/result";
+	}
+	
+	
+	@RequestMapping(value = "/reviewNest/nestMypage", method = RequestMethod.GET)
+	public String nestMypage(UserDTO userDTO, HttpSession session, Model model) {
+	     System.out.println("응답 와용~~~");
+		/*
+		 * model.addAttribute("myReviews", userService.getMyReviews(user.getUserNum()));
+		 * model.addAttribute("myComments",
+		 * userService.getMyComments(user.getUserNum()));
+		 * model.addAttribute("likedContents",
+		 * userService.getMyLikedContents(user.getUserNum()));
+		 * model.addAttribute("likedReviews",
+		 * userService.getMyLikedReviews(user.getUserNum()));
+		 */
+
+	   return "/reviewNest/nestMypage";
+	}
+	
+	
+
 	@RequestMapping(value = "bookList", method = RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
@@ -312,4 +378,5 @@ public class UserController {
 
 		return (result>0&&result2>0)?1:0;
 	}
+
 }

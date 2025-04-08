@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.like.ContentsLikeDAO;
 import com.movie.plex.pages.Pager;
 
 @Service
@@ -12,6 +13,8 @@ public class NestContentService {
 	
 	@Autowired
 	private NestContentDAO nestContentDAO;
+	@Autowired
+	private ContentsLikeDAO contentsLikeDAO;
 	
 	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
 		//珥앷갗�닔 媛��졇���꽌 怨꾩궛�븯�뒗 �떇
@@ -37,11 +40,21 @@ public class NestContentService {
 		return tvList;
 	}
 	
-	public NestContentDTO getMovieDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getMovieDetail(nestContentDTO);
+	public NestContentDTO getMovieDetail(Long contentId) throws Exception {
+		return nestContentDAO.getMovieDetail(contentId);
 	}
 	
-	public NestContentDTO getTvDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getTvDetail(nestContentDTO);
+	public NestContentDTO getTvDetail(Long contentId) throws Exception {
+		return nestContentDAO.getTvDetail(contentId);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
