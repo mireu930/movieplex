@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <html>
 <head>
@@ -18,11 +17,6 @@
 <link href="/resources/image/reviewnest_title.png" rel="shortcut icon" type="image/x-icon">
 
 <link rel="stylesheet" href="/resources/css/reviewNestDetail.css">
-
-<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -41,166 +35,134 @@
 				    <h2 style="margin-bottom: 10px; font-weight: bold;">${content.contentTitle}</h2>
 				    <p style="color: #666; margin-bottom: 50px;">${content.releaseDate}</p>
 				    <p>${content.overView}</p>
-					
-						<button type="button" class="btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-						  리뷰 남기기
-						</button>
-						
-						<!-- Modal -->
-						<form id="reviewForm" action="addReview" method="post">
-							    <input type="hidden" name="contentId" value="${content.contentId}">
-							    <input type="hidden" name="kind" value="${content.kind}">
-							
-							    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-							        <div class="modal-dialog">
-							            <div class="modal-content">
-							                <div class="modal-header">
-							                    <h1 class="modal-title fs-5" id="staticBackdropLabel">${content.contentTitle}</h1>
-							                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-							                </div>
-							
-							                <!-- 새로운 리뷰 작성 폼 -->
-							                <div class="modal-body">
-							                    <label for="reviewRate">나의 별점</label>
-							                    <select name="reviewRate" id="reviewRate" class="form-select">
-							                        <c:forEach var="i" begin="1" end="5">
-							                            <option value="${i}">${i} ★</option>
-							                        </c:forEach>
-							                    </select>
-												<br>
-							                    <label for="reviewText">나의 리뷰</label>
-							                    <textarea class="form-control" name="reviewContents" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요"></textarea>
-							                </div>
-							
-							                <div class="modal-footer">
-							                    <button type="button" class="btn-save" onclick="submitReview()">저장</button>
-							                </div>
-							            </div>
-							        </div>
-							    </div>
-							</form>
-						</div>
-						</div>
-											
-		<div class="container-custom mt-4">
-						<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰</strong>
-						
-						<c:if test="${empty reviewList}">
-					        <div class="alert alert-secondary text-center mt-4" role="alert">
-					            아직 작성된 리뷰가 없습니다. 🎬<br>
-					            <strong>첫 리뷰를 작성해보세요!</strong>
-					        </div>
-					    </c:if>
-						
-					<c:if test="${not empty reviewList}">
-						<div class="row">
-						    <c:forEach var="review" items="${reviewList}">
-						        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-						        	<div class="card border border-secondary">
-						            <div class="card-body">
-						                <strong class="card-title">${review.userName}</strong>
-						                <hr class="special-hr">
-						                <p class="card-text"></p>
-						                    <h6>${review.userName}님의 별점:</h6>
-						                    <c:forEach var="i" begin="1" end="${review.reviewRate}">★</c:forEach>
-						                    <c:forEach var="i" begin="1" end="${5 - review.reviewRate}">☆</c:forEach>
-						                <p class="card-text">
-						                	<a href="/reviewNest/getReviewDetail?reviewId=${review.reviewId}" class="text-decoration-none text-dark">
-										   <c:choose>
-										        <c:when test="${fn:length(review.reviewContents) >30}">
-										            <span class="short-review">${fn:substring(review.reviewContents, 0, 30)}...</span>
-										            <span class="full-text" style="display: none;">${review.reviewContents}</span>
-										        </c:when>
-										        <c:otherwise>
-										            ${review.reviewContents}
-										        </c:otherwise>
-										    </c:choose> 
-										    </a>
-										</p>
-						                <hr class="special-hr">
-						              
-						           		<button class="like-button"
-									        data-usernum="${userNum}"
-									        data-review-id="${review.reviewId}"
-									        data-kind="0">
-									    <span class="heart-icon">
-									        <c:choose>
-									            <c:when test="${likedReviewIds != null && likedReviewIds.contains(review.reviewId)}">
-									                ❤️
-									            </c:when>
-									            <c:otherwise>
-									                🤍
-									            </c:otherwise>
-									        </c:choose>
-									    </span>
-									</button>
+				 
+				<div class="star-container">
+				    <div class="star-rating">
+				        <span>★</span>
+				        <span>★</span>
+				        <span>★</span>
+				        <span>★</span>
+				        <span>★</span>
+				    </div>
+					<p id="selected-rating">나의 평점: 0</p>
+				</div>
+				</div>
+			 </div>
+					<p class="d-inline-flex gap-1">
+						  <a class="btn-review" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+						    리뷰 남기기
+						  </a>
+					</p>
+					<div class="collapse" id="collapseExample">
+					  <div class="card card-body">
+					     <textarea class="form-control" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요ㅇㅇㅇ"></textarea>
+						    <button class="btn mt-2"  type="submit">저장</button>
+						 </div>
+					  </div>
+				
 
-						            </div>
-						   
-						        </div>
-						        </div>
-						    </c:forEach>
-						</div>
-						</c:if>
-						</div>
-			
+				<div class="container-review">
+						<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰</strong>
+							<div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+							  <div class="col">
+							    <div class="card" style="width: 100%;">
+							      <div class="card-body">
+							        <h5 class="card-title">Special title treatment 1</h5>
+							        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							        <a href="#" class="btn btn-primary">Go somewhere</a>
+							      </div>
+							    </div>
+							  </div>
+							
+							  <div class="col">
+							    <div class="card" style="width: 100%;">
+							      <div class="card-body">
+							        <h5 class="card-title">Special title treatment 2</h5>
+							        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							        <a href="#" class="btn btn-primary">Go somewhere</a>
+							      </div>
+							    </div>
+							  </div>
+							
+							  <div class="col">
+							    <div class="card" style="width: 100%;">
+							      <div class="card-body">
+							        <h5 class="card-title">Special title treatment 3</h5>
+							        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							        <a href="#" class="btn btn-primary">Go somewhere</a>
+							      </div>
+							    </div>
+							  </div>
+							
+							  <div class="col">
+							    <div class="card" style="width: 100%;">
+							      <div class="card-body">
+							        <h5 class="card-title">Special title treatment 4</h5>
+							        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+							        <a href="#" class="btn btn-primary">Go somewhere</a>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+							
+					</div>
 	</main>
 	
 <!-- footer -->
 <c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
-<script src="/resources/js/getContentsDetail.js"></script>
-<script >
-document.addEventListener("DOMContentLoaded", function() {
-	  document.querySelectorAll(".like-button").forEach(function(button) {
-	    button.addEventListener("click", function() {
-	      const reviewId = button.dataset.reviewId;
-	      const userNum = button.dataset.usernum;
-	      const kind = button.dataset.kind;
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const stars = document.querySelectorAll(".star-rating span");
+    let selectedRating = 0; // 클릭으로 선택된 평점 저장
 
-	      console.log("! 리뷰 좋아요 클릭됨");
-	      console.log("reviewId:", reviewId);
-	      console.log("userNum:", userNum);
-	      console.log("kind:", kind); 
-	      
-	      if (!userNum) {
-	            alert("로그인이 필요합니다.");
-	            location.href = "/users/login";
-	            return;
-	        }
+    // 별점 클릭 (선택한 값 고정)
+    stars.forEach((star, index) => {
+        star.addEventListener("click", function () {
+            selectedRating = index + 1; // 선택한 값 저장
+            updateStars(selectedRating);
+        });
 
-	      fetch("/reviewNest/toggleReviewLike", {
-	        method: "POST",
-	        headers: {
-	          "Content-Type": "application/json"
-	        },
-	        body: JSON.stringify({
-	          reviewId: parseInt(reviewId),
-	          userNum: parseInt(userNum),
-	          kind: parseInt(kind)
-	        })
-	      })
-	      .then(response => response.json())
-	      .then(data => {
-	        const heartIcon = button.querySelector(".heart-icon");
-	        if (data.liked) {
-	          heartIcon.textContent = "❤️";
-	        } else {
-	          heartIcon.textContent = "🤍";
-	        }
-	      })
-	      .catch(error => {
-	        console.error("리뷰 좋아요 오류:", error);
-	        alert("좋아요 처리 중 오류가 발생했습니다.");
-	      });
-	    });
-	  });
-	});
+        // 마우스 오버 (hover한 별까지만 색칠)
+        star.addEventListener("mouseover", function () {
+            updateStars(index + 1, true); // hover 모드 활성화
+        });
 
+        // 마우스 아웃 (기존 선택한 값 유지)
+        star.addEventListener("mouseout", function () {
+            updateStars(selectedRating, false); // 선택한 값 유지
+        });
+    });
+
+    // ⭐ 별 색칠 함수 (클릭 or hover)
+    function updateStars(value, isHover = false) {
+        stars.forEach((s, i) => {
+            if (isHover) {
+                s.classList.toggle("hovered", i < value); // hover한 별까지만 색칠
+            } else {
+                s.classList.remove("hovered"); // hover 효과 제거
+                s.classList.toggle("selected", i < value); // 클릭한 값만 색칠
+            }
+        });
+
+        // 선택한 평점 표시
+        document.getElementById("selected-rating").innerText = "선택한 평점: " + (value > 0 ? value : "없음");
+    }
+    
+    function saveReview() {
+        const review = document.getElementById("reviewText").value;
+        if (review.trim() === "") {
+          alert("리뷰를 입력하세요!");
+          return;
+        }
+        alert("리뷰가 저장되었습니다: " + review);
+      }
+});
 
 
 
 </script>
+
 </body>
 </html>

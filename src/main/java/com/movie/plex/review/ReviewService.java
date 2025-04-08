@@ -1,8 +1,6 @@
 package com.movie.plex.review;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,33 +11,43 @@ public class ReviewService {
 		@Autowired
 		private ReviewDAO reviewDAO;
 		
-		
-		public int addReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.addReview(reviewDTO);
+		public int addMovieReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.addMovieReview(reviewDTO);
 		}
 		
-		public List<ReviewDTO> getReviewList(Long contentId, Long kind) throws Exception{
-			Map<String, Object> param = new HashMap<String, Object>();
-		    param.put("contentId", contentId);
-		    param.put("kind", kind);
-		    return reviewDAO.getReviewList(param);
+		public int addTvReivew(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.addTvReview(reviewDTO);
 		}
 		
-		public ReviewDTO getReviewDetail(Long reviewId ) throws Exception {
-			return reviewDAO.getReviewDetail(reviewId);
+		public List<ReviewDTO> getMovieReviewList() throws Exception{
+			return reviewDAO.getMovieReviewList();
 		}
 		
-		public int updateReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.updateReview(reviewDTO);
+		public List<ReviewDTO> getTvReviewList() throws Exception{
+			return reviewDAO.getTvReviewList();
 		}
 		
-		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.deleteReview(reviewDTO);
+		public ReviewDTO getMovieReviewDetail(ReviewDTO reviewDTO) throws Exception {
+			return reviewDAO.getMovieReviewDetail(reviewDTO);
 		}
 		
-		public int checkReviewExists(Long userNum, Long contentId, Long kind) throws Exception{
-			return reviewDAO.checkReviewExists(userNum, contentId, kind);
+		public ReviewDTO getTvReviewDetail(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.getTvReviewDetail(reviewDTO);
 		}
 		
+		public int updateMovieReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.updateMovieReview(reviewDTO);
+		}
 		
+		public int updateTvReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.updateTvReview(reviewDTO);
+		}
+		
+		public int deleteMovieReview(ReviewDTO reviewDTO) throws Exception{
+			return reviewDAO.deleteMovieReview(reviewDTO);
+		}
+		
+		public int deleteTvReview(ReviewDTO reviewDTO) throws Exception {
+			return reviewDAO.deleteMovieReview(reviewDTO);
+		}
 }

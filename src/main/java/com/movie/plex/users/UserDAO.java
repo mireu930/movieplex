@@ -50,7 +50,6 @@ public class UserDAO {
 		return sqlSession.selectList(NAMESPACE+"couponList", userDTO);
 	}
 	
-
 	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
 		return sqlSession.insert(NAMESPACE+"couponAdd", couponConnectDTO);
 	}
@@ -58,7 +57,6 @@ public class UserDAO {
 	public int couponUpdate(CouponDTO couponDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"couponUpdate", couponDTO);
 	}
-
 
 	public List<UserDTO> userList(Pager pager) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"userList", pager);

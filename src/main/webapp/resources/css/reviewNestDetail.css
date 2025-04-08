@@ -136,94 +136,23 @@ ul{
     color: orange;
 }
 
-.star-wrapper {
-    display: flex;
-    align-items: center; /* 수직 정렬 */
-    gap: 20px; /* 별점과 버튼 사이 간격 */
+.btn-review {
+	background-color: #ff912a; /* 원하는 배경색 */
+	color: white; /* 글자색 */
+	padding: 10px 15px; /* 버튼 크기 조절 */
+	border-radius: 5px; /* 모서리 둥글게 */
+	border: none; /* 테두리 제거 */
+	text-decoration: none; /* 링크 스타일 제거 */
+	display: inline-block; /* 크기 조절 가능하도록 설정 */
+  }
+
+.d-inline-flex{
+	padding-left: 150px;
+	
 }
-
-.star-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* 별점과 텍스트 왼쪽 정렬 */
-}
-
- .btn-modal {
-	background-color: #ff912a; /*원하는 배경색*/
-	color: white; 
-	padding: 10px 15px; /*버튼 크기 조절*/
-	border-radius: 5px; /*모서리 둥글게*/
-	border: none; 
-	text-decoration: none; 
-	/*display: inline-block; */
-	display: flex; /* ⭐️ 버튼 내 텍스트 중앙 정렬 */
-    align-items: center;
-    justify-content: center;
-    cursor: pointer; /* ⭐️ 클릭 가능하도록 */
-    font-size: 16px; /* 글자 크기 조절 */
-    transition: background-color 0.2s ease-in-out; /* 애니메이션 효과 */
-  } 
-
-.btn-save{
-	background-color: #ff912a; /*원하는 배경색*/
-	color: white; 
-	padding: 10px 15px; /*버튼 크기 조절*/
-	border-radius: 5px; /*모서리 둥글게*/
-	border: none; 
-	text-decoration: none; 
-	/*display: inline-block; */
-	display: flex; /* ⭐️ 버튼 내 텍스트 중앙 정렬 */
-    align-items: center;
-    justify-content: center;
-    cursor: pointer; /* ⭐️ 클릭 가능하도록 */
-    font-size: 16px; /* 글자 크기 조절 */
-    transition: background-color 0.2s ease-in-out; /* 애니메이션 효과 */
-}
-
-.container-custom {
-    
-    padding-left: 150px; /* 왼쪽 여백 */
-    padding-right: 150px; /* 오른쪽 여백 */
-    
-}
-
-
-
-.fixed-card {
-    height: 250px; /* 카드 크기 고정 */
-    overflow: hidden;
-    background-color: rgba(255, 165, 0, 0.7);
-}
-
-.btn-back{
-	background-color: #ff912a; /*원하는 배경색*/
-	color: white;
-	padding: 10px 10px; /*버튼 크기 조절*/
-	border-radius: 5px; /*모서리 둥글게*/
-	border: none; 
-	text-decoration: none;  
-}
-
-.gap {
-	padding-bottom: 100px;
-}
-
-.card-body{
-	width: 263px;
-	height: 245px;
-}
-
-.like-button {
-    background-color: white;     /* 배경 흰색 */
-    border: none;                /* 테두리 제거 */
-    cursor: pointer;            /* 마우스 커서 손가락으로 */
-    padding: 0;                 /* 안쪽 여백 제거 */
-    font-size: 1.5rem;          /* 하트 크기 조절 (원하는 만큼 조정) */
-}
-
-.like-button:hover {
-    transform: scale(1.1);      /* 하트 약간 커지는 효과 */
-    transition: 0.2s ease;
+.collapse{
+	padding-inline: 150px;
+	padding-bottom: 50px;
 }
 
 

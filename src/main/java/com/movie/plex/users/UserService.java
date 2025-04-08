@@ -64,18 +64,6 @@ public class UserService {
 		return userDAO.couponList(userDTO);
 	}
 	
-
-	public UserDTO reviewLogin(UserDTO userDTO) throws Exception {
-		UserDTO result = userDAO.getLogin(userDTO);
-		
-		if(result != null) {
-			if(result.getUserPw().equals(userDTO.getUserPw())) {
-				return result;
-			}
-		}
-		
-		return null;
-
 	public int couponAdd(CouponConnectDTO couponConnectDTO) throws Exception {
 		return userDAO.couponAdd(couponConnectDTO);
 	}
@@ -141,6 +129,5 @@ public class UserService {
 	
 	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
 		return userDAO.bookDetail(movieBookDTO);
-
 	}
 }

@@ -1,8 +1,6 @@
 package com.movie.plex.review;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,46 +12,46 @@ public class ReviewDAO {
 		@Autowired
 		private SqlSession sqlSession;
 		
-		
 		private final String NAMESPACE="com.movie.plex.review.ReviewDAO.";
 		
-		//리뷰 작성
-		public int addReview(ReviewDTO reviewDTO) throws Exception {
-			return sqlSession.insert(NAMESPACE+"addReview",reviewDTO);
+		//영화 리뷰 등록
+		public int addMovieReview(ReviewDTO reviewDTO) throws Exception {
+			return sqlSession.insert(NAMESPACE+"addMovieReview",reviewDTO);
 		}
-		
-		//리뷰 조회
-		public List<ReviewDTO> getReviewList(Map<String, Object> param) throws Exception {
-			return sqlSession.selectList(NAMESPACE+"getReviewList",param);
+		//tv 리뷰 등록
+		public int addTvReview(ReviewDTO reviewDTO) throws Exception {
+			return sqlSession.insert(NAMESPACE+"addTvReview", reviewDTO);
 		}
-		
-		// 리뷰 더보기
-		public ReviewDTO getReviewDetail(Long reviewId) throws Exception{
-			return sqlSession.selectOne(NAMESPACE+"getReviewDetail", reviewId);
+		//영화 리뷰 조회
+		public List<ReviewDTO> getMovieReviewList() throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getMovieReviewList");
 		}
-		
-		//리뷰 수정
-		public int updateReview(ReviewDTO reviewDTO) throws Exception{
-			return sqlSession.update(NAMESPACE+"updateReview", reviewDTO);
+		// tv 리뷰 조회
+		public List<ReviewDTO> getTvReviewList() throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getTvReviewList");
 		}
-		
-		//리뷰 삭제
-		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
-			return sqlSession.delete(NAMESPACE+"deleteReview",reviewDTO);
+		//영화 리뷰 더보기
+		public ReviewDTO getMovieReviewDetail(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.selectOne(NAMESPACE+"getMovieReviewDetail", reviewDTO);
 		}
-		
-		//리뷰 중복조회
-		public int checkReviewExists(Long userNum, Long contentId, Long kind) throws Exception {
-			 Map<String, Object> paramMap = new HashMap<String, Object>();
-			    paramMap.put("userNum", userNum);
-			    paramMap.put("contentId", contentId);
-			    paramMap.put("kind", kind);
-			
-			return sqlSession.selectOne(NAMESPACE+"checkReviewExists", paramMap);
+		//tv 리뷰 더보기
+		public ReviewDTO getTvReviewDetail(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.selectOne(NAMESPACE+"getTvReviewDetail", reviewDTO);
 		}
-		
-		
-		
-		
-		
+		//영화 리뷰 수정
+		public int updateMovieReview(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.update(NAMESPACE+"updateMovieReview", reviewDTO);
+		}
+		//tv 리뷰 수정
+		public int updateTvReview(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.update(NAMESPACE+"updateTvReview", reviewDTO);
+		}
+		//영화 리뷰 삭제
+		public int deleteMovieReview(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.delete(NAMESPACE+"deleteMovieReview",reviewDTO);
+		}
+		//tv 리뷰 삭제
+		public int deleteTvReview(ReviewDTO reviewDTO) throws Exception{
+			return sqlSession.delete(NAMESPACE+"deleteTvReview",reviewDTO);
+		}
 }
