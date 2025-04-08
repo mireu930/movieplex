@@ -99,6 +99,7 @@ movieList.addEventListener("click", (e) => {
 
 const theaterList = document.getElementById("theater-list");
 let selectedTheaterId = "";
+
 theaterList.addEventListener("click", (e) => {
   const target = e.target.closest(".theater-item");
   if (!target) return;
@@ -136,6 +137,7 @@ let teens = "";
 
 let sendingSeat = [];
 let paymentPrice = 0;
+let usedCoupon = "";
 
 
 //좌석 선택 창 JS
@@ -364,7 +366,7 @@ function paymentPage() {
   const discount_amount = document.getElementById("discount-amount");
   const final_amount = document.getElementById("final-amount");
 
-  let usedCoupon = "";
+  usedCoupon = "";
   // console.log(adults);
   // console.log(`일반 ${adults}`);
 
@@ -392,9 +394,9 @@ function paymentPage() {
 
   const couponDelete = document.getElementById("couponDelete");
 
-  selectedCoupon.addEventListener("change", (e)=>{
+  selectedCoupon.addEventListener("change", (e) => {
     const coupon = e.target.options[e.target.selectedIndex];
-    if(coupon.innerText == couponName.innerText){
+    if (coupon.innerText == couponName.innerText) {
       alert("이미 선택한 쿠폰입니다.");
       return;
     }
@@ -433,32 +435,33 @@ function paymentPage() {
       alert("결제 수단을 선택하세요");
       return;
     }
-    let param = new URLSearchParams();
 
-    //여러개 보낼때는 반복문을 사용해야 함함
-    for (let s of sendingSeat) {
-      param.append("seat", s);
-    }
-    param.append("theaterId", selectedTheaterId);
-    param.append("totalPrice", paymentPrice);
-    param.append("usedCoupon", usedCoupon);
     if (selectedMethod.value == 1) {
-
-      fetch("/moviePayment/movieBookCard", {
+      IMP.init("imp54880348");
+      fetch("/moviePayment/getUserInfo", {
         method: "POST",
         headers: {
           "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
         },
-        body: param
       })
         .then(r => r.json())
         .then(r => {
           console.log(r);
-          IMP.init("imp54880348");
           requestPay(r);
-
         })
+
+
     } else if (selectedMethod.value == 0) {
+      let param = new URLSearchParams();
+
+      //여러개 보낼때는 반복문을 사용해야 함함
+      for (let s of sendingSeat) {
+        param.append("seat", s);
+      }
+      param.append("theaterId", selectedTheaterId);
+      param.append("totalPrice", paymentPrice);
+      //param.append("totalPrice", 100); // 테스트용 100원 입금! => 나중에는 원래 금액으로 바꿀 예정
+      param.append("usedCoupon", usedCoupon);
       const selectedBank = document.getElementById("bank");
       fetch("/moviePayment/movieBookBankBook", {
         method: "POST",
@@ -488,11 +491,13 @@ function paymentPage() {
 
 
   function requestPay(r) {
+    const merchant_uid = new Date().getTime();
+
     IMP.request_pay(
       {
         channelKey: r.importChannel,
         pay_method: "card",
-        merchant_uid: r.bookId, // 주문 고유 번호
+        merchant_uid: merchant_uid, // 주문 고유 번호
         name: "movieplex",
         amount: 100,
         buyer_email: r.userEmail,
@@ -504,9 +509,18 @@ function paymentPage() {
           let param = new URLSearchParams();
           param.append("imp_uid", response.imp_uid);
           param.append("merchant_uid", response.merchant_uid);
-          param.append("totalPrice", paymentPrice);
-          param.append("bookId", r.bookId)
-          fetch("/moviePayment/payment/complete", {
+          //param.append("bookId", r.bookId)
+
+          for (let s of sendingSeat) {
+            param.append("seat", s);
+          }
+          param.append("theaterId", selectedTheaterId);
+          //param.append("totalPrice", paymentPrice);
+          param.append("totalPrice", 100); //테스트용 금액 => 나중에 원래 금액으로 바꿀 예정
+          param.append("usedCoupon", usedCoupon);
+
+
+          fetch("/moviePayment/movieBookCard", {
             method: "POST",
             headers: {
               "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
@@ -516,30 +530,30 @@ function paymentPage() {
             .then(res => res.text())
             .then(res => {
               console.log(res);
-              if (res * 1 == 1) {
-                fetch("/movieBooks/bookSuccessPage", {
-                  method: "POST",
-                  headers: {
-                    "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                  },
-                  body: `bookId=${r.bookId}`
+
+              fetch("/movieBooks/bookSuccessPage", {
+                method: "POST",
+                headers: {
+                  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+                body: `bookId=${res}`
+              })
+                .then(r => r.text())
+                .then(r => {
+                  console.log(r);
+                  main.innerHTML = r;
+
+                  const numPeople = document.getElementById("numPeople");
+                  if (adults != "" && teens == "") {
+                    numPeople.innerText = `일반 ${adults}`
+                  } else if (adults == "" && teens != "") {
+                    numPeople.innerText = `청소년 ${teens}`
+                  } else {
+                    numPeople.innerText = `일반 ${adults} 청소년 ${teens}`
+                  }
+
                 })
-                  .then(r => r.text())
-                  .then(r => {
-                    console.log(r);
-                    main.innerHTML = r;
 
-                    const numPeople = document.getElementById("numPeople");
-                    if (adults != "" && teens == "") {
-                      numPeople.innerText = `일반 ${adults}`
-                    } else if (adults == "" && teens != "") {
-                      numPeople.innerText = `청소년 ${teens}`
-                    } else {
-                      numPeople.innerText = `일반 ${adults} 청소년 ${teens}`
-                    }
-
-                  })
-              }
             })
           console.log(response);
         } else {
