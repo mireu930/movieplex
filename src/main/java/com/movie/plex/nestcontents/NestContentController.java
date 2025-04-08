@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.movie.plex.like.ContentsLikeService;
 import com.movie.plex.like.ReviewLikeService;
 import com.movie.plex.pages.Pager;
+import com.movie.plex.pages.ReviewPager;
 import com.movie.plex.review.ReviewDTO;
 import com.movie.plex.review.ReviewService;
 import com.movie.plex.users.UserDTO;
@@ -34,7 +35,7 @@ import com.movie.plex.users.UserDTO;
 		private ReviewLikeService reviewLikeService;
 		  
 		@RequestMapping(value="/reviewNest/getMovieList", method=RequestMethod.GET)
-		public String getMovieList(Model model, Pager pager, HttpSession session) throws Exception {
+		public String getMovieList(Model model, ReviewPager pager, HttpSession session) throws Exception {
 			List<NestContentDTO> movieList = nestContentService.getMovieList(pager);
 			
 			model.addAttribute("movieList", movieList);
@@ -57,7 +58,7 @@ import com.movie.plex.users.UserDTO;
 		}
 		
 		@RequestMapping(value="/reviewNest/getTvList", method=RequestMethod.GET)
-		public String getTvList(Model model, Pager pager, HttpSession session) throws Exception {
+		public String getTvList(Model model, ReviewPager pager, HttpSession session) throws Exception {
 			List<NestContentDTO> tvList = nestContentService.getTvList(pager);
 			
 			model.addAttribute("tvList",tvList);

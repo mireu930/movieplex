@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.movie.plex.like.ContentsLikeDAO;
 import com.movie.plex.pages.Pager;
+import com.movie.plex.pages.ReviewPager;
 
 @Service
 public class NestContentService {
@@ -16,7 +17,7 @@ public class NestContentService {
 	@Autowired
 	private ContentsLikeDAO contentsLikeDAO;
 	
-	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
+	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
 		//珥앷갗�닔 媛��졇���꽌 怨꾩궛�븯�뒗 �떇
 		Long totalCount = nestContentDAO.getTotalCount(pager);
 		
@@ -29,7 +30,7 @@ public class NestContentService {
 		return movieList;
 	}
 	
-	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
+	public List<NestContentDTO> getTvList(ReviewPager pager) throws Exception{
 		Long tvtotalCount = nestContentDAO.getTvTotalCount(pager);
 	
 		pager.makePage(tvtotalCount);

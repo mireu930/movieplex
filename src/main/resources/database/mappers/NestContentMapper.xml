@@ -32,7 +32,7 @@
     	SELECT 1 FROM DUAL
 	</insert>
 	
-	<select id="getTotalCount" parameterType="Pager" resultType="Long">
+	<select id="getTotalCount" parameterType="ReviewPager" resultType="Long">
 			SELECT COUNT(CONTENTID) 
 			FROM NESTCONTENTS
 			WHERE KIND=0
@@ -40,7 +40,7 @@
 			AND LONGPOSTER IS NOT NULL
 	</select>
 
-	<select id="getMovieList"  parameterType="Pager" resultType="nestContentDTO">
+	<select id="getMovieList"  parameterType="ReviewPager" resultType="nestContentDTO">
 			SELECT * FROM
 				(SELECT ROWNUM R, M.* FROM
 					(
@@ -55,7 +55,7 @@
 			WHERE R BETWEEN #{startNum} AND #{endNum}
 	</select>
 
-	<select id="getTvTotalCount" parameterType="Pager" resultType="Long">
+	<select id="getTvTotalCount" parameterType="ReviewPager" resultType="Long">
 			SELECT COUNT(CONTENTID) 
 			FROM NESTCONTENTS
 			WHERE KIND=1
@@ -63,7 +63,7 @@
 			AND LONGPOSTER IS NOT NULL
 	</select>
 	
-	<select id="getTvList" parameterType="Pager" resultType="nestContentDTO">
+	<select id="getTvList" parameterType="ReviewPager" resultType="nestContentDTO">
 			SELECT * FROM
 				(SELECT ROWNUM R, M.* FROM
 					(

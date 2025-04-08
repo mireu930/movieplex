@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.pages.ReviewPager;
 
 @Repository
 public class NestContentDAO {
@@ -27,19 +28,19 @@ public class NestContentDAO {
 		return sqlSession.insert(NAMESPACE+"addJsonTVList", nestContentDTOs);
 	}
 	
-	public Long getTotalCount(Pager pager) throws Exception{
+	public Long getTotalCount(ReviewPager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
 	}
 	
-	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
+	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getMovieList", pager);
 	}
 	
-	public Long getTvTotalCount(Pager pager) throws Exception{
+	public Long getTvTotalCount(ReviewPager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTvTotalCount", pager);
 	}
 	
-	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
+	public List<NestContentDTO> getTvList(ReviewPager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getTvList",pager);
 	}
 	
