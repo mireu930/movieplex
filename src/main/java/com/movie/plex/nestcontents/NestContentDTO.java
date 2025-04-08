@@ -1,6 +1,9 @@
 package com.movie.plex.nestcontents;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.movie.plex.review.ReviewDTO;
 
 public class NestContentDTO {
 		
@@ -13,7 +16,14 @@ public class NestContentDTO {
 		private Double popularity;
 		private Long kind;
 		
+		private List<ReviewDTO> reviewList;
 		
+		public List<ReviewDTO> getReviewList() {
+			return reviewList;
+		}
+		public void setReviewList(List<ReviewDTO> reviewList) {
+			this.reviewList = reviewList;
+		}
 		public Long getContentId() {
 			return contentId;
 		}

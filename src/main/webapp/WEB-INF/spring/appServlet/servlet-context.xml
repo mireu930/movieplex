@@ -55,7 +55,7 @@
 	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<beans:property name="locations">
 			<beans:list>
-				<!-- <beans:value>classpath:database/configs/database.properties</beans:value> -->
+				<beans:value>classpath:database/configs/database.properties</beans:value>
 				<beans:value>classpath:apiKey.properties</beans:value>
 			</beans:list>
 		</beans:property>

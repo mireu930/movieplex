@@ -8,20 +8,21 @@ public class ReviewDTO {
 
 	
 			private Long reviewId;
-			private String reviewContents;
 			private Date reviewDate;
+			private Date updateDate;
 			private Long reviewRate;
 			private Long userNum;
 			private Long contentId;
 			private Long kind;
-			private UserDTO userDTO;
+			private String userName;
+			private String reviewContents;
 			
 			
-			public UserDTO getUserDTO() {
-				return userDTO;
+			public String getUserName() {
+				return userName;
 			}
-			public void setUserDTO(UserDTO userDTO) {
-				this.userDTO = userDTO;
+			public void setUserName(String userName) {
+				this.userName = userName;
 			}
 			public Long getKind() {
 				return kind;
@@ -47,6 +48,13 @@ public class ReviewDTO {
 			public void setReviewDate(Date reviewDate) {
 				this.reviewDate = reviewDate;
 			}
+			public Date getUpdateDate() {
+				return updateDate;
+			}
+			public void setUpdateDate(Date updateDate) {
+				this.updateDate = updateDate;
+			}
+			
 			public Long getReviewRate() {
 				return reviewRate;
 			}
