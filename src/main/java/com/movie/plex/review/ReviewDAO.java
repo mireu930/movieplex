@@ -1,6 +1,8 @@
 package com.movie.plex.review;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,8 @@ public class ReviewDAO {
 		}
 		
 		//리뷰 조회
-		public List<ReviewDTO> getReviewList(Long contentId) throws Exception {
-			return sqlSession.selectList(NAMESPACE+"getReviewList");
+		public List<ReviewDTO> getReviewList(Map<String, Object> param) throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getReviewList",param);
 		}
 		
 		// 리뷰 더보기
@@ -38,6 +40,16 @@ public class ReviewDAO {
 		//리뷰 삭제
 		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
 			return sqlSession.delete(NAMESPACE+"deleteReview",reviewDTO);
+		}
+		
+		//리뷰 중복조회
+		public int checkReviewExists(Long userNum, Long contentId, Long kind) throws Exception {
+			 Map<String, Object> paramMap = new HashMap<String, Object>();
+			    paramMap.put("userNum", userNum);
+			    paramMap.put("contentId", contentId);
+			    paramMap.put("kind", kind);
+			
+			return sqlSession.selectOne(NAMESPACE+"checkReviewExists", paramMap);
 		}
 		
 		

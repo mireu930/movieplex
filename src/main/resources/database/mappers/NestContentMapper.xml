@@ -147,7 +147,12 @@
     </collection>
 	</resultMap>
 
-
+	<select id="getLikedContentsIds" resultType="Long">
+	    SELECT CONTENTID
+	    FROM CONTENTSLIKE
+	    WHERE USERNUM = #{userNum} AND KIND = #{kind}
+	</select>
+	
 
 
 

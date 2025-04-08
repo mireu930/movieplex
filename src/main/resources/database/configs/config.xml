@@ -15,8 +15,8 @@
 		<typeAlias type="com.movie.plex.theater.TheaterDTO" alias="TheaterDTO"/>
 		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
 		<typeAlias type="com.movie.plex.review.ReviewCommentDTO" alias="ReviewCommentDTO"/>
+		<typeAlias type="com.movie.plex.like.ReviewLikeDTO" alias="ReviewLikeDTO"/>
 	
-		<!-- <typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/> -->
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>
 		<typeAlias type="com.movie.plex.coupon.CouponDTO" alias="CouponDTO"/>
 		<typeAlias type="com.movie.plex.couponConnect.CouponConnectDTO" alias="CouponConnectDTO"/>

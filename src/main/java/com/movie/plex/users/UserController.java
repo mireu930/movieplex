@@ -246,4 +246,32 @@ public class UserController {
 		return "commons/result";
 	}
 	
+	
+	@RequestMapping(value = "/reviewNest/nestMypage", method = RequestMethod.GET)
+	public String nestMypage(UserDTO userDTO, HttpSession session, Model model) {
+	     System.out.println("응답 와용~~~");
+		/*
+		 * model.addAttribute("myReviews", userService.getMyReviews(user.getUserNum()));
+		 * model.addAttribute("myComments",
+		 * userService.getMyComments(user.getUserNum()));
+		 * model.addAttribute("likedContents",
+		 * userService.getMyLikedContents(user.getUserNum()));
+		 * model.addAttribute("likedReviews",
+		 * userService.getMyLikedReviews(user.getUserNum()));
+		 */
+
+	   return "/reviewNest/nestMypage";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

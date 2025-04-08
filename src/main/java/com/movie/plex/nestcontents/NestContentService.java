@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.like.ContentsLikeDAO;
 import com.movie.plex.pages.Pager;
 
 @Service
@@ -12,6 +13,8 @@ public class NestContentService {
 	
 	@Autowired
 	private NestContentDAO nestContentDAO;
+	@Autowired
+	private ContentsLikeDAO contentsLikeDAO;
 	
 	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
 		//총갯수 가져와서 계산하는 식
@@ -44,4 +47,14 @@ public class NestContentService {
 	public NestContentDTO getTvDetail(Long contentId) throws Exception {
 		return nestContentDAO.getTvDetail(contentId);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

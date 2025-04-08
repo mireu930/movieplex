@@ -1,5 +1,9 @@
 package com.movie.plex.like;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,20 +16,27 @@ public class ContentsLikeDAO {
 		
 		private final String NAMESPACE = "com.movie.plex.like.ContentsLikeDAO.";
 		
-		//좋아요가 있는지 확인
-		public boolean movieLikeCheck(ContentsLikeDTO contentsLikeDTO) {
-			Long result = sqlSession.selectOne(NAMESPACE+"movieLikeCheck", contentsLikeDTO);
-			return result != null && result >0;
+		//좋아요 여부확인
+		public int isLiked(ContentsLikeDTO contentsLikeDTO) {
+		    return sqlSession.selectOne(NAMESPACE + "isLiked", contentsLikeDTO);
+		}
+		 
+		//좋아요 추가
+		public int addLike(ContentsLikeDTO contentsLikeDTO) {
+			return sqlSession.insert(NAMESPACE+"addLike", contentsLikeDTO);
 		}
 		
-		//영화 좋아요 추가
-		public void movieAddLike(ContentsLikeDTO contentsLikeDTO) {
-			sqlSession.insert(NAMESPACE+"movieAddLike", contentsLikeDTO);
+		//좋아요 삭제
+		public int deleteLike(ContentsLikeDTO contentsLikeDTO) {
+			return sqlSession.delete(NAMESPACE+"deleteLike", contentsLikeDTO);
 		}
 		
-		//영화 좋아요 삭제
-		public void movieDeleteLike(ContentsLikeDTO contentsLikeDTO) {
-			sqlSession.delete(NAMESPACE+"movieDeleteLike", contentsLikeDTO);
+		
+		public List<Long> getLikedContentsIds(Long userNum, Long kind){
+			Map<String, Object> paramMap = new HashMap<String, Object>();
+		    paramMap.put("userNum", userNum);
+		    paramMap.put("kind", kind);
+			return sqlSession.selectList(NAMESPACE+"getLikedContentsIds", paramMap);
 		}
 		
 

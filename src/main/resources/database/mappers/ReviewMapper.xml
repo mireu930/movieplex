@@ -12,7 +12,7 @@
        #{reviewContents},
         sysdate, 
         sysdate, 
-        #{reviewRate}, 
+        #{reviewRate, jdbcType=NUMERIC}, 
         #{userNum},
         #{contentId, jdbcType=NUMERIC},
         (SELECT KIND FROM NESTCONTENTS WHERE CONTENTID = #{contentId, jdbcType=NUMERIC})
@@ -22,8 +22,8 @@
 
     <select id="getReviewList" parameterType="map" resultType="ReviewDTO">
         SELECT * FROM REVIEW
-        WHERE CONTENTID = #{contentId}
-        AND KIND = #{kind}
+        WHERE CONTENTID = #{contentId, jdbcType=NUMERIC}
+        AND KIND = #{kind, jdbcType=NUMERIC}
         ORDER BY REVIEWDATE DESC
     </select>
 
@@ -38,7 +38,7 @@
 	<select id="checkReviewExists" parameterType="ReviewDTO" resultType="int">
 	    SELECT COUNT(*) 
 	    FROM REVIEW 
-	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId} AND KIND = #{kind}
+	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId, jdbcType=NUMERIC} AND KIND = #{kind}
 	</select>
 
 

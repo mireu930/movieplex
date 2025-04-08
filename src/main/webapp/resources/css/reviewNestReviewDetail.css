@@ -177,7 +177,8 @@ ul{
 	padding: 10px 10px; /*버튼 크기 조절*/
 	border-radius: 5px; /*모서리 둥글게*/
 	border: none; 
-	text-decoration: none;  
+	text-decoration: none;
+	
 }
 
 .gap {
@@ -193,10 +194,36 @@ ul{
 	text-decoration: none;  
 }
 
-.btn-modal{
-	padding-top: 20px;
+.btn-save{
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white; 
+	padding: 10px 15px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none; 
+	/*display: inline-block; */
+	display: flex; /* ⭐️ 버튼 내 텍스트 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* ⭐️ 클릭 가능하도록 */
+    font-size: 16px; /* 글자 크기 조절 */
+    transition: background-color 0.2s ease-in-out; /* 애니메이션 효과 */
 }
 
+.list-group {
+	margin-top: 77px;
+}
+
+.btn-good{
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white;
+	padding: 10px 10px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none;
+	margin-right: 20px;
+	margin-left:10px;
+}
 
 
 

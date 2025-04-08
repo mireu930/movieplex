@@ -5,9 +5,13 @@
   
   <mapper namespace="com.movie.plex.review.ReviewCommentDAO">
 		
-		<insert id="addComment">
+		<insert id="addComment" parameterType="ReviewCommentDTO">
 		    INSERT INTO REVIEWCOMMENTS (COMMENTID, COMMENTCONTENTS, COMMENTDATE, REVIEWID, USERNUM)
-		    VALUES (COMMENTID_SEQ.NEXTVAL, #{commentContents}, SYSDATE, #{reviewId}, #{userNum})
+		    VALUES (COMMENTID_SEQ.NEXTVAL, 
+		    #{commentContents,jdbcType=VARCHAR}, 
+		    SYSDATE, 
+		    #{reviewId, jdbcType=NUMERIC}, 
+		    #{userNum, jdbcType=NUMERIC})
 		</insert>
 		
 		<select id="getCommentsByReviewId" parameterType="Long" resultType="ReviewCommentDTO">

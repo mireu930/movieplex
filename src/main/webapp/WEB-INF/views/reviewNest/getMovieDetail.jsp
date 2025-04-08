@@ -20,6 +20,7 @@
 <link rel="stylesheet" href="/resources/css/reviewNestDetail.css">
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.css" rel="stylesheet">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-lite.min.js"></script>
 </head>
@@ -60,14 +61,14 @@
 							
 							                <!-- 새로운 리뷰 작성 폼 -->
 							                <div class="modal-body">
-							                    <label for="reviewRate">나의 별점:</label>
+							                    <label for="reviewRate">나의 별점</label>
 							                    <select name="reviewRate" id="reviewRate" class="form-select">
 							                        <c:forEach var="i" begin="1" end="5">
 							                            <option value="${i}">${i} ★</option>
 							                        </c:forEach>
 							                    </select>
 												<br>
-							                    <label for="reviewText">나의 리뷰:</label>
+							                    <label for="reviewText">나의 리뷰</label>
 							                    <textarea class="form-control" name="reviewContents" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요"></textarea>
 							                </div>
 							
@@ -83,6 +84,15 @@
 											
 		<div class="container-custom mt-4">
 						<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰</strong>
+						
+						<c:if test="${empty reviewList}">
+					        <div class="alert alert-secondary text-center mt-4" role="alert">
+					            아직 작성된 리뷰가 없습니다. 🎬<br>
+					            <strong>첫 리뷰를 작성해보세요!</strong>
+					        </div>
+					    </c:if>
+						
+					<c:if test="${not empty reviewList}">
 						<div class="row">
 						    <c:forEach var="review" items="${reviewList}">
 						        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
@@ -108,13 +118,30 @@
 										    </a>
 										</p>
 						                <hr class="special-hr">
-						           		<a>좋아요</a>
+						              
+						           		<button class="like-button"
+									        data-usernum="${userNum}"
+									        data-review-id="${review.reviewId}"
+									        data-kind="0">
+									    <span class="heart-icon">
+									        <c:choose>
+									            <c:when test="${likedReviewIds != null && likedReviewIds.contains(review.reviewId)}">
+									                ❤️
+									            </c:when>
+									            <c:otherwise>
+									                🤍
+									            </c:otherwise>
+									        </c:choose>
+									    </span>
+									</button>
+
 						            </div>
 						   
 						        </div>
 						        </div>
 						    </c:forEach>
 						</div>
+						</c:if>
 						</div>
 			
 	</main>
@@ -123,23 +150,55 @@
 <c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
-<script>
-function submitReview() {
-    let reviewContents = document.getElementById("reviewText").value.trim();
-    let reviewRate = document.getElementById("reviewRate").value;
+<script src="/resources/js/getContentsDetail.js"></script>
+<script >
+document.addEventListener("DOMContentLoaded", function() {
+	  document.querySelectorAll(".like-button").forEach(function(button) {
+	    button.addEventListener("click", function() {
+	      const reviewId = button.dataset.reviewId;
+	      const userNum = button.dataset.usernum;
+	      const kind = button.dataset.kind;
 
-    if (reviewContents === "") {
-        alert("리뷰 내용을 입력하세요!");
-        return;
-    }
+	      console.log("! 리뷰 좋아요 클릭됨");
+	      console.log("reviewId:", reviewId);
+	      console.log("userNum:", userNum);
+	      console.log("kind:", kind); 
+	      
+	      if (!userNum) {
+	            alert("로그인이 필요합니다.");
+	            location.href = "/users/login";
+	            return;
+	        }
 
-    if (reviewRate === "") {
-        alert("별점을 선택하세요!");
-        return;
-    }
+	      fetch("/reviewNest/toggleReviewLike", {
+	        method: "POST",
+	        headers: {
+	          "Content-Type": "application/json"
+	        },
+	        body: JSON.stringify({
+	          reviewId: parseInt(reviewId),
+	          userNum: parseInt(userNum),
+	          kind: parseInt(kind)
+	        })
+	      })
+	      .then(response => response.json())
+	      .then(data => {
+	        const heartIcon = button.querySelector(".heart-icon");
+	        if (data.liked) {
+	          heartIcon.textContent = "❤️";
+	        } else {
+	          heartIcon.textContent = "🤍";
+	        }
+	      })
+	      .catch(error => {
+	        console.error("리뷰 좋아요 오류:", error);
+	        alert("좋아요 처리 중 오류가 발생했습니다.");
+	      });
+	    });
+	  });
+	});
 
-    document.getElementById("reviewForm").submit();
-}
+
 
 
 </script>

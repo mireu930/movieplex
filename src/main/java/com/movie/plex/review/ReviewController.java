@@ -1,6 +1,7 @@
 package com.movie.plex.review;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.movie.plex.like.ReviewLikeService;
 import com.movie.plex.users.UserDTO;
 
 @Controller
@@ -22,6 +24,10 @@ public class ReviewController {
 
 	@Autowired
 	private ReviewService reviewService;
+	@Autowired
+	private ReviewCommentService reviewCommentService;
+	@Autowired
+	private ReviewLikeService reviewLikeService;
 
 	@RequestMapping(value = "addReview", method = RequestMethod.GET)
 	public void addReview() throws Exception {
@@ -38,9 +44,23 @@ public class ReviewController {
 	        out.flush();
 	        return null;
 	    }
-		//System.out.println(reviewDTO.getReviewContents());
-		//System.out.println(reviewDTO.getKind());
+		
+		 if (reviewDTO.getReviewRate() == null) {
+		        reviewDTO.setReviewRate(0L); // 기본값 0
+		    }
+		
+		
 		reviewDTO.setUserNum(userDTO.getUserNum());
+		
+		 int exists = reviewService.checkReviewExists(reviewDTO.getUserNum(), reviewDTO.getContentId(), reviewDTO.getKind());
+		    if (exists > 0) {
+		        response.setContentType("text/html; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+		        out.println("<script>alert('이미 작성한 리뷰가 있습니다.'); history.back();</script>");
+		        out.flush();
+		        return null;
+		    }
+		
 		int result = reviewService.addReview(reviewDTO);
 
 		if (reviewDTO.getKind() == 0) {
@@ -53,12 +73,34 @@ public class ReviewController {
 
 
 	@RequestMapping(value = "getReviewList", method = RequestMethod.GET)
-	public String getReviewList(ReviewDTO reviewDTO, @RequestParam("contentId") Long contentId, Model model) throws Exception {
+	public String getReviewList(@RequestParam("contentId") Long contentId, @RequestParam("kind") Long kind, HttpSession session ,Model model) throws Exception {
 		
-		List<ReviewDTO> ar = reviewService.getReviewList(contentId);
+		System.out.println("📌 getReviewList() 호출됨");
 		
+		// DTO에 값 세팅
+	    ReviewDTO reviewDTO = new ReviewDTO();
+	    reviewDTO.setContentId(contentId);
+	    reviewDTO.setKind(kind);
 		
+		// 리뷰 목록
+		List<ReviewDTO> ar = reviewService.getReviewList(contentId, kind);
+		
+		//null일 경우 빈 리스트로 초기화-jsp c:if문
+		if (ar == null) {
+	        ar = new ArrayList<ReviewDTO>();
+	    }
 		model.addAttribute("reviewList", ar);
+		System.out.println("리뷰개수: " + ar.size());
+		
+		// 2. 로그인한 유저 번호
+	    Long userNum = (Long) session.getAttribute("userNum");
+
+	    // 3. 유저가 좋아요 누른 리뷰 ID 목록 가져오기
+	    List<Long> likedReviewIds = new ArrayList<Long>();
+	    if (userNum != null) {
+	        likedReviewIds = reviewLikeService.getLikedReviewIds(userNum, kind);
+	    }
+	    model.addAttribute("likedReviewIds", likedReviewIds);
 		
 		if (reviewDTO.getKind() == 0) {
 	        return "redirect:./getMovieDetail?contentId=" + reviewDTO.getContentId();
@@ -70,10 +112,13 @@ public class ReviewController {
 	@RequestMapping(value= "/reviewNest/getReviewDetail", method=RequestMethod.GET)
 	public String getReviewDetail(@RequestParam("reviewId") Long reviewId, Model model) throws Exception {
 		
+		//리뷰상세
 		ReviewDTO reviewDetail = reviewService.getReviewDetail(reviewId);
-		
-
 	        model.addAttribute("reviewDetail", reviewDetail);
+	    
+	    //댓글리스트
+	    List<ReviewCommentDTO> commentList = reviewCommentService.getCommentsByReviewId(reviewId);
+	    model.addAttribute("commentList", commentList);
 	        
 	    return "reviewNest/getReviewDetail";
 	}
@@ -109,6 +154,8 @@ public class ReviewController {
 		
 		return "commons/result";
 	}
+	
+	
 	
 	
 }

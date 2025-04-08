@@ -18,8 +18,6 @@
 <link href="/resources/image/reviewnest_title.png" rel="shortcut icon" type="image/x-icon">
 
 <link rel="stylesheet" href="/resources/css/reviewNestReviewDetail.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_back_ios" />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=comment" />
 </head>
 <body>
 	<!-- header -->
@@ -39,16 +37,17 @@
         <c:forEach var="i" begin="1" end="${5 - reviewDetail.reviewRate}">☆</c:forEach>
     </p>
     <br>
-    <p>${reviewDetail.reviewContents}</p>
+    <p class="review-content" style="white-space: pre-wrap;">${reviewDetail.reviewContents}</p>
     
     <hr>
-    <a href="javascript:history.back()" class="btn-back btn-secondary">뒤로 가기</a>
-   <button type="button" class="btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-	<span class="material-symbols-outlined">comment</span>댓글 등록</button>
-		
-		<form id="reviewForm" action="addReview" method="post">
-							    <input type="hidden" name="contentId" value="${content.contentId}">
-							    <input type="hidden" name="kind" value="${content.kind}">
+    
+    <a href="javascript:history.back()" class="btn-back btn-secondary" style="display: inline-block; margin-right: 10px;">뒤로 가기</a>
+	<button class="btn-good">👍 좋아요</button>
+   <button type="button" class="btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: inline-block;">
+	🗨️댓글 등록</button>
+	
+		<form id="reviewForm" action="addComment" method="post">
+							    <input type="hidden" name="reviewId" value="${reviewDetail.reviewId}">
 							
 							    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 							        <div class="modal-dialog">
@@ -60,7 +59,7 @@
 							
 							                <!-- 새로운 리뷰 작성 폼 -->
 							                <div class="modal-body">
-							                    <textarea class="form-control" name="reviewContents" id="reviewText" rows="4" placeholder="이 작품에 대한 생각을자유롭게 표현해주세요"></textarea>
+							                    <textarea class="form-control" name="commentContents" id="reviewText" rows="4" placeholder="이 작품에 대한 생각을 자유롭게 표현해주세요"></textarea>
 							                </div>
 							
 							                <div class="modal-footer">
@@ -70,10 +69,21 @@
 							        </div>
 							    </div>
 							</form>
+			<!-- 댓글 목록 -->
+			<ul class="list-group list-group-flush">
+			    <c:forEach var="comment" items="${commentList}">
+			        <li class="list-group-item">
+			        	<div class="d-flex justify-content-between align-items-center w-100">
+				            <strong>${comment.userName}</strong><span class="text-muted">${comment.commentDate}</span>
+				           </div>
+				           <br>
+				           <p>${comment.commentContents}</p>
+			        </li>
+			    </c:forEach>
+			</ul>
 	</div>
 	
-	<!-- 댓글 목록 -->
-	<div id="commentList" class="mt-3"></div>
+
 
 	
 	
@@ -83,5 +93,17 @@
 <c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+<script>
+function submitReview() {
+    let commentContents = document.getElementById("reviewText").value.trim();
+
+    if (commentContents === "") {
+        alert("댓글 내용을 입력하세요!");
+        return;
+    }
+
+    document.getElementById("reviewForm").submit();
+}
+</script>
 </body>
 </html>

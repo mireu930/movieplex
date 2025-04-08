@@ -56,14 +56,14 @@
 							
 							                <!-- 새로운 리뷰 작성 폼 -->
 							                <div class="modal-body">
-							                    <label for="reviewRate">나의 별점:</label>
+							                    <label for="reviewRate">나의 별점</label>
 							                    <select name="reviewRate" id="reviewRate" class="form-select">
 							                        <c:forEach var="i" begin="1" end="5">
 							                            <option value="${i}">${i} ★</option>
 							                        </c:forEach>
 							                    </select>
 												<br>
-							                    <label for="reviewText">나의 리뷰:</label>
+							                    <label for="reviewText">나의 리뷰</label>
 							                    <textarea class="form-control" name="reviewContents" id="reviewText" rows="4" placeholder="이 작품에 대한 평가를 자유롭게 글로 남겨보세요"></textarea>
 							                </div>
 							
@@ -106,7 +106,21 @@
 										    </a>
 										</p>
 						                <hr class="special-hr">
-						           		<a>좋아요</a>
+						           		<button class="like-button"
+									        data-usernum="${userNum}"
+									        data-review-id="${review.reviewId}"
+									        data-kind="0">
+									    <span class="heart-icon">
+									        <c:choose>
+									            <c:when test="${likedReviewIds != null && likedReviewIds.contains(review.reviewId)}">
+									                ❤️
+									            </c:when>
+									            <c:otherwise>
+									                🤍
+									            </c:otherwise>
+									        </c:choose>
+									    </span>
+									</button>
 						            </div>
 						   
 						        </div>
@@ -121,25 +135,53 @@
 <c:import url="/WEB-INF/views/reviewNest/templates/reviewNest_footer.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+<script src="/resources/js/getContentsDetail.js"></script>
 <script>
-function submitReview() {
-    let reviewContents = document.getElementById("reviewText").value.trim();
-    let reviewRate = document.getElementById("reviewRate").value;
+document.addEventListener("DOMContentLoaded", function() {
+	  document.querySelectorAll(".like-button").forEach(function(button) {
+	    button.addEventListener("click", function() {
+	      const reviewId = button.dataset.reviewId;
+	      const userNum = button.dataset.usernum;
+	      const kind = button.dataset.kind;
 
-    if (reviewContents === "") {
-        alert("리뷰 내용을 입력하세요!");
-        return;
-    }
+	      console.log("! 리뷰 좋아요 클릭됨");
+	      console.log("reviewId:", reviewId);
+	      console.log("userNum:", userNum);
+	      console.log("kind:", kind); 
+	      
+	      if (!userNum) {
+	            alert("로그인이 필요합니다.");
+	            location.href = "/users/login";
+	            return;
+	        }
 
-    if (reviewRate === "") {
-        alert("별점을 선택하세요!");
-        return;
-    }
-
-    document.getElementById("reviewForm").submit();
-}
-
-
+	      fetch("/reviewNest/toggleReviewLike", {
+	        method: "POST",
+	        headers: {
+	          "Content-Type": "application/json"
+	        },
+	        body: JSON.stringify({
+	          reviewId: parseInt(reviewId),
+	          userNum: parseInt(userNum),
+	          kind: parseInt(kind)
+	        })
+	      })
+	      .then(response => response.json())
+	      .then(data => {
+	        const heartIcon = button.querySelector(".heart-icon");
+	        if (data.liked) {
+	          heartIcon.textContent = "❤️";
+	        } else {
+	          heartIcon.textContent = "🤍";
+	        }
+	      })
+	      .catch(error => {
+	        console.error("리뷰 좋아요 오류:", error);
+	        alert("좋아요 처리 중 오류가 발생했습니다.");
+	      });
+	    });
+	  });
+	});
 </script>
 </body>
 </html>

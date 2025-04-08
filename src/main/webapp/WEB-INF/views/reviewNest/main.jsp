@@ -63,89 +63,63 @@
 			
 	
 		
-		<div class="row mb-2">
+		<div class="row g-4 align-items-stretch">
 			<div class="col-md-6">
-				<div
-					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col p-4 d-flex flex-column position-static">
+				<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col-md-8 p-4 d-flex flex-column position-static">
 						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
 						<h5 class="mb-0"><strong>미키 17</strong></h5>
 						<br>
-						<p class="card-text mb-auto">This is a wider card with
-							supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text mb-auto">위험한 일에 투입되는 소모품(익스펜더블)으로, 죽으면 다시 프린트되는 ‘미키’가 17번째 죽음의 위기를 겪던 중, 그가 죽은 줄 알고 
+						‘미키 18’이 프린트되면서 벌어지는 예측불허의 이야기를 그리는 영화.</p>
 						
 					</div>
-					<div class="col-auto d-none d-lg-block">
-						<svg class="bd-placeholder-img" width="200" height="250"
-							xmlns="http://www.w3.org/2000/svg" role="img"
-							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><img src="/resources/image/17.jpg" width="200" height="250">
-								<rect width="200" height="250"></rect>
-	 
-						</svg>
+					<div class="col-md-4 d-none d-lg-block">
+						<img src="/resources/image/17.jpg"  width="100%" height="100%" style="object-fit: cover;">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
 				<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col p-4 d-flex flex-column position-static">
-						<div class="mb-1 text-body-secondary">TODAY'S DRAMA</div>
-						<h5 class="mb-0"><strong>폭삭 속았수다</strong></h5>
+					<div class="col-md-8 p-4 d-flex flex-column position-static">
+						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
+						<h5 class="mb-0"><strong>폭싹 속았수다</strong></h5>
 						<br>
-						<p class="card-text mb-auto">This is a wider card with
-							supporting text below as a natural lead-in to additional content.</p>
+						<p class="card-text mb-auto">당차고 야무진 소녀와 우직하고 헌신적인 소년. 제주 바닷가 작은 마을에서 한 뼘씩 자라온 두 사람의 인생은 어디로 향할까. 
+						넘어지고 좌절해도 다시 일어서며, 세월을 뛰어넘어 피어나는 사랑 이야기.</p>
 						
 					</div>
-					<div class="col-auto d-none d-lg-block">
-						<svg class="bd-placeholder-img" width="200" height="250"
-							xmlns="http://www.w3.org/2000/svg" role="img"
-							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><img src="/resources/image/iu.jpg" width="200" height="250">
-								<rect width="200" height="250"></rect>
-	
-						</svg>
+					<div class="col-md-4 d-none d-lg-block">
+						<img src="/resources/image/iu.jpg"  width="100%" height="100%" style="object-fit: cover;">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div
-					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col p-4 d-flex flex-column position-static">
-						<div class="mb-1 text-body-secondary">MOVIE RECOMMEND</div>
+				<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col-md-8 p-4 d-flex flex-column position-static">
+						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
 						<h5 class="mb-0"><strong>인턴</strong></h5>
 						<br>
-						<p class="mb-auto">This is a wider card with supporting text
-							below as a natural lead-in to additional content.</p>
+						<p class="card-text mb-auto">창업 1년 반 만에 직원 220명의 성공신화를 이룬 열정적인 젊은 여성 CEO 줄스(앤 해서웨이)는 원치않는
+						수십 년 직장생활에서 비롯된 노하우와 나이만큼 풍부한 인생경험이 무기인 만능 70세의 벤(로버트 드 니로)을 인턴으로 채용하게 되는데...</p>
 						
 					</div>
-					<div class="col-auto d-none d-lg-block">
-						<svg class="bd-placeholder-img" width="200" height="250"
-							xmlns="http://www.w3.org/2000/svg" role="img"
-							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><img src="/resources/image/in.jpg" width="200" height="250">
-								<rect width="200" height="250"></rect>
-						</svg>
+					<div class="col-md-4 d-none d-lg-block">
+						<img src="/resources/image/in.jpg"  width="100%" height="100%" style="object-fit: cover;">
 					</div>
 				</div>
 			</div>
 			<div class="col-md-6">
-				<div
-					class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-					<div class="col p-4 d-flex flex-column position-static">
-						<div class="mb-1 text-body-secondary">DRAMA RECOMMEND</div>
+				<div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+					<div class="col-md-8 p-4 d-flex flex-column position-static">
+						<div class="mb-1 text-body-secondary">TODAY'S MOVIE</div>
 						<h5 class="mb-0"><strong>협상의 기술</strong></h5>
 						<br>
-						<p class="mb-auto">This is a wider card with supporting text
-							below as a natural lead-in to additional content.</p>
+						<p class="card-text mb-auto">전설의 협상가로 불리는 대기업의 M&A 전문가와 그 팀들의 기업 간의 인수 합병 체결 프로젝트의 활약상을 담은 드라마</p>
 						
 					</div>
-					<div class="col-auto d-none d-lg-block">
-						<svg class="bd-placeholder-img" width="200" height="250"
-							xmlns="http://www.w3.org/2000/svg" role="img"
-							preserveAspectRatio="xMidYMid slice" focusable="false">
-							<title>Placeholder</title><img src="/resources/image/nego.jpg" width="200" height="250">
-								<rect width="200" height="250"></rect>
-						</svg>
+					<div class="col-md-4 d-none d-lg-block">
+						<img src="/resources/image/nego.jpg"  width="100%" height="100%" style="object-fit: cover;">
 					</div>
 				</div>
 			</div>
