@@ -14,13 +14,13 @@ public class ReviewNestTest extends SampleTestCase{
 	
 	
 	
-	/*
-	 * @Test public void addJsonList() throws Exception {
-	 * 
-	 * int result = nestContentJson.addJsonList();
-	 * 
-	 * assertNotEquals(0, result); }
-	 */
+	
+//	 @Test public void addJsonList() throws Exception {
+//	 
+//	 int result = nestContentJson.addJsonList();
+//	 
+//	  assertNotEquals(0, result); }
+	 
 
 	 
 	

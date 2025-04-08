@@ -21,18 +21,18 @@ public class MovieTest extends SampleTestCase{
 	
 	@Test
 	public void addJsonListTest() throws Exception{
-//		int result = jsonService.addListJson();
-		List<MovieDTO> result = jsonService.addListJson();
+		int result = jsonService.addListJson();
+//		List<MovieDTO> result = jsonService.addListJson();
 		
 //		for(MovieDTO dto : dtos) {
 //			System.out.println(dto.getMovieId());
 //		}
-		assertNotEquals(0, result.size());
+		assertNotEquals(0, result);
 	}
 	
 	//@Test
 	public void init() {
-	    System.out.println("API KEY: " + tmdbApiKey); // 여기에 null 이면 설정 안 된 것
+	    System.out.println("API KEY: " + tmdbApiKey); // �뿬湲곗뿉 null �씠硫� �꽕�젙 �븞 �맂 寃�
 	}
 
 }

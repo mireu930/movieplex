@@ -118,8 +118,14 @@ public class UserController {
 		return "commons/result";
 	}
 	
-	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	@RequestMapping(value = "logout", method=RequestMethod.GET)
 	public String logout(HttpSession session) throws Exception {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	@RequestMapping(value = "kakaologout", method = RequestMethod.GET)
+	public String kakaologout(HttpSession session) throws Exception {
 		String a = "redirect:/";
 		
 		String accessToken = (String) session.getAttribute("accessToken");

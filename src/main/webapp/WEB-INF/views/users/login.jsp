@@ -27,7 +27,7 @@
 	<main>
 		<div class="cover_box">
 			<div class = "form-box login">
-				<h2>login</h2>
+				<h2>로그인</h2>
 					<form action = "./login" method = "post">
 					  <div class="input-box">
 						<div class="input-group has-validation">
@@ -61,7 +61,7 @@
 			</div>
 
 			<div class = "form-box register">
-				<h2>register</h2>
+				<h2>회원가입</h2>
 				<form action = "./join" method = "post" enctype="multipart/form-data">
 					
 					  <div class="input-box">

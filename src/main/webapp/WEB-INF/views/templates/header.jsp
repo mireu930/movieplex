@@ -38,14 +38,24 @@
 				<a class="btn btn-outline-primary px-3 login-btn" href="/users/login">로그인</a>				
 			</c:if>
 			<c:if test="${not empty user and user.userGrade ne 4}">
-				<a class="btn btn-outline-danger px-3 login-btn" href="/users/logout">로그아웃</a>
-				<a class="btn btn-outline-secondary px-3 login-btn" href="/users/mypage">마이페이지</a>
+				<c:if test="${user.sns eq 0}">
+					<a class="btn btn-outline-danger px-3 login-btn" href="/users/logout">로그아웃</a>
+					<a class="btn btn-outline-secondary px-3 login-btn" href="/users/mypage">마이페이지</a>
+				</c:if>
+				<c:if test="${user.sns ne 0}">
+					<a class="btn btn-outline-danger px-3 login-btn" href="/users/kakaologout">로그아웃</a>
+					<a class="btn btn-outline-secondary px-3 login-btn" href="/users/mypage">마이페이지</a>
+				</c:if>
 			</c:if>
 			<c:if test="${not empty user and user.userGrade eq 4}">
-			
-				<a class="btn btn-outline-danger px-3 login-btn" href="/users/logout">로그아웃</a>
-				<a class="btn btn-outline-secondary px-3 login-btn" href="/admin/mainPage">관리자페이지</a>
-				
+				<c:if test="${user.sns eq 0}">
+					<a class="btn btn-outline-danger px-3 login-btn" href="/users/logout">로그아웃</a>
+					<a class="btn btn-outline-secondary px-3 login-btn" href="/admin/mainPage">관리자페이지</a>
+				</c:if>
+				<c:if test="${user.sns ne 0}">
+					<a class="btn btn-outline-danger px-3 login-btn" href="/users/kakaologout">로그아웃</a>
+					<a class="btn btn-outline-secondary px-3 login-btn" href="/admin/mainPage">관리자페이지</a>
+				</c:if>
 			</c:if>
 		</div>
 		

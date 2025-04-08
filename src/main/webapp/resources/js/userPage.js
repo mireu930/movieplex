@@ -20,6 +20,7 @@ function loadUserInfo() {
 		 document.getElementById('mainContents').innerHTML = `
          <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
                 <h2>내 정보</h2>
+                <br>
                 <p><strong>아이디:</strong> ${user.userId}</p>
                 <p><strong>이름:</strong>${user.userName}</p>
                 <p><strong>이메일:</strong>${user.userEmail}</p>
@@ -60,31 +61,50 @@ function loadUserInfo() {
 
 
 function editUserInfo(user){
-
-        document.getElementById("mainContents").innerHTML=`
+  let userHtml = "";
+  userHtml+=`
         <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
             <h2>정보 수정하기</h2>
+            <br>
             <form>
-
                 <input type="hidden" id="userId" name ="userId" value=${user.userId}>
+
                 <div class="mb-3">
-                <label for="userName" class="form-label"><p><strong>이름:</strong></p></label>
-                <input type="text" class="form-label" id="userName" name="userName" value=${user.userName}>
+                <label for="userName" class="form-label"><strong>이름</strong></label>
+                `
+                if(user.sns==0){
+                userHtml+=`
+                <input type="text" class="form-control w-50" id="userName" name="userName" value=${user.userName}>`
+                }else {
+                userHtml+=`
+                <input type="text" class="form-control w-50" id="userName" name="userName" value=${user.userName} readonly>`
+                }
+                userHtml+=`
                 </div>
                 
                  <div class="mb-3">
-                <label for="userEmail" class="form-label"><p><strong>이메일:</strong></p></label>
-                <input type="text" class="form-label" id="userEmail" name="userEmail" value=${user.userEmail}>
+                <label for="userEmail" class="form-label"><strong>이메일</strong></label>
+                `
+                if(user.sns==0){
+                    userHtml+=`
+                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail}>`
+                }else {
+                    userHtml+=`
+                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail} readonly>`
+                }
+                userHtml+=`
                 </div>
 
                  <div class="mb-3">
-                <label for="userPhone" class="form-label"><p><strong>폰번호:</strong></p></label>
-                <input type="text" class="form-label" id="userPhone" name="userPhone" value=${user.userPhone}>
+                <label for="userPhone" class="form-label"><strong>폰번호</strong></label>
+                <input type="text" class="form-control w-50" id="userPhone" name="userPhone" value=${user.userPhone}>
+                  <div class="invalid-feedback" id="userPhoneFeedback"></div>
                 </div>
 
-                 <div class="mb-3">
-                <label for="userPw" class="form-label"><p><strong>비밀번호:</strong></p></label>
-                <input type="password" class="form-label" id="userPw" name="userPw" value=${user.userPw}>
+                <div class="mb-3">
+                <label for="userPw" class="form-label"><strong>비밀번호</strong></label>
+                <input type="password" class="form-control w-50" id="userPw" name="userPw" value=${user.userPw}">
+                   <div class="invalid-feedback" id="userPwFeedback"></div>
                 </div>
 
                 <input type="button" id="savebtn" class="btn btn-success" value="저장">
@@ -92,10 +112,70 @@ function editUserInfo(user){
             </form>
         </div>
         `
+        document.getElementById('mainContents').innerHTML = userHtml;
+
+        let userPw = document.getElementById("userPw");
+        let userPhone = document.getElementById("userPhone");
+        let savebtn = document.getElementById("savebtn");
+
+        const form = document.querySelector("form");
+        const inputs = form.querySelectorAll("input");
+        
+        function isPw(v) {
+            let regex = /^[A-Za-z0-9]{8,12}$/
+            return regex.test(v)
+        }
+
+        userPw.addEventListener('input', ()=>{
+            console.log("input");
+            console.log(userPw.value);
+            let feedback = document.getElementById("userPwFeedback");
+
+         if(isPw(userPw.value)){
+            feedback.style.display = 'none';
+            userPw.classList.remove('is-invalid');
+         } else {
+            feedback.style.display = 'block';
+            feedback.innerHTML = '영문자+숫자 조합 8~12자리로 입력해주세요.';
+            userPw.classList.add('is-invalid');
+         }
+        })
+
+        userPhone.addEventListener('input', (e)=>{
     
+            let feedback = document.getElementById("userPhoneFeedback");
+        
+            let v = e.target.value.replace(/[^0-9]/g, "")
+            .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        
+            console.log(v)
+        
+            e.target.value =v;
+        
+            if(v.length>10){
+                feedback.style.display = 'none';
+                userPhone.classList.remove('is-invalid');
+            } else {
+                feedback.style.display = 'block';
+                feedback.innerHTML='핸드폰번호를입력하세요'
+                userPhone.classList.add('is-invalid');
+            }
+        })
 
-        document.getElementById("savebtn").addEventListener("click",update)
+        function toggleSubmitButton() {
+          let invalidInputs = form.querySelectorAll(".is-invalid");
+          if(invalidInputs.length===0){
+            savebtn.disabled = false;
+          }else{
+             savebtn.disabled = true;
+          }
+        }
 
+        inputs.forEach(input => {
+          input.addEventListener("input", toggleSubmitButton);
+        });
+
+        savebtn.addEventListener("click",update)
         document.getElementById("cancelbtn").addEventListener("click",loadUserInfo)
 }
 
@@ -254,7 +334,7 @@ function loadBookInfo(page=1) {
 
             bookHtml += `
                 <div style="width: 250px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
-                    <img src="${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
+                    <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
                     <div style="padding: 15px;">
                         <h3 style="font-size: 16px; margin: 0 0 10px;">${item.theaterDTO.movieDTO.movieTitle}</h3>
                         <p style="color: #555; font-size: 14px; margin: 0;">예매 날짜:${formattedDate}</p>
@@ -317,7 +397,7 @@ function bookDetail(bookId){
 
         document.getElementById('mainContents').innerHTML=`
             <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
-                <img src="${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
+                <img src="https://image.tmdb.org/t/p/w500${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
                 
                 <div style="padding: 20px; text-align: left;">
                     <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${b.theaterDTO.movieDTO.movieTitle}</h2>
