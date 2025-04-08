@@ -18,11 +18,15 @@
 		SELECT 1 FROM DUAL
 	</insert>
 
-	<select id="getMainList" resultType="MovieDTO">
+	<select id="getMainList" resultType="MovieDTO" >
 		SELECT * FROM (
 		SELECT ROWNUM R, A.*
 		FROM (SELECT * FROM MOVIES ORDER BY POPULARITY DESC) A)
 		WHERE R BETWEEN 1 AND 9
+	</select>
+	
+	<select id="getTotalMovies">
+		SELECT COUNT(*) FROM MOVIES
 	</select>
 	
 	<select id="getMovieTitle" parameterType="MovieDTO" resultType="MovieDTO">
@@ -33,11 +37,11 @@
 		SELECT * FROM MOVIES
 	</select>
 	
-	<select id="getMoviesList" resultType="MovieDTO">
+	<select id="getMoviesList" resultType="MovieDTO" parameterType="MoviesPager">
 		SELECT * from
 		(SELECT ROWNUM, m.* FROM
-		(SELECT * FROM MOVIES) m) r
-		WHERE ROWNUM BETWEEN 1 AND 12
+		(SELECT * FROM MOVIES) m ORDER BY POPULARITY DESC) r
+		WHERE ROWNUM BETWEEN #{startNum} AND #{endNum}
 	</select>
 	
 	<select id="getDetail" parameterType="MovieDTO" resultType="MovieDTO">

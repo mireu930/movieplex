@@ -35,7 +35,7 @@ public class MovieJson{
 	@Value("${tmdb.apiKey}")
 	private String tmdbApiKey;
 
-	public List<MovieDTO> addListJson() throws Exception{
+	public int addListJson() throws Exception{
 
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -123,8 +123,8 @@ public class MovieJson{
 			}
 
 		}
-		return dtos;
-		//return movieDAO.addJsonList(dtos);
+		//return dtos;
+		return movieDAO.addJsonList(dtos);
 	}
 
 	public Long getRuntime(MovieDTO movieDTO) throws Exception{

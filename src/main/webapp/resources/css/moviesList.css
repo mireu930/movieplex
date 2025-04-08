@@ -1,3 +1,71 @@
+/* 타이틀과 검색창을 감싸는 Wrapper */
+.titleWrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Bootstrap 기본 패딩 제거 */
+.titleWrapper .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/* 타이틀 스타일 */
+#title {
+    color: black;
+    font-weight: bolder;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 1.8rem;
+    margin-left: 10px;
+}
+
+/* 검색창 스타일 */
+.input-group {
+    max-width: 300px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.input-group input {
+    border: 1px solid black;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: #888;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+/* 카드 리스트와 타이틀 너비 동일화 */
+.movieListSection {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* 반응형 처리 */
+@media (max-width: 768px) {
+    .titleWrapper .row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    #title, .input-group {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}
+
+
+
+
+
+
+
 .album .movieListSection {
     max-width: 1200px;
 }
