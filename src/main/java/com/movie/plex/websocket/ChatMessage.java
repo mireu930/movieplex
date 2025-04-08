@@ -12,17 +12,6 @@ public class ChatMessage {
 	private Long userNum;
 	
 	private String userId;
-	
-    public ChatMessage() {}
-
-    public ChatMessage(int cmNo, String message, Date createDate, int chatRoomNo, Long userNum, String userId) {
-        this.cmNo = cmNo;
-        this.message = message;
-        this.createDate = createDate;
-        this.chatRoomNo = chatRoomNo;
-        this.userNum = userNum;
-        this.userId = userId;
-    }
 
 	public int getCmNo() {
 		return cmNo;
@@ -71,35 +60,4 @@ public class ChatMessage {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-
-    @Override
-    public String toString() {
-        return "ChatMessage{" +
-                "cmNo=" + cmNo +
-                ", message='" + message + '\'' +
-                ", createDate='" + createDate + '\'' +
-                ", chatRoomNo=" + chatRoomNo +
-                ", userNum=" + userNum +
-                ", userId='" + userId + '\'' +
-                '}';
-    }
-
-    // equals() & hashCode() 오버라이드 (객체 비교 시 필요)
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ChatMessage that = (ChatMessage) o;
-        return cmNo == that.cmNo &&
-                chatRoomNo == that.chatRoomNo &&
-                userNum == that.userNum &&
-                Objects.equals(message, that.message) &&
-                Objects.equals(createDate, that.createDate) &&
-                Objects.equals(userId, that.userId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cmNo, message, createDate, chatRoomNo, userNum, userId);
-    }
 }

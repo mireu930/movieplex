@@ -35,4 +35,20 @@ public class ChatDAO {
 	public int insertMessage(ChatMessage chatMessage) throws Exception {
 		return sqlSession.insert(NAMESPACE+"insertMessage", chatMessage);
 	}
+	
+	public List<ChatRoom> getChatRoomJoin(ChatRoomJoin chatRoomJoin) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"getChatRoomJoin", chatRoomJoin);
+	}
+	
+	public int exitChatRoom(ChatRoomJoin chatRoomJoin) throws Exception {
+		return sqlSession.delete(NAMESPACE+"exitChatRoom", chatRoomJoin);
+	}
+	
+	public int closeChatRoom(ChatRoomJoin chatRoomJoin) throws Exception {
+		return sqlSession.update(NAMESPACE+"closeChatRoom", chatRoomJoin);
+	}
+	
+	public int countChatRoomMember(ChatRoomJoin chatRoomJoin) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"countChatRoomMember", chatRoomJoin);
+	}
 }
