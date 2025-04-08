@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+
 import com.movie.plex.movies.MovieDTO;
 
 public class TheaterDTO {
@@ -14,9 +15,14 @@ public class TheaterDTO {
 	private Long movieId;
 	private Long kind;
 	private MovieDTO movieDTO;
+	private SeatDTO seatDTO;
 	
-	
-	
+	public SeatDTO getSeatDTO() {
+		return seatDTO;
+	}
+	public void setSeatDTO(SeatDTO seatDTO) {
+		this.seatDTO = seatDTO;
+	}
 	public MovieDTO getMovieDTO() {
 		return movieDTO;
 	}
@@ -63,7 +69,7 @@ public class TheaterDTO {
 	}
 	
 	
-	//출력용 getter
+	//異쒕젰�슜 getter
 	
 	public String getPrintStart() {
 		if(theaterStart != null) {
@@ -80,4 +86,25 @@ public class TheaterDTO {
 		
 		return "";
 	}
+	
+	public String getPrintDate() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("yyyy-MM-dd").format(theaterStart);
+		}
+		return "";
+	}
+	public String getTimeStart() {
+		if(theaterStart != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterStart);
+		}
+		return "";
+	}
+	
+	public String getTimeEnd() {
+		if(theaterEnd != null) {
+			return new SimpleDateFormat("HH:mm").format(theaterEnd);
+		}
+		return "";
+	}
+	
 }

@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +34,14 @@ public class HomeController {
 	private NestContentService nestContentService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Model model) throws Exception{
+	public String home(Model model, HttpSession session) throws Exception{
 		logger.info("Welcome home! The client locale is {}.");
 		
 		List<MovieDTO> dtos = movieService.getMainList();
-		//System.out.println(dtos.size());
 		model.addAttribute("topMovieList", dtos);
+		
+		Object user = session.getAttribute("user");
+		model.addAttribute("user", user);
 		return "main";
 	}
 	

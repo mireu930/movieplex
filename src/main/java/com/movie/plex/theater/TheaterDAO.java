@@ -19,7 +19,6 @@ public class TheaterDAO {
 	}
 
 	public List<TheaterDTO> getList(TheaterDTO theaterDTO) throws Exception{
-		
 		return sqlSession.selectList(NAMESPACE + "getList", theaterDTO);
 	}
 	public List<TheaterDTO> getDayList(TheaterDTO theaterDTO)throws Exception{
@@ -38,5 +37,13 @@ public class TheaterDAO {
 	public int deleteTheater(TheaterDTO theaterDTO) {
 		return sqlSession.delete(NAMESPACE + "deleteTheater", theaterDTO);
 		
+	}
+
+	public List<TheaterDTO> getTheaterList(TheaterDTO theaterDTO) {
+		return sqlSession.selectList(NAMESPACE + "getTheaterList", theaterDTO);
+	}
+
+	public TheaterDTO getMovieInfo(Long theaterId) {
+		return sqlSession.selectOne(NAMESPACE + "getMovieInfo", theaterId);
 	}
 }

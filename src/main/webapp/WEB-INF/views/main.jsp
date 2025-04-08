@@ -5,7 +5,6 @@
 
 <html data-bs-theme="light">
 <head>
-<script src="/docs/5.3/assets/js/color-modes.js"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,10 +20,12 @@
 <link rel="stylesheet" href="/resources/css/main.css">
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+
 </head>
 <body>
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
+
 
 		<div id="myCarousel" class="carousel slide mb-6"
 			data-bs-ride="carousel">
@@ -85,7 +86,7 @@
 					<c:forEach items="${topMovieList }" var="top" varStatus="status">
 						<div class="col">
 							<div class="card shadow-sm">
-								<img class="card-img-top" src="https://image.tmdb.org/t/p/w500/${top.shortPoster }">
+								<img class="card-img-top" src="https://image.tmdb.org/t/p/w500${top.shortPoster }">
 								<div class="card-body">
 									<p class="card-text">${top.movieTitle}</p>
 									<div class="d-flex justify-content-between align-items-center">
@@ -108,5 +109,7 @@
 	<c:import url="/WEB-INF/views/templates/footer.jsp"></c:import>
 
 	<c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
+
+	<script src="/docs/5.3/assets/js/color-modes.js"></script>
 </body>
 </html>

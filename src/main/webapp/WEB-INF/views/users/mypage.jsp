@@ -15,6 +15,12 @@
 
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/calendar.css">
+<style>
+	#mainContents {
+	margin: 50px auto;
+    align-items: center;
+}
+</style>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>

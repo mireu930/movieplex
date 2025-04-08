@@ -25,7 +25,17 @@ contents.addEventListener("click", (e) => {
     let kind = target?.getAttribute("data-kind");
     //console.log(e.target.getAttribute("id"));
     if (kind == "user") {
-        mainContents.innerHTML = "";
+        let url = '/admin/userList'
+
+        contents.classList.add("d-flex");
+        mainContents.classList.add("flex-grow-1", "p-4");
+
+        fetch(url)
+        .then(r => r.text())
+        .then(r=>{
+            mainContents.innerHTML = r;
+        })
+ 
     } else if (kind == "movies") {
         mainContents.innerHTML = "";
     } else if (kind == "theater") {
@@ -41,20 +51,167 @@ contents.addEventListener("click", (e) => {
     }
 })
 
+//회원 조회
+
+
+//회원 상세정보
+mainContents.addEventListener("click", (e) => {
+    let target = e.target.closest("td[id='userId']");
+
+    if (target) {
+        let userId = target.textContent.trim();
+
+        fetch(`/admin/userDetail?userId=${userId}`)
+            .then((res) => res.text()) 
+            .then((data) => {
+                mainContents.innerHTML = data;
+            })
+            .catch((error) => console.error(error));
+    }
+});
+
+//회원정보 페이징 처리
+mainContents.addEventListener("click",(e)=>{
+    let page = e.target.closest(".pages");
+
+    if(page){
+        let pageNum = page.getAttribute("data-page-num");
+
+        fetch(`/admin/userList?page=${pageNum}`)
+        .then(r=>r.text())
+        .then(r=>{
+            mainContents.innerHTML = r;
+        })
+    }
+})
+
+//회원정보 검색처리
+mainContents.addEventListener("click",()=>{
+    let list_form = document.getElementById("list_form");
+
+    if(list_form){
+    list_form.addEventListener("submit",(e)=>{
+        e.preventDefault(); //페이지 이동막기
+       
+        let formData = new FormData(e.target);
+        let list = new URLSearchParams(formData).toString();
+        
+        fetch(`/admin/userList?${list}`)
+        .then(r=>r.text())
+        .then(r=>{
+            console.log(r)
+            mainContents.innerHTML = r;
+
+            })
+        })
+    }
+})
+
+//관리자등록
+mainContents.addEventListener("click", (e) => {
+    if (e.target && e.target.id === "adminbtn") {
+        
+        let selectedUserId = document.getElementById("userId")?.textContent.trim(); 
+
+            console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("회원을 선택하세요!");
+                return;
+            }
+
+            let con = confirm("관리자로 등록하시겠습니까?");
+            if (!con) {
+                return; 
+            }
+    
+            fetch(`/admin/adminUpdate?userId=${selectedUserId}`)
+                .then(r => r.text())
+                .then(r => {
+                        alert(r.trim() == '0' ? "이미 관리자입니다." : "관리자로 변경되었습니다.");
+                        location.reload();
+                });
+    }
+});
+
+//영구탈퇴
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "withdrawbtn") {
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        let con = confirm("영구히 탈퇴하시겠습니까?")
+
+        if (!con) {
+            return; 
+        }
+
+        fetch(`/admin/withdraw?userId=${selectedUserId}`)
+        .then(r => r.text())
+        .then(r => {
+                alert(r.trim()=='0'?"실패":"영구탈퇴되었습니다.");
+                location.reload();
+        })
+    }
+})
+
+//입금승인
+mainContents.addEventListener("click",(e)=>{
+    if(e.target.id === "paymentbtn"){
+        let selectedUserId = document.getElementById("userId")?.textContent.trim()
+
+        console.log(selectedUserId);
+            if (!selectedUserId) {
+                alert("회원을 선택하세요!");
+                return;
+            }
+
+            let con = confirm("입금 승인인하시겠습니까?");
+
+            if (!con) {
+                return; 
+            }
+
+        fetch(`/admin/paymentUpdate?userId=test`)
+        .then(r=>r.text())
+        .then(r=>{
+            alert(r.trim()=='0'?"실패":"입금승인되었습니다.");
+            location.reload();
+        })
+    }
+})
+    
+
+
 
 
 //영화 조회
-mainContents.addEventListener("click", (e) => {
-    if (e.target.getAttribute("id") == "fetchScheduleBtn") {
+// mainContents.addEventListener("click", (e) => {
+//     if (e.target.getAttribute("id") == "fetchScheduleBtn") {
+//         const selectedRadio = document.querySelector('input[name="theater"]:checked');
+//         let selectedName = selectedRadio ? selectedRadio.id : "";
+//         let selectedDate = document.getElementById("theaterDate").value;
+//         if (selectedName == "" || selectedDate == "") {
+//             alert("모든 정보를 입력하세요!");
+//             return;
+//         }
+//         const date = `${selectedDate} 00:00:00`;
+//         let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+//         fetch(url)
+//             .then(r => r.text())
+//             .then(r => {
+//                 const scheduleList = document.getElementById("scheduleList");
+//                 scheduleList.innerHTML = r;
+//             })
+//     }
+// })
+let selectedDate = "";
+mainContents.addEventListener("change", (e) => {
+    if (e.target.getAttribute("id") == "theaterDate") {
+        selectedDate = document.getElementById("theaterDate").value;
         const selectedRadio = document.querySelector('input[name="theater"]:checked');
         let selectedName = selectedRadio ? selectedRadio.id : "";
-        let selectedDate = document.getElementById("theaterDate").value;
-        if (selectedName == "" || selectedDate == "") {
-            alert("모든 정보를 입력하세요!");
-            return;
-        }
+
         const date = `${selectedDate} 00:00:00`;
-        let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+        let url = `/theater/getDayList?theaterStart=${date}`;
         fetch(url)
             .then(r => r.text())
             .then(r => {
@@ -66,8 +223,26 @@ mainContents.addEventListener("click", (e) => {
 
 mainContents.addEventListener("change", (e) => {
     if (e.target.name == "theater") {
-        const scheduleList = document.getElementById("scheduleList");
-        scheduleList.innerHTML = "";
+        if (selectedDate == "") {
+            alert("날짜를 선택해주세요");
+             // 현재 클릭한 라디오 버튼 선택 해제
+            const selectedRadio = document.querySelector('input[name="theater"]:checked');
+            if (selectedRadio) {
+                selectedRadio.checked = false;
+            }
+            return;
+        }
+        const selectedRadio = document.querySelector('input[name="theater"]:checked');
+        let selectedName = selectedRadio ? selectedRadio.id : "";
+
+        const date = `${selectedDate} 00:00:00`;
+        let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+        fetch(url)
+            .then(r => r.text())
+            .then(r => {
+                const scheduleList = document.getElementById("scheduleList");
+                scheduleList.innerHTML = r;
+            })
     }
 })
 
@@ -150,13 +325,15 @@ mainContents.addEventListener("click", (e) => {
 
         let selectedDate = document.getElementById("theaterDate").value;
 
-        startDate = formatToTimeStamp(startDate);
-        endDate = formatToTimeStamp(endDate);
-
         if (selectedDate == "" || selectedMovie == "" || selectedName == "" || startTime == "" || endTime == "") {
             alert("모든 정보를 입력하세요");
             return;
         }
+
+        startDate = formatToTimeStamp(startDate);
+        endDate = formatToTimeStamp(endDate);
+
+
 
         const params = new URLSearchParams({
             movieId: selectedMovie,
@@ -173,7 +350,16 @@ mainContents.addEventListener("click", (e) => {
                 if (r * 1 == 1) {
                     alert("상영 정보가 추가 되었습니다.");
 
-                    document.getElementById("fetchScheduleBtn").click();
+                    // document.getElementById("fetchScheduleBtn").click();
+                    const date = `${selectedDate} 00:00:00`;
+                    let url = `/theater/getDayList?theaterStart=${date}&theaterName=${selectedName}`;
+                    fetch(url)
+                        .then(r => r.text())
+                        .then(r => {
+                            const scheduleList = document.getElementById("scheduleList");
+                            scheduleList.innerHTML = r;
+                        })
+
 
                     const resetStart = document.getElementById("startTime");
                     resetStart.value = "";
@@ -239,8 +425,16 @@ function formatToTimeStamp(dateObj) {
 mainContents.addEventListener("click", (e) => {
     if (e.target.getAttribute("id") == "del_btn") {
         const theaterId = e.target.getAttribute("data-theater-id");
-        let url = `/theater/deleteTheater?theaterId=${theaterId}`;
-        fetch(url)
+        let param = new URLSearchParams();
+        param.append("theaterId", theaterId);
+        let url = `/theater/deleteTheater`;
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+            },
+            body: param
+        })
             .then(r => r.text())
             .then(r => {
                 console.log(r);
@@ -257,131 +451,3 @@ mainContents.addEventListener("click", (e) => {
             })
     }
 })
-
-
-//예매하기 할 때 사용할 js admin에서는 필요 없음
-
-//contents.classList.add("d-flex");
-// fetch("/admin/getTheaterPage")
-//     .then(r => r.text())
-//     .then(r => {
-//         let e = document.createAttribute("style");
-//         e.value = "display: flex; gap: 20px; width: 100%;";
-//         mainContents.setAttributeNode(e);
-//         //console.log(r);
-//         mainContents.innerHTML = r;
-//         act();
-
-//     })
-
-
-// let checkMovieId="";
-// let selectedDate="";
-
-// mainContents.addEventListener("click", (e) => {
-//     let clickitem = e.target.closest(".movie-list-group");
-
-//     // list-group-item이 아닌 곳 클릭 시 무시
-//     if (!clickitem || !mainContents.contains(clickitem)) return;
-
-//     mainContents.querySelectorAll(".movie-list-group.active").forEach(item => {
-//         item.classList.remove("active");
-//     })
-
-//     clickitem.classList.add("active");
-
-//     const movieId = clickitem.getAttribute("data-movie-id");
-//     checkMovieId= movieId;
-// })
-
-// mainContents.addEventListener("click", (e)=>{
-//     if(e.target.classList.contains("date")){
-//         //console.log(e.target.innerHTML.substring(0, e.target.innerText.indexOf("일")));
-//         mainContents.querySelectorAll(".date.selected").forEach(item => {
-//             item.classList.remove("selected");
-//         })
-//         e.target.classList.add("selected");
-
-//         const day = parseInt(e.target.innerText.substring(0, e.target.innerText.indexOf("일")));
-//         const selected = new Date(currentYear, currentMonth, day);
-//         const yyyy = selected.getFullYear();
-//         const mm = String(selected.getMonth() + 1).padStart(2,'0');
-//         const dd = String(selected.getDate()).padStart(2,'0');
-//         const formattedDate = `${yyyy}-${mm}-${dd}`;
-
-//         selectedDate = formattedDate;
-
-//         let url = `/theater/getList?movieId=${checkMovieId}&theaterDate=${formattedDate}`
-//         fetch(url)
-//         .then(res => res.text())
-//         .then(res => {
-//             document.getElementById("theaterArea").innerHTML=res
-//         })
-//     }
-// })
-
-
-// //달력 js
-// function act() {
-//     const monthYear = document.getElementById("monthYear");
-//     const calendarDays = document.getElementById("calendarDays");
-//     const prevBtnEl = document.getElementById("prevMonth");
-//     const nextBtnEl = document.getElementById("nextMonth");
-
-
-
-//     const renderCalendar = () => {
-//         calendarDays.innerHTML = "";
-//         const date = new Date(currentYear, currentMonth, 1);
-//         const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-//         monthYear.innerText = `${date.toLocaleString("default", { month: "long" })} ${currentYear}`;
-
-//         for (let i = 1; i <= lastDay; i++) {
-//             const thisDate = new Date(currentYear, currentMonth, i);
-//             const weekday = thisDate.toLocaleDateString("ko-KR", { weekday: "short" });
-
-//             const dayBtn = document.createElement("button");
-//             dayBtn.classList.add("date");
-//             dayBtn.innerText = `${i}일(${weekday})`;
-
-//             // if (
-//             //     i === today.getDate() &&
-//             //     currentMonth === today.getMonth() &&
-//             //     currentYear === today.getFullYear()
-//             // ) {
-//             //     dayBtn.classList.add("today");
-//             // }
-
-//             calendarDays.appendChild(dayBtn);
-//         }
-//     };
-
-//     prevBtnEl.addEventListener("click", () => {
-//         currentMonth--;
-//         if (currentMonth < 0) {
-//             currentMonth = 11;
-//             currentYear--;
-//         }
-//         renderCalendar();
-//     });
-
-//     nextBtnEl.addEventListener("click", () => {
-//         currentMonth++;
-//         if (currentMonth > 11) {
-//             currentMonth = 0;
-//             currentYear++;
-//         }
-//         renderCalendar();
-//     });
-
-//     renderCalendar();
-// }
-
-
-
-
-
-
-
-

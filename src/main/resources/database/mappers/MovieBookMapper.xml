@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.plex.movieBooks.MovieBookDAO">
+	<select id="getSeats" parameterType="Long" resultType="String">
+		SELECT
+		SEAT FROM SEATS WHERE THEATERID = #{theaterId}
+	</select>
+	
+	<select id="getTheaterId" parameterType="Long" resultType="Long">
+		SELECT THEATERID FROM MOVIEBOOKS WHERE BOOKID = #{bookId}
+	</select>
+
+	<insert id="addMovieBook" parameterType="MovieBookDTO">
+		INSERT
+		INTO MOVIEBOOKS(BOOKID, BOOKDATE, USERNUM, THEATERID, NOWSTATUS)
+		VALUES(MOVIEBOOKS_SEQ.NEXTVAL, SYSDATE, #{userNum}, #{theaterId}, 0)
+	</insert>
+	<insert id="addMovieBookBankBook" parameterType="MovieBookDTO">
+		INSERT
+		INTO MOVIEBOOKS(BOOKID, BOOKDATE, USERNUM, THEATERID, NOWSTATUS)
+		VALUES(MOVIEBOOKS_SEQ.NEXTVAL, SYSDATE, #{userNum}, #{theaterId}, 2)
+	</insert>
+
+	<select id="getBookId" parameterType="MovieBookDTO"
+		resultType="Long">
+		SELECT BOOKID
+		FROM (
+		SELECT BOOKID
+		FROM MOVIEBOOKS
+		WHERE USERNUM = #{userNum}
+		AND THEATERID = #{theaterId}
+		AND NOWSTATUS = 0
+		ORDER BY BOOKDATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<select id="getBookIdBankBook" parameterType="MovieBookDTO"
+		resultType="Long">
+		SELECT BOOKID
+		FROM (
+		SELECT BOOKID
+		FROM MOVIEBOOKS
+		WHERE USERNUM = #{userNum}
+		AND THEATERID = #{theaterId}
+		AND NOWSTATUS = 2
+		ORDER BY BOOKDATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+
+	<insert id="addSeat" parameterType="Map">
+		INSERT ALL
+
+		<foreach collection="seat" item="item">
+			INTO SEATS(SEAT, THEATERID, BOOKID)
+			VALUES(#{item},#{theaterId},#{bookId})
+		</foreach>
+		SELECT 1 FROM DUAL <!-- INSERT ALL 할 때 반드시 있어야 한다. -->
+	</insert>
+	
+	<update id="updateNowStatus" parameterType="Long">
+		UPDATE MOVIEBOOKS SET NOWSTATUS = 1 WHERE BOOKID = #{bookId}
+	</update>
+	
+	<!-- delete 관련 -->
+	<delete id="deleteSeat" parameterType="SeatDTO">
+		DELETE SEATS WHERE BOOKID = #{bookId} AND THEATERID = #{theaterId}
+	</delete>
+	
+	
+	<!-- payment 관련 Mapper -->
+	<insert id="addPayment" parameterType="MoviePayments">
+		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
+		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, 100, #{bookId})
+	</insert>
+	<insert id="addPaymentBankBook" parameterType="MoviePayments">
+		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
+		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 0, 100, #{bookId})
+	</insert>
+	<!-- 지금은 테스트라 금액은 100으로 고정 / VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, #{payAmounts}, #{bookId}) -->
+	<select id="getAmounts" parameterType="Long" resultType="java.math.BigDecimal">
+		SELECT PAYAMOUNTS FROM MOVIEPAYMENTS WHERE BOOKID = #{bookId}
+	</select>
+	<delete id="deleteBook" parameterType="Long">
+		DELETE MOVIEPAYMENTS WHERE BOOKID = #{bookId}
+	</delete>
+</mapper>

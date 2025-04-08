@@ -21,6 +21,7 @@ public class MovieService {
 	
 	
 	public List<MovieDTO> getMainList() throws Exception{
+		System.out.println(movieDAO.getMainList().size());
 		return movieDAO.getMainList();
 	}
 	
