@@ -9,8 +9,15 @@ public class ReviewCommentDTO {
 		private Date commentDate;
 		private Long reviewId;
 		private Long userNum;
+		private String userName;
 		
 		
+		public String getUserName() {
+			return userName;
+		}
+		public void setUserName(String userName) {
+			this.userName = userName;
+		}
 		public Long getCommentId() {
 			return commentId;
 		}

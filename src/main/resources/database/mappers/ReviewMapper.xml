@@ -3,6 +3,67 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="ReviewDAO">
+  <mapper namespace="com.movie.plex.review.ReviewDAO">
 	
-  </mapper>
+	<insert id="addReview" parameterType="ReviewDTO">
+    INSERT INTO review (REVIEWID,REVIEWCONTENTS,REVIEWDATE,UPDATEDATE,REVIEWRATE,USERNUM,CONTENTID,KIND)
+    VALUES (
+        REVIEWID_SEQ.NEXTVAL, 
+       #{reviewContents},
+        sysdate, 
+        sysdate, 
+        #{reviewRate, jdbcType=NUMERIC}, 
+        #{userNum},
+        #{contentId, jdbcType=NUMERIC},
+        (SELECT KIND FROM NESTCONTENTS WHERE CONTENTID = #{contentId, jdbcType=NUMERIC})
+	    )
+	</insert>
+	
+
+    <select id="getReviewList" parameterType="map" resultType="ReviewDTO">
+        SELECT * FROM REVIEW
+        WHERE CONTENTID = #{contentId, jdbcType=NUMERIC}
+        AND KIND = #{kind, jdbcType=NUMERIC}
+        ORDER BY REVIEWDATE DESC
+    </select>
+
+	<select id="getReviewDetail" parameterType="Long" resultType="ReviewDTO">
+	   SELECT R.*, U.USERNAME
+		FROM REVIEW R
+		LEFT JOIN USERS U ON R.USERNUM = U.USERNUM
+		WHERE R.REVIEWID = #{reviewId}
+
+	</select>
+	
+	<select id="checkReviewExists" parameterType="ReviewDTO" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM REVIEW 
+	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId, jdbcType=NUMERIC} AND KIND = #{kind}
+	</select>
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

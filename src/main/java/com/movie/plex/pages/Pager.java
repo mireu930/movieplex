@@ -64,29 +64,6 @@ public class Pager {
 		}
 	}
 	
-	public Long getStart() {
-		return start;
-	}
-
-	public void setStart(Long start) {
-		this.start = start;
-	}
-
-	public Long getEnd() {
-		return end;
-	}
-
-	public void setEnd(Long end) {
-		this.end = end;
-	}
-	
-	public Long getStartNum() {
-		return startNum;
-	}
-	
-	public void setStartNum(Long startNum) {
-		this.startNum = startNum;
-	}
 	
 	public Long getLastNum() {
 		return lastNum;
@@ -96,27 +73,6 @@ public class Pager {
 		this.lastNum = lastNum;
 	}
 	
-	public Long getPage() {
-		if(page == null || page <1) {
-			this.page =1L;
-		}
-		return page;
-	}
-	
-	public void setPage(Long page) {
-		this.page = page;
-	}
-	
-	public Long getPerPage() {
-		if(perPage==null|| perPage<1) {
-			this.perPage =5L;
-		}
-		return perPage;
-	}
-	
-	public void setPerPage(Long perPage) {
-		this.perPage = perPage;
-	}
 	
 	public String getKind() {
 		if(this.kind == null) {

@@ -15,9 +15,9 @@
 		<div class="d-flex justify-content-between align-items-center px-4 gap-5 fs-5 fw-bold">
 		    <!-- 왼쪽 메뉴 -->
 		    <ul class="nav d-flex justify-content-center gap-5">
-		        <li><a href="/movies/list" class="nav-link px-2 ">영화</a></li>
+		    	<li><a href="/movies/list" class="nav-link px-2 ">영화</a></li>
 		        <li><a href="/movieBooks/booking" class="nav-link px-2">예매</a></li>
-		        <li><a href="#" class="nav-link px-2">ReviewNest</a></li>
+		        <li><a href="/reviewNest" class="nav-link px-2">ReviewNest</a></li>
 		    </ul>
 		
 		    <!-- 중앙에 위치할 div -->
