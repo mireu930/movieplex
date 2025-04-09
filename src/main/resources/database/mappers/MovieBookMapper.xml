@@ -21,7 +21,7 @@
 	<insert id="addMovieBookBankBook" parameterType="MovieBookDTO">
 		INSERT
 		INTO MOVIEBOOKS(BOOKID, BOOKDATE, USERNUM, THEATERID, NOWSTATUS)
-		VALUES(MOVIEBOOKS_SEQ.NEXTVAL, SYSDATE, #{userNum}, #{theaterId}, 2)
+		VALUES(MOVIEBOOKS_SEQ.NEXTVAL, SYSDATE, #{userNum}, #{theaterId}, 1)
 	</insert>
 
 	<select id="getBookId" parameterType="MovieBookDTO"
@@ -46,7 +46,7 @@
 		FROM MOVIEBOOKS
 		WHERE USERNUM = #{userNum}
 		AND THEATERID = #{theaterId}
-		AND NOWSTATUS = 2
+		AND NOWSTATUS = 1
 		ORDER BY BOOKDATE DESC
 		)
 		WHERE ROWNUM = 1
@@ -71,6 +71,7 @@
 		UPDATE MOVIEBOOKS SET NOWSTATUS = 2 WHERE BOOKID = #{bookId}
 	</update>
 	
+
 	<!-- delete 관련 -->
 	<delete id="deleteSeat" parameterType="SeatDTO">
 		DELETE SEATS WHERE BOOKID = #{bookId} AND THEATERID = #{theaterId}
@@ -80,7 +81,7 @@
 	<!-- payment 관련 Mapper -->
 	<insert id="addPayment" parameterType="MoviePayments">
 		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
-		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, 100, #{bookId})
+		VALUES(#{payId}, 1, 100, #{bookId})
 	</insert>
 	<insert id="addPaymentBankBook" parameterType="MoviePayments">
 		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)

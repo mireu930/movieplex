@@ -22,6 +22,7 @@ public class MovieTest extends SampleTestCase{
 	@Test
 	public void addJsonListTest() throws Exception{
 		int result = jsonService.addListJson();
+
 //		List<MovieDTO> result = jsonService.addListJson();
 		
 //		for(MovieDTO dto : dtos) {

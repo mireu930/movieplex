@@ -1,5 +1,6 @@
 package com.movie.plex.movieBooks;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -46,11 +47,14 @@ public class MovieBookController {
 	public String seatBook(Long theaterId, Model model, HttpSession session) throws Exception{
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		Object user = session.getAttribute("user");
-//		if(user == null) {
-//			System.out.println("�쑀�� �뾾�쓬");
-//			model.addAttribute("result", 0);
-//			return "/commons/ajax";
-//		}
+
+
+		if(user == null) {
+			System.out.println("유저 없음");
+			model.addAttribute("result", 0);
+			return "/commons/ajax";
+		}
+
 		//System.out.println(theaterId);
 		model.addAttribute("theaterDTO", dto);
 		
@@ -75,9 +79,17 @@ public class MovieBookController {
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		UserDTO user = (UserDTO)session.getAttribute("user");
 		List<CouponConnectDTO> coupons = userService.couponList(user);
-		System.out.println("荑좏룿" + coupons.size());
+
+		List<CouponConnectDTO> sendCoupons = new ArrayList<CouponConnectDTO>();
+		for(CouponConnectDTO coupon : coupons) {
+			if(coupon.getUsed() == 0) {
+				sendCoupons.add(coupon);
+			}
+		}
+		System.out.println("쿠폰" + coupons.size());
+
 		model.addAttribute("theaterDTO", dto);
-		model.addAttribute("coupons", coupons);
+		model.addAttribute("coupons", sendCoupons);
 		
 		System.out.println("paymentPage");
 	}

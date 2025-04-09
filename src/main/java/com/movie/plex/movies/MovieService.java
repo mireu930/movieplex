@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.movie.plex.nestcontents.NestContentDTO;
+import com.movie.plex.pages.MoviesPager;
 
 @Service
 public class MovieService {
@@ -33,5 +34,23 @@ public class MovieService {
 	public MovieDTO getMovieTitle(MovieDTO movieDTO) throws Exception{
 		return movieDAO.getMovieTitle(movieDTO);
 	}
+	
+	public List<MovieDTO> getMoviesList(MoviesPager pager) throws Exception{
+		Long total = movieDAO.getTotalMovies(pager);
+		//System.out.println(total);
+		pager.make(total);
+		
+		pager.makeNum();
+		List<MovieDTO> dtos = movieDAO.getMoviesList(pager);
+		System.out.println("startNum" + pager.getStartNum());
+		System.out.println("endNum" + pager.getEndNum());
+		System.out.println("start" + pager.getStart());
+		System.out.println("end" + pager.getEnd());
+		return dtos;
+	}
 
+
+	public MovieDTO getDetail(MovieDTO movieDTO) throws Exception{
+		return movieDAO.getDetail(movieDTO);
+	}
 }

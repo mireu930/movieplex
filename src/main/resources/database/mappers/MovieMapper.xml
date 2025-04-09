@@ -8,7 +8,8 @@
 		INSERT ALL
 		<foreach collection="list" item="item">
 			INTO MOVIES
-			(MOVIEID, MOVIETITLE,SHORTPOSTER,LONGPOSTER, VIDEO, RELEASEDATE, OVERVIEW,
+			(MOVIEID,
+			MOVIETITLE,SHORTPOSTER,LONGPOSTER, VIDEO, RELEASEDATE, OVERVIEW,
 			POPULARITY, TICKETPRICE, MOVIECHECK)
 			VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster,
 			jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.video,
@@ -21,16 +22,45 @@
 	<select id="getMainList" resultType="MovieDTO">
 		SELECT * FROM (
 		SELECT ROWNUM R, A.*
-		FROM (SELECT * FROM MOVIES ORDER BY POPULARITY DESC) A)
+		FROM (SELECT * FROM MOVIES ORDER BY POPULARITY
+		DESC) A)
 		WHERE R BETWEEN 1 AND 9
 	</select>
-	
-	<select id="getMovieTitle" parameterType="MovieDTO" resultType="MovieDTO">
-		SELECT MOVIETITLE FROM MOVIES m WHERE MOVIEID = #{movieId} 
+
+
+
+	<select id="getMovieTitle" parameterType="MovieDTO"
+		resultType="MovieDTO">
+		SELECT MOVIETITLE FROM MOVIES m WHERE MOVIEID = #{movieId}
 	</select>
-	
+
 	<select id="getList" resultType="MovieDTO">
 		SELECT * FROM MOVIES
+	</select>
+
+	<select id="getTotalMovies" parameterType="MoviesPager"
+		resultType="Long">
+		SELECT COUNT(*) FROM MOVIES WHERE MOVIETITLE LIKE
+		'%'||#{search}||'%'
+	</select>
+
+	<select id="getMoviesList" parameterType="MoviesPager"
+		resultType="MovieDTO">
+		SELECT *
+		FROM (
+		SELECT ROWNUM AS RN, m.*
+		FROM (
+		SELECT * FROM MOVIES
+		WHERE MOVIETITLE LIKE '%' || #{search} || '%'
+		ORDER BY POPULARITY DESC
+		) m
+		) r
+		WHERE r.RN BETWEEN #{startNum} AND #{endNum}
+	</select>
+
+	<select id="getDetail" parameterType="MovieDTO"
+		resultType="MovieDTO">
+		SELECT * FROM MOVIES WHERE MOVIEID = #{movieId}
 	</select>
 
 </mapper>

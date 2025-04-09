@@ -31,13 +31,15 @@ public class MovieBookService {
 		return movieBookDAO.getSeats(theaterId);
 	}
 
-	public Long movieBookCard(List<String> seat, Long theaterId, UserDTO userDTO, Long totalPrice) throws Exception{
+	public Long movieBookCard(List<String> seat, Long theaterId, UserDTO userDTO, Long totalPrice, String merchant) throws Exception{
+		//예매 내역 저장
 		MovieBookDTO movieBookDTO = new MovieBookDTO();
 		movieBookDTO.setTheaterId(theaterId);
 		movieBookDTO.setUserNum(userDTO.getUserNum());
 		Long bookId = 0L;
 		int result = movieBookDAO.addMovieBook(movieBookDTO);
 		if(result > 0) {
+			//좌석 추가
 			bookId = movieBookDAO.getBookId(movieBookDTO);
 			System.out.println("�셿猷�:" + bookId);
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -46,11 +48,18 @@ public class MovieBookService {
 			map.put("bookId", bookId);
 			
 			result = movieBookDAO.addSeat(map);
-			System.out.println("醫뚯꽍 異붽� �셿猷�:" + result);
+
+	
+
+			System.out.println("좌석 추가 완료:" + result);
+			
+			//결제 내역 저장
+
 			if(result > 0) {
 				MoviePayments dto = new MoviePayments();
 				dto.setBookId(bookId);
 				dto.setPayAmounts(totalPrice);
+				dto.setPayId(Long.parseLong(merchant));
 				System.out.println(totalPrice);
 				result = movieBookDAO.addPayment(dto);
 			}
@@ -62,6 +71,7 @@ public class MovieBookService {
 		return movieBookDAO.getAmounts(bookId);
 	}
 
+
 	public int updateNowStatus(Long bookId) throws Exception{
 		return movieBookDAO.updateNowStatus(bookId);
 		
@@ -70,6 +80,7 @@ public class MovieBookService {
 	public int bookRefund(MovieBookDTO movieBookDTO) throws Exception {
 		return movieBookDAO.bookRefund(movieBookDTO);
 	}
+
 
 	public Map<String, Object> bookSuccessPage(Long bookId) throws Exception{
 		Long theaterId = movieBookDAO.getTheaterId(bookId);

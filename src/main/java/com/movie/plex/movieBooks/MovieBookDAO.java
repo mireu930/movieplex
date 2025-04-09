@@ -62,6 +62,7 @@ public class MovieBookDAO {
 		return sqlSession.update(NAMESPACE+"bookRefund", movieBookDTO);
 	}
 
+
 	public Long getTheaterId(Long bookId) throws Exception{
 		return sqlSession.selectOne(NAMESPACE + "getTheaterId", bookId);
 	}

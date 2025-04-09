@@ -6,6 +6,7 @@
 <head>
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 <script src="/docs/5.3/assets/js/color-modes.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -38,9 +39,21 @@
 								<div class="card-body">
 									<p class="card-text">${content.contentTitle}</p>
 									<div class="d-flex justify-content-end">
-										<button id="likeButton" data-usernum=" ${userNum}" data-contentid=" ${contentId}" data-kind="0">
-										    <span class="heart-icon">🤍 </span>
-										</button>
+										<button class="like-button"
+									        data-usernum="${userNum}"
+									        data-contentid="${content.contentId}"
+									        data-kind="0">
+									    <span class="heart-icon">
+									        <c:choose>
+									            <c:when test="${likedContentIds != null && likedContentIds.contains(content.contentId)}">
+									                ❤️
+									            </c:when>
+									            <c:otherwise>
+									                🤍
+									            </c:otherwise>
+									        </c:choose>
+									    </span>
+									</button>
 									</div>
 									<div class="d-flex justify-content-between align-items-center">
 									</div>
@@ -94,6 +107,49 @@
 <c:import url="/WEB-INF/views/templates/boot_js.jsp"></c:import>
 
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
-<script src="/resources/js/toggleLike.js"></script>
+<script>
+$(document).ready(function () {
+    $(".like-button").click(function () {
+        const button = $(this);
+        const userNum = button.data("usernum");
+        const contentId = button.data("contentid");
+        const kind = button.data("kind");
+        
+        console.log("🧪 리뷰 좋아요 클릭됨");
+	      console.log("contentId:", contentId);
+	      console.log("userNum:", userNum);
+	      console.log("kind:", kind); 
+
+        // 로그인 안했을 경우 처리
+        if (!userNum) {
+            alert("로그인이 필요합니다.");
+            location.href = "/users/login";
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/reviewNest/toggleLike",
+            contentType: "application/json",
+            data: JSON.stringify({
+                userNum: userNum,
+                contentId: contentId,
+                kind: kind
+            }),
+            success: function (res) {
+                const icon = button.find(".heart-icon");
+                if (res.liked) {
+                    icon.text("❤️");
+                } else {
+                    icon.text("🤍");
+                }
+            },
+            error: function () {
+                alert("좋아요 처리 중 오류가 발생했습니다.");
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
