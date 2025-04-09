@@ -12,10 +12,13 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>Album example · Bootstrap v5.3</title>
+<title>MoviePlex</title>
+
+<link href="/resources/image/movieplex_title.png" rel="shortcut icon"
+	type="image/x-icon">
 
 <link rel="stylesheet" href="/resources/css/main.css">
-
+<link rel="stylesheet" href="/resources/css/movieDetail.css">
 <c:import url="/WEB-INF/views/templates/boot_css.jsp"></c:import>
 </head>
 <body>
@@ -23,17 +26,31 @@
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
 	<main>
 
-		<section class="py-5 text-center container">
-			<div class="row py-lg-5">
-				<div class="col-lg-6 col-md-8 mx-auto">
-					<img src="https://image.tmdb.org/t/p/w500${movieDTO.longPoster }">
+		<div class="movie-detail-wrapper">
+			<div class="movie-hero-section">
+				<div class="movie-info-section">
+					<div class="movie-info">
+						<h4 class="movie-title">${movieDTO.movieTitle }</h4>
+					</div>
+					<div class="movie-poster">
+						<img src="https://image.tmdb.org/t/p/w500${movieDTO.shortPoster}"
+							alt="포스터">
+						<button class="reserve-button">예매</button>
+					</div>
+				</div>
+				<img class="movie-bg"
+					src="https://image.tmdb.org/t/p/original${movieDTO.longPoster}"
+					alt="배경 이미지">
+			</div>
+
+			<div class="movie-summary-section">
+				<div class="movie-summary">
+					<h3>주요정보</h3>
+					<p>${movieDTO.overView}</p>
 				</div>
 			</div>
-		</section>
-
-		<div class="album py-5 bg-body-tertiary">
-			
 		</div>
+
 
 	</main>
 	<!-- footer -->

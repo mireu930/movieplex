@@ -70,7 +70,7 @@
 									<p class="card-text text-center movie-title">${m.movieTitle}</p>
 									<div
 										class="d-flex justify-content-between align-items-center mt-auto">
-										<button type="button" class="btn btn-sm btn-outline-primary">예매</button>
+										<button type="button" id="bookBtn" class="btn btn-sm btn-outline-primary">예매</button>
 									</div>
 								</div>
 							</div>
