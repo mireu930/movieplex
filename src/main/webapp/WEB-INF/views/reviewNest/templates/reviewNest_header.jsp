@@ -23,11 +23,11 @@
 				</c:if>
 				<c:if test="${not empty user}">
 					<c:if test="${user.sns eq 0 }">
-						<li><a href="/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
+						<li><a href="users/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
 						<li><a class="nav-link px-2 link-secondary" href="/reviewNest/logout">로그아웃</a></li>					
 					</c:if>
 					<c:if test="${user.sns ne 0 }">
-						<li><a href="/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
+						<li><a href="users/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
 						<li><a class="nav-link px-2 link-secondary" href="/reviewNest/kakaologout">로그아웃</a></li>					
 					</c:if>					
 				</c:if>
