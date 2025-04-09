@@ -90,15 +90,15 @@ public class UserDAO {
 		return sqlSession.selectList(NAMESPACE+"paymentList", pager);
 	}
 	
-	public Long paymentTotalCount() throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"paymentTotalCount");
+	public Long paymentTotalCount(UserDTO userDTO) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"paymentTotalCount", userDTO);
 	}
 	
 	public int paymentUpdate(UserDTO userDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"paymentUpdate", userDTO);
 	}
 	
-	public List<UserDTO> bookList(Pager pager) throws Exception {
+	public List<MovieBookDTO> bookList(Pager pager) throws Exception {
 		return sqlSession.selectList(NAMESPACE+"bookList", pager);
 	}
 	

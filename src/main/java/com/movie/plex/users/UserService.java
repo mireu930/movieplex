@@ -104,8 +104,9 @@ public class UserService {
 		return userDAO.reviewDetail(reviewDTO);
 	}
 	
-	public List<UserDTO> paymentList(Pager pager) throws Exception {
-		Long paymentTotalCount = userDAO.paymentTotalCount();
+	public List<UserDTO> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+		userDTO = (UserDTO)session.getAttribute("user");
+		Long paymentTotalCount = userDAO.paymentTotalCount(userDTO);
 		
 		pager.makeNum();
 		pager.makePage(paymentTotalCount);
@@ -117,7 +118,7 @@ public class UserService {
 		return userDAO.paymentUpdate(userDTO);
 	}
 	
-	public List<UserDTO> bookList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
+	public List<MovieBookDTO> bookList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
 		 userDTO = (UserDTO)session.getAttribute("user");
 		
 		Long bookTotalCount = userDAO.bookTotalCount(userDTO);

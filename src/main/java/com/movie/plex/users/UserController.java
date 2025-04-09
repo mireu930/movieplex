@@ -306,7 +306,7 @@ public class UserController {
 	public Map<String, Object> paymentList(Pager pager, UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.paymentList(pager);
+		List<UserDTO> list = userService.paymentList(pager, userDTO, session);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -321,7 +321,7 @@ public class UserController {
 	public Map<String, Object> bookList(Pager pager,UserDTO userDTO, HttpSession session) throws Exception {
 		userDTO = (UserDTO)session.getAttribute("user");
 		pager.setUserDTO(userDTO);
-		List<UserDTO> list = userService.bookList(pager, userDTO, session);
+		List<MovieBookDTO> list = userService.bookList(pager, userDTO, session);
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		System.out.println("List:"+list.size());

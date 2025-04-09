@@ -380,7 +380,7 @@ function loadBookInfo(page=1) {
             });
 
             bookHtml += `
-                <div style="width: 250px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
+                <div style="width: 200px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
                     <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
                     <div style="padding: 15px;">
                         <h3 style="font-size: 16px; margin: 0 0 10px;">${item.theaterDTO.movieDTO.movieTitle}</h3>
@@ -553,12 +553,18 @@ function loadReview(page=1) {
                     </tr>
                 </thead>`
         r.list.forEach(item=>{
+            const timestamp = parseInt(item.reviewDate);
+            const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
             reviewHtml += `
    
                 <tbody>
                         <tr style="background-color: #f9f9f9;">
                             <td style="padding: 10px; border-bottom: 1px solid #ddd; cursor: pointer;" onclick="reviewDetail(${item.reviewId})">${item.reviewContents}</td>
-                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.reviewDate}</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${formattedDate}</td>
                         </tr>
                 </tbody>
             `
@@ -613,6 +619,12 @@ function reviewDetail(reviewId) {
     fetch(`/users/reviewDetail?reviewId=${reviewId}`)
     .then(r=>r.json())
     .then(r=>{
+        const timestamp = parseInt(r.reviewDate);
+        const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        });
         
         document.getElementById('mainContents').innerHTML=`
           
@@ -625,7 +637,7 @@ function reviewDetail(reviewId) {
 			          <th scope="col">종류</th>
 			        </tr>
 			        <tr style="background-color: #f9f9f9;">
-			          <td>${r.reviewDate}</td>
+			          <td>${formattedDate}</td>
 			          <td>${r.reviewRate}</td>
 			          <td>${r.contentId}</td>
 			          <td>${r.kind}</td>
