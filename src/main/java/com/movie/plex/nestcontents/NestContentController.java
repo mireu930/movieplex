@@ -20,7 +20,9 @@ import com.movie.plex.pages.Pager;
 import com.movie.plex.pages.ReviewPager;
 import com.movie.plex.review.ReviewDTO;
 import com.movie.plex.review.ReviewService;
+import com.movie.plex.users.KakaoApi;
 import com.movie.plex.users.UserDTO;
+import com.movie.plex.users.UserService;
 
 	@Controller
 	public class NestContentController {
@@ -33,6 +35,10 @@ import com.movie.plex.users.UserDTO;
 		private ReviewService reviewService;
 		@Autowired
 		private ReviewLikeService reviewLikeService;
+		@Autowired
+		private KakaoApi kakaoApi;
+		@Autowired
+		private UserService userService;
 		  
 		@RequestMapping(value="/reviewNest/getMovieList", method=RequestMethod.GET)
 		public String getMovieList(Model model, ReviewPager pager, HttpSession session) throws Exception {
@@ -48,7 +54,7 @@ import com.movie.plex.users.UserDTO;
 	        	Long userNum = user.getUserNum();  
 	            Long kind = 0L;  
 	            
-	            // 해당 유저가 좋아요 누른 영화 콘텐츠 목록 조회
+	            // �빐�떦 �쑀��媛� 醫뗭븘�슂 �늻瑜� �쁺�솕 肄섑뀗痢� 紐⑸줉 議고쉶
 	            List<Long> likedContentIds = contentsLikeService.getLikedContentsIds(userNum, kind);
 	            model.addAttribute("likedContentIds", likedContentIds);
 	            model.addAttribute("userNum", user.getUserNum());
@@ -71,7 +77,7 @@ import com.movie.plex.users.UserDTO;
 	        	Long userNum = user.getUserNum();  
 	            Long kind = 1L;  
 	            
-	            // 해당 유저가 좋아요 누른 영화 콘텐츠 목록 조회
+	            // �빐�떦 �쑀��媛� 醫뗭븘�슂 �늻瑜� �쁺�솕 肄섑뀗痢� 紐⑸줉 議고쉶
 	            List<Long> likedContentIds = contentsLikeService.getLikedContentsIds(userNum, kind);
 	            model.addAttribute("likedContentIds", likedContentIds);
 	            model.addAttribute("userNum", user.getUserNum());
@@ -93,15 +99,16 @@ import com.movie.plex.users.UserDTO;
 			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId);
 			 model.addAttribute("reviewList", reviewList);
 			 
+
 			  
-			// 3. 로그인 유저 정보
+			// 3. 濡쒓렇�씤 �쑀�� �젙蹂�
 			  UserDTO user = (UserDTO) session.getAttribute("user");
 			  Long userNum = null;
 			  if (user != null) {
 			      userNum = user.getUserNum();
 			  }
 			   
-			    // 4. 로그인 유저가 좋아요 누른 리뷰 ID 목록 가져오기 (kind = 0: 영화)
+			    // 4. 濡쒓렇�씤 �쑀��媛� 醫뗭븘�슂 �늻瑜� 由щ럭 ID 紐⑸줉 媛��졇�삤湲� (kind = 0: �쁺�솕)
 			    List<Long> likedReviewIds = new ArrayList<Long>();
 			    if (userNum != null) {
 			        likedReviewIds = reviewLikeService.getLikedReviewIds(userNum, 0L);
@@ -119,18 +126,19 @@ import com.movie.plex.users.UserDTO;
 			NestContentDTO tvdetail = nestContentService.getTvDetail(contentId);
 			 model.addAttribute("content", tvdetail);
 			 
-			// 2. 리뷰 목록 가져오기
+
 			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId);
+
 			 model.addAttribute("reviewList", tvdetail.getReviewList());
 			 
-			// 3. 로그인 유저 정보
+			// 3. 濡쒓렇�씤 �쑀�� �젙蹂�
 			  UserDTO user = (UserDTO) session.getAttribute("user");
 			  Long userNum = null;
 			  if (user != null) {
 			      userNum = user.getUserNum();
 			  }
 			   
-			    // 4. 로그인 유저가 좋아요 누른 리뷰 ID 목록 가져오기 
+			    // 4. 濡쒓렇�씤 �쑀��媛� 醫뗭븘�슂 �늻瑜� 由щ럭 ID 紐⑸줉 媛��졇�삤湲� 
 			    List<Long> likedReviewIds = new ArrayList<Long>();
 			    if (userNum != null) {
 			        likedReviewIds = reviewLikeService.getLikedReviewIds(userNum, 1L);
@@ -143,15 +151,60 @@ import com.movie.plex.users.UserDTO;
 		}
 		
 		
+		@RequestMapping(value = "/reviewNest/login", method = RequestMethod.GET)
+		public String getLogin(Model model) throws Exception {
+			model.addAttribute("kakaoApi", kakaoApi.getKakaoApi());
+			model.addAttribute("redirectUrl2", kakaoApi.getKakaoRedirectUrl2());
+			return "/reviewNest/login";
+		}
 		
 		
 		
+		@RequestMapping(value = "/reviewNest/login", method = RequestMethod.POST)
+		public String getLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
+			userDTO = userService.getLogin(userDTO);
+			
+			if(userDTO != null) {
+				 if (userDTO.getUserOut() == 1) {
+					// 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+			            model.addAttribute("result", "비활성화된 계정입니다 관리자에게 문의하세요.");
+			            model.addAttribute("path", "./login");
+			            return "commons/result";  // 비활성화된 사용자 메시지 출력
+			        }else {
+			        	session.setAttribute("user", userDTO);
+			        	
+			        	return "redirect:/reviewNest";
+			        }
+			}
+			
+			model.addAttribute("result", "로그인 실패");
+			model.addAttribute("path", "./login");
+			
+			
+			return "commons/result";
+		}
 		
+		@RequestMapping(value = "/reviewNest/logout", method=RequestMethod.GET)
+		public String logout(HttpSession session) throws Exception {
+			session.invalidate();
+			return "redirect:/reviewNest";
+		}
 		
-		
-		
-		
-		
+		@RequestMapping(value = "/reviewNest/kakaologout", method = RequestMethod.GET)
+		public String kakaologout(HttpSession session) throws Exception {
+			String a = "redirect:/reviewNest";
+			
+			String accessToken = (String) session.getAttribute("accessToken");
+
+		    if (accessToken != null) {
+		        kakaoApi.kakaoLogout(accessToken);
+		        session.removeAttribute("accessToken");
+		        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/reviewNest/login";
+		        a = "redirect:"+kakaoUrl;
+		    }
+		    session.invalidate();
+			return a;
+		}
 		
 	}
 	

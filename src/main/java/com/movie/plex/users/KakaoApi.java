@@ -26,7 +26,16 @@ public class KakaoApi {
 	private String kakaoApi;
 //	@Value("${kakao.redirect_url}")
 	private String kakaoRedirectUrl;
+	private String kakaoRedirectUrl2;
 	
+	public String getKakaoRedirectUrl2() {
+		return kakaoRedirectUrl2;
+	}
+
+	public void setKakaoRedirectUrl2(String kakaoRedirectUrl2) {
+		this.kakaoRedirectUrl2 = kakaoRedirectUrl2;
+	}
+
 	public String getKakaoApi() {
 		return kakaoApi;
 	}
@@ -65,6 +74,62 @@ public class KakaoApi {
 	        sb.append("grant_type=authorization_code");
 	        sb.append("&client_id=").append(kakaoApi);
 	        sb.append("&redirect_uri=").append(kakaoRedirectUrl);
+	        sb.append("&code=").append(code);
+
+	        bw.write(sb.toString());
+	        bw.flush();
+
+	        int responseCode = conn.getResponseCode();
+	        log.info("[KakaoApi.getAccessToken] responseCode = {}", responseCode);
+
+	        BufferedReader br;
+	        if (responseCode >= 200 && responseCode < 300) {
+	            br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        } else {
+	            br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+	        }
+
+	        String line = "";
+	        StringBuilder responseSb = new StringBuilder();
+	        while((line = br.readLine()) != null){
+	            responseSb.append(line);
+	        }
+	        String result = responseSb.toString();
+	        log.info("responseBody = {}", result);
+
+	        JsonParser parser = new JsonParser();
+	        JsonElement element = parser.parse(result);
+	        accessToken = element.getAsJsonObject().get("access_token").getAsString();
+	        refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+
+	        br.close();
+	        bw.close();
+	    }catch (Exception e){
+	        e.printStackTrace();
+	    }
+	    return accessToken;
+	}
+	
+	public String getAccessToken2(String code) {
+		String accessToken = "";
+	    String refreshToken = "";
+	    String reqUrl = "https://kauth.kakao.com/oauth/token";
+
+	    try{
+	        URL url = new URL(reqUrl);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        
+	        //필수 헤더 세팅
+	        conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+	        conn.setDoOutput(true); //OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
+
+	        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+	        StringBuilder sb = new StringBuilder();
+	        
+	        //필수 쿼리 파라미터 세팅
+	        sb.append("grant_type=authorization_code");
+	        sb.append("&client_id=").append(kakaoApi);
+	        sb.append("&redirect_uri=").append(kakaoRedirectUrl2);
 	        sb.append("&code=").append(code);
 
 	        bw.write(sb.toString());

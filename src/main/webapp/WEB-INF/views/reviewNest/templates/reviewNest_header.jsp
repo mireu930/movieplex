@@ -19,11 +19,17 @@
 		<div class="col-6 d-flex justify-content-end align-items-center gap-3 me-4" >
 			<ul class="nav gap-4">
 				<c:if test="${empty user}">
-				<li><a class="btn btn-sm btn-outline-secondary" href="/users/login">로그인</a></li>
+				<li><a class="btn btn-sm btn-outline-secondary" href="/reviewNest/login">로그인</a></li>
 				</c:if>
 				<c:if test="${not empty user}">
-				<li><a href="/users/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
-				<li><a class="nav-link px-2 link-secondary" href="/users/logout">로그아웃</a></li>
+					<c:if test="${user.sns eq 0 }">
+						<li><a href="users/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
+						<li><a class="nav-link px-2 link-secondary" href="/reviewNest/logout">로그아웃</a></li>					
+					</c:if>
+					<c:if test="${user.sns ne 0 }">
+						<li><a href="users/reviewNest/nestMypage" class="nav-link px-2 link-secondary">마이페이지</a></li>
+						<li><a class="nav-link px-2 link-secondary" href="/reviewNest/kakaologout">로그아웃</a></li>					
+					</c:if>					
 				</c:if>
 			</ul>
 		</div>
