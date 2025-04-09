@@ -39,14 +39,14 @@ public class MovieBookService {
 		int result = movieBookDAO.addMovieBook(movieBookDTO);
 		if(result > 0) {
 			bookId = movieBookDAO.getBookId(movieBookDTO);
-			System.out.println("완료:" + bookId);
+			System.out.println("�셿猷�:" + bookId);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("seat", seat);
 			map.put("theaterId", theaterId);
 			map.put("bookId", bookId);
 			
 			result = movieBookDAO.addSeat(map);
-			System.out.println("좌석 추가 완료:" + result);
+			System.out.println("醫뚯꽍 異붽� �셿猷�:" + result);
 			if(result > 0) {
 				MoviePayments dto = new MoviePayments();
 				dto.setBookId(bookId);
@@ -65,6 +65,10 @@ public class MovieBookService {
 	public int updateNowStatus(Long bookId) throws Exception{
 		return movieBookDAO.updateNowStatus(bookId);
 		
+	}
+	
+	public int bookRefund(MovieBookDTO movieBookDTO) throws Exception {
+		return movieBookDAO.bookRefund(movieBookDTO);
 	}
 
 	public Map<String, Object> bookSuccessPage(Long bookId) throws Exception{
@@ -97,14 +101,14 @@ public class MovieBookService {
 		int result = movieBookDAO.addMovieBookBankBook(movieBookDTO);
 		if(result > 0) {
 			bookId = movieBookDAO.getBookIdBankBook(movieBookDTO);
-			System.out.println("완료:" + bookId);
+			System.out.println("�셿猷�:" + bookId);
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("seat", seat);
 			map.put("theaterId", theaterId);
 			map.put("bookId", bookId);
 			
 			result = movieBookDAO.addSeat(map);
-			System.out.println("좌석 추가 완료:" + result);
+			System.out.println("醫뚯꽍 異붽� �셿猷�:" + result);
 			if(result > 0) {
 				MoviePayments dto = new MoviePayments();
 				dto.setBookId(bookId);

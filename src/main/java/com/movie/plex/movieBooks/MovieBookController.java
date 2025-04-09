@@ -47,7 +47,7 @@ public class MovieBookController {
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		Object user = session.getAttribute("user");
 //		if(user == null) {
-//			System.out.println("유저 없음");
+//			System.out.println("�쑀�� �뾾�쓬");
 //			model.addAttribute("result", 0);
 //			return "/commons/ajax";
 //		}
@@ -63,10 +63,10 @@ public class MovieBookController {
 		List<String> seats = bookService.getSeats(theaterId);
 //		ObjectMapper objectMapper = new ObjectMapper();
 //		return objectMapper.writeValueAsString(seats);
-		//java에서 json으로 변환하는 방법
-		//1. ObjectMapper를 사용한다. => String으로 반환 => JS에서 .text()로 받아야함
-		//2. 그냥 직접 반환한다(@ResonseBody를 쓰면 스프링이 자동으로 json으로 변환해줌) 
-		//         => Json으로 반환 => .json()으로 받아야함
+		//java�뿉�꽌 json�쑝濡� 蹂��솚�븯�뒗 諛⑸쾿
+		//1. ObjectMapper瑜� �궗�슜�븳�떎. => String�쑝濡� 諛섑솚 => JS�뿉�꽌 .text()濡� 諛쏆븘�빞�븿
+		//2. 洹몃깷 吏곸젒 諛섑솚�븳�떎(@ResonseBody瑜� �벐硫� �뒪�봽留곸씠 �옄�룞�쑝濡� json�쑝濡� 蹂��솚�빐以�) 
+		//         => Json�쑝濡� 諛섑솚 => .json()�쑝濡� 諛쏆븘�빞�븿
 		return seats;
 	}
 	
@@ -75,7 +75,7 @@ public class MovieBookController {
 		TheaterDTO dto = bookService.getMovieInfo(theaterId);
 		UserDTO user = (UserDTO)session.getAttribute("user");
 		List<CouponConnectDTO> coupons = userService.couponList(user);
-		System.out.println("쿠폰" + coupons.size());
+		System.out.println("荑좏룿" + coupons.size());
 		model.addAttribute("theaterDTO", dto);
 		model.addAttribute("coupons", coupons);
 		

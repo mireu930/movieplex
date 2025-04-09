@@ -67,6 +67,10 @@
 		UPDATE MOVIEBOOKS SET NOWSTATUS = 1 WHERE BOOKID = #{bookId}
 	</update>
 	
+	<update id="bookRefund" parameterType="MovieBookDTO">
+		UPDATE MOVIEBOOKS SET NOWSTATUS = 2 WHERE BOOKID = #{bookId}
+	</update>
+	
 	<!-- delete 관련 -->
 	<delete id="deleteSeat" parameterType="SeatDTO">
 		DELETE SEATS WHERE BOOKID = #{bookId} AND THEATERID = #{theaterId}

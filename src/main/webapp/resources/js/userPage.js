@@ -434,28 +434,81 @@ function bookDetail(bookId){
     .then(r=>r.json())
     .then(b=>{
         console.log(b)
+        let bookHtml = '';
 
-        const timestamp = parseInt(b.bookDate);
-            const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
+        
+        bookHtml +=`
+        <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">`
+        b.list.forEach(item => {
+            
+            const timestamp = parseInt(item.bookDate);
+                const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
 
-        document.getElementById('mainContents').innerHTML=`
-            <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
-                <img src="https://image.tmdb.org/t/p/w500${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
-                
-                <div style="padding: 20px; text-align: left;">
-                    <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${b.theaterDTO.movieDTO.movieTitle}</h2>
+               bookHtml +=`  <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.longPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
+                 
+                 <div style="padding: 20px; text-align: left;">
+                     <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${item.theaterDTO.movieDTO.movieTitle}</h2>
+ 
+                     <p style="margin: 5px 0;"><strong>영화관:</strong> ${item.theaterDTO.theaterName}</p>
+                     <p style="margin: 5px 0;"><strong>좌석:</strong>
+                     `
+                     item.theaterDTO.seatDTO.forEach(s=>{
+                         bookHtml+=`${s.seat},`
+                        })
+                    bookHtml=bookHtml.slice(0,-1);
+                    bookHtml=bookHtml.replace(/,\s*$/,'');
+                        
+                     bookHtml+=`
+                     </p>
+                     <p style="margin: 5px 0;"><strong>날짜:</strong> ${formattedDate}</p>
+ 
+             </div>
+         `
+         bookHtml +='<input type="button" id="refundbtn" class="btn btn-success" value="환불"/>'
+         ;
+           })
 
-                    <p style="margin: 5px 0;"><strong>영화관:</strong> ${b.theaterDTO.theaterName}</p>
-                    <p style="margin: 5px 0;"><strong>좌석:</strong> ${b.theaterDTO.seatDTO.seat}</p>
-                    <p style="margin: 5px 0;"><strong>날짜:</strong> ${formattedDate}</p>
+        document.getElementById('mainContents').innerHTML = bookHtml;
 
-            </div>
-        `;
+        document.getElementById('refundbtn').addEventListener('click', ()=> {
+            console.log("refund");
+            console.log(b.list[0].bookId);
+            refund(b.list[0].bookId);
+        });
     })
+}
+
+function refund(bookId) {
+    let con = confirm("정말 환불하시겠습니까?");
+
+    if (!con) {
+        return;
+    }
+
+    fetch(`/users/refund`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/x-www-form-urlencoded"
+        },
+        body: `bookId=${bookId}`
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        if(r>0){
+            alert('환불되었습니다.')
+            location.reload();
+        }else {
+            alert('환불실패');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("환불불 정보를 가져올 수 없습니다.");
+    });
 }
 
 //관람평

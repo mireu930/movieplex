@@ -148,6 +148,8 @@
 		LEFT OUTER JOIN MOVIES mv ON MV.MOVIEID = T.MOVIEID
 		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
 		WHERE U.USERID = #{userDTO.userId}
+			AND MB.NOWSTATUS = 1
+			OR MB.NOWSTATUS = 0
 		ORDER BY mb.BOOKDATE DESC)M)
 		WHERE R BETWEEN #{startNum} AND #{lastNum}
   	</select>
@@ -161,7 +163,7 @@
     	WHERE u.USERID = #{userId}
 	</select>
 	
-	<select id="bookDetail" resultMap="getBookList"  resultType="MovieBookDTO">
+	<select id="bookDetail" resultMap="getBookList"  parameterType="MovieBookDTO">
   		SELECT * FROM MOVIEBOOKS mb
 		LEFT OUTER JOIN USERS u ON MB.USERNUM = U.USERNUM
 		LEFT OUTER JOIN THEATER t ON T.THEATERID = MB.THEATERID 
@@ -169,6 +171,10 @@
 		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
 		WHERE MB.BOOKID = #{bookId}	
 	</select>
+	
+	<update id="paymentRefund" parameterType="MovieBookDTO">
+		UPDATE MOVIEPAYMENTS SET PAYCHECK=2 WHERE BOOKID = #{bookId}
+	</update>
   	
   	
   	<resultMap type="CouponConnectDTO" id="getCouponList">
@@ -263,7 +269,7 @@
 		  		<result column="SNS" property="sns"/>  			
   			</association>
   			
-  			<association property="theaterDTO" javaType="TheaterDTO">
+  			<collection property="theaterDTO" javaType="TheaterDTO">
   					<id column="THEATERID" property="theaterId"/>
   					<result column="THEATERSTART" property="theaterStart" />
 					<result column="THEATEREND" property="theaterEnd" />
@@ -271,16 +277,16 @@
 					<result column="MOVIEID" property="movieId" />
 					<result column="KIND" property="kind" />
   				
-  					<association property="seatDTO" javaType="SeatDTO">
+  					<collection property="seatDTO" ofType="SeatDTO">
 		  				<result column="SEAT" property="seat"/>
-					</association>
+					</collection>
 					
-					<association property="movieDTO" javaType="MovieDTO">
+					<collection property="movieDTO" javaType="MovieDTO">
 						<result column="MOVIETITLE" property="movieTitle"/>
 						<result column="SHORTPOSTER" property="shortPoster"/>
 						<result column="LONGPOSTER" property="longPoster"/>
-					</association>
-  			</association>
+					</collection>
+  			</collection>
   	</resultMap>
   	
   		<sql id="search">

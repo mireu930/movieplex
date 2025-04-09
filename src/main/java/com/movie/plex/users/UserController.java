@@ -25,6 +25,7 @@ import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.coupon.CouponService;
 import com.movie.plex.couponConnect.CouponConnectDTO;
 import com.movie.plex.movieBooks.MovieBookDTO;
+import com.movie.plex.movieBooks.MovieBookService;
 import com.movie.plex.pages.Pager;
 import com.movie.plex.review.ReviewDTO;
 
@@ -36,6 +37,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private CouponService couponService;
+	@Autowired
+	private MovieBookService movieBookService;
 	@Autowired
 	private MailSend mailSend;
 	@Autowired
@@ -306,7 +309,7 @@ public class UserController {
 		List<UserDTO> list = userService.bookList(pager, userDTO, session);
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+		System.out.println("List:"+list.size());
 		map.put("list", list);
 		map.put("pager", pager);
 		return map;
@@ -314,8 +317,13 @@ public class UserController {
 	
 	@RequestMapping(value = "bookDetail", method = RequestMethod.GET)
 	@ResponseBody
-	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
-		return userService.bookDetail(movieBookDTO);
+	public Map<String, Object> bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		List<MovieBookDTO> list = userService.bookDetail(movieBookDTO);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		System.out.println("Detail:"+list.size());
+		map.put("list", list);
+		return map;
 	}
 	
 	@RequestMapping(value = "userCouponUpdate", method = RequestMethod.POST)
@@ -327,6 +335,17 @@ public class UserController {
 		int result = userService.couponUpdate(couponDTO);
 		int result2 = couponService.couponUpdate(couponDTO);
 
+		return (result>0&&result2>0)?1:0;
+	}
+	
+	@RequestMapping(value = "refund", method = RequestMethod.POST)
+	@ResponseBody
+	public int refund(MovieBookDTO movieBookDTO) throws Exception {
+		
+		int result = movieBookService.bookRefund(movieBookDTO);
+		int result2 = userService.paymentRefund(movieBookDTO);
+		System.out.println(result);
+		System.out.println(result2);
 		return (result>0&&result2>0)?1:0;
 	}
 }
