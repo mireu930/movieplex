@@ -29,6 +29,9 @@ public class ReviewLikeService {
 	        return reviewLikeDAO.getLikedReviewIds(userNum, kind);
 	    }
 	
+		public List<ReviewLikeDTO> getMyLikedReviews (Long userNum) throws Exception{
+			return reviewLikeDAO.getMyLikedReviews(userNum);
+		}
 	
 	
 	

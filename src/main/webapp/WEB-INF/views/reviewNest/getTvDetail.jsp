@@ -81,52 +81,65 @@
 				
 				<div class="container-custom mt-4">
 						<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰</strong>
-						<div class="row">
-						    <c:forEach var="review" items="${reviewList}">
-						        <div class="col-lg-3 col-md-6 col-sm-12 mb-4">
-						        	<div class="card border border-secondary">
-						            <div class="card-body">
-						                <strong class="card-title">${review.userName}</strong>
-						                <hr class="special-hr">
-						                <p class="card-text"></p>
-						                    <h6>${review.userName}님의 별점:</h6>
-						                    <c:forEach var="i" begin="1" end="${review.reviewRate}">★</c:forEach>
-						                    <c:forEach var="i" begin="1" end="${5 - review.reviewRate}">☆</c:forEach>
-						                <p class="card-text">
-						                	<a href="/reviewNest/getReviewDetail?reviewId=${review.reviewId}" class="text-decoration-none text-dark">
-										   <c:choose>
-										        <c:when test="${fn:length(review.reviewContents) >30}">
-										            <span class="short-review">${fn:substring(review.reviewContents, 0, 30)}...</span>
-										            <span class="full-text" style="display: none;">${review.reviewContents}</span>
-										        </c:when>
-										        <c:otherwise>
-										            ${review.reviewContents}
-										        </c:otherwise>
-										    </c:choose> 
-										    </a>
-										</p>
-						                <hr class="special-hr">
-						           		<button class="like-button"
-									        data-usernum="${userNum}"
-									        data-review-id="${review.reviewId}"
-									        data-kind="0">
-									    <span class="heart-icon">
-									        <c:choose>
-									            <c:when test="${likedReviewIds != null && likedReviewIds.contains(review.reviewId)}">
-									                ❤️
-									            </c:when>
-									            <c:otherwise>
-									                🤍
-									            </c:otherwise>
-									        </c:choose>
-									    </span>
-									</button>
-						            </div>
-						   
-						        </div>
-						        </div>
-						    </c:forEach>
-						</div>
+						<c:choose>
+							<c:when test="${empty reviewList || reviewList.size() eq 0}">
+								<div class="alert  text-center mt-4"  style="background-color: #ffe5b4;" role="alert">
+									아직 작성된 리뷰가 없습니다. 🎬<br> <strong>첫 리뷰를 작성해보세요!</strong>
+									
+								</div>
+							</c:when>
+			
+							
+							<c:otherwise>
+								<div class="row">
+									<c:forEach var="review" items="${reviewList}">
+										<div class="col-lg-3 col-md-6 col-sm-12 mb-4">
+											<div class="card border border-secondary">
+												<div class="card-body">
+													<strong class="card-title">${review.userName}</strong>
+													<hr class="special-hr">
+			
+													<h6>${review.userName}님의별점:</h6>
+													<c:forEach var="i" begin="1" end="${review.reviewRate}">★</c:forEach>
+													<c:forEach var="i" begin="1" end="${5 - review.reviewRate}">☆</c:forEach>
+			
+													<p class="card-text">
+														<a
+															href="/reviewNest/getReviewDetail?reviewId=${review.reviewId}"
+															class="text-decoration-none text-dark"> <c:choose>
+																<c:when test="${fn:length(review.reviewContents) > 30}">
+																	<span class="short-review">${fn:substring(review.reviewContents, 0, 30)}...</span>
+																	<span class="full-text" style="display: none;">${review.reviewContents}</span>
+																</c:when>
+																<c:otherwise>
+									                                            ${review.reviewContents}
+									                                        </c:otherwise>
+															</c:choose>
+														</a>
+													</p>
+			
+													<hr class="special-hr">
+			
+													<button class="like-button" data-usernum="${review.userNum}"
+														data-review-id="${review.reviewId}" data-kind="0">
+														<span class="heart-icon"> <c:choose>
+																<c:when
+																	test="${likedReviewIds != null && likedReviewIds.contains(review.reviewId)}">
+									                                            ❤️
+									                                        </c:when>
+																<c:otherwise>
+									                                            🤍
+									                                        </c:otherwise>
+															</c:choose>
+														</span>
+													</button>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
+							</c:otherwise>
+						</c:choose>
 						</div>
 			
 	</main>

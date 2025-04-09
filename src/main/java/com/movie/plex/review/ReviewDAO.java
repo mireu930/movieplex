@@ -23,8 +23,8 @@ public class ReviewDAO {
 		}
 		
 		//리뷰 조회
-		public List<ReviewDTO> getReviewList(Map<String, Object> param) throws Exception {
-			return sqlSession.selectList(NAMESPACE+"getReviewList",param);
+		public List<ReviewDTO> getReviewList(Long contentsId) throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getReviewList",contentsId);
 		}
 		
 		// 리뷰 더보기
@@ -38,8 +38,8 @@ public class ReviewDAO {
 		}
 		
 		//리뷰 삭제
-		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
-			return sqlSession.delete(NAMESPACE+"deleteReview",reviewDTO);
+		public int deleteReview(Long reviewId) throws Exception{
+			return sqlSession.delete(NAMESPACE+"deleteReview",reviewId);
 		}
 		
 		//리뷰 중복조회
@@ -51,6 +51,11 @@ public class ReviewDAO {
 			
 			return sqlSession.selectOne(NAMESPACE+"checkReviewExists", paramMap);
 		}
+		
+		public List<ReviewDTO> getMyReviews(Long userNum) throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getMyReviews", userNum);
+		}
+		
 		
 		
 		

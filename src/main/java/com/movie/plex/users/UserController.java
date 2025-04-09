@@ -25,10 +25,16 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.coupon.CouponService;
 import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.like.ContentsLikeDAO;
+import com.movie.plex.like.ContentsLikeService;
+import com.movie.plex.like.ReviewLikeDAO;
+import com.movie.plex.like.ReviewLikeService;
 import com.movie.plex.movieBooks.MovieBookDTO;
 import com.movie.plex.movieBooks.MovieBookService;
 import com.movie.plex.pages.Pager;
+import com.movie.plex.review.ReviewCommentService;
 import com.movie.plex.review.ReviewDTO;
+import com.movie.plex.review.ReviewService;
 
 @Controller
 @RequestMapping(value = "/users/*")
@@ -44,6 +50,14 @@ public class UserController {
 	private MailSend mailSend;
 	@Autowired
 	private KakaoApi kakaoApi;
+	@Autowired
+	private ReviewService reviewService;
+	@Autowired
+	private ReviewCommentService reviewCommentService;
+	@Autowired
+	private ContentsLikeService contentsLikeService;
+	@Autowired
+	private ReviewLikeService reviewLikeService;
 	
 	@RequestMapping(value = "check", method = RequestMethod.GET)
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
@@ -339,6 +353,25 @@ public class UserController {
 		return (result>0&&result2>0)?1:0;
 	}
 	
+
+		@RequestMapping(value = "/reviewNest/nestMypage", method = RequestMethod.GET)
+		public String nestMypage(UserDTO userDTO, HttpSession session, Model model) throws Exception{
+			UserDTO user = (UserDTO) session.getAttribute("user");
+		    if (user == null) return "redirect:/login";
+			
+		    model.addAttribute("userName", user.getUserName());
+			
+			model.addAttribute("myReviews", reviewService.getMyReviews(user.getUserNum()));
+			model.addAttribute("myComments", reviewCommentService.getMyComments(user.getUserNum()));
+			model.addAttribute("likedContents", contentsLikeService.getMyLikedContents(user.getUserNum()));
+			model.addAttribute("likedReviews",reviewLikeService.getMyLikedReviews(user.getUserNum()));
+			
+			
+		   return "reviewNest/nestMypage";
+		}
+	
+	
+
 	@RequestMapping(value = "refund", method = RequestMethod.POST)
 	@ResponseBody
 	public int refund(MovieBookDTO movieBookDTO) throws Exception {
@@ -349,4 +382,5 @@ public class UserController {
 		System.out.println(result2);
 		return (result>0&&result2>0)?1:0;
 	}
+
 }

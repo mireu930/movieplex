@@ -21,10 +21,21 @@
 		    WHERE RC.REVIEWID = #{reviewId}
 		    ORDER BY RC.COMMENTDATE ASC
 		</select>
-
 		
-		<delete id="deleteComment">
-		    DELETE FROM REVIEWCOMMENTS WHERE COMMENTID = #{commentId}
-		</delete>
+		<update id="updateComment" parameterType="ReviewCommentDTO">
+	    UPDATE REVIEWCOMMENTS
+	    SET 	COMMENTCONTENTS = #{commentContents}
+	    WHERE COMMENTID = #{commentId}
+	</update>
+	
+	<delete id="deleteComment" parameterType="long">
+	    DELETE FROM REVIEWCOMMENTS
+	    WHERE COMMENTID = #{commentId}
+	</delete>
+		
+		<select id="getMyComments" resultType="ReviewCommentDTO">
+			  SELECT * FROM REVIEWCOMMENTS
+			  WHERE USERNUM = #{userNum}
+		</select>
 		
   </mapper>

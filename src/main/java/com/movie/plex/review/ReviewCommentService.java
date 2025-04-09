@@ -19,5 +19,16 @@ public class ReviewCommentService {
 			return reviewCommentDAO.getCommentsByReviewId(reviewId);
 		}
 		
+		public int updateComment (ReviewCommentDTO reviewCommentDTO) throws Exception {
+			return reviewCommentDAO.updateComment(reviewCommentDTO);
+		}
+		
+		public int deleteComment (Long commentId) throws Exception {
+			return reviewCommentDAO.deleteComment(commentId);
+		}
+		
+		public List<ReviewCommentDTO> getMyComments(Long userNum) throws Exception{
+			return reviewCommentDAO.getMyComments(userNum);
+		}
 		
 }

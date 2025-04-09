@@ -18,11 +18,8 @@ public class ReviewService {
 			return reviewDAO.addReview(reviewDTO);
 		}
 		
-		public List<ReviewDTO> getReviewList(Long contentId, Long kind) throws Exception{
-			Map<String, Object> param = new HashMap<String, Object>();
-		    param.put("contentId", contentId);
-		    param.put("kind", kind);
-		    return reviewDAO.getReviewList(param);
+		public List<ReviewDTO> getReviewList(Long contentId) throws Exception{
+		    return reviewDAO.getReviewList(contentId);
 		}
 		
 		public ReviewDTO getReviewDetail(Long reviewId ) throws Exception {
@@ -33,12 +30,16 @@ public class ReviewService {
 			return reviewDAO.updateReview(reviewDTO);
 		}
 		
-		public int deleteReview(ReviewDTO reviewDTO) throws Exception{
-			return reviewDAO.deleteReview(reviewDTO);
+		public int deleteReview(Long reviewId) throws Exception{
+			return reviewDAO.deleteReview(reviewId);
 		}
 		
 		public int checkReviewExists(Long userNum, Long contentId, Long kind) throws Exception{
 			return reviewDAO.checkReviewExists(userNum, contentId, kind);
+		}
+		
+		public List<ReviewDTO> getMyReviews (Long userNum) throws Exception{
+			return reviewDAO.getMyReviews(userNum);
 		}
 		
 		

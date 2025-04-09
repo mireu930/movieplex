@@ -34,6 +34,10 @@ public class ReviewLikeDAO {
 		    paramMap.put("kind", kind);
 		    return sqlSession.selectList(NAMESPACE + "getLikedReviewIds", paramMap);
 		}
+		
+		public List<ReviewLikeDTO> getMyLikedReviews(Long userNum) throws Exception {
+			return sqlSession.selectList(NAMESPACE+"getLikedReviews", userNum);
+		}
 
 
 }
