@@ -23,5 +23,19 @@ public class ReviewCommentDAO {
 			public List<ReviewCommentDTO> getCommentsByReviewId(Long reviewId) throws Exception{
 				return sqlSession.selectList(NAMESPACE+"getCommentsByReviewId", reviewId);
 			}
+			
+			//리뷰 댓글 수정
+			public int updateComment(ReviewCommentDTO reviewCommentDTO) throws Exception{
+				return sqlSession.update(NAMESPACE+"updateComment", reviewCommentDTO);
+			}
+			
+			//리뷰 댓글 삭제
+			public int deleteComment (Long commentId) throws Exception{
+				return sqlSession.delete(NAMESPACE+"deleteComment", commentId);
+			}
+			
+			public List<ReviewCommentDTO> getMyComments(Long userNum) throws Exception{
+				return sqlSession.selectList(NAMESPACE+"getMyComments",userNum);
+			}
 }
 

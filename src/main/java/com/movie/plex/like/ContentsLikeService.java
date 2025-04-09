@@ -29,6 +29,10 @@ public class ContentsLikeService {
 	        return contentsLikeDAO.getLikedContentsIds(userNum, kind);
 	    }
 		
+		public List<ContentsLikeDTO> getMyLikedContents(Long userNum) throws Exception{
+			return contentsLikeDAO.getMyLikedContents(userNum);
+		}
+
 		
 		
 

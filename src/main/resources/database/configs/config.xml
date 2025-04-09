@@ -7,20 +7,18 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.movie.plex.movies.MovieDTO" alias="MovieDTO"/>
-
-		<typeAlias type="com.movie.plex.nestcontents.NestContentDTO" alias="NestContentDTO"/>
 		<typeAlias type="com.movie.plex.pages.Pager" alias="Pager"/>
-		<typeAlias type="com.movie.plex.pages.ReviewPager" alias="ReviewPager"/>
-		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
-		<typeAlias type="com.movie.plex.like.ContentsLikeDTO" alias="ContentsLikeDTO"/>
 		<typeAlias type="com.movie.plex.theater.TheaterDTO" alias="TheaterDTO"/>
 		<typeAlias type="com.movie.plex.movieBooks.MovieBookDTO" alias="MovieBookDTO" />
-		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
 		<typeAlias type="com.movie.plex.movieBooks.MoviePayments" alias="MoviePayments"/>
 		<typeAlias type="com.movie.plex.movieBooks.MovieBookDTO" alias="MovieBookDTO"/>
 		<typeAlias type="com.movie.plex.theater.SeatDTO" alias="SeatDTO"/>
 
+		<typeAlias type="com.movie.plex.pages.ReviewPager" alias="ReviewPager"/>
+		<typeAlias type="com.movie.plex.nestcontents.NestContentDTO" alias="NestContentDTO"/>
+		<typeAlias type="com.movie.plex.review.ReviewDTO" alias="ReviewDTO"/>
 		<typeAlias type="com.movie.plex.review.ReviewCommentDTO" alias="ReviewCommentDTO"/>
+		<typeAlias type="com.movie.plex.like.ContentsLikeDTO" alias="ContentsLikeDTO"/>
 		<typeAlias type="com.movie.plex.like.ReviewLikeDTO" alias="ReviewLikeDTO"/>
 	
 		<typeAlias type="com.movie.plex.users.UserDTO" alias="UserDTO"/>

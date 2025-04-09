@@ -8,13 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.movie.plex.like.ContentsLikeService;
 import com.movie.plex.like.ReviewLikeService;
 import com.movie.plex.users.UserDTO;
 
@@ -28,6 +32,8 @@ public class ReviewController {
 	private ReviewCommentService reviewCommentService;
 	@Autowired
 	private ReviewLikeService reviewLikeService;
+	@Autowired
+	private ContentsLikeService contentsLikeService;
 
 	@RequestMapping(value = "addReview", method = RequestMethod.GET)
 	public void addReview() throws Exception {
@@ -83,7 +89,7 @@ public class ReviewController {
 	    reviewDTO.setKind(kind);
 		
 		// 리뷰 목록
-		List<ReviewDTO> ar = reviewService.getReviewList(contentId, kind);
+		List<ReviewDTO> ar = reviewService.getReviewList(contentId);
 		
 		//null일 경우 빈 리스트로 초기화-jsp c:if문
 		if (ar == null) {
@@ -132,27 +138,37 @@ public class ReviewController {
 	}
 	
 	@RequestMapping(value="updateReview", method=RequestMethod.POST)
-	public String updateReview(ReviewDTO reviewDTO) throws Exception{
-		int result = reviewService.updateReview(reviewDTO);
+	public String updateReview(ReviewDTO reviewDTO, HttpSession session, Model model) throws Exception{
+		reviewService.updateReview(reviewDTO);
 		
-		return "redirect:./getReviewDetail?reviewId=" +reviewDTO.getReviewId();
+		UserDTO user = (UserDTO) session.getAttribute("user");
+	    if (user == null) return "redirect:/login";
+
+	    model.addAttribute("myReviews", reviewService.getMyReviews(user.getUserNum()));
+	    model.addAttribute("myComments", reviewCommentService.getMyComments(user.getUserNum()));
+	    model.addAttribute("likedContents", contentsLikeService.getMyLikedContents(user.getUserNum()));
+	    model.addAttribute("likedReviews", reviewLikeService.getMyLikedReviews(user.getUserNum()));
+
+		
+		return "/reviewNest/nestMypage";
 	}
 	
 	
 
 	
 	
-	@RequestMapping(value="deleteReview", method=RequestMethod.GET)
-	public String deleteReview(ReviewDTO reviewDTO, Model model) throws Exception{
-		int result = reviewService.deleteReview(reviewDTO);
-		String s = "삭제 실패";
-		if(result>0) {
-				s = "삭제 성공";
-		}
-		model.addAttribute("result" ,s);
-		model.addAttribute("path", "./getReviewList");
-		
-		return "commons/result";
+	@RequestMapping(value="deleteReview", method=RequestMethod.POST)
+	public String deleteReview(@RequestParam("reviewId") Long reviewId, HttpSession session, RedirectAttributes redirectAttributes) throws Exception{
+		try {
+	        reviewService.deleteReview(reviewId);
+	        redirectAttributes.addFlashAttribute("message", "리뷰가 성공적으로 삭제되었습니다.");
+	    } catch (DataIntegrityViolationException e) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "댓글이 달린 리뷰는 삭제할 수 없습니다.");
+	    } catch (Exception e) {
+	        redirectAttributes.addFlashAttribute("errorMessage", "알 수 없는 오류가 발생했습니다.");
+	    }
+
+	    return "redirect:/users/reviewNest/nestMypage";
 	}
 	
 	

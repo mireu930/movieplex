@@ -39,7 +39,12 @@
 	</select>
 	
 	
-	
+	<select id="getLikedReviews" resultType="ReviewDTO">
+			  SELECT R.* 
+			  FROM REVIEWLIKE RL
+			  JOIN REVIEW R ON RL.REVIEWID = R.REVIEWID
+			  WHERE RL.USERNUM = #{userNum}
+	</select>
 	
 	
 	
