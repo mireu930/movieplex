@@ -39,6 +39,7 @@ import com.movie.plex.users.UserDTO;
 			List<NestContentDTO> movieList = nestContentService.getMovieList(pager);
 			
 			model.addAttribute("movieList", movieList);
+			System.out.println(pager.isEndCheck());
 			model.addAttribute("pager", pager);
 			
 			UserDTO user = (UserDTO) session.getAttribute("user");

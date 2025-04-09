@@ -20,8 +20,9 @@ public class NestContentService {
 	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
 		//珥앷갗�닔 媛��졇���꽌 怨꾩궛�븯�뒗 �떇
 		Long totalCount = nestContentDAO.getTotalCount(pager);
-		
-		pager.makePage(totalCount);
+		System.out.println("컨텐츠 갯수: "+totalCount);
+		System.out.println("!!");
+		pager.make(totalCount);
 		
 		pager.makeNum();
 		List<NestContentDTO> movieList = nestContentDAO.getMovieList(pager);
@@ -32,12 +33,11 @@ public class NestContentService {
 	
 	public List<NestContentDTO> getTvList(ReviewPager pager) throws Exception{
 		Long tvtotalCount = nestContentDAO.getTvTotalCount(pager);
-	
-		pager.makePage(tvtotalCount);
+		
+		pager.make(tvtotalCount);
 		
 		pager.makeNum();
 		List<NestContentDTO> tvList = nestContentDAO.getTvList(pager);
-		System.out.println(tvtotalCount);
 		return tvList;
 	}
 	

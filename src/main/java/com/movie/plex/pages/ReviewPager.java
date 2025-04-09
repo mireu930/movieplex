@@ -18,9 +18,6 @@ public class ReviewPager {
 	private Long start;
 	private Long end;
 	private boolean endCheck;
-	private Long lastNum;
-	private String kind;
-	private String search;
 	
 	//시작 번호, 끝번호를 계산하는 메서드 
 	public void makeNum() {
@@ -136,62 +133,25 @@ public class ReviewPager {
 
 
 
-public void makePage(Long totalCount) throws Exception {
-	if(totalCount<1) {
-		totalCount=1L;
-	}
-	
-	Long totalPage = totalCount/5;
-	
-	if(totalCount % 5 != 0) {
-		totalPage++;
-	}
-	
-	Long totalBlock = (long)Math.ceil(totalPage/5.0);
-	Long curBlock = (long)Math.ceil(this.getPage()/5.0);
-	
-	Long start = (curBlock-1)*5+1;
-	Long end = curBlock*5;
-	
-	this.setStart(start);
-	this.setEnd(end);
-	
-	if(totalBlock==curBlock) {
-		this.setEnd(totalPage);
-		this.setEndCheck(true);
-	}
-}
+	/*
+	 * public void makePage(Long totalCount) throws Exception { if(totalCount<1) {
+	 * totalCount=1L; }
+	 * 
+	 * Long totalPage = totalCount/5;
+	 * 
+	 * if(totalCount % 5 != 0) { totalPage++; }
+	 * 
+	 * Long totalBlock = (long)Math.ceil(totalPage/5.0); Long curBlock =
+	 * (long)Math.ceil(this.getPage()/5.0);
+	 * 
+	 * Long start = (curBlock-1)*5+1; Long end = curBlock*5;
+	 * 
+	 * this.setStart(start); this.setEnd(end);
+	 * 
+	 * if(totalBlock==curBlock) { this.setEnd(totalPage); this.setEndCheck(true); }
+	 * }
+	 */
 
 
-public Long getLastNum() {
-	return lastNum;
-}
-
-public void setLastNum(Long lastNum) {
-	this.lastNum = lastNum;
-}
-
-
-public String getKind() {
-	if(this.kind == null) {
-		this.kind = "k1";
-	}
-	return kind;
-}
-
-public void setKind(String kind) {
-	this.kind = kind;
-}
-
-public String getSearch() {
-	if(this.search == null) {
-		this.search="";
-	}
-	return search;
-}
-
-public void setSearch(String search) {
-	this.search = search;
-}
 
 }
