@@ -20,6 +20,7 @@ function loadUserInfo() {
 		 document.getElementById('mainContents').innerHTML = `
          <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
                 <h2>내 정보</h2>
+                <br>
                 <p><strong>아이디:</strong> ${user.userId}</p>
                 <p><strong>이름:</strong>${user.userName}</p>
                 <p><strong>이메일:</strong>${user.userEmail}</p>
@@ -60,31 +61,52 @@ function loadUserInfo() {
 
 
 function editUserInfo(user){
-
-        document.getElementById("mainContents").innerHTML=`
+  let userHtml = "";
+  userHtml+=`
         <div style="padding: 20px; background-color: #f9f9f9; border-radius: 8px; width: 600px; margin: 20px auto;">
             <h2>정보 수정하기</h2>
+            <br>
             <form>
-
                 <input type="hidden" id="userId" name ="userId" value=${user.userId}>
+
                 <div class="mb-3">
-                <label for="userName" class="form-label"><p><strong>이름:</strong></p></label>
-                <input type="text" class="form-label" id="userName" name="userName" value=${user.userName}>
+                <label for="userName" class="form-label"><strong>이름</strong></label>
+                `
+                if(user.sns==0){
+                userHtml+=`
+                <input type="text" class="form-control w-50" id="userName" name="userName" value=${user.userName}>`
+                }else {
+                userHtml+=`
+                <input type="text" class="form-control w-50" id="userName" name="userName" value=${user.userName} readonly>`
+                }
+                userHtml+=`
                 </div>
                 
                  <div class="mb-3">
-                <label for="userEmail" class="form-label"><p><strong>이메일:</strong></p></label>
-                <input type="text" class="form-label" id="userEmail" name="userEmail" value=${user.userEmail}>
+                <label for="userEmail" class="form-label"><strong>이메일</strong></label>
+                `
+                if(user.sns==0){
+                    userHtml+=`
+                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail}>
+                    <div class="invalid-feedback" id="userEmailFeedback"></div>
+                    <button id="mailCheckBtn" style="background-color: black; color: white; font-size: 12px;">이메일 확인</button>`
+                }else {
+                    userHtml+=`
+                    <input type="text" class="form-control w-50" id="userEmail" name="userEmail" value=${user.userEmail} readonly>`
+                }
+                userHtml+=`
                 </div>
 
                  <div class="mb-3">
-                <label for="userPhone" class="form-label"><p><strong>폰번호:</strong></p></label>
-                <input type="text" class="form-label" id="userPhone" name="userPhone" value=${user.userPhone}>
+                <label for="userPhone" class="form-label"><strong>폰번호</strong></label>
+                <input type="text" class="form-control w-50" id="userPhone" name="userPhone" value=${user.userPhone}>
+                  <div class="invalid-feedback" id="userPhoneFeedback"></div>
                 </div>
 
-                 <div class="mb-3">
-                <label for="userPw" class="form-label"><p><strong>비밀번호:</strong></p></label>
-                <input type="password" class="form-label" id="userPw" name="userPw" value=${user.userPw}>
+                <div class="mb-3">
+                <label for="userPw" class="form-label"><strong>비밀번호</strong></label>
+                <input type="password" class="form-control w-50" id="userPw" name="userPw" value=${user.userPw}">
+                   <div class="invalid-feedback" id="userPwFeedback"></div>
                 </div>
 
                 <input type="button" id="savebtn" class="btn btn-success" value="저장">
@@ -92,10 +114,115 @@ function editUserInfo(user){
             </form>
         </div>
         `
+        document.getElementById('mainContents').innerHTML = userHtml;
+
+        let userPw = document.getElementById("userPw");
+        let userPhone = document.getElementById("userPhone");
+        let userEmail = document.getElementById("userEmail");
+        let mailCheckBtn = document.getElementById("mailCheckBtn");
+        let savebtn = document.getElementById("savebtn");
+
+        const form = document.querySelector("form");
+        const inputs = form.querySelectorAll("input");
+        
+        function isPw(v) {
+            let regex = /^[A-Za-z0-9]{8,12}$/
+            return regex.test(v)
+        }
+
+        function isEmail(v) {
+            let regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+            return regex.test(v)
+        }
+
+        userPw.addEventListener('input', ()=>{
+            console.log("input");
+            console.log(userPw.value);
+            let feedback = document.getElementById("userPwFeedback");
+
+         if(isPw(userPw.value)){
+            feedback.style.display = 'none';
+            userPw.classList.remove('is-invalid');
+         } else {
+            feedback.style.display = 'block';
+            feedback.innerHTML = '영문자+숫자 조합 8~12자리로 입력해주세요.';
+            userPw.classList.add('is-invalid');
+         }
+        })
+
+        userPhone.addEventListener('input', (e)=>{
     
+            let feedback = document.getElementById("userPhoneFeedback");
+        
+            let v = e.target.value.replace(/[^0-9]/g, "")
+            .replace(/^(\d{3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+        
+            console.log(v)
+        
+            e.target.value =v;
+        
+            if(v.length>10){
+                feedback.style.display = 'none';
+                userPhone.classList.remove('is-invalid');
+            } else {
+                feedback.style.display = 'block';
+                feedback.innerHTML='핸드폰번호를입력하세요'
+                userPhone.classList.add('is-invalid');
+            }
+        })
 
-        document.getElementById("savebtn").addEventListener("click",update)
+        userEmail.addEventListener('input',()=>{
+            let userEmailFeedback = document.getElementById("userEmailFeedback");
 
+            if(isEmail(userEmail.value)){
+                userEmailFeedback.style.display = 'none';
+            } else {
+                userEmailFeedback.style.display = 'block';
+                userEmail.classList.add('is-invalid');
+            }
+        })
+
+        mailCheckBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let email = userEmail.value;
+            console.log(email);
+        
+            fetch("/users/updateMailCheck?email="+email)
+            .then(r=>r.text())
+            .then(r=>{
+                console.log(r)
+                if(r==="?? ???? ??????."){
+                    alert("이미 있는 이메일입니다. 다른이메일부탁드립니다.");
+                    userEmail.classList.add('is-invalid');
+                    toggleSubmitButton();
+                } else {
+                    alert("사용가능한 이메일입니다.")
+                    userEmail.classList.remove('is-invalid');
+                    toggleSubmitButton();
+                }
+            })
+            .catch(error=>{
+                console.log(error);
+                alert("에러발생")
+            })
+        })
+
+            
+            function toggleSubmitButton() {
+              let invalidInputs = form.querySelectorAll(".is-invalid");
+              if(invalidInputs.length===0){
+                savebtn.disabled = false;
+              }else{
+                 savebtn.disabled = true;
+              }
+            }
+    
+            inputs.forEach(input => {
+              input.addEventListener("input", toggleSubmitButton);
+            });
+
+
+        savebtn.addEventListener("click",update)
         document.getElementById("cancelbtn").addEventListener("click",loadUserInfo)
 }
 
@@ -254,7 +381,7 @@ function loadBookInfo(page=1) {
 
             bookHtml += `
                 <div style="width: 250px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); background: #fff;">
-                    <img src="${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
+                    <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.shortPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" onclick="bookDetail(${item.bookId})" style="width: 100%; height: 150px; object-fit: cover;cursor: pointer;">
                     <div style="padding: 15px;">
                         <h3 style="font-size: 16px; margin: 0 0 10px;">${item.theaterDTO.movieDTO.movieTitle}</h3>
                         <p style="color: #555; font-size: 14px; margin: 0;">예매 날짜:${formattedDate}</p>
@@ -307,28 +434,81 @@ function bookDetail(bookId){
     .then(r=>r.json())
     .then(b=>{
         console.log(b)
+        let bookHtml = '';
 
-        const timestamp = parseInt(b.bookDate);
-            const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
+        
+        bookHtml +=`
+        <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">`
+        b.list.forEach(item => {
+            
+            const timestamp = parseInt(item.bookDate);
+                const formattedDate = new Date(timestamp).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
 
-        document.getElementById('mainContents').innerHTML=`
-            <div style="width: 600px; margin: auto; background: #fff; border-radius: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
-                <img src="${b.theaterDTO.movieDTO.longPoster}" alt="${b.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
-                
-                <div style="padding: 20px; text-align: left;">
-                    <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${b.theaterDTO.movieDTO.movieTitle}</h2>
+               bookHtml +=`  <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.longPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
+                 
+                 <div style="padding: 20px; text-align: left;">
+                     <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${item.theaterDTO.movieDTO.movieTitle}</h2>
+ 
+                     <p style="margin: 5px 0;"><strong>영화관:</strong> ${item.theaterDTO.theaterName}</p>
+                     <p style="margin: 5px 0;"><strong>좌석:</strong>
+                     `
+                     item.theaterDTO.seatDTO.forEach(s=>{
+                         bookHtml+=`${s.seat},`
+                        })
+                    bookHtml=bookHtml.slice(0,-1);
+                    bookHtml=bookHtml.replace(/,\s*$/,'');
+                        
+                     bookHtml+=`
+                     </p>
+                     <p style="margin: 5px 0;"><strong>날짜:</strong> ${formattedDate}</p>
+ 
+             </div>
+         `
+         bookHtml +='<input type="button" id="refundbtn" class="btn btn-success" value="환불"/>'
+         ;
+           })
 
-                    <p style="margin: 5px 0;"><strong>영화관:</strong> ${b.theaterDTO.theaterName}</p>
-                    <p style="margin: 5px 0;"><strong>좌석:</strong> ${b.theaterDTO.seatDTO.seat}</p>
-                    <p style="margin: 5px 0;"><strong>날짜:</strong> ${formattedDate}</p>
+        document.getElementById('mainContents').innerHTML = bookHtml;
 
-            </div>
-        `;
+        document.getElementById('refundbtn').addEventListener('click', ()=> {
+            console.log("refund");
+            console.log(b.list[0].bookId);
+            refund(b.list[0].bookId);
+        });
     })
+}
+
+function refund(bookId) {
+    let con = confirm("정말 환불하시겠습니까?");
+
+    if (!con) {
+        return;
+    }
+
+    fetch(`/users/refund`, {
+        method: "POST",
+        headers: {
+            "Content-type": "application/x-www-form-urlencoded"
+        },
+        body: `bookId=${bookId}`
+    })
+    .then(r=>r.json())
+    .then(r=>{
+        if(r>0){
+            alert('환불되었습니다.')
+            location.reload();
+        }else {
+            alert('환불실패');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("환불불 정보를 가져올 수 없습니다.");
+    });
 }
 
 //관람평
@@ -479,7 +659,6 @@ function loadCoupon() {
                 <input type="hidden" name="couponNum" value="${item.couponNum}"> 
                 <p><strong>쿠폰이름:</strong>${item.couponDTO.couponName}</p>
                 <p><strong>쿠폰금액:</strong>${item.couponDTO.couponCost}</p> 
-                <input type = "button" id="couponUpdatebtn" class="btn btn-primary" value="업데이트"/>
             </div>
             `          
         })
@@ -491,12 +670,6 @@ function loadCoupon() {
 
         document.getElementById('couponbtn').addEventListener('click', ()=> {
             couponRegister();
-        });
-
-        document.getElementById('couponUpdatebtn').addEventListener('click', ()=> {
-            c.forEach(item=>{
-                couponUpdate(item.couponNum);
-            })
         });
     })
 }
@@ -547,21 +720,4 @@ function couponRegister() {
             console.error("쿠폰 조회 실패:", error);
             alert("쿠폰 정보를 가져올 수 없습니다.");
         });
-}
-
-function couponUpdate(couponNum) {
-    fetch(`/users/userCouponUpdate`, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/x-www-form-urlencoded"
-        },
-        body: `couponNum=${couponNum}`
-    })
-    .then(r=>r.json())
-    .then(r=>{
-        if(r>0){
-            alert("업데이트되었습니다.")
-            location.reload();
-        }
-    })
 }

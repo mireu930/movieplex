@@ -142,15 +142,32 @@ public class ReviewController {
 
 	
 	
+
 	@RequestMapping(value="deleteReview", method=RequestMethod.GET)
 	public String deleteReview(ReviewDTO reviewDTO, Model model) throws Exception{
 		int result = reviewService.deleteReview(reviewDTO);
 		String s = "삭제 실패";
+
 		if(result>0) {
-				s = "삭제 성공";
+				s = "���� ����";
+		}
+    
+		model.addAttribute("result" ,s);
+		model.addAttribute("path", "./getMovieReviewList");
+		
+		return "commons/result";
+	}
+  
+	@RequestMapping(value="deleteTvReview", method=RequestMethod.GET)
+	public String deleteTvReview(ReviewDTO reviewDTO, Model model) throws Exception{
+		int result = reviewService.deleteMovieReview(reviewDTO);
+		String s = "���� ����";
+		if(result>0) {
+				s = "���� ����";
 		}
 		model.addAttribute("result" ,s);
-		model.addAttribute("path", "./getReviewList");
+		model.addAttribute("path", "./getTvReviewList");
+
 		
 		return "commons/result";
 	}

@@ -127,7 +127,11 @@ public class UserService {
 		return userDAO.bookList(pager);
 	}
 	
-	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+	public List<MovieBookDTO> bookDetail(MovieBookDTO movieBookDTO) throws Exception {
 		return userDAO.bookDetail(movieBookDTO);
 	}
+
+	public int paymentRefund(MovieBookDTO movieBookDTO) throws Exception {
+		return userDAO.paymentRefund(movieBookDTO);
+	}	
 }

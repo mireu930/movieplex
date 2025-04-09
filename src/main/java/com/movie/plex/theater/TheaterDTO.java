@@ -3,7 +3,7 @@ package com.movie.plex.theater;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-
+import java.util.List;
 
 import com.movie.plex.movies.MovieDTO;
 
@@ -15,12 +15,12 @@ public class TheaterDTO {
 	private Long movieId;
 	private Long kind;
 	private MovieDTO movieDTO;
-	private SeatDTO seatDTO;
+	private List<SeatDTO> seatDTO;
 	
-	public SeatDTO getSeatDTO() {
+	public List<SeatDTO> getSeatDTO() {
 		return seatDTO;
 	}
-	public void setSeatDTO(SeatDTO seatDTO) {
+	public void setSeatDTO(List<SeatDTO> seatDTO) {
 		this.seatDTO = seatDTO;
 	}
 	public MovieDTO getMovieDTO() {
