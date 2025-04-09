@@ -393,7 +393,7 @@ function paymentPage() {
   const couponName = document.getElementById("couponName");
 
   const couponDelete = document.getElementById("couponDelete");
-
+  let discount = "";
   selectedCoupon.addEventListener("change", (e) => {
     const coupon = e.target.options[e.target.selectedIndex];
     if (coupon.innerText == couponName.innerText) {
@@ -401,16 +401,24 @@ function paymentPage() {
       return;
     }
     couponName.innerText = coupon.innerText;
-    let discount = coupon.getAttribute("data-coupon-cost");
+    discount = coupon.getAttribute("data-coupon-cost");
     console.log(discount);
     discount_amount.innerText = discount + "원";
     final_amount.innerText = (parseInt(paymentPrice) - parseInt(discount)) + "원";
     usedCoupon = coupon.value;
+    paymentPrice = (parseInt(paymentPrice) - parseInt(discount));
+
+    console.log("쿠폰 적용: " + paymentPrice)
   })
 
   couponDelete.addEventListener("click", () => {
     couponName.innerText = "";
     selectedCoupon.value = "default";
+    discount_amount.innerText = "0원";
+    final_amount.innerText = (parseInt(paymentPrice) + parseInt(discount)) + "원";
+    paymentPrice = (parseInt(paymentPrice) + parseInt(discount))
+
+    console.log("쿠폰 취소 :" + paymentPrice);
   })
 
   const paymentMethod = document.getElementById("payment-radio");
