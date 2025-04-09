@@ -93,4 +93,51 @@ public class KakaoController {
 		
 		return "commons/ajax";
 	}
+	
+	@RequestMapping(value = "kakao2", method = RequestMethod.GET)
+	public String reviewNestkakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
+		System.out.println("kakaologin2");
+	    // 1. 인가 코드 받기
+
+	    // 2. 토큰 받기
+	    String accessToken = kakaoApi.getAccessToken2(code);
+
+	    // 3. 사용자 정보 받기
+	    Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
+
+	    String email = (String)userInfo.get("email");
+	    String nickname = (String)userInfo.get("nickname");
+
+	    System.out.println("email = " + email);
+	    System.out.println("nickname = " + nickname);
+	    System.out.println("accessToken = " + accessToken);
+	    
+	    
+	    
+	    UserDTO userDTO = userService.findEmail(email);
+	    
+	    if(userDTO!=null) {
+	    	userDTO = userService.getLogin(userDTO);
+	    	 if (userDTO.getUserOut() == 1) {
+		            // 사용자가 비활성화된 상태일 경우 로그인 실패 처리
+		            model.addAttribute("result", "비활성화된 사용자입니다. 관리자에게 문의하세요.");
+		            model.addAttribute("path", "/reviewNest/login");
+		            return "commons/result";  // 비활성화된 사용자 메시지 출력
+		        }else {
+		        	session.setAttribute("accessToken", accessToken);
+		        	session.setAttribute("userEmail", email);
+		        	session.setAttribute("userName", nickname);
+		        	
+		        	session.setAttribute("user", userDTO);
+		        	
+		        	return "redirect:/reviewNest";		        	
+		        }
+	    	
+	    } else {
+	    	model.addAttribute("result", "로그인실패");
+	    	model.addAttribute("email", "/reviewNest/login");
+	    	return "commons/result";	    	
+	    }
+
+	}
 }
