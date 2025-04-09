@@ -138,10 +138,6 @@ public class ReviewController {
 		return "redirect:./getReviewDetail?reviewId=" +reviewDTO.getReviewId();
 	}
 	
-	
-
-	
-	
 
 	@RequestMapping(value="deleteReview", method=RequestMethod.GET)
 	public String deleteReview(ReviewDTO reviewDTO, Model model) throws Exception{
@@ -158,21 +154,5 @@ public class ReviewController {
 		return "commons/result";
 	}
   
-	@RequestMapping(value="deleteTvReview", method=RequestMethod.GET)
-	public String deleteTvReview(ReviewDTO reviewDTO, Model model) throws Exception{
-		int result = reviewService.deleteMovieReview(reviewDTO);
-		String s = "���� ����";
-		if(result>0) {
-				s = "���� ����";
-		}
-		model.addAttribute("result" ,s);
-		model.addAttribute("path", "./getTvReviewList");
-
-		
-		return "commons/result";
-	}
-	
-	
-	
 	
 }
