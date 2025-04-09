@@ -16,8 +16,15 @@ public class ReviewDTO {
 			private Long kind;
 			private String userName;
 			private String reviewContents;
+			private UserDTO userDTO;
 			
 			
+			public UserDTO getUserDTO() {
+				return userDTO;
+			}
+			public void setUserDTO(UserDTO userDTO) {
+				this.userDTO = userDTO;
+			}
 			public String getUserName() {
 				return userName;
 			}

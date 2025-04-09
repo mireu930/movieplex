@@ -93,9 +93,12 @@ import com.movie.plex.users.UserService;
 			NestContentDTO moviedetail= nestContentService.getMovieDetail(contentId);
 			 model.addAttribute("content", moviedetail);
 			 
-			// 2. 由щ럭 紐⑸줉 媛��졇�삤湲�
-			  List<ReviewDTO> reviewList = reviewService.getReviewList(contentId, 0L);
-			  model.addAttribute("reviewList", moviedetail.getReviewList());
+			 
+			// 2. 리뷰 목록 가져오기
+			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId);
+			 model.addAttribute("reviewList", reviewList);
+			 
+
 			  
 			// 3. 濡쒓렇�씤 �쑀�� �젙蹂�
 			  UserDTO user = (UserDTO) session.getAttribute("user");
@@ -122,8 +125,9 @@ import com.movie.plex.users.UserService;
 			NestContentDTO tvdetail = nestContentService.getTvDetail(contentId);
 			 model.addAttribute("content", tvdetail);
 			 
-			// 2. 由щ럭 紐⑸줉 媛��졇�삤湲�
-			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId, 1L);
+
+			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId);
+
 			 model.addAttribute("reviewList", tvdetail.getReviewList());
 			 
 			// 3. 濡쒓렇�씤 �쑀�� �젙蹂�

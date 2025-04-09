@@ -20,11 +20,12 @@
 	</insert>
 	
 
-    <select id="getReviewList" parameterType="map" resultType="ReviewDTO">
-        SELECT * FROM REVIEW
-        WHERE CONTENTID = #{contentId, jdbcType=NUMERIC}
-        AND KIND = #{kind, jdbcType=NUMERIC}
-        ORDER BY REVIEWDATE DESC
+    <select id="getReviewList" parameterType="Long" resultType="ReviewDTO">
+        SELECT u.USERNAME, u.USERNUM,  r.REVIEWCONTENTS, r.REVIEWID ,r.REVIEWRATE 
+        FROM REVIEW r 
+		JOIN USERS u 
+		ON r.USERNUM  = u.USERNUM
+		WHERE r.CONTENTID = #{contentId, jdbcType=NUMERIC}
     </select>
 
 	<select id="getReviewDetail" parameterType="Long" resultType="ReviewDTO">
@@ -41,7 +42,25 @@
 	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId, jdbcType=NUMERIC} AND KIND = #{kind}
 	</select>
 
-
+	<select id="getMyReviews" resultType="ReviewDTO">
+		  SELECT * FROM REVIEW
+		  WHERE USERNUM = #{userNum}
+	</select>
+	
+	<update id="updateReview" parameterType="ReviewDTO">
+	    UPDATE REVIEW
+	    SET REVIEWCONTENTS = #{reviewContents},
+	    		REVIEWRATE = #{reviewRate},
+	    		REVIEWDATE = SYSDATE
+	    WHERE REVIEWID= #{reviewId}
+	</update>
+	
+	<delete id="deleteReview" parameterType="long">
+	    DELETE FROM REVIEW
+	    WHERE REVIEWID = #{reviewId}
+	</delete>
+	
+	
 
 
 

@@ -33,7 +33,12 @@
 	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId} AND KIND = #{kind}
 	</select>
 	
-	
+	<select id="getLikedContents" resultType="NestContentDTO">
+		  SELECT c.* 
+		  FROM CONTENTSLIKE CL
+		  JOIN NESTCONTENTS C ON CL.CONTENTID = C.CONTENTID AND CL.KIND = C.KIND
+		  WHERE CL.USERNUM = #{userNum}
+	</select>
 	
 	
 	

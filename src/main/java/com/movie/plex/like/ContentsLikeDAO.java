@@ -39,6 +39,9 @@ public class ContentsLikeDAO {
 			return sqlSession.selectList(NAMESPACE+"getLikedContentsIds", paramMap);
 		}
 		
+		public List<ContentsLikeDTO> getMyLikedContents(Long userNum) throws Exception{
+			return sqlSession.selectList(NAMESPACE+"getLikedContents", userNum);
+		}
 
 		
 		
