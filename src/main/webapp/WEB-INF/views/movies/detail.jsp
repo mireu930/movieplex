@@ -35,7 +35,7 @@
 					<div class="movie-poster">
 						<img src="https://image.tmdb.org/t/p/w500${movieDTO.shortPoster}"
 							alt="포스터">
-						<button class="reserve-button">예매</button>
+						<a href="/movieBooks/booking" class="reserve-button btn btn-info">예매</a>
 					</div>
 				</div>
 				<img class="movie-bg"

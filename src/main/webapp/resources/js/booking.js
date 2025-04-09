@@ -428,6 +428,33 @@ function paymentPage() {
   })
 
   const payBtn = document.getElementById("payBtn");
+  const preBtn = document.getElementById("preBtn");
+
+  preBtn.addEventListener("click", ()=>{
+    let param = new URLSearchParams();
+    param.append("theaterId", selectedTheaterId);
+    console.log(selectedTheaterId);
+    fetch("/movieBooks/seatBook", {
+      method: 'POST',
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
+      },
+      body: param
+    })
+      .then(r => r.text())
+      .then(r => {
+        if (r * 1 == 0) {
+          alert("로그인이 필요합니다.");
+          window.location.replace("/users/login")
+          return;
+        }
+        //console.log(r);
+        main.innerHTML = r;
+        seatBook();
+      })
+
+  })
+
 
   payBtn.addEventListener("click", () => {
     const selectedMethod = document.querySelector('input[name="method"]:checked');
@@ -454,13 +481,12 @@ function paymentPage() {
     } else if (selectedMethod.value == 0) {
       let param = new URLSearchParams();
 
-      //여러개 보낼때는 반복문을 사용해야 함함
+      //여러개 보낼때는 반복문을 사용해야 함
       for (let s of sendingSeat) {
         param.append("seat", s);
       }
       param.append("theaterId", selectedTheaterId);
       param.append("totalPrice", paymentPrice);
-      //param.append("totalPrice", 100); // 테스트용 100원 입금! => 나중에는 원래 금액으로 바꿀 예정
       param.append("usedCoupon", usedCoupon);
       const selectedBank = document.getElementById("bank");
       fetch("/moviePayment/movieBookBankBook", {
