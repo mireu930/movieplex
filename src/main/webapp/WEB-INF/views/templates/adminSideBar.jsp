@@ -21,14 +21,14 @@
 					</span>
 				</a>
 			</li>
-			<li class="nav-item">
+			<!-- <li class="nav-item">
 				<a href="javascript:void(0);" data-kind="movies" class="nav-link" onclick="setActive(this)">
 					<span style="display: inline-flex; align-items: center;">
 						<ion-icon name="videocam-outline" size="large"></ion-icon>
 						<span style="margin-left: 4px;">영화 목록</span>
 					</span>
 				</a>
-			</li>
+			</li> -->
 
 			<li class="nav-item">
 				<a href="javascript:void(0);" data-kind="theater" class="nav-link" onclick="setActive(this)">
