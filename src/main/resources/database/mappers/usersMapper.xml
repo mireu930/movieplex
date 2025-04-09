@@ -161,6 +161,8 @@
 		LEFT OUTER JOIN MOVIES mv ON MV.MOVIEID = T.MOVIEID
 		LEFT OUTER JOIN SEATS s ON S.THEATERID = T.THEATERID 
     	WHERE u.USERID = #{userId}
+    		AND MB.NOWSTATUS =1
+    		OR MB.NOWSTATUS =0
 	</select>
 	
 	<select id="bookDetail" resultMap="getBookList"  parameterType="MovieBookDTO">
