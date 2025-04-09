@@ -153,9 +153,7 @@ public class ReviewController {
 		return "/reviewNest/nestMypage";
 	}
 	
-	
 
-	
 	
 	@RequestMapping(value="deleteReview", method=RequestMethod.POST)
 	public String deleteReview(@RequestParam("reviewId") Long reviewId, HttpSession session, RedirectAttributes redirectAttributes) throws Exception{
@@ -169,9 +167,9 @@ public class ReviewController {
 	    }
 
 	    return "redirect:/users/reviewNest/nestMypage";
+
+	
 	}
-	
-	
-	
+  
 	
 }

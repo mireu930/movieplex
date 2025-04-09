@@ -12,7 +12,10 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>Album example · Bootstrap v5.3</title>
+<title>로그인</title>
+
+<link href="/resources/image/movieplex_title.png" rel="shortcut icon"
+	type="image/x-icon">
 
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/login.css">
@@ -27,7 +30,7 @@
 	<main>
 		<div class="cover_box">
 			<div class = "form-box login">
-				<h2>login</h2>
+				<h2>로그인</h2>
 					<form action = "./login" method = "post">
 					  <div class="input-box">
 						<div class="input-group has-validation">
@@ -61,7 +64,7 @@
 			</div>
 
 			<div class = "form-box register">
-				<h2>register</h2>
+				<h2>회원가입</h2>
 				<form action = "./join" method = "post" enctype="multipart/form-data">
 					
 					  <div class="input-box">

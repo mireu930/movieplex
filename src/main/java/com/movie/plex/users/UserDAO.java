@@ -106,7 +106,11 @@ public class UserDAO {
 		return sqlSession.selectOne(NAMESPACE+"bookTotalCount", userDTO);
 	}
 	
-	public MovieBookDTO bookDetail(MovieBookDTO movieBookDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"bookDetail", movieBookDTO);
+	public List<MovieBookDTO> bookDetail(MovieBookDTO movieBookDTO) throws Exception {
+		return sqlSession.selectList(NAMESPACE+"bookDetail", movieBookDTO);
+	}
+
+	public int paymentRefund(MovieBookDTO movieBookDTO) throws Exception {
+		return sqlSession.update(NAMESPACE+"paymentRefund", movieBookDTO);
 	}
 }

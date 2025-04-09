@@ -106,7 +106,7 @@
 					</div>
 				</div>
 				<div class="payment-buttons">
-					<button class="btn btn-secondary">이전</button>
+					<button id="preBtn" class="btn btn-secondary">이전</button>
 					<button id="payBtn" class="btn btn-primary">결제</button>
 				</div>
 			</div>
