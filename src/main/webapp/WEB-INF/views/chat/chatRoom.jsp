@@ -14,6 +14,9 @@
 <meta name="generator" content="Hugo 0.122.0">
 <title>chat</title>
 
+<link href="/resources/image/movieplex_title.png" rel="shortcut icon"
+	type="image/x-icon">
+
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/chat.css">
 

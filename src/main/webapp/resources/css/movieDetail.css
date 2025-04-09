@@ -74,6 +74,10 @@
   cursor: pointer;
   font-weight: bold;
   width: 100%;
+  
+}
+a{
+  text-decoration-line: none;
 }
 
 .movie-summary-section {

@@ -100,6 +100,7 @@
                     <!-- 버튼 영역 -->
                     <div class="movie-actions mt-3">
                         <button id="finalBtn" class="btn btn-outline-primary w-100">예매 완료</button>
+                        <a href="/movieBooks/booking" class="btn btn-outline-secondary w-100">이전</a>
                     </div>
                 </div>
                 

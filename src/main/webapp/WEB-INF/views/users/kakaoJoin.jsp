@@ -12,7 +12,10 @@
 <meta name="author"
 	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 <meta name="generator" content="Hugo 0.122.0">
-<title>Album example · Bootstrap v5.3</title>
+<title>카카오로그인</title>
+
+<link href="/resources/image/movieplex_title.png" rel="shortcut icon"
+	type="image/x-icon">
 
 <link rel="stylesheet" href="/resources/css/main.css">
 <link rel="stylesheet" href="/resources/css/kakaoJoin.css">

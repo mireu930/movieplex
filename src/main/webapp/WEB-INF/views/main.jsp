@@ -91,8 +91,8 @@
 									<p class="card-text">${top.movieTitle}</p>
 									<div class="d-flex justify-content-between align-items-center">
 										<div class="btn-group">
-											<button type="button"
-												class="btn btn-sm btn-outline-danger">예매하기</button>
+											<a href="/movieBooks/booking"
+												class="btn btn-sm btn-outline-danger">예매하기</a>
 										</div>
 										<small class="text-body-secondary">${status.index + 1} 위</small>
 									</div>
