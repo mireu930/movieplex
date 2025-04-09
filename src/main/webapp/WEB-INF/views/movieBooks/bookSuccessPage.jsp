@@ -20,8 +20,8 @@
             </div>
 
             <div class="btn-group successBtn mt-3">
-                <a href="/users/mypage" class="btn btn-success ">마이페이지로 이동</a>
-                <a href="/" class="btn btn-secondary">홈으로 돌아가기</a>
+                <a href="/users/mypage" class="btn btn-outline-info">마이페이지로 이동</a>
+                <a href="/" class="btn btn-outline-primary">홈으로 돌아가기</a>
             </div>
         </div>
     </div>
