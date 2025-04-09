@@ -1,12 +1,15 @@
 package com.movie.plex.nestcontents;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.movie.plex.pages.Pager;
+import com.movie.plex.pages.ReviewPager;
 
 @Repository
 public class NestContentDAO {
@@ -25,28 +28,28 @@ public class NestContentDAO {
 		return sqlSession.insert(NAMESPACE+"addJsonTVList", nestContentDTOs);
 	}
 	
-	public Long getTotalCount(Pager pager) throws Exception{
+	public Long getTotalCount(ReviewPager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTotalCount", pager);
 	}
 	
-	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
+	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getMovieList", pager);
 	}
 	
-	public Long getTvTotalCount(Pager pager) throws Exception{
+	public Long getTvTotalCount(ReviewPager pager) throws Exception{
 		return sqlSession.selectOne(NAMESPACE+"getTvTotalCount", pager);
 	}
 	
-	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
+	public List<NestContentDTO> getTvList(ReviewPager pager) throws Exception{
 		return sqlSession.selectList(NAMESPACE+"getTvList",pager);
 	}
 	
-	public NestContentDTO getMovieDetail(NestContentDTO nestContentDTO) throws Exception {
-		return sqlSession.selectOne(NAMESPACE+"getMovieDetail", nestContentDTO);
+	public NestContentDTO getMovieDetail(Long contentId) throws Exception {
+		return sqlSession.selectOne(NAMESPACE+"getMovieDetail", contentId);
 	}
 	
-	public NestContentDTO getTvDetail(NestContentDTO nestContentDTO) throws Exception{
-		return sqlSession.selectOne(NAMESPACE+"getTvDetail", nestContentDTO);
+	public NestContentDTO getTvDetail(Long contentId) throws Exception{
+		return sqlSession.selectOne(NAMESPACE+"getTvDetail", contentId);
 	}
 	
 	

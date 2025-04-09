@@ -5,14 +5,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.movie.plex.users.UserDTO;
 
@@ -22,27 +19,29 @@ public class ChatController {
 	@Autowired
 	private ChatService chatService;
 
-	private Logger logger = LoggerFactory.getLogger(ChatController.class);
-	
-	@GetMapping(value = "/chat")
-	public String chat2(Model model, HttpSession session) {
-		logger.info("[Controller]: chat 페이지 진입");
-		Object user = session.getAttribute("user");
-		model.addAttribute("user", user);
-		return "chat";
-	}
 	
 	@GetMapping(value = "/chatRoom")
-	public String chatRoomList(Model model) throws Exception {
+	public String chatRoomList(Model model, HttpSession session, ChatRoomJoin chatRoomJoin) throws Exception {
 		
-		List<ChatRoom> list = chatService.chatRoomList();
+		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		
+		List<ChatRoom> list = null;
+		
+		if(userDTO.getUserGrade()==4) {
+			list = chatService.chatRoomList();
+		} else {
+			chatRoomJoin.setUserNum(userDTO.getUserNum());
+			list = chatService.getChatRoomJoin(chatRoomJoin);
+			
+		}
 		model.addAttribute("list", list);
+		model.addAttribute("user", userDTO);
 		
-		return "chatRoom";
+		return "chat/chatRoom";
 	}
 	
 	@PostMapping(value = "/addChatRoom")
-	public String addChatRoom(ChatRoom chatRoom, HttpSession session, Model model) throws Exception {
+	public String addChatRoom(ChatRoom chatRoom, HttpSession session, Model model, ChatRoomJoin chatRoomJoin) throws Exception {
 	
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
 		chatRoom.setUserNum(userDTO.getUserNum());
@@ -50,6 +49,10 @@ public class ChatController {
 		int result = chatService.addChatRoom(chatRoom);
 		
 		if(result>0) {
+			chatRoomJoin.setUserNum(userDTO.getUserNum());
+			chatRoomJoin.setChatRoomNo(chatRoom.getChatRoomNo());
+			chatService.addChatRoomDetail(chatRoomJoin);
+			
 			model.addAttribute("result", "방만들기성공");
 			model.addAttribute("path", "./chatRoom");
 		} else {
@@ -67,6 +70,18 @@ public class ChatController {
 		model.addAttribute("list", list);
 		model.addAttribute("user", userDTO);
 		model.addAttribute("chatRoomNo", chatRoomJoin.getChatRoomNo());
-		return "chatRoomDetail";
+		return "chat/chatRoomDetail";
+	}
+	
+	@GetMapping(value = "/exit")
+	public String exitChatRoom(ChatRoomJoin chatRoomJoin, HttpSession session) throws Exception {
+		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		
+		chatRoomJoin.setUserNum(userDTO.getUserNum());
+		chatRoomJoin.setChatRoomNo(chatRoomJoin.getChatRoomNo());
+		
+		chatService.exitChatRoom(chatRoomJoin);
+		
+		return "redirect:./chatRoom";
 	}
 }

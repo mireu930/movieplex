@@ -5,15 +5,19 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.movie.plex.like.ContentsLikeDAO;
 import com.movie.plex.pages.Pager;
+import com.movie.plex.pages.ReviewPager;
 
 @Service
 public class NestContentService {
 	
 	@Autowired
 	private NestContentDAO nestContentDAO;
+	@Autowired
+	private ContentsLikeDAO contentsLikeDAO;
 	
-	public List<NestContentDTO> getMovieList(Pager pager) throws Exception{
+	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
 		//珥앷갗�닔 媛��졇���꽌 怨꾩궛�븯�뒗 �떇
 		Long totalCount = nestContentDAO.getTotalCount(pager);
 		
@@ -26,7 +30,7 @@ public class NestContentService {
 		return movieList;
 	}
 	
-	public List<NestContentDTO> getTvList(Pager pager) throws Exception{
+	public List<NestContentDTO> getTvList(ReviewPager pager) throws Exception{
 		Long tvtotalCount = nestContentDAO.getTvTotalCount(pager);
 	
 		pager.makePage(tvtotalCount);
@@ -37,11 +41,21 @@ public class NestContentService {
 		return tvList;
 	}
 	
-	public NestContentDTO getMovieDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getMovieDetail(nestContentDTO);
+	public NestContentDTO getMovieDetail(Long contentId) throws Exception {
+		return nestContentDAO.getMovieDetail(contentId);
 	}
 	
-	public NestContentDTO getTvDetail(NestContentDTO nestContentDTO) throws Exception {
-		return nestContentDAO.getTvDetail(nestContentDTO);
+	public NestContentDTO getTvDetail(Long contentId) throws Exception {
+		return nestContentDAO.getTvDetail(contentId);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

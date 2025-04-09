@@ -1,27 +1,19 @@
 package com.movie.plex.websocket;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import javax.websocket.server.ServerEndpoint;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.movie.plex.users.UserDTO;
 
-@Component
 public class EchoHandler extends TextWebSocketHandler{
 	
 	@Autowired
@@ -47,7 +39,7 @@ public class EchoHandler extends TextWebSocketHandler{
 		
 		if(result>0) {
 			for(WebSocketSession s: sessions) {
-				int chatRoomNo = 0;
+				Integer  chatRoomNo = (Integer)s.getAttributes().get("chatRoomNo");
 				
 				if(chatMessage.getChatRoomNo() == chatRoomNo) {
 					s.sendMessage(new TextMessage(new Gson().toJson(chatMessage)));

@@ -32,7 +32,7 @@
     	SELECT 1 FROM DUAL
 	</insert>
 	
-	<select id="getTotalCount" parameterType="Pager" resultType="Long">
+	<select id="getTotalCount" parameterType="ReviewPager" resultType="Long">
 			SELECT COUNT(CONTENTID) 
 			FROM NESTCONTENTS
 			WHERE KIND=0
@@ -40,7 +40,7 @@
 			AND LONGPOSTER IS NOT NULL
 	</select>
 
-	<select id="getMovieList"  parameterType="Pager" resultType="nestContentDTO">
+	<select id="getMovieList"  parameterType="ReviewPager" resultType="nestContentDTO">
 			SELECT * FROM
 				(SELECT ROWNUM R, M.* FROM
 					(
@@ -55,7 +55,7 @@
 			WHERE R BETWEEN #{startNum} AND #{endNum}
 	</select>
 
-	<select id="getTvTotalCount" parameterType="Pager" resultType="Long">
+	<select id="getTvTotalCount" parameterType="ReviewPager" resultType="Long">
 			SELECT COUNT(CONTENTID) 
 			FROM NESTCONTENTS
 			WHERE KIND=1
@@ -63,7 +63,7 @@
 			AND LONGPOSTER IS NOT NULL
 	</select>
 	
-	<select id="getTvList" parameterType="Pager" resultType="nestContentDTO">
+	<select id="getTvList" parameterType="ReviewPager" resultType="nestContentDTO">
 			SELECT * FROM
 				(SELECT ROWNUM R, M.* FROM
 					(
@@ -78,21 +78,81 @@
 			WHERE R BETWEEN #{startNum} AND #{endNum}
 	</select>
 
-	<select id="getMovieDetail" parameterType="nestContentDTO" resultType="nestContentDTO">
-			SELECT *
-			FROM NESTCONTENTS
-			WHERE CONTENTID=#{contentId}
+	<select id="getMovieDetail" parameterType="long" resultMap="MovieDetailResult">
+	    SELECT NC.*, 
+	    		r.REVIEWID , r.REVIEWCONTENTS , r.REVIEWDATE , 
+		        r.REVIEWRATE , r.USERNUM ,
+		        U.USERNAME
+		FROM NESTCONTENTS NC
+		LEFT JOIN REVIEW r ON NC.CONTENTID  = r.CONTENTID
+		LEFT JOIN USERS U ON R.USERNUM = U.USERNUM
+		WHERE NC.CONTENTID = #{contentId}
+	</select>
+
+	
+	<resultMap id="MovieDetailResult"  type="NestContentDTO">
+    <id property="contentId" column="CONTENTID"/>
+    <result property="contentTitle" column="CONTENTTITLE"/>
+    <result property="shortPoster" column="SHORTPOSTER"/>
+    <result property="longPoster" column="LONGPOSTER"/>
+    <result property="releaseDate" column="RELEASEDATE"/>
+    <result property="overView" column="OVERVIEW"/>
+    <result property="popularity" column="POPULARITY"/>
+    <result property="kind" column="KIND"/>
+    
+    <collection property="reviewList" ofType="ReviewDTO" javaType="java.util.ArrayList">
+        <id property="reviewId" column="REVIEWID"/>
+        <result property="reviewContents" column="REVIEWCONTENTS"/>
+        <result property="reviewDate" column="REVIEWDATE"/>
+        <result property="reviewRate" column="REVIEWRATE"/>
+        <result property="kind" column="KIND"/>
+        <result property="userNum" column="USERNUM"/>
+        <result property="contentId" column="CONTENTID"/>
+         <result property="userName" column="USERNAME"/>
+    </collection>
+	</resultMap>
+
+
+	
+	<select id="getTvDetail" parameterType="long" resultMap="TvDetailResult">
+		SELECT NC.*, 
+	    		r.REVIEWID , r.REVIEWCONTENTS , r.REVIEWDATE , 
+		        r.REVIEWRATE , r.USERNUM ,
+		        U.USERNAME
+		FROM NESTCONTENTS NC
+		LEFT JOIN REVIEW r ON NC.CONTENTID  = r.CONTENTID
+		LEFT JOIN USERS U ON R.USERNUM = U.USERNUM
+		WHERE NC.CONTENTID = #{contentId}
+	</select>
+
+<resultMap id="TvDetailResult"  type="NestContentDTO">
+    <id property="contentId" column="CONTENTID"/>
+    <result property="contentTitle" column="CONTENTTITLE"/>
+    <result property="shortPoster" column="SHORTPOSTER"/>
+    <result property="longPoster" column="LONGPOSTER"/>
+    <result property="releaseDate" column="RELEASEDATE"/>
+    <result property="overView" column="OVERVIEW"/>
+    <result property="popularity" column="POPULARITY"/>
+    <result property="kind" column="KIND"/>
+    
+    <collection property="reviewList" ofType="ReviewDTO" javaType="java.util.ArrayList">
+        <id property="reviewId" column="REVIEWID"/>
+        <result property="reviewContents" column="REVIEWCONTENTS"/>
+        <result property="reviewDate" column="REVIEWDATE"/>
+        <result property="reviewRate" column="REVIEWRATE"/>
+        <result property="kind" column="KIND"/>
+        <result property="userNum" column="USERNUM"/>
+        <result property="contentId" column="CONTENTID"/>
+        <result property="userName" column="USERNAME"/>
+    </collection>
+	</resultMap>
+
+	<select id="getLikedContentsIds" resultType="Long">
+	    SELECT CONTENTID
+	    FROM CONTENTSLIKE
+	    WHERE USERNUM = #{userNum} AND KIND = #{kind}
 	</select>
 	
-	<select id="getTvDetail" parameterType="nestContentDTO" resultType="nestContentDTO">
-			SELECT *
-			FROM NESTCONTENTS
-			WHERE CONTENTID=#{contentId}
-	</select>
-
-
-
-
 
 
 

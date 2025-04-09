@@ -16,10 +16,29 @@
 		ORDER BY CHATROOMNO DESC
   	</select>
   	
+  	<select id="getChatRoomJoin" resultType="ChatRoom" parameterType="ChatRoomJoin">
+  		  SELECT 
+			CR.CHATROOMNO ,
+			CR.TITLE,
+			U.USERID,
+			(SELECT COUNT(*) FROM CHATROOMJOIN CRJ WHERE CRJ.CHATROOMNO = CR.CHATROOMNO) AS CNT
+		  FROM CHATROOM CR
+		  JOIN CHATROOMJOIN CRJ ON CR.CHATROOMNO = CRJ.CHATROOMNO
+		  JOIN USERS U ON U.USERNUM = CRJ.USERNUM
+		  WHERE CRJ.USERNUM = #{userNum}
+		  AND CR.STATUS = 'Y'
+		ORDER BY CHATROOMNO DESC
+  	</select>
+  	
   	<insert id="addChatRoom" parameterType="ChatRoom">
+  		<selectKey order="BEFORE" keyProperty="chatRoomNo" resultType="int">
+			SELECT CHATROOMNO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
   		INSERT INTO CHATROOM
-		VALUES (CHATROOMNO_SEQ.NEXTVAL, #{title}, 'Y', #{userNum})
+		VALUES (#{chatRoomNo}, #{title}, 'Y', #{userNum})
   	</insert>
+  	
+  	
   	
   	<select id="addCheck" parameterType="ChatRoomJoin" resultType="Long">
   		SELECT COUNT(*) FROM CHATROOMJOIN 
@@ -42,4 +61,22 @@
 		INSERT INTO CHATMESSAGE
 		VALUES (CMNO_SEQ.NEXTVAL, #{message} , SYSDATE, #{chatRoomNo}, #{userNum})
 	</insert>
+	
+	<delete id="exitChatRoom" parameterType="ChatRoomJoin">
+		DELETE FROM CHATROOMJOIN
+			WHERE USERNUM = #{userNum} AND CHATROOMNO = #{chatRoomNo}
+	</delete>
+	
+	<update id="closeChatRoom" parameterType="ChatRoomJoin">
+		UPDATE CHATROOM
+		   SET STATUS = 'N'
+		 WHERE CHATROOMNO = #{chatRoomNo}
+	</update>
+	
+		<select id="countChatRoomMember" parameterType="ChatRoomJoin" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM CHATROOMJOIN
+		WHERE CHATROOMNO = #{chatRoomNo}
+	</select>
   </mapper>

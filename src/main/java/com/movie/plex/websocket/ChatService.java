@@ -16,6 +16,10 @@ public class ChatService {
 		return chatDAO.chatRoomList();
 	}
 	
+	public List<ChatRoom> getChatRoomJoin(ChatRoomJoin chatRoomJoin) throws Exception {
+		return chatDAO.getChatRoomJoin(chatRoomJoin);
+	}
+	
 	public int addChatRoom(ChatRoom chatRoom) throws Exception {
 		return chatDAO.addChatRoom(chatRoom);
 	}
@@ -41,6 +45,19 @@ public class ChatService {
 		chatMessage.setMessage(Utils.XSSHandling(chatMessage.getMessage()));
 		chatMessage.setMessage(Utils.newLineHandling(chatMessage.getMessage()));
 		return chatDAO.insertMessage(chatMessage);
+	}
+	
+	public int exitChatRoom(ChatRoomJoin chatRoomJoin) throws Exception {
+		int result = chatDAO.exitChatRoom(chatRoomJoin);
+		
+		if(result>0) {
+			int cnt = chatDAO.countChatRoomMember(chatRoomJoin);
+			
+			if(cnt==0) {
+				result = chatDAO.closeChatRoom(chatRoomJoin);
+			}
+		}
+		return result;
 	}
 
 }
