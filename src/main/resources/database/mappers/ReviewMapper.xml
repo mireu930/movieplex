@@ -21,8 +21,8 @@
 	
 
     <select id="getReviewList" parameterType="Long" resultType="ReviewDTO">
-        SELECT u.USERNAME, r.REVIEWCONTENTS, r.REVIEWID ,r.REVIEWRATE
-		FROM REVIEW r 
+        SELECT u.USERNAME, u.USERNUM,  r.REVIEWCONTENTS, r.REVIEWID ,r.REVIEWRATE 
+        FROM REVIEW r 
 		JOIN USERS u 
 		ON r.USERNUM  = u.USERNUM
 		WHERE r.CONTENTID = #{contentId, jdbcType=NUMERIC}
