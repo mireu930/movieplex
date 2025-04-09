@@ -71,13 +71,9 @@ public class MovieBookService {
 		return movieBookDAO.getAmounts(bookId);
 	}
 
-
-	public int updateNowStatus(Long bookId) throws Exception{
-		return movieBookDAO.updateNowStatus(bookId);
-		
-	}
 	
 	public int bookRefund(MovieBookDTO movieBookDTO) throws Exception {
+		movieBookDAO.deleteSeat(movieBookDTO);
 		return movieBookDAO.bookRefund(movieBookDTO);
 	}
 
@@ -94,14 +90,6 @@ public class MovieBookService {
 		map.put("totalPrice", totalPrice);
 		
 		return map;
-	}
-
-	public void deleteInfo(Long bookId) throws Exception{
-		Long theaterId = movieBookDAO.getTheaterId(bookId);
-		SeatDTO seatDTO = new SeatDTO();
-		seatDTO.setBookId(bookId);
-		seatDTO.setTheaterId(theaterId);
-		movieBookDAO.deleteSeat(seatDTO);
 	}
 
 	public Long movieBookBankBook(List<String> seat, Long theaterId, Long totalPrice, UserDTO userDTO) throws Exception{
