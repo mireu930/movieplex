@@ -40,14 +40,27 @@ function isId(v) {
 
 idbtn.addEventListener("click",()=>{
 
+    let feedback = document.getElementById("userIdFeedback");
+
+    if(isId(userId.value)){
+        feedback.style.display = 'none';
+    } else {
+        alert("아이디는 영문,숫자 6자 이상 12자이하이여야합니다다(아이디확인해주십시오)")
+        feedback.style.display = 'block';
+        userId.classList.add('is-invalid');
+        return;
+    }
+
     fetch("./check?userId="+userId.value)
     .then(r=>r.text())
     .then(r=>{
+        console.log(r);
         if(r.trim()=='0'){
             alert('중복된 아이디입니다.')
             userId.classList.add('is-invalid');
             idcheck=false
         } else {
+            
             alert('사용 가능한 아이디입니다.')
             userId.classList.remove('is-invalid');
             idcheck=true;

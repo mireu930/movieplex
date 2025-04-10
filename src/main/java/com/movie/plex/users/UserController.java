@@ -358,7 +358,7 @@ public class UserController {
 		@RequestMapping(value = "/reviewNest/nestMypage", method = RequestMethod.GET)
 		public String nestMypage(UserDTO userDTO, HttpSession session, Model model) throws Exception{
 			UserDTO user = (UserDTO) session.getAttribute("user");
-		    if (user == null) return "redirect:/login";
+		    if (user == null) return "redirect:/reviewNest/login";
 			
 		    model.addAttribute("userName", user.getUserName());
 			
@@ -375,7 +375,7 @@ public class UserController {
 
 	@RequestMapping(value = "refund", method = RequestMethod.POST)
 	@ResponseBody
-	public int refund(@ModelAttribute MovieBookDTO movieBookDTO) throws Exception {
+	public int refund(MovieBookDTO movieBookDTO) throws Exception {
 		
 		int result = movieBookService.bookRefund(movieBookDTO);
 		int result2 = userService.paymentRefund(movieBookDTO);
