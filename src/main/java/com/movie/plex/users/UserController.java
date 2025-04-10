@@ -189,8 +189,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "mypage", method = RequestMethod.GET)
-	public UserDTO mypage(UserDTO userDTO, HttpSession session, Model model) throws Exception {
-		return (UserDTO)session.getAttribute("user");
+	public String mypage(UserDTO userDTO, HttpSession session, Model model) throws Exception {
+		
+		userDTO = (UserDTO)session.getAttribute("user");
+		
+		if(userDTO == null || userDTO.getUserId() == null) {
+			model.addAttribute("result", "로그인이필요합니다.");
+			model.addAttribute("path", "/users/login");
+			return "commons/result";
+		} else {
+			model.addAttribute("user", userDTO);
+		}
+		return "users/mypage";
 	}
 	
 	@RequestMapping(value = "mypageData", method = RequestMethod.GET)
