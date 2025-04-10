@@ -448,12 +448,20 @@ function bookDetail(bookId){
                     day: '2-digit'
                 });
 
+                const timestamp2 = parseInt(item.theaterDTO.theaterStart);
+                const formattedDate2 = new Date(timestamp2).toLocaleDateString('ko-KR', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit'
+                });
+
                bookHtml +=`  <img src="https://image.tmdb.org/t/p/w500${item.theaterDTO.movieDTO.longPoster}" alt="${item.theaterDTO.movieDTO.movieTitle}" style="width: 100%; height: 350px; object-fit: cover;">
                  
                  <div style="padding: 20px; text-align: left;">
                      <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${item.theaterDTO.movieDTO.movieTitle}</h2>
  
                      <p style="margin: 5px 0;"><strong>영화관:</strong> ${item.theaterDTO.theaterName}</p>
+                     <p style="margin: 5px 0;"><strong>시작시간:</strong> ${formattedDate2}</p>
                      <p style="margin: 5px 0;"><strong>좌석:</strong>
                      `
                      item.theaterDTO.seatDTO.forEach(s=>{
@@ -507,7 +515,7 @@ function refund(bookId) {
     })
     .catch(error => {
         console.error(error);
-        alert("환불불 정보를 가져올 수 없습니다.");
+        alert("환불 정보를 가져올 수 없습니다.");
     });
 }
 

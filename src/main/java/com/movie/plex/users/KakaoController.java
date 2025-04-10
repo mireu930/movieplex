@@ -135,7 +135,7 @@ public class KakaoController {
 	    	
 	    } else {
 	    	model.addAttribute("result", "로그인실패");
-	    	model.addAttribute("email", "/reviewNest/login");
+	    	model.addAttribute("path", "/reviewNest/login");
 	    	return "commons/result";	    	
 	    }
 
