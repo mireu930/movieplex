@@ -113,4 +113,8 @@ public class UserDAO {
 	public int paymentRefund(MovieBookDTO movieBookDTO) throws Exception {
 		return sqlSession.update(NAMESPACE+"paymentRefund", movieBookDTO);
 	}
+	
+	public List<UserDTO> getAdmin() throws Exception{
+		return sqlSession.selectList(NAMESPACE + "getAdmin");
+	}
 }
