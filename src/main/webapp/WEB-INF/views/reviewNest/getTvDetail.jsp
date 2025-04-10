@@ -37,9 +37,8 @@
 				    <p style="color: #666; margin-bottom: 50px;">${content.releaseDate}</p>
 				    <p>${content.overView}</p>
 				    
-				    <button type="button" class="btn-modal"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-						  리뷰 남기기
-						</button>
+				    <button type="button" class="btn-modal"  data-bs-target="#staticBackdrop"   id="btn-review"> 
+				    	리뷰 남기기</button>
 						
 						<!-- Modal -->
 						<form id="reviewForm" action="addReview" method="post">

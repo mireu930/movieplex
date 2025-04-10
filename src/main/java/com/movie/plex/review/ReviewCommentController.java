@@ -36,6 +36,21 @@ public class ReviewCommentController {
 	@Autowired
 	private ContentsLikeService contentsLikeService;
 	
+	@RequestMapping(value="checkComment", method= RequestMethod.GET)
+	public String checkUser(HttpSession session, Model model) throws Exception{
+		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		
+		if(userDTO == null) {
+			model.addAttribute("result", 0);
+		}else {
+			model.addAttribute("result", 1);
+		}
+		return "/commons/ajax";
+	} 
+	
+	
+	
+	
 	@RequestMapping(value = "addComment", method = RequestMethod.GET)
 	public void addComment() throws Exception {
 
@@ -51,13 +66,13 @@ public class ReviewCommentController {
 	    }
 		
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
-		if (userDTO == null) {
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script>alert('로그인이 필요합니다.'); location.href='/users/login';</script>");
-	        out.flush();
-	        return null;
-	    }
+		/*
+		 * if (userDTO == null) { response.setContentType("text/html; charset=UTF-8");
+		 * PrintWriter out = response.getWriter(); out.
+		 * println("<script>alert('로그인이 필요합니다.'); location.href='/users/login';</script>"
+		 * ); out.flush(); return null; }
+		 */
+		
 		//System.out.println(reviewDTO.getReviewContents());
 		//System.out.println(reviewDTO.getKind());
 		
