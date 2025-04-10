@@ -358,7 +358,7 @@ public class UserController {
 		@RequestMapping(value = "/reviewNest/nestMypage", method = RequestMethod.GET)
 		public String nestMypage(UserDTO userDTO, HttpSession session, Model model) throws Exception{
 			UserDTO user = (UserDTO) session.getAttribute("user");
-		    if (user == null) return "redirect:/login";
+		    if (user == null) return "redirect:/reviewNest/login";
 			
 		    model.addAttribute("userName", user.getUserName());
 			
