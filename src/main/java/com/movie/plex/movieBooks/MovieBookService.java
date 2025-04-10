@@ -22,6 +22,8 @@ public class MovieBookService {
 	private TheaterDAO theaterDAO;
 	@Autowired
 	private MovieBookDAO movieBookDAO;
+	@Autowired
+	private PaymentService paymentService;
 
 	public TheaterDTO getMovieInfo(Long theaterId) throws Exception{
 		return theaterDAO.getMovieInfo(theaterId);
@@ -73,6 +75,10 @@ public class MovieBookService {
 
 	
 	public int bookRefund(MovieBookDTO movieBookDTO) throws Exception {
+		Long status = movieBookDAO.getStatus(movieBookDTO);
+		if(status == 0) {
+			paymentService.deleteBook(movieBookDTO.getBookId());
+		}
 		movieBookDAO.deleteSeat(movieBookDTO);
 		return movieBookDAO.bookRefund(movieBookDTO);
 	}

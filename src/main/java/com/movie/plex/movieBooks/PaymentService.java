@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.movie.plex.coupon.CouponDAO;
 import com.movie.plex.coupon.CouponDTO;
 import com.movie.plex.couponConnect.CouponConnectDTO;
+import com.movie.plex.movies.MovieDAO;
 import com.movie.plex.users.UserDAO;
 import com.movie.plex.users.UserDTO;
 import com.siot.IamportRestClient.IamportClient;
@@ -31,6 +32,8 @@ public class PaymentService {
 	private CouponDAO couponDAO;
 	@Autowired
 	private UserDAO userDAO;
+	@Autowired
+	private MovieBookDAO bookDAO;
 	
 	@Value("${import.channel}")
 	private String importChannel;
@@ -39,6 +42,8 @@ public class PaymentService {
 	private String rest_api;
 	@Value("${import.secret}")
 	private String api_secret;
+	
+	//private IamportClient api = new IamportClient(rest_api, api_secret);
 	
 	
 	public Long movieBookCard(List<String> seat, Long theaterId, UserDTO userDTO, Long totalPrice, String usedCoupon, String imp_uid, String merchant) throws Exception{
@@ -100,8 +105,14 @@ public class PaymentService {
 		return result;
 	}
 	
-	private void calcelPayment(String impUid, String reason, IamportClient api) throws Exception{
-		CancelData cancelData = new CancelData(impUid, false);
+	public void deleteBook(Long bookId) throws Exception{
+		IamportClient api = new IamportClient(rest_api, api_secret);
+		Long merchant = bookDAO.getPayId(bookId);
+		calcelPayment(merchant.toString(), "환불", api);
+	}
+	
+	private void calcelPayment(String id, String reason, IamportClient api) throws Exception{
+		CancelData cancelData = new CancelData(id, false);
 		cancelData.setReason(reason);
 		
 		IamportResponse<Payment> response = api.cancelPaymentByImpUid(cancelData);
@@ -112,6 +123,8 @@ public class PaymentService {
 			System.out.println("결제 취소 실패");
 		}
 	}
+
+	
 
 
 
