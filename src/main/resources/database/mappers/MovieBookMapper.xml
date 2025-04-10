@@ -84,6 +84,12 @@
 		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
 		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 0, 100, #{bookId})
 	</insert>
+	<select id="getStatus" parameterType="MovieBookDTO" resultType="Long">
+		SELECT NOWSTATUS FROM MOVIEBOOKS WHERE BOOKID = #{bookId}
+	</select>
+	<select id="getPayId" parameterType="Long" resultType="Long">
+		SELECT PAYID FROM MOVIEPAYMENTS WHERE BOOKID = #{bookId}
+	</select>
 	<!-- 지금은 테스트라 금액은 100으로 고정 / VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, #{payAmounts}, #{bookId}) -->
 	<select id="getAmounts" parameterType="Long" resultType="java.math.BigDecimal">
 		SELECT PAYAMOUNTS FROM MOVIEPAYMENTS WHERE BOOKID = #{bookId}

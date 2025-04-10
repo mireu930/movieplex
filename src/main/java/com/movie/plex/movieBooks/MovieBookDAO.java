@@ -71,4 +71,12 @@ public class MovieBookDAO {
 		return sqlSession.delete(NAMESPACE +"deletePay", bookId);
 	}
 
+	public Long getStatus(MovieBookDTO movieBookDTO) {
+		return sqlSession.selectOne(NAMESPACE + "getStatus", movieBookDTO);
+	}
+
+	public Long getPayId(Long bookId) {
+		return sqlSession.selectOne(NAMESPACE + "getPayId", bookId);
+	}
+
 }
