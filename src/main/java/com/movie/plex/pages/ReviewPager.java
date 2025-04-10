@@ -18,7 +18,10 @@ public class ReviewPager {
 	private Long start;
 	private Long end;
 	private boolean endCheck;
+	private String search;
 	
+	
+
 	//시작 번호, 끝번호를 계산하는 메서드 
 	public void makeNum() {
 			this.startNum = (this.getPage()-1)*this.getPerPage()+1;
@@ -123,10 +126,18 @@ public class ReviewPager {
 	public boolean isEndCheck() {
 		return endCheck;
 	}
+	
 	public void setEndCheck(boolean endCheck) {
 		this.endCheck = endCheck;   
 	}
 
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 
 
 

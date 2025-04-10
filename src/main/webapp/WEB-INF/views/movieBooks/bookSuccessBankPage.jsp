@@ -14,7 +14,7 @@
             <div class="success-movie-info text-start mt-4">
                 <h5>예매 정보</h5>
                 <p><strong>영화 제목:</strong> <span id="movieName">${theaterDTO.movieDTO.movieTitle }</span></p>
-                <p><strong>상영관:</strong> <span id="theaterName">${theaterDTO.theaterName }</span></p>
+                <p><strong>상영관:</strong> <span id="theaterName">${theaterDTO.theaterName }관</span></p>
                 <p><strong>상영 시간:</strong> <span id="screeningTime">${theaterDTO.printStart } ~ ${theaterDTO.printEnd }</span></p>
                 <p><strong>예매 인원:</strong> <span id="numPeople"></span></p>
             </div>

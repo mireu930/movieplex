@@ -32,12 +32,14 @@
     	SELECT 1 FROM DUAL
 	</insert>
 	
+	
 	<select id="getTotalCount" parameterType="ReviewPager" resultType="Long">
 			SELECT COUNT(CONTENTID) 
 			FROM NESTCONTENTS
 			WHERE KIND=0
 			AND SHORTPOSTER IS NOT NULL
 			AND LONGPOSTER IS NOT NULL
+			AND CONTENTTITLE LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
 	</select>
 
 	<select id="getMovieList"  parameterType="ReviewPager" resultType="nestContentDTO">
@@ -49,6 +51,7 @@
 						WHERE KIND=0
 							AND SHORTPOSTER IS NOT NULL
 							AND LONGPOSTER IS NOT NULL
+							AND CONTENTTITLE LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
 						ORDER BY POPULARITY DESC
 					) M
 				)
@@ -61,6 +64,7 @@
 			WHERE KIND=1
 			AND SHORTPOSTER IS NOT NULL
 			AND LONGPOSTER IS NOT NULL
+			AND CONTENTTITLE LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
 	</select>
 	
 	<select id="getTvList" parameterType="ReviewPager" resultType="nestContentDTO">
@@ -72,6 +76,7 @@
 						WHERE KIND=1
 						AND SHORTPOSTER IS NOT NULL
 						AND LONGPOSTER IS NOT NULL
+						AND CONTENTTITLE LIKE '%' || #{search, jdbcType=VARCHAR} || '%'
 						ORDER BY POPULARITY DESC
 					) M
 				)

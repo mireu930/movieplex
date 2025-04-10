@@ -34,6 +34,18 @@ public class ReviewController {
 	private ReviewLikeService reviewLikeService;
 	@Autowired
 	private ContentsLikeService contentsLikeService;
+	
+	@RequestMapping(value="checkUser", method= RequestMethod.GET)
+	public String checkUser(HttpSession session, Model model) throws Exception{
+		UserDTO userDTO = (UserDTO) session.getAttribute("user");
+		
+		if(userDTO == null) {
+			model.addAttribute("result", 0);
+		}else {
+			model.addAttribute("result", 1);
+		}
+		return "/commons/ajax";
+	} 
 
 	@RequestMapping(value = "addReview", method = RequestMethod.GET)
 	public void addReview() throws Exception {
@@ -43,13 +55,7 @@ public class ReviewController {
 	@RequestMapping(value = "addReview", method = RequestMethod.POST)
 	public String addReview(ReviewDTO reviewDTO, HttpSession session,HttpServletResponse response) throws Exception {
 		UserDTO userDTO = (UserDTO) session.getAttribute("user");
-		if (userDTO == null) {
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        out.println("<script>alert('로그인이 필요합니다.'); location.href='/users/login';</script>");
-	        out.flush();
-	        return null;
-	    }
+		
 		
 		 if (reviewDTO.getReviewRate() == null) {
 		        reviewDTO.setReviewRate(0L); // 기본값 0

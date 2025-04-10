@@ -48,8 +48,7 @@
 				<p style="color: #666; margin-bottom: 50px;">${content.releaseDate}</p>
 				<p>${content.overView}</p>
 
-				<button type="button" class="btn-modal" data-bs-toggle="modal"
-					data-bs-target="#staticBackdrop">리뷰 남기기</button>
+				<button type="button" class="btn-modal"  data-bs-target="#staticBackdrop" id="btn-review">리뷰 남기기</button>
 
 				<!-- Modal -->
 				<form id="reviewForm" action="addReview" method="post">
@@ -95,8 +94,7 @@
 			<c:choose>
 				<c:when test="${empty reviewList || reviewList.size() eq 0}">
 					<div class="alert text-center mt-4"  style="background-color: #ffe5b4;" role="alert">
-						아직 작성된 리뷰가 없습니다. 🎬<br> <strong>첫 리뷰를 작성해보세요!</strong>
-						
+						<strong>아직 작성된 리뷰가 없습니다. 🎬</strong><br> <strong>첫 리뷰를 작성해보세요!</strong>
 					</div>
 				</c:when>
 
@@ -131,7 +129,7 @@
 
 										<hr class="special-hr">
 
-										<button class="like-button" data-usernum="${review.userNum}"
+										<button class="like-button" data-usernum="${userNum}"
 											data-review-id="${review.reviewId}" data-kind="0">
 											<span class="heart-icon"> <c:choose>
 													<c:when
@@ -177,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	      
 	      if (!userNum) {
 	            alert("로그인이 필요합니다.");
-	            location.href = "/users/login";
+	            location.href = "/reviewNest/login";
 	            return;
 	        }
 

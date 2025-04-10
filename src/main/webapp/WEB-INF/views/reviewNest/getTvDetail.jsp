@@ -37,7 +37,7 @@
 				    <p style="color: #666; margin-bottom: 50px;">${content.releaseDate}</p>
 				    <p>${content.overView}</p>
 				    
-				    <button type="button" class="btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+				    <button type="button" class="btn-modal"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">
 						  리뷰 남기기
 						</button>
 						
@@ -120,7 +120,7 @@
 			
 													<hr class="special-hr">
 			
-													<button class="like-button" data-usernum="${review.userNum}"
+													<button class="like-button" data-usernum="${userNum}"
 														data-review-id="${review.reviewId}" data-kind="0">
 														<span class="heart-icon"> <c:choose>
 																<c:when
@@ -164,7 +164,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	      
 	      if (!userNum) {
 	            alert("로그인이 필요합니다.");
-	            location.href = "/users/login";
+	            location.href = "/reviewNest/login";
 	            return;
 	        }
 

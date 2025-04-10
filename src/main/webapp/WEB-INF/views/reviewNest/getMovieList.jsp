@@ -28,7 +28,43 @@
 	<main>
 	<!-- 컨텐츠 넣는 부분 -->
 			<div class="container">
-				<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰네스트 영화 인기 순위</strong>
+				<div class="titleWrapper mt-3">
+					<div class="row justify-content-between align-items-center gx-0">
+						<!-- 왼쪽 -->
+						<div class="col-auto">
+							<strong class="hot_rank d-inline-block mb-2 text-success-emphasis">리뷰네스트 영화 인기 순위</strong>
+						</div>
+						<!-- 오른쪽: 검색 폼 -->
+						<div class="col-auto">
+							<form class="d-flex align-items-center">
+								<div class="input-group">
+									<input name="search" type="text" class="form-control"
+										placeholder="영화명 검색">
+									<button type="submit" class="btn-search">🔍</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				
+				<c:choose>
+				  <c:when test="${empty movieList}">
+				    <div class="text-center mt-5">
+				      <c:choose>
+				        <c:when test="${not empty search}">
+				         <div class="alert text-center mt-4"  style="background-color: #ffe5b4;" role="alert">
+						아쉽게도 '${search}'은 아직 등록되어 있지 않아요.<br> <strong>대신 인기 있는 다른 작품들을 확인해보세요!</strong>
+						</div>
+				        </c:when>
+				        <c:otherwise>
+				          <h5>현재 등록된 작품이 없습니다.</h5>
+				        </c:otherwise>
+				      </c:choose>
+				    </div>
+				  </c:when>
+				
+				  <c:otherwise>
+				
 				<div class="row row-cols-1 row-cols-sm-2 row-cols-md-5 g-3">
 					<c:forEach items="${movieList}" var="content" varStatus="status">
 						<div class="col">
@@ -62,14 +98,15 @@
 						</div>
 					</c:forEach>
 				</div>
-			</div>
+			</c:otherwise>
+			</c:choose>
 			
 			<nav aria-label="Page navigation example" class="mb-5">
 			  <ul class="pagination d-flex justify-content-center mt-5">
 			    <!-- Previous Button -->
 			    <li class="page-item ${pager.page <= 1 ? 'disabled' : ''}">
 			      <a class="page-link pages arrow text-white" 
-			         href="?page=${pager.page - 1}" 
+			         href="?page=${pager.page - 1}&search=${pager.search}" 
 			         aria-label="Previous">
 			        <span aria-hidden="true">&laquo;</span>
 			      </a>
@@ -123,7 +160,7 @@ $(document).ready(function () {
         // 로그인 안했을 경우 처리
         if (!userNum) {
             alert("로그인이 필요합니다.");
-            location.href = "/users/login";
+            location.href = "/reviewNest/login";
             return;
         }
 

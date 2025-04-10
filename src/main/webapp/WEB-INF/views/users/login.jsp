@@ -51,7 +51,7 @@
 						</div>
 					 
 						
-						<button class="btn btn-primary" type="submit" style="margin-bottom: 5px;">로그인</button>
+						<button class="btn btn-primary" type="submit" style="margin-bottom: 5px;">통합 로그인</button>
 		
 						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoApi}&redirect_uri=${redirectUrl}" class="btn btn-warning">
 							 카카오로그인

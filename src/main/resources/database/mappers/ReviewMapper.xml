@@ -42,7 +42,7 @@
 	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId, jdbcType=NUMERIC} AND KIND = #{kind}
 	</select>
 
-	<select id="getMyReviews" resultType="ReviewDTO">
+	<select id="getMyReviews" parameterType="Long" resultType="ReviewDTO">
 		  SELECT * FROM REVIEW
 		  WHERE USERNUM = #{userNum}
 	</select>

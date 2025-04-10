@@ -32,7 +32,7 @@
 					<form action = "/reviewNest/login" method = "post">
 					  <div class="input-box">
 						<div class="input-group has-validation">
-						<span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+						 <span class="icon"><ion-icon name="person-outline"></ion-icon></span>
 						  <input type="text" name="userId" id="userId" placeholder="아이디" required>
 						</div>
 					  </div>
@@ -49,7 +49,7 @@
 						</div>
 					 
 						
-						<button class="btn btn-primary" type="submit" style="margin-bottom: 5px;">로그인</button>
+						<button class="btn btn-primary" type="submit" style="margin-bottom: 5px;">통합로그인</button>
 		
 						<a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${kakaoApi}&redirect_uri=${redirectUrl2}" class="btn btn-warning">
 							 카카오로그인

@@ -174,7 +174,6 @@
 			</div>
 			<br>
 			<br>
-			<br>
 			<div class="section">
 			    <h4><strong>❤️ 내가 좋아요 누른 리뷰</strong></h4>
 			    <c:choose>

@@ -45,7 +45,7 @@ import com.movie.plex.users.UserService;
 			List<NestContentDTO> movieList = nestContentService.getMovieList(pager);
 			
 			model.addAttribute("movieList", movieList);
-			System.out.println(pager.isEndCheck());
+			model.addAttribute("search", pager.getSearch());
 			model.addAttribute("pager", pager);
 			
 			UserDTO user = (UserDTO) session.getAttribute("user");
@@ -54,7 +54,6 @@ import com.movie.plex.users.UserService;
 	        	Long userNum = user.getUserNum();  
 	            Long kind = 0L;  
 	            
-	            // �빐�떦 �쑀��媛� 醫뗭븘�슂 �늻瑜� �쁺�솕 肄섑뀗痢� 紐⑸줉 議고쉶
 	            List<Long> likedContentIds = contentsLikeService.getLikedContentsIds(userNum, kind);
 	            model.addAttribute("likedContentIds", likedContentIds);
 	            model.addAttribute("userNum", user.getUserNum());
@@ -69,6 +68,7 @@ import com.movie.plex.users.UserService;
 			List<NestContentDTO> tvList = nestContentService.getTvList(pager);
 			
 			model.addAttribute("tvList",tvList);
+			model.addAttribute("search", pager.getSearch());
 			model.addAttribute("pager", pager);
 			
 			UserDTO user = (UserDTO) session.getAttribute("user");
@@ -126,10 +126,8 @@ import com.movie.plex.users.UserService;
 			NestContentDTO tvdetail = nestContentService.getTvDetail(contentId);
 			 model.addAttribute("content", tvdetail);
 			 
-
 			 List<ReviewDTO> reviewList = reviewService.getReviewList(contentId);
-
-			 model.addAttribute("reviewList", tvdetail.getReviewList());
+			 model.addAttribute("reviewList", reviewList);
 			 
 			// 3. 濡쒓렇�씤 �쑀�� �젙蹂�
 			  UserDTO user = (UserDTO) session.getAttribute("user");
