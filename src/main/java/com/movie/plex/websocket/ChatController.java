@@ -27,17 +27,27 @@ public class ChatController {
 		
 		List<ChatRoom> list = null;
 		
-		if(userDTO.getUserGrade()==4) {
-			list = chatService.chatRoomList();
-		} else {
-			chatRoomJoin.setUserNum(userDTO.getUserNum());
-			list = chatService.getChatRoomJoin(chatRoomJoin);
-			
-		}
-		model.addAttribute("list", list);
-		model.addAttribute("user", userDTO);
+		String str ="";
 		
-		return "chat/chatRoom";
+		if(userDTO == null || userDTO.getUserId() == null) {
+			model.addAttribute("result", "로그인이필요합니다.");
+			model.addAttribute("path", "/users/login");
+			str = "commons/result";
+		}else {
+			if(userDTO.getUserGrade()==4) {
+				list = chatService.chatRoomList();
+			} else {
+				chatRoomJoin.setUserNum(userDTO.getUserNum());
+				list = chatService.getChatRoomJoin(chatRoomJoin);
+				
+			}
+			model.addAttribute("list", list);
+			model.addAttribute("user", userDTO);	
+			
+			str = "chat/chatRoom";
+		}
+		
+		return str;
 	}
 	
 	@PostMapping(value = "/addChatRoom")
@@ -53,10 +63,10 @@ public class ChatController {
 			chatRoomJoin.setChatRoomNo(chatRoom.getChatRoomNo());
 			chatService.addChatRoomDetail(chatRoomJoin);
 			
-			model.addAttribute("result", "�游��⼺��");
+			model.addAttribute("result", "방만들기성공");
 			model.addAttribute("path", "./chatRoom");
 		} else {
-			model.addAttribute("result", "�游������");
+			model.addAttribute("result", "방만들기실패");
 			model.addAttribute("path", "./chatRoom");
 		}
 		return "commons/result";

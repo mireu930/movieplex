@@ -72,8 +72,15 @@ public class QnaCotroller {
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public String add(HttpSession session, Model model) throws Exception {
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		model.addAttribute("user", userDTO);
-		return "board/boardform";
+		
+		if(userDTO == null) {
+			model.addAttribute("result", "로그인이 필요합니다.");
+			model.addAttribute("path", "./list");
+			return "commons/result";
+		} else {
+			model.addAttribute("user", userDTO);
+			return "board/boardform";			
+		}
 		
 	}
 	
@@ -90,12 +97,24 @@ public class QnaCotroller {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.GET)
-	public ModelAndView update(QnaDTO qnaDTO) throws Exception {
+	public ModelAndView update(QnaDTO qnaDTO, HttpSession session) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
 		qnaDTO = qnaService.getDetail(qnaDTO,false);
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
 		
-		modelAndView.addObject("dto", qnaDTO);
-		modelAndView.setViewName("board/boardform");
+		if(userDTO == null) { 
+			modelAndView.addObject("result", "로그인이 필요합니다.");
+			modelAndView.addObject("path", "./detail?qnaNum="+qnaDTO.getqnaNum());
+			modelAndView.setViewName("commons/result");
+		} else if(userDTO.getUserNum() != qnaDTO.getUserNum()) {
+			modelAndView.addObject("result", "작성자만 수정가능합니다.");
+			modelAndView.addObject("path", "./detail?qnaNum="+qnaDTO.getqnaNum());
+			modelAndView.setViewName("commons/result");	
+		}else {
+			modelAndView.addObject("dto", qnaDTO);
+			modelAndView.setViewName("board/boardform");			
+		}
+		
 		
 		return modelAndView;
 	}
@@ -114,27 +133,52 @@ public class QnaCotroller {
 	
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public ModelAndView delete(QnaDTO qnaDTO, HttpSession session) throws Exception {
-		int result = qnaService.delete(qnaDTO, session);
-		
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
+		qnaDTO = qnaService.getDetail(qnaDTO,false);
 		ModelAndView modelAndView = new ModelAndView();
 		
-		if(result > 0) {
-			modelAndView.addObject("result","��������");
-			modelAndView.addObject("path", "./list");
+		if(userDTO == null) { 
+			modelAndView.addObject("result", "로그인이 필요합니다.");
+			modelAndView.addObject("path", "./detail?qnaNum="+qnaDTO.getqnaNum());
+			modelAndView.setViewName("commons/result");
+		} else if(userDTO.getUserNum() != qnaDTO.getUserNum()) {
+			System.out.println("userNum");
+			System.out.println(userDTO.getUserNum());
+			System.out.println(qnaDTO.getUserNum());
+			modelAndView.addObject("result", "작성자만 삭제가능합니다.");
+			modelAndView.addObject("path", "./detail?qnaNum="+qnaDTO.getqnaNum());
+			modelAndView.setViewName("commons/result");
+		} else if(userDTO.getUserNum() == qnaDTO.getUserNum()||userDTO.getUserGrade() == 4) {
+			int result = qnaService.delete(qnaDTO, session);
+			if(result > 0) {
+				modelAndView.addObject("result","삭제성공");
+				modelAndView.addObject("path", "./list");
+			} else {
+				modelAndView.addObject("result","삭제실패");
+				modelAndView.addObject("path", "./detail");
+			}
+			modelAndView.setViewName("commons/result");			
 		} else {
-			modelAndView.addObject("result","��������");
-			modelAndView.addObject("path", "./detail");
+			modelAndView.addObject("result","에러");
+			modelAndView.addObject("path", "./list");
+			modelAndView.setViewName("commons/result");	
 		}
-		modelAndView.setViewName("commons/result");
+		
 		
 		return modelAndView;
 	}
 	
 	@RequestMapping(value = "reply", method = RequestMethod.GET)
-	public String reply(HttpSession session, Model model, @ModelAttribute("reply")QnaDTO qnaDTO) throws Exception {
+	public String reply(HttpSession session, Model model, @ModelAttribute("reply")QnaDTO qnaDTO, QnaDTO qnadto) throws Exception {
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		model.addAttribute("user", userDTO);
-		return "board/boardform";
+		if(userDTO == null) {
+			model.addAttribute("result", "로그인이 필요합니다.");
+			model.addAttribute("path", "./detail?qnaNum="+qnadto.getqnaNum());
+			return "commons/result";
+		}else {
+			model.addAttribute("user", userDTO);
+			return "board/boardform";			
+		}
 	}
 	
 	@RequestMapping(value = "reply", method = RequestMethod.POST)

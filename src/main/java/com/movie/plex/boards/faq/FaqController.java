@@ -73,8 +73,14 @@ public class FaqController {
 	@RequestMapping(value = "add", method = RequestMethod.GET)
 	public String add(HttpSession session, Model model) throws Exception {
 		UserDTO userDTO = (UserDTO)session.getAttribute("user");
-		model.addAttribute("user", userDTO);
-		return "board/boardform";
+		if(userDTO==null||userDTO.getUserGrade()!= 4) {
+			model.addAttribute("result", "관리자만 추가가능합니다.");
+			model.addAttribute("path", "./list");
+			return "commons/result";
+		}else {
+			model.addAttribute("user", userDTO);
+			return "board/boardform";			
+		}
 	}
 	
 	@RequestMapping(value = "add", method = RequestMethod.POST)
@@ -90,12 +96,19 @@ public class FaqController {
 	}
 	
 	@RequestMapping(value = "update", method = RequestMethod.GET)
-	public ModelAndView update(FaqDTO faqDTO) throws Exception {
+	public ModelAndView update(FaqDTO faqDTO, HttpSession session) throws Exception {
 		ModelAndView modelAndView = new ModelAndView();
 		faqDTO = faqService.getDetail(faqDTO, false);
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
 		
-		modelAndView.addObject("dto", faqDTO);
-		modelAndView.setViewName("board/boardform");
+		if(userDTO==null||userDTO.getUserGrade()!= 4) {
+			modelAndView.addObject("result", "관리자만 수정가능합니다.");
+			modelAndView.addObject("path", "./detail?faqNum="+faqDTO.getFaqNum());
+			modelAndView.setViewName("commons/result");
+		}else {		
+			modelAndView.addObject("dto", faqDTO);
+			modelAndView.setViewName("board/boardform");
+		}
 		
 		return modelAndView;
 	}
@@ -115,18 +128,28 @@ public class FaqController {
 	
 	@RequestMapping(value = "delete", method = RequestMethod.GET)
 	public ModelAndView delete(FaqDTO faqDTO, HttpSession session) throws Exception {
-		int result = faqService.delete(faqDTO,session);
-		
+		UserDTO userDTO = (UserDTO)session.getAttribute("user");
+
 		ModelAndView modelAndView = new ModelAndView();
 		
-		if(result > 0) {
-			modelAndView.addObject("result","��������");
-			modelAndView.addObject("path", "./list");
+		if(userDTO==null||userDTO.getUserGrade()!= 4) {
+			modelAndView.addObject("result", "관리자만 삭제가능합니다.");
+			modelAndView.addObject("path", "./detail?faqNum="+faqDTO.getFaqNum());
+			modelAndView.setViewName("commons/result");
 		} else {
-			modelAndView.addObject("result","��������");
-			modelAndView.addObject("path", "./detail");
+			
+			int result = faqService.delete(faqDTO,session);
+			
+			if(result > 0) {
+				modelAndView.addObject("result","삭제성공");
+				modelAndView.addObject("path", "./list");
+			} else {
+				modelAndView.addObject("result","삭제실패");
+				modelAndView.addObject("path", "./detail");
+			}
+			modelAndView.setViewName("commons/result");
 		}
-		modelAndView.setViewName("commons/result");
+		
 		
 		return modelAndView;
 		
