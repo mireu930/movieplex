@@ -170,7 +170,7 @@ mainContents.addEventListener("click",(e)=>{
                 return; 
             }
 
-        fetch(`/admin/paymentUpdate?userId=test`)
+        fetch(`/admin/paymentUpdate?userId=${selectedUserId}`)
         .then(r=>r.text())
         .then(r=>{
             alert(r.trim()=='0'?"실패":"입금승인되었습니다.");
