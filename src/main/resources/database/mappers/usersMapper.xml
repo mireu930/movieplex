@@ -146,7 +146,8 @@
 			ON p.bookid = m.bookid
 			LEFT  OUTER JOIN USERS u 
 			ON u.usernum = m.usernum
-			WHERE u.userid = #{userId})
+			WHERE u.userid = #{userId}
+			AND p.PAYCHECK = 0)
   	</update>
   	
   	<select id="bookList" resultMap="getBookList" parameterType="Pager">
