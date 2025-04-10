@@ -375,7 +375,7 @@ public class UserController {
 
 	@RequestMapping(value = "refund", method = RequestMethod.POST)
 	@ResponseBody
-	public int refund(@ModelAttribute MovieBookDTO movieBookDTO) throws Exception {
+	public int refund(MovieBookDTO movieBookDTO) throws Exception {
 		
 		int result = movieBookService.bookRefund(movieBookDTO);
 		int result2 = userService.paymentRefund(movieBookDTO);

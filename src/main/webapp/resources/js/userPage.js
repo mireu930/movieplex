@@ -430,6 +430,7 @@ mainContents.addEventListener("click",(e)=>{
 })
 
 function bookDetail(bookId){
+
     fetch(`/users/bookDetail?bookId=${bookId}`)
     .then(r=>r.json())
     .then(b=>{
@@ -461,7 +462,7 @@ function bookDetail(bookId){
                      <h2 style="margin: 0 0 10px; font-size: 1.5em; color: #333;">${item.theaterDTO.movieDTO.movieTitle}</h2>
  
                      <p style="margin: 5px 0;"><strong>영화관:</strong> ${item.theaterDTO.theaterName}</p>
-                     <p style="margin: 5px 0;"><strong>시작시간:</strong> ${formattedDate2}</p>
+                     <p style="margin: 5px 0;"><strong>시작시간:</strong> ${formattedDate2} ${item.theaterDTO.timeStart} - ${item.theaterDTO.timeEnd}</p>
                      <p style="margin: 5px 0;"><strong>좌석:</strong>
                      `
                      item.theaterDTO.seatDTO.forEach(s=>{
@@ -485,15 +486,39 @@ function bookDetail(bookId){
         document.getElementById('refundbtn').addEventListener('click', ()=> {
             console.log("refund");
             console.log(b.list[0].bookId);
-            refund(b.list[0].bookId);
+            refund(b.list[0]);
         });
     })
 }
 
-function refund(bookId) {
+function refund(list) {
+
     let con = confirm("정말 환불하시겠습니까?");
 
+    
+    const formattedDate = new Date().toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+
+    const timestamp2 = parseInt(list.theaterDTO.theaterStart);
+    const formattedDate2 = new Date(timestamp2).toLocaleDateString('ko-KR', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+    });
+    
+ console.log(formattedDate);
+ console.log(formattedDate2);
+
     if (!con) {
+        return;
+    }
+
+
+    if(formattedDate>formattedDate2) {
+        alert("상영날짜 이후는 환불이 어렵습니다.")
         return;
     }
 
@@ -502,7 +527,7 @@ function refund(bookId) {
         headers: {
             "Content-type": "application/x-www-form-urlencoded"
         },
-        body: `bookId=${bookId}`
+        body: `bookId=${list.bookId}`
     })
     .then(r=>r.json())
     .then(r=>{
