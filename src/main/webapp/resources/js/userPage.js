@@ -305,6 +305,7 @@ function loadPayInfo(page=1) {
         <table style="width: 600px; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #ddd; text-align: left;">
+                        <th style="padding: 10px; border-bottom: 2px solid #bbb;">결제id</th>
                         <th style="padding: 10px; border-bottom: 2px solid #bbb;">결제금액</th>
                         <th style="padding: 10px; border-bottom: 2px solid #bbb;">결제승인여부</th>
                     </tr>
@@ -314,6 +315,7 @@ function loadPayInfo(page=1) {
    
                 <tbody>
                         <tr style="background-color: #f9f9f9;">
+                            <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.payId}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.payAmounts}</td>
                             <td style="padding: 10px; border-bottom: 1px solid #ddd;">${item.payCheck == 0 ? "<span style='color: red;'>미승인</span>": item.payCheck == 1 ? "<span style='color: blue;'>승인</span>":"<span style='color: green;'>환불</span>"}</td>
                         </tr>
