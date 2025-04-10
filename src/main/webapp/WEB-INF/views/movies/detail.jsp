@@ -24,7 +24,7 @@
 <body>
 	<!-- header -->
 	<c:import url="/WEB-INF/views/templates/header.jsp"></c:import>
-	<main>
+	<main class="main">
 
 		<div class="movie-detail-wrapper">
 			<div class="movie-hero-section">
@@ -33,14 +33,22 @@
 						<h4 class="movie-title">${movieDTO.movieTitle }</h4>
 					</div>
 					<div class="movie-poster">
-						<img src="https://image.tmdb.org/t/p/w500${movieDTO.shortPoster}"
-							alt="포스터"> <a href="/movieBooks/booking"
-							class="reserve-button btn btn-info">예매</a>
+
+						<c:if test="${not empty movieDTO.shortPoster }">
+							<img src="https://image.tmdb.org/t/p/w500${movieDTO.shortPoster}"
+								alt="포스터">
+						</c:if>
+						<c:if test="${empty movieDTO.shortPoster}">
+							<div class=empty></div>
+						</c:if>
+						<a href="/movieBooks/booking" class="reserve-button btn btn-info">예매</a>
 					</div>
 				</div>
-				<img class="movie-bg"
-					src="https://image.tmdb.org/t/p/original${movieDTO.longPoster}"
-					alt="배경 이미지">
+				<c:if test="${not empty movieDTO.longPoster }">
+					<img class="movie-bg"
+						src="https://image.tmdb.org/t/p/original${movieDTO.longPoster}"
+						alt="배경 이미지">
+				</c:if>
 			</div>
 
 			<div class="movie-summary-section">
@@ -53,6 +61,26 @@
 						<h3>개봉일</h3>
 						<p>${movieDTO.releaseDate}</p>
 					</div>
+
+					<c:if test="${not empty movieDTO.video}">
+						<div class="movie-trailer">
+							<h3>예고편</h3>
+							<iframe width="100%" height="315"
+								src="https://www.youtube.com/embed/${movieDTO.video}"
+								title="예고편" frameborder="0"
+								allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+								allowfullscreen> </iframe>
+						</div>
+					</c:if>
+					<c:if
+						test="${empty movieDTO.video && not empty movieDTO.longPoster}">
+						<div class="movie-trailer">
+							<h3>스틸컷</h3>
+							<img class="summary-img"
+								src="https://image.tmdb.org/t/p/original${movieDTO.longPoster}"
+								alt="배경 이미지">
+						</div>
+					</c:if>
 				</div>
 			</div>
 		</div>
