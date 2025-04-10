@@ -34,8 +34,8 @@
 					</div>
 					<div class="movie-poster">
 						<img src="https://image.tmdb.org/t/p/w500${movieDTO.shortPoster}"
-							alt="포스터">
-						<a href="/movieBooks/booking" class="reserve-button btn btn-info">예매</a>
+							alt="포스터"> <a href="/movieBooks/booking"
+							class="reserve-button btn btn-info">예매</a>
 					</div>
 				</div>
 				<img class="movie-bg"
@@ -44,9 +44,15 @@
 			</div>
 
 			<div class="movie-summary-section">
-				<div class="movie-summary">
-					<h3>주요정보</h3>
-					<p>${movieDTO.overView}</p>
+				<div class="summary-wrapper">
+					<div class="movie-summary">
+						<h3>주요정보</h3>
+						<p>${movieDTO.overView}</p>
+					</div>
+					<div class="movie-releaseDate">
+						<h3>개봉일</h3>
+						<p>${movieDTO.releaseDate}</p>
+					</div>
 				</div>
 			</div>
 		</div>
