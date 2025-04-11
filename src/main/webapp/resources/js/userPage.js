@@ -187,6 +187,13 @@ function editUserInfo(user){
             e.preventDefault();
             let email = userEmail.value;
             console.log(email);
+
+            if(!isEmail(email)){
+                alert("이메일형태가 아닙니다.")
+                userEmail.classList.add('is-invalid');
+                toggleSubmitButton();
+                return;
+            }
         
             fetch("/users/updateMailCheck?email="+email)
             .then(r=>r.text())
@@ -207,6 +214,11 @@ function editUserInfo(user){
                 alert("에러발생")
             })
         })
+    }
+
+    function isEmail(v) {
+        let regex = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
+        return regex.test(v)
     }
 
             

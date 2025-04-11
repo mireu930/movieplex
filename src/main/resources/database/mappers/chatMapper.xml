@@ -55,6 +55,7 @@
 		JOIN USERS
 		USING(USERNUM)
 		WHERE CHATROOMNO = #{chatRoomNo}
+		ORDER BY CMNO ASC
   	</select>
 	
 	<insert id="insertMessage" parameterType="ChatMessage">

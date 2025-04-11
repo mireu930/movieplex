@@ -36,7 +36,7 @@
 	</selectKey>
 	
 		INSERT INTO QNA
-		VALUES (#{qnaNum},#{boardTitle},#{boardContents},SYSDATE,0,0,0,0,#{userNum})
+		VALUES (#{qnaNum},#{boardTitle},#{boardContents},SYSDATE,0,QNANUM_SEQ.CURRVAL,0,0,#{userNum})
 	</insert>
 	
 	<insert id="reply" parameterType="QnaDTO">

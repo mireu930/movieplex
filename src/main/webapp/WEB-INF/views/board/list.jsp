@@ -89,7 +89,7 @@
 	      <td>
 	      <c:catch>
 	      <c:forEach begin ="1" end="${ar.boardDepth}" varStatus="ar2">
-	      
+	      &nbsp
 	      <c:if test="${ar2.last}">
 	      	<ion-icon name="return-down-forward-outline"></ion-icon>
 	      </c:if>
