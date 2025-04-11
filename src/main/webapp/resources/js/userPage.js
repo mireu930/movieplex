@@ -182,6 +182,7 @@ function editUserInfo(user){
             }
         })
 
+        if(user.sns==0){
         mailCheckBtn.addEventListener("click", (e) => {
             e.preventDefault();
             let email = userEmail.value;
@@ -206,6 +207,7 @@ function editUserInfo(user){
                 alert("에러발생")
             })
         })
+    }
 
             
             function toggleSubmitButton() {
