@@ -458,6 +458,8 @@ function paymentPage() {
         }
         //console.log(r);
         main.innerHTML = r;
+        teens = 0;
+        adults = 0;
         seatBook();
       })
 
@@ -533,7 +535,7 @@ function paymentPage() {
         pay_method: "card",
         merchant_uid: merchant_uid, // 주문 고유 번호
         name: "movieplex",
-        amount: 100,
+        amount: paymentPrice,
         buyer_email: r.userEmail,
         buyer_name: r.userName,
         buyer_tel: r.userPhone,
@@ -549,8 +551,8 @@ function paymentPage() {
             param.append("seat", s);
           }
           param.append("theaterId", selectedTheaterId);
-          //param.append("totalPrice", paymentPrice);
-          param.append("totalPrice", 100); //테스트용 금액 => 나중에 원래 금액으로 바꿀 예정
+          param.append("totalPrice", paymentPrice);
+          //param.append("totalPrice", 100); //테스트용 금액 => 나중에 원래 금액으로 바꿀 예정
           param.append("usedCoupon", usedCoupon);
 
 
