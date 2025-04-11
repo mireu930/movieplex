@@ -87,7 +87,7 @@ public class PaymentService {
 	}
 	private int checkAmounts(String imp_uid, Long totalPrice) throws Exception{
 		IamportClient api = new IamportClient(rest_api, api_secret);
-		System.out.println("금액 확인 메서드");
+		//System.out.println("금액 확인 메서드");
 //		System.out.println(rest_api);
 //		System.out.println(api_secret);
 		IamportResponse<Payment> payment = api.paymentByImpUid(imp_uid);
