@@ -43,8 +43,8 @@
     
     <a href="javascript:history.back()" class="btn-back btn-secondary" style="display: inline-block; margin-right: 10px;">뒤로 가기</a>
 	<button class="btn-good">👍 좋아요</button>
-   <button type="button" class="btn-modal" data-bs-toggle="modal" data-bs-target="#staticBackdrop" style="display: inline-block;">
-	🗨️댓글 등록</button>
+   <button type="button" class="btn-modal"  id="btn-comment" data-bs-target="#staticBackdrop" style="display: inline-block;">
+	🗨️댓글 남기기</button>
 	
 		<form id="reviewForm" action="addComment" method="post">
 							    <input type="hidden" name="reviewId" value="${reviewDetail.reviewId}">
@@ -104,6 +104,23 @@ function submitReview() {
 
     document.getElementById("reviewForm").submit();
 }
+
+const btncomment = document.getElementById("btn-comment");
+
+btncomment.addEventListener("click",()=>{
+    fetch("/reviewNest/checkComment")
+    .then(r=>r.text())
+    .then(r=>{
+        if(r==0){
+        	
+            alert("로그인이 필요합니다")
+            window.location.href = "/reviewNest/login"
+            } else {
+                    const modal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+                    modal.show();
+        }
+    })
+})
 </script>
 </body>
 </html>

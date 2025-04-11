@@ -55,6 +55,13 @@
 							 카카오로그인
        						</a>
 				</form>
+				<div style="text-align: center; color: white; font-size: 1rem;">
+					<span>
+						<a href="/users/login">MOVIEPLEX</a>에서 회원가입하고
+					</span>
+					<br>
+					<span>다양한 기능을 즐겨보세요!</span>
+				</div>
 			</div>
 		</div>
 		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

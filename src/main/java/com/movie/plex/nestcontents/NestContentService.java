@@ -18,10 +18,10 @@ public class NestContentService {
 	private ContentsLikeDAO contentsLikeDAO;
 	
 	public List<NestContentDTO> getMovieList(ReviewPager pager) throws Exception{
-		//珥앷갗�닔 媛��졇���꽌 怨꾩궛�븯�뒗 �떇
 		Long totalCount = nestContentDAO.getTotalCount(pager);
-		System.out.println("컨텐츠 갯수: "+totalCount);
-		System.out.println("!!");
+		/*
+		 * System.out.println("컨텐츠 갯수: "+totalCount); System.out.println("!!");
+		 */
 		pager.make(totalCount);
 		
 		pager.makeNum();

@@ -83,7 +83,7 @@ public class KakaoController {
 	public String kakaoLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
 		int result = userService.kakaoJoin(userDTO);
 		
-		model.addAttribute("result", "회원가입성공");
+		model.addAttribute("result", "회원가입을 성공했습니다.");
 		model.addAttribute("path", "/");
 		
 		return "commons/result";

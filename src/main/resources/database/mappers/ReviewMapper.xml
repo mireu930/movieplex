@@ -26,6 +26,7 @@
 		JOIN USERS u 
 		ON r.USERNUM  = u.USERNUM
 		WHERE r.CONTENTID = #{contentId, jdbcType=NUMERIC}
+		ORDER BY r.REVIEWDATE DESC
     </select>
 
 	<select id="getReviewDetail" parameterType="Long" resultType="ReviewDTO">
