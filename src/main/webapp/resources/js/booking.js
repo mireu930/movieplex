@@ -489,6 +489,13 @@ function paymentPage() {
 
 
     } else if (selectedMethod.value == 0) {
+      const selectedBank = document.getElementById("bank");
+      console.log(selectedBank.value);
+      if(selectedBank.value =="default"){
+        alert("은행을 선택하세요.");
+        return;
+      }
+
       let param = new URLSearchParams();
 
       //여러개 보낼때는 반복문을 사용해야 함
@@ -498,7 +505,7 @@ function paymentPage() {
       param.append("theaterId", selectedTheaterId);
       param.append("totalPrice", paymentPrice);
       param.append("usedCoupon", usedCoupon);
-      const selectedBank = document.getElementById("bank");
+      // const selectedBank = document.getElementById("bank");
       fetch("/moviePayment/movieBookBankBook", {
         method: "POST",
         headers: {
