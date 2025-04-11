@@ -78,11 +78,11 @@
 	<!-- payment 관련 Mapper -->
 	<insert id="addPayment" parameterType="MoviePayments">
 		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
-		VALUES(#{payId}, 1, 100, #{bookId})
+		VALUES(#{payId}, 1, #{payAmounts}, #{bookId})
 	</insert>
 	<insert id="addPaymentBankBook" parameterType="MoviePayments">
 		INSERT INTO MOVIEPAYMENTS(PAYID, PAYCHECK, PAYAMOUNTS, BOOKID)
-		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, #{payAmounts}, #{bookId})
+		VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 0, #{payAmounts}, #{bookId})
 	</insert>
 	<!-- 지금은 테스트라 금액은 100으로 고정 / VALUES(MOVIEPAYMENTS_SEQ.NEXTVAL, 1, #{payAmounts}, #{bookId}) -->
 	<select id="getStatus" parameterType="MovieBookDTO" resultType="Long">
