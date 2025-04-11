@@ -23,21 +23,7 @@ import com.movie.plex.users.UserDTO;
 public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
-	
-//	//결제 금액이 맞는지 확인하는 기능
-//	@RequestMapping(value="payment/complete", method=RequestMethod.POST)
-//	public String paymentComplete(String imp_uid, String merchant_uid, Long totalPrice, Long bookId, Model model) throws Exception{
-//		System.out.println(imp_uid);
-//		System.out.println(merchant_uid);
-//		System.out.println(totalPrice);
-//		System.out.println("complete");
-//		int result = paymentService.checkAmounts(imp_uid, merchant_uid, totalPrice, bookId);
-//		
-//		model.addAttribute("result", result);
-//		
-//		return "/commons/ajax";
-//		
-//	}
+
 	
 	//동일한 이름으로 여러개 받을 때는 RequestParam 사용!
 	@RequestMapping(value="movieBookCard", method=RequestMethod.POST)
