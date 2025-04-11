@@ -24,12 +24,12 @@ public class KakaoController {
 	@RequestMapping(value = "kakao", method = RequestMethod.GET)
 	public String kakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
 		System.out.println("kakaologin");
-	    // 1. ÀÎ°¡ ÄÚµå ¹Ş±â (@RequestParam String code)
+	    // 1. ï¿½Î°ï¿½ ï¿½Úµï¿½ ï¿½Ş±ï¿½ (@RequestParam String code)
 
-	    // 2. ÅäÅ« ¹Ş±â
+	    // 2. ï¿½ï¿½Å« ï¿½Ş±ï¿½
 	    String accessToken = kakaoApi.getAccessToken(code);
 
-	    // 3. »ç¿ëÀÚ Á¤º¸ ¹Ş±â
+	    // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş±ï¿½
 	    Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
 
 	    String email = (String)userInfo.get("email");
@@ -46,10 +46,21 @@ public class KakaoController {
 	    if(userDTO!=null) {
 	    	userDTO = userService.getLogin(userDTO);
 	    	 if (userDTO.getUserOut() == 1) {
-		            // »ç¿ëÀÚ°¡ ºñÈ°¼ºÈ­µÈ »óÅÂÀÏ °æ¿ì ·Î±×ÀÎ ½ÇÆĞ Ã³¸®
-		            model.addAttribute("result", "ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚÀÔ´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä.");
-		            model.addAttribute("path", "/users/login");
-		            return "commons/result";  // ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚ ¸Ş½ÃÁö Ãâ·Â
+		            // ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+	    		 model.addAttribute("result", "ë¹„í™œì„±í™”ëœ ê³„ì •ì…ë‹ˆë‹¤.");
+
+		    	    // accessTokenì´ ìˆì„ ê²½ìš° ì¹´ì¹´ì˜¤ ë¡œê·¸ì•„ì›ƒ ìˆ˜í–‰
+		    	    if (accessToken != null) {
+		    	        kakaoApi.kakaoLogout(accessToken);
+		    	        session.removeAttribute("accessToken"); // í† í° ì‚­ì œ
+		    	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
+		    	        String a = kakaoUrl;
+		    	        model.addAttribute("path", a);
+		    	        
+		    	    } else {
+		    	    	model.addAttribute("path", "/users/login");		    	    	
+		    	    }
+		            return "commons/result";
 		        }else {
 		        	session.setAttribute("accessToken", accessToken);
 		        	session.setAttribute("userEmail", email);
@@ -72,7 +83,7 @@ public class KakaoController {
 	public String kakaoLogin(UserDTO userDTO, HttpSession session, Model model) throws Exception {
 		int result = userService.kakaoJoin(userDTO);
 		
-		model.addAttribute("result", "È¸¿ø°¡ÀÔ¼º°ø");
+		model.addAttribute("result", "íšŒì›ê°€ì…ì„±ê³µ");
 		model.addAttribute("path", "/");
 		
 		return "commons/result";
@@ -82,11 +93,11 @@ public class KakaoController {
 	public String idCheck(UserDTO userDTO, Model model) throws Exception {
 		
 		userDTO = userService.idCheck(userDTO);
-		//Áßº¹ 0
+		//ï¿½ßºï¿½ 0
 		int result =0;
 		
 		if(userDTO== null) {
-			result =1; //Áßº¹ x
+			result =1; //ï¿½ßºï¿½ x
 		}
 		
 		model.addAttribute("result", result);
@@ -97,12 +108,12 @@ public class KakaoController {
 	@RequestMapping(value = "kakao2", method = RequestMethod.GET)
 	public String reviewNestkakaoLogin(@RequestParam String code, Model model, HttpSession session) throws Exception{
 		System.out.println("kakaologin2");
-	    // 1. ÀÎ°¡ ÄÚµå ¹Ş±â
+	    // 1. ï¿½Î°ï¿½ ï¿½Úµï¿½ ï¿½Ş±ï¿½
 
-	    // 2. ÅäÅ« ¹Ş±â
+	    // 2. ï¿½ï¿½Å« ï¿½Ş±ï¿½
 	    String accessToken = kakaoApi.getAccessToken2(code);
 
-	    // 3. »ç¿ëÀÚ Á¤º¸ ¹Ş±â
+	    // 3. ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ş±ï¿½
 	    Map<String, Object> userInfo = kakaoApi.getUserInfo(accessToken);
 
 	    String email = (String)userInfo.get("email");
@@ -119,10 +130,10 @@ public class KakaoController {
 	    if(userDTO!=null) {
 	    	userDTO = userService.getLogin(userDTO);
 	    	 if (userDTO.getUserOut() == 1) {
-		            // »ç¿ëÀÚ°¡ ºñÈ°¼ºÈ­µÈ »óÅÂÀÏ °æ¿ì ·Î±×ÀÎ ½ÇÆĞ Ã³¸®
-		            model.addAttribute("result", "ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚÀÔ´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¹®ÀÇÇÏ¼¼¿ä.");
+		            // ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½
+		            model.addAttribute("result", "ë¹„í™œì„±í™”ëœ ê³„ì •ì…ë‹ˆë‹¤.");
 		            model.addAttribute("path", "/reviewNest/login");
-		            return "commons/result";  // ºñÈ°¼ºÈ­µÈ »ç¿ëÀÚ ¸Ş½ÃÁö Ãâ·Â
+		            return "commons/result";  // ï¿½ï¿½È°ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 		        }else {
 		        	session.setAttribute("accessToken", accessToken);
 		        	session.setAttribute("userEmail", email);
@@ -134,7 +145,7 @@ public class KakaoController {
 		        }
 	    	
 	    } else {
-	    	model.addAttribute("result", "·Î±×ÀÎ½ÇÆĞ");
+	    	model.addAttribute("result", "ë¡œê·¸ì¸ì‹¤íŒ¨");
 	    	model.addAttribute("path", "/reviewNest/login");
 	    	return "commons/result";	    	
 	    }

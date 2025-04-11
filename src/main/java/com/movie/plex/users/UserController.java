@@ -245,14 +245,31 @@ public class UserController {
 	
 	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	@ResponseBody
-	public int delete(@RequestParam("userId") String userid, HttpSession session) throws Exception {
+	public Map<String, Object> delete(@RequestParam("userId") String userid, HttpSession session) throws Exception {
 		System.out.println("delete");
+		String a ="";
+
 		UserDTO userDTO = userService.getDetail(userid);
 		userDTO.setUserOut(1L);
 		
 		int result = userService.inactive(userDTO);
+		
+		String accessToken = (String) session.getAttribute("accessToken");
+
+	    // accessToken이 있을 경우 카카오 로그아웃 수행
+	    if (accessToken != null) {
+	        kakaoApi.kakaoLogout(accessToken);
+	        session.removeAttribute("accessToken"); // 토큰 삭제
+	        String kakaoUrl = "https://kauth.kakao.com/oauth/logout?client_id="+kakaoApi.getKakaoApi()+"&logout_redirect_uri=http://localhost/users/login";
+	        a = kakaoUrl;
+	    }
+		
+		Map<String, Object> map = new HashMap();
+		map.put("result", result);
+		map.put("kakaoUrl", a);
+		
 		session.invalidate();
-		return result;
+		return map;
 	}
 	
 	@RequestMapping(value = "couponList", method = RequestMethod.GET)

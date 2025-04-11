@@ -63,14 +63,14 @@ public class KakaoApi {
 	        URL url = new URL(reqUrl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        
-	        //ÇÊ¼ö Çì´õ ¼¼ÆÃ
+	        //ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	        conn.setDoOutput(true); //OutputStreamÀ¸·Î POST µ¥ÀÌÅÍ¸¦ ³Ñ°ÜÁÖ°Ú´Ù´Â ¿É¼Ç.
+	        conn.setDoOutput(true); //OutputStreamï¿½ï¿½ï¿½ï¿½ POST ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ñ°ï¿½ï¿½Ö°Ú´Ù´ï¿½ ï¿½É¼ï¿½.
 
 	        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 	        StringBuilder sb = new StringBuilder();
 	        
-	        //ÇÊ¼ö Äõ¸® ÆÄ¶ó¹ÌÅÍ ¼¼ÆÃ
+	        //ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        sb.append("grant_type=authorization_code");
 	        sb.append("&client_id=").append(kakaoApi);
 	        sb.append("&redirect_uri=").append(kakaoRedirectUrl);
@@ -119,14 +119,14 @@ public class KakaoApi {
 	        URL url = new URL(reqUrl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 	        
-	        //ÇÊ¼ö Çì´õ ¼¼ÆÃ
+	        //ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-	        conn.setDoOutput(true); //OutputStreamÀ¸·Î POST µ¥ÀÌÅÍ¸¦ ³Ñ°ÜÁÖ°Ú´Ù´Â ¿É¼Ç.
+	        conn.setDoOutput(true); //OutputStreamï¿½ï¿½ï¿½ï¿½ POST ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½Ñ°ï¿½ï¿½Ö°Ú´Ù´ï¿½ ï¿½É¼ï¿½.
 
 	        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 	        StringBuilder sb = new StringBuilder();
 	        
-	        //ÇÊ¼ö Äõ¸® ÆÄ¶ó¹ÌÅÍ ¼¼ÆÃ
+	        //ï¿½Ê¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	        sb.append("grant_type=authorization_code");
 	        sb.append("&client_id=").append(kakaoApi);
 	        sb.append("&redirect_uri=").append(kakaoRedirectUrl2);

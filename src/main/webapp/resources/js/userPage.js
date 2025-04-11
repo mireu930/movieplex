@@ -279,11 +279,18 @@ function delteUserInfo(userId) {
             "Content-type":"application/x-www-form-urlencoded"
         }
     })
-    .then(result=>result.text())
-    .then(result=>{
-            if(result==='1'){
-                alert('탈퇴되었습니다.')
-                location.reload();
+    .then(result=>result.json())
+    .then(data=>{
+        console.log(data.kakaoUrl);
+        console.log(data.result);
+            if(data.result===1){
+                if (data.kakaoUrl && data.kakaoUrl !== "") {
+                    alert("탈퇴되었습니다. 카카오 로그아웃으로 이동합니다.");
+                    window.location.href = data.kakaoUrl;
+                } else {
+                    alert("탈퇴되었습니다.");
+                    location.href = "/users/login";
+                }
             } else {
                 alert("취소되었습니다.");
             }
