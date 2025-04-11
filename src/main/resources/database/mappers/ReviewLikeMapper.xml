@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.like.ReviewLikeDAO">
+
+	<select id="isLiked" parameterType="ReviewLikeDTO" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM REVIEWLIKE 
+	    WHERE USERNUM = #{userNum,  jdbcType=NUMERIC} 
+	    AND REVIEWID = #{reviewId,  jdbcType=NUMERIC} 
+	    AND KIND = #{kind, jdbcType=NUMERIC}
+	</select>
+	
+	<!-- 좋아요 추가 -->
+	<insert id="addLike" parameterType="ReviewLikeDTO">
+			INSERT INTO REVIEWLIKE (LIKEID, USERNUM, REVIEWID, KIND)
+			VALUES (
+			LIKEID_SEQ.NEXTVAL, 
+			#{userNum,  jdbcType=NUMERIC},
+			#{reviewId, jdbcType=NUMERIC}, 
+			#{kind,  jdbcType=NUMERIC})
+	</insert>
+	
+	<!-- 좋아요 취소 -->
+	<delete id="deleteLike" parameterType="ReviewLikeDTO">
+			DELETE FROM REVIEWLIKE
+			WHERE USERNUM= #{userNum,  jdbcType=NUMERIC}
+			AND REVIEWID = #{reviewId,  jdbcType=NUMERIC}
+			AND KIND = #{kind,  jdbcType=NUMERIC}
+	</delete>
+	
+	<select id="getLikedReviewIds" resultType="long" parameterType="map">
+	    SELECT REVIEWID
+	    FROM REVIEWLIKE
+	    WHERE USERNUM = #{userNum,  jdbcType=NUMERIC}
+	    AND KIND = #{kind,  jdbcType=NUMERIC}
+	</select>
+	
+	
+	<select id="getLikedReviews" resultType="ReviewDTO">
+			  SELECT R.* 
+			  FROM REVIEWLIKE RL
+			  JOIN REVIEW R ON RL.REVIEWID = R.REVIEWID
+			  WHERE RL.USERNUM = #{userNum}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+  </mapper>

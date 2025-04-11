@@ -1,0 +1,230 @@
+header {
+    height: 100px; /* 원하는 높이 설정 */
+}
+
+.maincss{
+    margin-top: 20px;
+
+}
+#logo_img{
+    height: 60px;
+    width: 160px;
+}
+
+
+
+ .hot_rank {
+	font-size: large;
+	font-weight: bolder;
+	margin-top: 30px;
+ }
+
+.bd-placeholder-img {
+	font-size: 1.125rem;
+	text-anchor: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
+  
+
+
+@media ( min-width : 768px) {
+	.bd-placeholder-img-lg {
+		font-size: 3.5rem;
+	}
+}
+
+.b-example-divider {
+	width: 100%;
+	height: 3rem;
+	background-color: rgba(0, 0, 0, .1);
+	border: solid rgba(0, 0, 0, .15);
+	border-width: 1px 0;
+	box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em
+		rgba(0, 0, 0, .15);
+}
+
+.b-example-vr {
+	flex-shrink: 0;
+	width: 1.5rem;
+	height: 100vh;
+}
+
+.bi {
+	vertical-align: -.125em;
+	fill: currentColor;
+}
+
+.nav-scroller {
+	position: relative;
+	z-index: 2;
+	height: 2.75rem;
+	overflow-y: hidden;
+}
+
+.nav-scroller .nav {
+	display: flex;
+	flex-wrap: nowrap;
+	padding-bottom: 1rem;
+	margin-top: -1px;
+	overflow-x: auto;
+	text-align: center;
+	white-space: nowrap;
+	-webkit-overflow-scrolling: touch;
+}
+
+
+
+.bd-mode-toggle {
+	z-index: 1500;
+}
+
+.bd-mode-toggle .dropdown-menu .active .bi {
+	display: block !important;
+}
+
+ul{
+	list-style: none;
+}
+
+/*부모*/
+.container-ban{
+	width: 100%;
+	height: 400px;
+	overflow: hidden;
+}
+
+/*자식*/
+.img-fluid{
+	object-fit: cover;
+	object-position: center top;
+	width: 100%;
+	height: 100%;
+}
+
+ .container-body{
+	display: flex;
+	gap: 40px;
+	align-items: flex-start;
+	padding-inline: 150px;
+	padding-top: 100px;
+	padding-bottom: 50px;
+} 
+
+.container-body img{
+	width: 250px;
+	height: auto;
+	border-radius: 10px;
+	object-fit: cover;
+}
+
+.container-review {
+	padding-left: 150px;
+	padding-right: 150px;
+}
+
+.star-rating span {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+ .star-rating span.selected,
+.star-rating span:hover,
+.star-rating span:hover ~ span {
+    color: orange;
+}
+
+.star-wrapper {
+    display: flex;
+    align-items: center; /* 수직 정렬 */
+    gap: 20px; /* 별점과 버튼 사이 간격 */
+}
+
+.star-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 별점과 텍스트 왼쪽 정렬 */
+}
+
+ .btn-modal {
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white; 
+	padding: 10px 15px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none; 
+	/*display: inline-block; */
+	display: flex; /* ⭐️ 버튼 내 텍스트 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* ⭐️ 클릭 가능하도록 */
+    font-size: 16px; /* 글자 크기 조절 */
+    transition: background-color 0.2s ease-in-out; /* 애니메이션 효과 */
+  } 
+
+.container-custom {
+    
+    padding-left: 150px; /* 왼쪽 여백 */
+    padding-right: 150px; /* 오른쪽 여백 */
+    
+}
+
+.btn-back{
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white;
+	padding: 10px 10px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none;
+	
+}
+
+.gap {
+	padding-bottom: 100px;
+}
+
+.btn-add {
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white;
+	padding: 10px 10px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none;  
+}
+
+.btn-save{
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white; 
+	padding: 10px 15px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none; 
+	/*display: inline-block; */
+	display: flex; /* ⭐️ 버튼 내 텍스트 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /* ⭐️ 클릭 가능하도록 */
+    font-size: 16px; /* 글자 크기 조절 */
+    transition: background-color 0.2s ease-in-out; /* 애니메이션 효과 */
+}
+
+.list-group {
+	margin-top: 77px;
+}
+
+.btn-good{
+	background-color: #ff912a; /*원하는 배경색*/
+	color: white;
+	padding: 10px 10px; /*버튼 크기 조절*/
+	border-radius: 5px; /*모서리 둥글게*/
+	border: none; 
+	text-decoration: none;
+	margin-right: 20px;
+	margin-left:10px;
+}
+
+
+
+

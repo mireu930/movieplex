@@ -1,0 +1,176 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.seatBookSection {
+    width: 55% !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px; /* 간격 줄이기 */
+}
+
+.seat-selection {
+    background-color: #ffffff;
+    min-height: 400px; /* 높이 줄이기 */
+    border: 1px solid #dbdbdb;
+}
+
+.audience-selection {
+    background-color: #f1f3f5;
+    padding: 8px; /* 패딩 줄이기 */
+}
+
+.seat-layout {
+    background-color: #ffffff;
+    padding: 15px; /* 패딩 줄이기 */
+    margin-top: 8px;
+    border-radius: 5px;
+    min-height: 400px; /* 높이 줄이기 */
+}
+
+.movie-info {
+    background-color: #212529;
+    color: white;
+    padding: 10px; /* 패딩 줄이기 */
+}
+
+.card {
+    border-radius: 8px;
+}
+
+h4, h5 {
+    margin-bottom: 10px;
+}
+
+#adult {
+    margin-bottom: 8px;
+}
+
+#adult > span {
+    margin-right: 15px;
+}
+
+#screen img {
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+button {
+    transition: background-color 0.05s ease;
+}
+
+.seat-group-section {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 4px 0;
+}
+
+#seat {
+    margin-top: 30px; /* 간격 줄이기 */
+}
+
+.seatRow {
+    width: 28px;
+    height: 28px;
+    text-align: center;
+    line-height: 28px;
+    font-weight: bold;
+    margin: 1px;
+    border: 1px solid #ccc;
+    background-color: #f1f3f5;
+    border-radius: 4px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem; /* 폰트 크기 줄이기 */
+}
+
+.seat {
+    width: 28px;
+    height: 28px;
+    margin: 1px;
+    font-size: 0.8rem; /* 폰트 크기 줄이기 */
+    background-color: rgb(102, 102, 102) !important;
+    color: white !important;
+}
+.seat.disabled{
+    background-color: #c6c6c6 !important;
+    color: white !important;
+}
+
+.seat-group {
+    display: inline-block;
+    margin: 0 4px;
+}
+
+.seat.clicked {
+    background-color: #013cff !important;
+    color: white !important;
+    border-color: #0056b3 !important;
+}
+
+.movie-info {
+    background-color: #212529;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.movie-title {
+    /* background-color: #5a4b81; */
+    padding: 5px; /* 패딩 줄이기 */
+    text-align: center;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    font-size: 1rem;
+}
+
+.movie-content {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.movie-poster img {
+    width: 80px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.movie-details {
+    /* background-color: #333; */
+    padding: 8px;
+    border-radius: 4px;
+    flex: 1;
+    font-size: 0.9rem;
+}
+
+.movie-price {
+    /* background-color: #1d3557; */
+    padding: 8px;
+    text-align: center;
+    border-radius: 4px;
+    margin-top: 8px;
+}
+
+.movie-actions button{
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.movie-actions a{
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 10px;
+}

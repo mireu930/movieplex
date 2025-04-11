@@ -1,24 +1,34 @@
 package com.movie.plex.nestcontents;
 
 import java.sql.Date;
+import java.util.List;
+
+import com.movie.plex.review.ReviewDTO;
 
 public class NestContentDTO {
 		
-		private Long contentID;
+		private Long contentId;
 		private String contentTitle;
 		private String shortPoster;
 		private String longPoster;
 		private Date releaseDate;
 		private String overView;
-		private Long popularity;
+		private Double popularity;
 		private Long kind;
 		
+		private List<ReviewDTO> reviewList;
 		
-		public Long getContentID() {
-			return contentID;
+		public List<ReviewDTO> getReviewList() {
+			return reviewList;
 		}
-		public void setContentID(Long contentID) {
-			this.contentID = contentID;
+		public void setReviewList(List<ReviewDTO> reviewList) {
+			this.reviewList = reviewList;
+		}
+		public Long getContentId() {
+			return contentId;
+		}
+		public void setContentId(Long contentId) {
+			this.contentId = contentId;
 		}
 		public String getContentTitle() {
 			return contentTitle;
@@ -50,10 +60,10 @@ public class NestContentDTO {
 		public void setOverView(String overView) {
 			this.overView = overView;
 		}
-		public Long getPopularity() {
+		public Double getPopularity() {
 			return popularity;
 		}
-		public void setPopularity(Long popularity) {
+		public void setPopularity(Double popularity) {
 			this.popularity = popularity;
 		}
 		public Long getKind() {
@@ -62,6 +72,9 @@ public class NestContentDTO {
 		public void setKind(Long kind) {
 			this.kind = kind;
 		}
+	
+		
+		
 		
 		
 		

@@ -11,6 +11,7 @@
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
+		<async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>encode</filter-name>
@@ -39,12 +40,28 @@
 			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
 	</servlet>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+		<error-page>
+		<error-code>
+			404
+		</error-code>
+		<location>/WEB-INF/views/Errors/error_400.jsp</location>
+		<error-code>
+			400
+		</error-code>
+		<location>/WEB-INF/views/Errors/error_400.jsp</location>
+		<error-code>
+			500
+		</error-code>
+		<location>/WEB-INF/views/Errors/error_500.jsp</location>
+	</error-page>
 
 
 </web-app>

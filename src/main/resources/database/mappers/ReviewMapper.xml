@@ -3,6 +3,87 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="ReviewDAO">
+  <mapper namespace="com.movie.plex.review.ReviewDAO">
 	
-  </mapper>
+	<insert id="addReview" parameterType="ReviewDTO">
+    INSERT INTO review (REVIEWID,REVIEWCONTENTS,REVIEWDATE,UPDATEDATE,REVIEWRATE,USERNUM,CONTENTID,KIND)
+    VALUES (
+        REVIEWID_SEQ.NEXTVAL, 
+       #{reviewContents},
+        sysdate, 
+        sysdate, 
+        #{reviewRate, jdbcType=NUMERIC}, 
+        #{userNum},
+        #{contentId, jdbcType=NUMERIC},
+        (SELECT KIND FROM NESTCONTENTS WHERE CONTENTID = #{contentId, jdbcType=NUMERIC})
+	    )
+	</insert>
+	
+
+    <select id="getReviewList" parameterType="Long" resultType="ReviewDTO">
+        SELECT u.USERNAME, u.USERNUM,  r.REVIEWCONTENTS, r.REVIEWID ,r.REVIEWRATE 
+        FROM REVIEW r 
+		JOIN USERS u 
+		ON r.USERNUM  = u.USERNUM
+		WHERE r.CONTENTID = #{contentId, jdbcType=NUMERIC}
+		ORDER BY r.REVIEWDATE DESC
+    </select>
+
+	<select id="getReviewDetail" parameterType="Long" resultType="ReviewDTO">
+	   SELECT R.*, U.USERNAME
+		FROM REVIEW R
+		LEFT JOIN USERS U ON R.USERNUM = U.USERNUM
+		WHERE R.REVIEWID = #{reviewId}
+
+	</select>
+	
+	<select id="checkReviewExists" parameterType="ReviewDTO" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM REVIEW 
+	    WHERE USERNUM = #{userNum} AND CONTENTID = #{contentId, jdbcType=NUMERIC} AND KIND = #{kind}
+	</select>
+
+	<select id="getMyReviews" parameterType="Long" resultType="ReviewDTO">
+		  SELECT * FROM REVIEW
+		  WHERE USERNUM = #{userNum}
+	</select>
+	
+	<update id="updateReview" parameterType="ReviewDTO">
+	    UPDATE REVIEW
+	    SET REVIEWCONTENTS = #{reviewContents},
+	    		REVIEWRATE = #{reviewRate},
+	    		REVIEWDATE = SYSDATE
+	    WHERE REVIEWID= #{reviewId}
+	</update>
+	
+	<delete id="deleteReview" parameterType="long">
+	    DELETE FROM REVIEW
+	    WHERE REVIEWID = #{reviewId}
+	</delete>
+	
+	
+
+
+
+
+
+
+
+
+</mapper>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

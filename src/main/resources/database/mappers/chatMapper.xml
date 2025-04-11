@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.websocket.ChatDAO">
+  	<select id="chatRoomList" resultType="ChatRoom">
+  		SELECT
+		    CHATROOMNO ,
+		    TITLE,
+		    USERID,
+		    (SELECT COUNT(*) FROM CHATROOMJOIN CRJ WHERE CRJ.CHATROOMNO = CR.CHATROOMNO) AS CNT
+		FROM CHATROOM CR
+		JOIN USERS USING(USERNUM)
+		WHERE CR.STATUS = 'Y'
+		ORDER BY CHATROOMNO DESC
+  	</select>
+  	
+  	<select id="getChatRoomJoin" resultType="ChatRoom" parameterType="ChatRoomJoin">
+  		  SELECT 
+			CR.CHATROOMNO ,
+			CR.TITLE,
+			U.USERID,
+			(SELECT COUNT(*) FROM CHATROOMJOIN CRJ WHERE CRJ.CHATROOMNO = CR.CHATROOMNO) AS CNT
+		  FROM CHATROOM CR
+		  JOIN CHATROOMJOIN CRJ ON CR.CHATROOMNO = CRJ.CHATROOMNO
+		  JOIN USERS U ON U.USERNUM = CRJ.USERNUM
+		  WHERE CRJ.USERNUM = #{userNum}
+		  AND CR.STATUS = 'Y'
+		ORDER BY CHATROOMNO DESC
+  	</select>
+  	
+  	<insert id="addChatRoom" parameterType="ChatRoom">
+  		<selectKey order="BEFORE" keyProperty="chatRoomNo" resultType="int">
+			SELECT CHATROOMNO_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+  		INSERT INTO CHATROOM
+		VALUES (#{chatRoomNo}, #{title}, 'Y', #{userNum})
+  	</insert>
+  	
+  	
+  	
+  	<select id="addCheck" parameterType="ChatRoomJoin" resultType="Long">
+  		SELECT COUNT(*) FROM CHATROOMJOIN 
+		WHERE CHATROOMNO = #{chatRoomNo} AND USERNUM = #{userNum}
+  	</select>
+  	
+  	<insert id="addChatRoomDetail" parameterType="ChatRoomJoin">
+  		INSERT INTO CHATROOMJOIN
+		VALUES (#{userNum}, #{chatRoomNo})
+  	</insert>
+  	
+  	<select id="chatMessage" parameterType="int" resultType="ChatMessage">
+  		SELECT MESSAGE, CREATEDATE, USERID, USERNUM, CMNO FROM CHATMESSAGE
+		JOIN USERS
+		USING(USERNUM)
+		WHERE CHATROOMNO = #{chatRoomNo}
+		ORDER BY CMNO ASC
+  	</select>
+	
+	<insert id="insertMessage" parameterType="ChatMessage">
+		INSERT INTO CHATMESSAGE
+		VALUES (CMNO_SEQ.NEXTVAL, #{message} , SYSDATE, #{chatRoomNo}, #{userNum})
+	</insert>
+	
+	<delete id="exitChatRoom" parameterType="ChatRoomJoin">
+		DELETE FROM CHATROOMJOIN
+			WHERE USERNUM = #{userNum} AND CHATROOMNO = #{chatRoomNo}
+	</delete>
+	
+	<update id="closeChatRoom" parameterType="ChatRoomJoin">
+		UPDATE CHATROOM
+		   SET STATUS = 'N'
+		 WHERE CHATROOMNO = #{chatRoomNo}
+	</update>
+	
+		<select id="countChatRoomMember" parameterType="ChatRoomJoin" resultType="int">
+		SELECT
+			COUNT(*)
+		FROM CHATROOMJOIN
+		WHERE CHATROOMNO = #{chatRoomNo}
+	</select>
+  </mapper>

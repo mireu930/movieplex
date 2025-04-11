@@ -2,6 +2,9 @@ package com.movie.plex.users;
 
 import java.sql.Date;
 
+import com.movie.plex.coupon.CouponDTO;
+import com.movie.plex.couponConnect.CouponConnectDTO;
+
 public class UserDTO {
 	private Long userNum;
 	private String userId;

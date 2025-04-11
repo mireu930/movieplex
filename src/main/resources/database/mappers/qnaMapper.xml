@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.boards.qna.QnaDAO">
+  	<select id="getList" resultMap="getResult" parameterType="Pager">
+		SELECT * FROM (SELECT ROWNUM R,M.* FROM (
+			SELECT *
+				FROM QNA Q
+	    		JOIN USERS U ON Q.USERNUM = U.USERNUM
+				<include refid="search"/>
+				ORDER BY BOARDREF DESC, BOARDSTEP ASC)M)
+			WHERE R BETWEEN #{startNum} AND #{lastNum}
+	</select>
+	
+	<select id="getTotalCount" resultType="Long" parameterType="Pager">
+		SELECT COUNT(QNANUM)
+			FROM QNA Q
+    		JOIN USERS U ON Q.USERNUM = U.USERNUM
+		<include refid="search"/> 
+	</select>
+	
+	<select id="getDetail" resultMap="getDetailResult" parameterType="QnaDTO">
+		SELECT * FROM QNA 
+		LEFT OUTER JOIN USERS
+		USING(USERNUM)
+		LEFT OUTER JOIN QNAFILES
+		USING (QNANUM)
+		WHERE QNANUM =#{qnaNum}
+	</select>
+	
+	<insert id="add" parameterType="QnaDTO">
+	<selectKey order="BEFORE" keyProperty="qnaNum" resultType="Long">
+		SELECT QNANUM_SEQ.NEXTVAL FROM DUAL
+	</selectKey>
+	
+		INSERT INTO QNA
+		VALUES (#{qnaNum},#{boardTitle},#{boardContents},SYSDATE,0,QNANUM_SEQ.CURRVAL,0,0,#{userNum})
+	</insert>
+	
+	<insert id="reply" parameterType="QnaDTO">
+		INSERT INTO QNA
+		VALUES (QNANUM_SEQ.NEXTVAL, #{boardTitle},#{boardContents},SYSDATE,0,#{boardRef},#{boardStep},#{boardDepth},#{userNum})
+	</insert>
+	
+	<update id="updateStep" parameterType="QnaDTO">
+		UPDATE QNA SET BOARDSTEP=BOARDSTEP+1 WHERE BOARDREF=#{boardRef} AND BOARDSTEP > #{boardStep}
+	</update>
+	
+	<update id="update" parameterType="QnaDTO">
+		UPDATE QNA SET BOARDTITLE=#{boardTitle}, BOARDCONTENTS=#{boardContents} WHERE QNANUM=#{qnaNum}
+	</update>
+	
+	<update id="updateHit" parameterType="QnaDTO">
+		UPDATE QNA SET BOARDHIT=BOARDHIT+1 WHERE QNANUM=#{qnaNum}
+	</update>
+	
+	<delete id="delete" parameterType="QnaDTO">
+		DELETE QNA WHERE QNANUM =#{qnaNum}
+	</delete>
+	
+	<select id="getFileDetail" parameterType="QnaFilesDTO" resultType="QnaFilesDTO">
+		SELECT * FROM QNAFILES WHERE FILENUM = #{fileNum}
+	</select>
+	
+	 <insert id="addFile" parameterType="QnaFilesDTO">
+  		INSERT INTO QNAFILES VALUES (FILENUM_SEQ.NEXTVAL,#{fileName},#{oldName},#{qnaNum})
+  	</insert>
+	
+	<delete id="deleteFile" parameterType="QnaFilesDTO">
+		DELETE QNAFILES WHERE FILENUM = #{fileNum}
+	</delete>
+	
+	<delete id="deleteFileAll" parameterType="QnaFilesDTO">
+		DELETE QNAFILES WHERE QNANUM = #{qnaNum}
+	</delete>
+	
+	<resultMap type="QnaDTO" id="getResult">
+  		<id column="QNANUM" property="qnaNum"/>
+  		<result column="BOARDTITLE" property="boardTitle"/>
+  		<result column="BOARDCONTENTS" property="boardContents"/>
+  		<result column="BOARDDATE" property="boardDate"/>
+  		<result column="BOARDHIT" property="boardHit"/>
+  		<result column="BOARDREF" property="boardRef"/>
+  		<result column="BOARDSTEP" property="boardStep"/>
+  		<result column="BOARDDEPTH" property="boardDepth"/>
+  		<result column="USERNUM" property="userNum"/>
+  		
+  		<association property="userDTO" javaType="UserDTO">
+	  		<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		</association>
+  	</resultMap>
+  	
+  	  	<resultMap type="QnaDTO" id="getDetailResult">
+	  		<id column="QNANUM" property="qnaNum"/>
+	  		<result column="BOARDTITLE" property="boardTitle"/>
+	  		<result column="BOARDCONTENTS" property="boardContents"/>
+	  		<result column="BOARDDATE" property="boardDate"/>
+	  		<result column="BOARDHIT" property="boardHit"/>
+	  		<result column="BOARDREF" property="boardRef"/>
+	  		<result column="BOARDSTEP" property="boardStep"/>
+	  		<result column="BOARDDEPTH" property="boardDepth"/>
+	  		<result column="USERNUM" property="userNum"/>
+	  		
+	  	  <association property="userDTO" javaType="UserDTO">
+	  		<result column="USERID" property="userId"/>
+	  		<result column="USERPW" property="userPw"/>
+	  		<result column="USEREMAIL" property="userEmail"/>
+	  		<result column="USERPHONE" property="userPhone"/>
+	  		<result column="USERNAME" property="userName"/>
+	  		<result column="USERGRADE" property="userGrade"/>
+	  		<result column="REGISTDATE" property="registDate"/>
+	  		<result column="USEROUT" property="userOut"/>
+	  		<result column="SNS" property="sns"/>
+  		  </association>
+	  		
+  		<collection property="qnaFilesDTOs" javaType="List" ofType="QnaFilesDTO">
+  			<id column="FILENUM" property="fileNum"/>
+  			<result column="FILENAME" property="fileName"/>
+  			<result column="OLDNAME" property="oldName"/>
+  		</collection>
+  		
+  	</resultMap>
+	
+		<sql id="search">
+			WHERE
+		    <choose>
+		        <when test="kind == 'k2'">
+		            U.USERNAME LIKE '%' || #{search} || '%'
+		        </when>
+		        <when test="kind == 'k3'">
+		            U.USERNAME LIKE '%' || #{search} || '%' OR Q.BOARDTITLE LIKE '%' || #{search} || '%'
+		        </when>
+		        <otherwise>
+		            Q.BOARDTITLE LIKE '%' || #{search} || '%'
+		        </otherwise>	
+		    </choose>	
+		</sql>
+	
+  </mapper>

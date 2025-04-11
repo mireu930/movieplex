@@ -1,8 +1,17 @@
+.card-img-top {
+  height: 500px; 
+  width: 400px;
+}
 
 .header{
   	max-width: 100vw !important;	
 	background-color: #003092 !important; 
 }
+
+.login-btn {
+	white-space: nowrap; /* 줄바꿈 방지 */
+}
+
 .nav-item{
 	font-size: 20px !important;
 	font-weight: bold !important;
@@ -78,3 +87,5 @@
 ul{
 	list-style: none;
 }
+
+

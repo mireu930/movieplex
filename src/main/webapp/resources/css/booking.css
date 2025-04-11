@@ -1,0 +1,129 @@
+.section {
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    min-height: 250px;
+    margin-bottom: 20px;
+  }
+  
+  /* ✅ 날짜 네비게이션 */
+  .date-nav {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+  
+  .date-strip-wrapper {
+    overflow-x: auto;
+    flex-grow: 1;
+  }
+  
+  .date-strip {
+    display: flex;
+    gap: 10px;
+    padding: 0 0 0 80px;
+    align-items: center;
+    white-space: nowrap;
+    border-top: 1px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
+  }
+  
+  /* 날짜 아이템 */
+  .date-item {
+    display: inline-block;
+    min-width: 70px;
+    text-align: center;
+    padding: 10px 8px;
+    background-color: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s, font-weight 0.2s;
+  }
+  
+  .date-item:hover,
+  .date-item.active {
+    background-color: rgb(234, 232, 232);
+    font-weight: bold;
+  }
+  
+  /* 영화/극장 목록 */
+  .movie-list ul,
+  .theater-list ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+  }
+  
+  .movie-item {
+    display: block;             /* ✅ padding 적용 확실하게 */
+    padding: 6px 20px;
+    border-radius: 6px;
+    margin: 4px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-sizing: border-box;    /* ✅ padding 포함해서 레이아웃 계산 */
+  }
+  
+  .movie-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .movie-item.active {
+    background-color: #444;
+    color: white;
+    font-weight: bold;
+  }
+
+  .theater-item {
+    display: block;             /* ✅ padding 적용 확실하게 */
+    padding: 6px 20px;
+    border-radius: 6px;
+    margin: 4px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-sizing: border-box;    /* ✅ padding 포함해서 레이아웃 계산 */
+  }
+  
+  .theater-item:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .theater-item.active {
+    background-color: #444;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* time list & scrollbar */
+  #movie-list {
+    max-height: 550px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  .theater-list {
+    height: 513px;
+  }
+  
+  .time-list {
+    height: 663px;
+    overflow-y: auto;
+    padding-right: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .time-list p {
+    color: #888;
+    margin-top: 10px;
+  }
+  
+  .form-check {
+    font-size: 20px;
+  }
+  

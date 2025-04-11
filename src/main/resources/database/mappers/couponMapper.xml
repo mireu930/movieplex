@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.movie.plex.coupon.CouponDAO">
+  	<select id="getList" resultType="CouponDTO">
+  		SELECT * FROM COUPON
+  	</select>
+  	
+  	 <select id="findCouponByCode" parameterType="String" resultType="CouponDTO">
+    	SELECT * FROM COUPON WHERE couponCode = #{couponCode}
+	</select>
+  	
+  	<insert id="couponAdd" parameterType="CouponDTO">
+  		INSERT INTO COUPON (COUPONNUM, COUPONNAME, COUPONCOST, COUPONCODE, USED)
+  		VALUES (COUPONNUM_SEQ.NEXTVAL, #{couponName}, #{couponCost}, #{couponCode}, 0)
+  	</insert>
+  	
+  	<update id="couponUpdate" parameterType="CouponDTO">
+  		UPDATE COUPON SET USED = 1 WHERE COUPONNUM=#{couponNum}
+  	</update>
+  	
+  	<update id="couponUsed" parameterType="CouponConnectDTO">
+  		UPDATE COUPONCONNECT SET USED = 1 WHERE COUPONNUM = #{couponNum} AND USERNUM = #{userNum}
+  	</update>
+	
+  </mapper>
