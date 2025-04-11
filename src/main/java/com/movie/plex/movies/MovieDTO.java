@@ -11,8 +11,7 @@ public class MovieDTO {
 	private Date releaseDate;
 	private String overView;
 	private Double popularity;
-	private Long ticketPrice;
-	private Long movieCheck;
+	
 	
 	public Long getMovieId() {
 		return movieId;
@@ -62,18 +61,6 @@ public class MovieDTO {
 	}
 	public void setPopularity(Double popularity) {
 		this.popularity = popularity;
-	}
-	public Long getTicketPrice() {
-		return ticketPrice;
-	}
-	public void setTicketPrice(Long ticketPrice) {
-		this.ticketPrice = ticketPrice;
-	}
-	public Long getMovieCheck() {
-		return movieCheck;
-	}
-	public void setMovieCheck(Long movieCheck) {
-		this.movieCheck = movieCheck;
 	}
 	
 }

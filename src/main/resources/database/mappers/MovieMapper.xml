@@ -14,7 +14,7 @@
 			VALUES(#{item.movieId},#{item.movieTitle},#{item.shortPoster,
 			jdbcType=VARCHAR},#{item.longPoster, jdbcType=VARCHAR},#{item.video,
 			jdbcType=VARCHAR},#{item.releaseDate},#{item.overView},
-			#{item.popularity},#{item.ticketPrice},#{item.movieCheck})
+			#{item.popularity})
 		</foreach>
 		SELECT 1 FROM DUAL
 	</insert>

@@ -113,11 +113,11 @@ public class MovieJson{
 				// 줄거리
 				movieDTO.setOverView(dto.get("overview").toString());
 
-				// 영화 티켓값
-				movieDTO.setTicketPrice(12000L);
-
-				// 영화 삭제 여부
-				movieDTO.setMovieCheck(0L);
+//				// 영화 티켓값
+//				movieDTO.setTicketPrice(12000L);
+//
+//				// 영화 삭제 여부
+//				movieDTO.setMovieCheck(0L);
 				//System.out.println(movieDTO.getMovieId());
 				dtos.add(movieDTO);
 			}
