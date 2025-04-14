@@ -29,6 +29,8 @@
 
 과정명   : (K-Digital Training)클라우드(AWS)활용 자바/스프링 개발 부트캠프(1회차)
 
+기  간   : 2024.12.23 ~ 2025.07.09
+
 프로젝트 : Middle Project
 
 GitHub URL  : https://github.com/yangtori0407/movieplex
@@ -38,9 +40,7 @@ GitHub URL  : https://github.com/yangtori0407/movieplex
 <br>
 
 ## 3. 프로젝트기간
-2024.12.23 ~ 2025.07.09
-
-
+2025.03.17 ~ 2025.04.14(4주)
 
 
 <br>
@@ -53,14 +53,10 @@ GitHub URL  : https://github.com/yangtori0407/movieplex
 
 ## 5. 실행화면(기능 설명)
 
-| 카카오로그인 | 영화예매 |
-| :--------: | :--------: |
-| <img src=https://github.com/user-attachments/assets/6b558858-9ffb-44a4-b8a0-f4a59ba1a4e3 height="200"/> |  <img src=https://github.com/user-attachments/assets/ffabad95-de8c-4263-975a-9a3248c4a443 height="200"/> 
-| 리뷰네스트 |
-||
+| 카카오로그인 | 영화예매 |  리뷰네스트 |
+| :--------: | :--------: | :--------: |
+| <img src=https://github.com/user-attachments/assets/6b558858-9ffb-44a4-b8a0-f4a59ba1a4e3 height="200"/> |  <img src=https://github.com/user-attachments/assets/ffabad95-de8c-4263-975a-9a3248c4a443 height="200"/> | <img src=https://github.com/user-attachments/assets/e43ba862-edea-4cec-a045-3b1f2653494d  height="200"/>
 
-
-  
 
 <br>
 
