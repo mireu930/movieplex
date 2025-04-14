@@ -11,7 +11,7 @@
 		KIND)
 		VALUES(THEATER_SEQ.NEXTVAL,
 		#{theaterStart},
-		#{theaterEnd},#{theaterName}, #{movieId}, 0)
+		#{theaterEnd},#{theaterName}, #{movieId})
 	</insert>
 
 	<select id="getList" parameterType="TheaterDTO"
